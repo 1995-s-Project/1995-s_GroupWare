@@ -1,4 +1,4 @@
-title: "[From➡️To]  "
+title: "[ANNOUNCEMENT]  "
 body:
 - type: dropdown
   attributes:
@@ -6,7 +6,7 @@ body:
     description: 중요한 공지사항만 입력하세요...
     multiple: false
     options:
-      - 공지 사항
+      - 메인 공지
       - 에러 발생
       - 질문 하기
       - 투표 하기
