@@ -1,0 +1,9 @@
+title: " ERROR "
+body:
+- type: checkboxes
+    attributes:
+      label: Check that box!
+      options:
+        - label: This one!
+          required: true
+        - label: I won't stop you if you check this one, too
