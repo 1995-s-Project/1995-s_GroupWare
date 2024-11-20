@@ -11,6 +11,3 @@ body:
     default: 0
   validations:
     required: true
-      ```cs
-      code
-      ```
