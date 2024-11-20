@@ -2,20 +2,6 @@ title: "[ANNOUNCEMENT]  "
 body:
 - type: dropdown
   attributes:
-    label: 공지 사항
-    description: 중요한 공지사항만 입력하세요...
-    multiple: false
-    options:
-      - 메인 공지
-      - 에러 발생
-      - 질문 하기
-      - 투표 하기
-    default: 0
-  validations:
-    required: true
-    type: textarea
-    id: improvements
-    attributes:
       label: Top 3 improvements
       description: "What are the top 3 improvements we could make to this project?"
       value: |
