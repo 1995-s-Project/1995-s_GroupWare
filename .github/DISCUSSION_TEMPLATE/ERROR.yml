@@ -6,9 +6,7 @@ body:
       options:
         - label: "근희"
         - label: "경훈"
-          required: true
         - label: "관훈"
-          required: true
         - label: "은미"
           required: true
         - label: "재민"
