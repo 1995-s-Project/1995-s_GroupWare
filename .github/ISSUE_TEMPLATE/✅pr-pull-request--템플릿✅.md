@@ -3,7 +3,7 @@ name: "✅PR(Pull Request) 템플릿✅"
 about: 기능 추가, 코드 수정 및 삭제 등 공유 및 브랜치 확인용 템플릿
 title: 예시) PR - [24.11.20] 회원가입 로그인 기능 추가
 labels: ''
-assignees: ''
+assignees: JungKeunHee
 
 ---
 
