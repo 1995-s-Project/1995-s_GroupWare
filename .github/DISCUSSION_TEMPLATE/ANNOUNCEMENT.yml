@@ -1,6 +1,6 @@
-title: "[From➡️To]"
+title: "[ANNOUNCEMENT]"
 body:
-    - type: checkboxes
+  - type: checkboxes
     attributes:
       label: 작성자
       options:
@@ -9,6 +9,7 @@ body:
         - label: "관훈"
         - label: "은미"
         - label: "재민"
+
   - type: dropdown
     attributes:
       label: 카테고리
