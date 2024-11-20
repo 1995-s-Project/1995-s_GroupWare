@@ -1,4 +1,4 @@
-title: "ERROR"
+title: "Q&A"
 body:
   - type: checkboxes
     attributes:
@@ -13,11 +13,11 @@ body:
   - type: dropdown
     id: download
     attributes:
-      label: 에러내용
+      label: 질문내용
       options:
-        - "403 에러"
-        - "404 에러"
-        - "500 에러"
+        - "코드"
+        - "기능"
+        - "주제"
         - "기타"
     validations:
       required: true
@@ -25,7 +25,7 @@ body:
   - type: textarea
     id: improvements
     attributes:
-      label: 에러내역(자세히)
+      label: 질문내역(자세히)
       description: "구체적으로 적어주세요.."
       value: |
         -
