@@ -16,12 +16,12 @@ body:
     id: improvements
     attributes:
       label: 내역
-      description: "What are the top 3 improvements we could make to this project?"
+      description: "다들 잘 이행하시길 바랍니다."
       value: |
-        1.
-        2.
-        3.
-        ...
+        💗
+        💗
+        💗
+        💗
       render: bash
     validations:
       required: true
