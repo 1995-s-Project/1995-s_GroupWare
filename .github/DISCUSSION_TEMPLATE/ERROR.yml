@@ -4,6 +4,12 @@ body:
     attributes:
       label: Check that box!
       options:
-        - label: This one!
+        - label: "근희"
           required: true
-        - label: I won't stop you if you check this one, too
+        - label: "경훈"
+          required: true
+        - label: "관훈"
+          required: true
+        - label: "은미"
+          required: true
+        - label: "재민"
