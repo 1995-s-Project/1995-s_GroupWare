@@ -1,6 +1,6 @@
-title: " ERROR "
+title: "ERROR"
 body:
-- type: checkboxes
+  - type: checkboxes
     attributes:
       label: Check that box!
       options:
