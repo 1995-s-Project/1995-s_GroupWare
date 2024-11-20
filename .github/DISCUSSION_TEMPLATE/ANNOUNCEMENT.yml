@@ -1,16 +1,16 @@
-title: "[From➡️To]  "
+title: "[From➡️To]"
 body:
-- type: dropdown
-  attributes:
-    label: 카테고리
-    multiple: false
-    options:
-      - 전체 공지
-      - 에러 관련
-      - 기타
-    default: 0
-  validations:
-    required: true
+  - type: dropdown
+    attributes:
+      label: 카테고리
+      multiple: false
+      options:
+        - 전체 공지
+        - 에러 관련
+        - 기타
+      default: 0
+    validations:
+      required: true
 
   - type: textarea
     id: improvements
