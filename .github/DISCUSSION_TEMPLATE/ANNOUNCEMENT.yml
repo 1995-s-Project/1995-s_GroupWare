@@ -10,4 +10,28 @@ body:
         - label: "은미"
         - label: "재민"
 
-  
+  - type: dropdown
+    attributes:
+      label: 카테고리
+      multiple: false
+      options:
+        - 전체 공지
+        - 에러 관련
+        - 기타
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: improvements
+    attributes:
+      label: 공지내역
+      description: "다들 잘 이행하시길 바랍니다."
+      value: |
+        -
+        -
+        -
+        -
+      render: bash
+    validations:
+      required: true
