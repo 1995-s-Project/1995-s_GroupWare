@@ -1,14 +1,16 @@
-title: "[ANNOUNCEMENT]  "
+title: "[From➡️To]  "
 body:
-type: dropdown
+- type: dropdown
   attributes:
-      label: Top 3 improvements
-      description: "What are the top 3 improvements we could make to this project?"
-      value: |
-          1.
-          2.
-          3.
-          ...
-      render: markdown
-    validations:
-      required: true
+    label: 카테고리
+    multiple: false
+    options:
+      - 전체 공지
+      - 에러 관련
+      - 기타
+    default: 0
+  validations:
+    required: true
+      ```cs
+      code
+      ```
