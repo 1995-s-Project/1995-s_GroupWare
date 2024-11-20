@@ -1,1 +1,15 @@
-
+title: "[From➡️To]  "
+body:
+- type: dropdown
+  attributes:
+    label: 공지 사항
+    description: 중요한 공지사항만 입력하세요...
+    multiple: false
+    options:
+      - 공지 사항
+      - 에러 발생
+      - 질문 하기
+      - 투표 하기
+    default: 0
+  validations:
+    required: true
