@@ -22,7 +22,7 @@ body:
     validations:
       required: true
 
-    - type: textarea
+  - type: textarea
     id: improvements
     attributes:
       label: 에러내역
