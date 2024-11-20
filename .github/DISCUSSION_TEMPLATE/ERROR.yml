@@ -13,11 +13,11 @@ body:
   - type: dropdown
     id: download
     attributes:
-      label: Which area of this project could be most improved?
+      label: 에러내용
       options:
-        - Documentation
-        - Pull request review time
-        - Bug fix time
-        - Release cadence
+        - "403 에러"
+        - "404 에러"
+        - "500 에러"
+        - "기타"
     validations:
       required: true
