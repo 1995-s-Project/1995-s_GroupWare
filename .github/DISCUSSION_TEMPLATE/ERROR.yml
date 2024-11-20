@@ -5,7 +5,6 @@ body:
       label: Check that box!
       options:
         - label: "근희"
-          required: true
         - label: "경훈"
           required: true
         - label: "관훈"
