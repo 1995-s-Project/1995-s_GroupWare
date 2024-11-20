@@ -1,6 +1,6 @@
 title: "[ANNOUNCEMENT]  "
 body:
-- type: dropdown
+type: dropdown
   attributes:
       label: Top 3 improvements
       description: "What are the top 3 improvements we could make to this project?"
