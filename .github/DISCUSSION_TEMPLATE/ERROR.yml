@@ -2,11 +2,10 @@ title: "ERROR"
 body:
   - type: checkboxes
     attributes:
-      label: Check that box!
+      label: 작성자
       options:
         - label: "근희"
         - label: "경훈"
         - label: "관훈"
         - label: "은미"
-          required: true
         - label: "재민"
