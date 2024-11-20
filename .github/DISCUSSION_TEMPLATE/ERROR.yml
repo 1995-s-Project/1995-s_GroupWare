@@ -10,7 +10,7 @@ body:
         - label: "은미"
         - label: "재민"
 
-    - type: dropdown
+  - type: dropdown
     id: download
     attributes:
       label: Which area of this project could be most improved?
