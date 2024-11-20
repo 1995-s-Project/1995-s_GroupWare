@@ -13,3 +13,11 @@ body:
     default: 0
   validations:
     required: true
+  - type: textarea
+  attributes:
+    label: 전달 사항
+    value: |
+      * 
+      * 
+      * 
+      ...
