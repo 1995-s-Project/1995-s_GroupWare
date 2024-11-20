@@ -21,3 +21,17 @@ body:
         - "기타"
     validations:
       required: true
+
+    - type: textarea
+    id: improvements
+    attributes:
+      label: 에러내역
+      description: "구체적으로 적어주세요.."
+      value: |
+        -
+        -
+        -
+        -
+      render: bash
+    validations:
+      required: true
