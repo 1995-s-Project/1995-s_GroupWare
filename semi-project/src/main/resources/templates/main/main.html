@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🐶PetHarmony🐶</title>
+    <link rel="stylesheet" href="/main/css/main-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_arrow_down" />
+    <script src="/main/js/main.js"></script>
+</head>
+<body>
+<header>
+    <div class="side-menu-bar">
+        <ul>
+            <li><a href="/main">🐶PetHarmony🐶</a></li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/schedule')">근태관리</a></li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/messenger')">메신저(채팅)</a></li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/mail')">이메일</a></li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/adoption')">입양</a></li>
+            <li class="animal-menu">
+                <div class="menu-wrapper">
+                    <a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/animals')">동물
+                        <span class="material-symbols-outlined">keyboard_arrow_down</span>
+                    </a>
+                </div>
+                <ul class="sub-menu">
+                    <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/animals')">구조동물</a></li>
+                    <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/adoptionComplete')">입양완료</a></li>
+                    <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/stock')">재고관리</a></li>
+                </ul>
+            </li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/facilities')">시설관리</a></li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/board')">전사게시판</a></li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/employee')">직원정보</a></li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/mypage')">마이페이지</a></li>
+            <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/approval')">결재</a></li>
+            <li class="admin-menu">
+                <div class="admin-menu-wrapper">
+                    <a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/manager')">관리자전용
+                        <span class="material-symbols-outlined">keyboard_arrow_down</span>
+                    </a>
+                </div>
+                <ul class="sub-menu">
+                    <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/manager')">관리자페이지</a></li>
+                    <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/employeeRegister')">사원등록</a></li>
+                    <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/employeeManagement')">직원관리</a></li>
+                    <li><a href="javascript:void(0);" onclick="loadContent('http://localhost:8080/sidemenu/approvalBox')">결재함</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<div class="container1">
+    <div class="change-screen">
+        <div id="change-screen-content">메인페이지</div>
+    </div>
+</div>
+</body>
+</html>
