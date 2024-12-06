@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>비밀번호 찾기</title>
+  <link rel="stylesheet" href="/home/css/pass-search.css">
+</head>
+<body>
+<div class="login">
+  <div class="title">
+    <h2>🐶비밀번호 찾기🐶</h2>
+  </div>
+
+  <div class="home-body">
+    <label>사번</label>
+    <input type="text" id="employee-id" placeholder="사원번호를 입력해주세요"><br>
+
+    <form action="" method="post" id="password-reset-form" onsubmit="sendTemporaryPassword(event)">
+      <label>이메일</label>
+      <input type="text" id="email-input" placeholder="이메일을 입력해주세요">
+      <div class="submit">
+        <button type="submit">임시 비밀번호 전송</button>
+        <span class="message" id="message" style="display:none;">임시 비밀번호가 발송되었습니다.</span>
+      </div>
+    </form>
+
+    <div class="button-container">
+      <form action="" method="get" onsubmit="showLoginAlertAndRedirect(event)">
+        <button class="success">로그인 하러가기</button>
+      </form>
+
+      <input type="button" class="cancel" value="취소" onclick="location.href='/home';">
+    </div>
+  </div>
+</div>
+<div class="dogImg">
+  <img src="/img/dog/dog.png" style="width: 900px; height: auto;">
+</div>
+<script>
+  function sendTemporaryPassword(event) {
+    event.preventDefault(); // 폼 제출 방지
+    const emailInput = document.getElementById('email-input').value;
+    const employeeIdInput = document.getElementById('employee-id').value; // 사번 입력값
+    const messageElement = document.getElementById('message');
+
+    // 이메일 유효성 검사 (간단한 예시)
+    if (!employeeIdInput) {
+      alert('사번을 입력해주세요.'); // 사번 입력 검사
+      return false;
+    }
+
+    if (!emailInput) {
+      alert('이메일을 입력해주세요.');
+      return false;
+    }
+
+    // AJAX 요청을 통해 서버에 이메일 전송 요청
+    // 여기서는 예시로 setTimeout을 사용하여 비동기 처리를 시뮬레이션합니다.
+    setTimeout(() => {
+      // 실제 AJAX 요청을 여기에 추가할 수 있습니다.
+      messageElement.style.display = 'inline'; // 메시지 표시
+    }, 1000); // 1초 후에 메시지 표시
+
+    return false; // 폼 제출 방지
+  }
+
+  function showLoginAlertAndRedirect(event) {
+    event.preventDefault(); // 기본 폼 제출 방지
+    const confirmation = confirm("📢로그인 후 마이페이지에서 비밀번호를 꼭! 변경해주세요.📢");
+    if (confirmation) {
+      window.location.href = '/home.html'; // 확인 버튼 클릭 시 home.html로 이동
+    }
+  }
+</script>
+</body>
+</html>
