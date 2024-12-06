@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>사원번호 찾기</title>
+  <link rel="stylesheet" href="/home/css/no-search.css">
+</head>
+<body>
+<div class="login">
+  <div class="title">
+    <h2>🐶사원번호 찾기🐶</h2>
+  </div>
+
+  <div class="home-body">
+    <label class="">부서명 </label>
+    <input type="text" placeholder="부서명을 입력해주세요"><br>
+    <label>사번</label>
+    <input type="text" placeholder="사원번호를 입력해주세요"><br>
+    <label>이메일</label>
+    <input type="text" placeholder="이메일을 입력해주세요">
+
+    <div class="button-container">
+      <form action="" method="post" onsubmit="validateSearchForm(event)">
+        <button class="success">확인</button>
+      </form>
+
+      <input type="button" class="cancel" value="취소" onclick="location.href='/home';">
+    </div>
+  </div>
+</div>
+<div class="dogImg">
+  <img src="/img/dog/dog.png" style="width: 900px; height: auto;">
+</div>
+<script>
+  function validateSearchForm(event) {
+    // 입력 필드 가져오기
+    const department = document.querySelector('input[placeholder="부서명을 입력해주세요"]').value;
+    const empNo = document.querySelector('input[placeholder="사원번호를 입력해주세요"]').value;
+    const email = document.querySelector('input[placeholder="이메일을 입력해주세요"]').value;
+
+    // 알림 메시지 초기화
+    let message = '';
+
+    // 부서명 입력 확인
+    if (!department) {
+      message += '부서명을 입력해주세요.\n';
+    }
+
+    // 사번 입력 확인
+    if (!empNo) {
+      message += '사원번호를 입력해주세요.\n';
+    }
+
+    // 이메일 입력 확인
+    if (!email) {
+      message += '이메일을 입력해주세요.\n';
+    }
+
+    // 메시지가 있으면 알림창 표시하고 폼 제출 방지
+    if (message) {
+      alert(message);
+      event.preventDefault(); // 폼 제출 방지
+    }
+  }
+</script>
+</body>
+</html>

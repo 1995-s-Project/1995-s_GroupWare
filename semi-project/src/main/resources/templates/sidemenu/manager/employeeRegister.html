@@ -51,7 +51,57 @@
     </div>
 </header>
 <div class="change-screen-employeeRegister">
-    <div id="change-screen-content">사원등록 페이지</div>
+    <div id="change-screen-content">
+        <form action="/user/signup" method="post">
+            사원번호 : <input type="text" name="code"><br>
+            비밀번호 : <input type="pass" name="pass" value="1234"><br>
+            이름 : <input type="text" name="name"><br>
+            이메일 : <input type="text" name="email"><br>
+            핸드폰 번호 : <input type="text" name="phone"><br>
+
+            <label>
+                <input type="radio" name="gender" value="남"> 남
+            </label>
+            <label>
+                <input type="radio" name="gender" value="여"> 여
+            </label>
+
+            주소 : <input type="text" name="address"><br>
+
+            직급 :
+            <select name="jobCode">
+                <option value="J1">대표</option>
+                <option value="J2">부사장</option>
+                <option value="J3">부장</option>
+                <option value="J4">과장</option>
+                <option value="J5">주임</option>
+                <option value="J6">대리</option>
+                <option value="J7">사원</option>
+            </select><br>
+
+            부서 :
+            <select name="deptCode">
+                <option value="B1">경영부</option>
+                <option value="B2">애견담당부</option>
+                <option value="B3">마케팅부</option>
+                <option value="B4">영업부</option>
+                <option value="B5">물류부</option>
+                <option value="B6">고객CS업무부</option>
+            </select><br>
+
+            권한 :
+            <select name="authority">
+                <option value="USER">일반회원</option>
+                <option value="ADMIN">관리자</option>
+            </select><br>
+
+            <label for="hireDate">입사일자:</label>
+            <input type="date" id="hireDate" name="hireDate" required><br>
+
+
+            <button>사원등록하기</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
