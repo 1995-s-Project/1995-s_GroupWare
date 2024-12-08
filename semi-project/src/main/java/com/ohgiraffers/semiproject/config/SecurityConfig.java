@@ -73,7 +73,7 @@ public class SecurityConfig {
             // 한 사용자가 여러 창을 띄워 동시에 세션 여러 개 활성화 방지
 
             // 세션이 만료 되었을 때 요청할 URL 기술
-            session.invalidSessionUrl("/home/home");
+            session.invalidSessionUrl("/home");
 
             // 추가적인 구현이 필요하므로 비활성화
         }).csrf(csrf -> csrf.disable());
