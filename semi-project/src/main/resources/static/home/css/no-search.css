@@ -64,6 +64,21 @@ input[type="password"]:focus {
     outline: none;
 }
 
+select{
+    width: 400px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    margin-bottom: 15px; /* 입력 박스 간의 간격 추가 */
+}
+
+select:focus{
+    border-color: #007bff;
+    outline: none;
+}
+
 .button-container {
     display: flex; /* Flexbox를 사용하여 인라인 배치 */
     gap: 20px; /* 버튼 사이의 간격 조정 (필요에 따라 조정) */
