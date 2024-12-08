@@ -12,43 +12,64 @@
   </div>
 
   <div class="home-body">
-    <label class="">부서명 </label>
-    <input type="text" placeholder="부서명을 입력해주세요"><br>
-    <label>사번</label>
-    <input type="text" placeholder="사원번호를 입력해주세요"><br>
-    <label>이메일</label>
-    <input type="text" placeholder="이메일을 입력해주세요">
+    <form action="/home/no-check" method="post" onsubmit="validateSearchForm(event)">
+      <label for="deptCode">부서</label>
+      <select name="deptCode" id="deptCode">
+        <option value="">부서를 선택해주세요</option>
+        <option value="B1">경영부</option>
+        <option value="B2">애견담당부</option>
+        <option value="B3">마케팅부</option>
+        <option value="B4">영업부</option>
+        <option value="B5">물류부</option>
+        <option value="B6">고객CS업무부</option>
+      </select>
 
-    <div class="button-container">
-      <form action="" method="post" onsubmit="validateSearchForm(event)">
-        <button class="success">확인</button>
-      </form>
+      <label>이름</label>
+      <input type="text" placeholder="이름을 입력해주세요" id="empName" name="name"><br>
 
-      <input type="button" class="cancel" value="취소" onclick="location.href='/home';">
-    </div>
+      <label>이메일</label>
+      <input type="text" placeholder="이메일을 입력해주세요" id="email" name="email">
+
+      <div class="button-container">
+        <button class="success" type="submit">확인</button>
+        <input type="button" class="cancel" value="취소" onclick="location.href='/home';">
+      </div>
+    </form>
   </div>
 </div>
 <div class="dogImg">
   <img src="/img/dog/dog.png" style="width: 900px; height: auto;">
 </div>
+
+<!-- 에러 메시지를 숨겨진 요소로 추가 -->
+<div id="error-message" style="display:none;">[[${errorMessage}]]</div>
+
 <script>
+  // 페이지 로드 시 에러 메시지가 있는지 확인
+  window.onload = function() {
+    const errorMessage = document.getElementById('error-message').innerText;
+    if (errorMessage) {
+      alert(errorMessage);
+    }
+  };
+
   function validateSearchForm(event) {
     // 입력 필드 가져오기
-    const department = document.querySelector('input[placeholder="부서명을 입력해주세요"]').value;
-    const empNo = document.querySelector('input[placeholder="사원번호를 입력해주세요"]').value;
-    const email = document.querySelector('input[placeholder="이메일을 입력해주세요"]').value;
+    const department = document.getElementById('deptCode').value;
+    const empName = document.getElementById('empName').value;
+    const email = document.getElementById('email').value;
 
     // 알림 메시지 초기화
     let message = '';
 
     // 부서명 입력 확인
     if (!department) {
-      message += '부서명을 입력해주세요.\n';
+      message += '부서를 선택해주세요.\n';
     }
 
     // 사번 입력 확인
-    if (!empNo) {
-      message += '사원번호를 입력해주세요.\n';
+    if (!empName) {
+      message += '이름을 입력해주세요.\n';
     }
 
     // 이메일 입력 확인

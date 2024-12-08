@@ -13,8 +13,8 @@
   </div>
 
   <div class="noCheck">
-    <h3>OOO 님의</h3>
-    <h3>사원번호는 OOO 입니다</h3>
+    <h3 th:text="${noCheck.name} + '님의 '"></h3>
+    <h3 th:text="'사원번호는 ' + ${noCheck.code} + ' 입니다.'"></h3>
   </div>
   <div class="button-container">
     <form action="" method="get" onsubmit="showAlertAndRedirect(event)">

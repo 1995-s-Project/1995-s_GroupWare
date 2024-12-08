@@ -27,6 +27,11 @@
         (#{code}, #{pass}, #{name}, #{email}, #{phone}, #{hireDate}, #{gender}, #{address}, #{jobCode}, #{deptCode}, #{authority}, #{image})
     </insert>
 
+    <resultMap id="noCheck" type="com.ohgiraffers.semiproject.home.model.dto.NoCheckDTO">
+        <id property="code" column="emp_code"/>
+        <result property="name" column="emp_name"/>
+    </resultMap>
+
     <select id="findByUsername" resultMap="login">
         SELECT
         *
@@ -34,5 +39,15 @@
         tbl_emp
         WHERE
         emp_code = #{code}
+    </select>
+
+    <select id="findByNo" resultMap="noCheck">
+        SELECT
+        emp_code,
+        emp_name
+        FROM
+        tbl_emp
+        WHERE
+        dept_code = #{deptCode} AND emp_name = #{name} AND emp_email = #{email}
     </select>
 </mapper>
