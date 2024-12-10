@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/main/css/main-style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_arrow_down" />
     <script src="/main/js/main.js"></script>
+    <link rel="stylesheet" href="/main/css/mainPage.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <header>
@@ -52,7 +54,98 @@
 
 <div class="container1">
     <div class="change-screen">
-        <div id="change-screen-content">메인페이지</div>
+        <div id="change-screen-content">
+
+            <div class="slide-board">
+
+            </div>
+
+            <div class="main-form1">
+
+                <div class="main-form2">
+
+                </div>
+
+                <div class="main-form3">
+                    <h2 class="form3-title">📉 현황 📉</h2>
+                    <div class="adapt-container1">
+                        <div class="adapt-sub-box">
+                            <img src="/img/adapt_icon/1.png">
+                            <h1 class="counter1">452</h1>
+                            <p>누적 입양수</p>
+                        </div>
+                    </div>
+
+                    <div class="adapt-container2">
+                        <div class="adapt-sub-box">
+                            <img src="/img/adapt_icon/3.png">
+                            <h1 class="counter2">52</h1>
+                            <p>현재 입양 신청자</p>
+                        </div>
+                        <div class="adapt-sub-box">
+                            <img src="/img/adapt_icon/2.png">
+                            <h1 class="counter2">52</h1>
+                            <p>보호중인 유기동물</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-form4">
+                    <h2 class="chart-title">📊 품종 📊</h2>
+                    <!-- 차트 크기는 부모 크기를 조절하면 거기에 맞게 자동으로 맹글어짐-->
+                    <div class="chart" style="width:600px;height:700px;border:0px solid gray">
+                        <!-- 차트 그릴 위치 지정 canvas webGL(그래픽엔진) 사용 -->
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <script>
+                        const ctx = document.querySelector('#myChart');
+
+                        // 차트 생성 및 설정
+                        new Chart(ctx, {
+                            type: 'pie',  // 차트 유형
+                            data: {
+                                labels: ['말티즈', '믹스견', '골든리트리버', '시츄', '치와와', '믹스묘', '러시안블루', '아비시니안', '코리안숏헤어'],
+                                datasets: [
+                                    {
+                                        label: '품종수',
+                                        data: [10, 19, 13, 15, 12, 13, 9, 5, 8],
+                                        backgroundColor: [ // 각 데이터 항목에 대한 색상 배열
+                                            'rgba(255, 99, 132, 0.6)', // 말티즈
+                                            'rgba(54, 162, 235, 0.6)', // 믹스견
+                                            'rgba(255, 206, 86, 0.6)', // 골든리트리버
+                                            'rgba(75, 192, 192, 0.6)', // 시츄 (청록색)
+                                            'rgba(75, 255, 75, 0.6)',  // 치와와 (초록색)
+                                            'rgba(255, 159, 64, 0.6)', // 믹스묘
+                                            'rgba(153, 102, 255, 0.6)', // 러시안블루
+                                            'rgba(54, 162, 235, 0.6)', // 아비시니안
+                                            'rgba(255, 206, 86, 0.6)'  // 코리안숏헤어
+                                        ],
+                                        borderWidth: 1,
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true, // 반응형 설정
+                                plugins: {
+                                    legend: {
+                                        display: true, // 범례 표시
+                                        position: 'top', // 범례 위치
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(tooltipItem) {
+                                                return tooltipItem.label + ': ' + tooltipItem.raw; // 툴팁에 레이블과 값 표시
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

@@ -48,3 +48,30 @@ function setupEventListeners() {
         });
     });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const counter1 = document.querySelector('.counter1');
+    const counter2 = document.querySelectorAll('.counter2');
+
+    const updateCount = (counter, target, speed) => {
+        let count = 0; // 현재 숫자
+        const increment = Math.ceil(target / (speed / 100)); // 증가량
+
+        const interval = setInterval(() => {
+            count += increment;
+            if (count >= target) {
+                count = target; // 목표 숫자에 도달하면 멈춤
+                clearInterval(interval);
+            }
+            counter.innerText = count; // 현재 숫자 업데이트
+        }, 100); // 100ms마다 업데이트
+    };
+
+    // 카운터1: 빠르게 증가
+    updateCount(counter1, 452, 4000);
+
+    // 카운터2: 느리게 증가
+    counter2.forEach(counter => {
+        updateCount(counter, parseInt(counter.innerText), 8000);
+    });
+});
