@@ -51,7 +51,172 @@
     </div>
 </header>
 <div class="change-screen-animals">
-    <div id="change-screen-content">구조 동물 페이지</div>
+    <div id="change-screen-content">
+        <div class="animals">
+            <div style="text-align: right;">
+                <a href="/sidemenu/animals/insert">등록</a>
+                <a href="javascript:boardDelete();" class="btn btn-danger">삭제</a>
+            </div>
+            <form th:action th:object="${form}" method="get">
+            <table border="1" class="post-list">
+            <thead>
+                <tr>
+                <th>
+                <label class="checkbox-inline">
+                <input type="checkbox" id="allCheckBox" onclick="allChecked()">
+                </label>
+                </th>
+                <th>담당자</th>
+                <th>구조 된 날짜</th>
+                <th>사진</th>
+                <th>동물등록번호</th>
+                <th>분류</th>
+                <th>품종</th>
+                <th>성별</th>
+                <th>나이</th>
+                <th>구조 된 위치</th>
+                <th>상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 자동으로 menuList 의 크기까지 반복 -->
+                <tr th:each="allList : ${list}">
+                <td>
+                <label class="checkbox-inline">
+                <input type="checkbox" name="chk" class="chk" onclick="chkClicked()" th:value="${allList.animalCode}">
+                </label></td>
+                <td th:text="${allList.empDTO.empName}"></td>
+                <td th:text="${#dates.format(allList.rescueDate, 'yyyy-MM-dd')}"></td>
+                    <td class="image">
+                    <img th:if="${allList.animalImage != null and allList.animalImage != ''}"
+                         th:src="@{'/animalimages/' + ${allList.animalImage} + '?v=' + ${#dates.format(#dates.createNow(), 'yyyyMMddHHmmss')}}"
+                            alt="Animal Image" width="45px" height="45px"/>
+                    <img th:if="${allList.animalImage == null or allList.animalImage == ''}"
+                         th:src="@{/animalimages/defaultAnimal.jpg}"
+                         alt="Default Animal Image" width="45px" height="45px"/>
+                    </td>
+                <td th:text="${allList.animalCode}"></td>
+                <td th:text="${allList.typeDTO.typeName}"></td>
+                <td th:text="${allList.breedDTO.breedName}"></td>
+                <td th:text="${allList.gender}"></td>
+                <td th:text="${allList.age}"></td>
+                <td th:text="${allList.rescueLocation}"></td>
+                <td th:text="${allList.animalStatus}"></td>
+            </tr>
+            </tbody>
+            </table>
+                <div style="text-align: center" role="toolbar">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-secondary"
+                            th:each="i : ${#numbers.sequence(1, totalPages)}"
+                            th:text="${i}"
+                            th:classappend="${currentPage == i ? 'btn-primary' : ''}"
+                            th:onclick="|location.href='/sidemenu/animals?page=' + ${i} + '&limit=10'|">
+                    </button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
+
+<script>
+
+    //체크박스 전체 선택 클릭 이벤트
+    function allChecked(target){
+
+        //전체 체크박스 버튼
+        const checkbox = document.getElementById('allCheckBox');
+
+        //전체 체크박스 버튼 체크 여부
+        const is_checked = checkbox.checked;
+
+        //전체 체크박스 제외한 모든 체크박스
+        if(is_checked){
+            //체크박스 전체 체크
+            chkAllChecked()
+        }
+
+        else{
+            //체크박스 전체 해제
+            chkAllUnChecked()
+        }
+    }
+
+    //자식 체크박스 클릭 이벤트
+    function chkClicked(){
+
+        //체크박스 전체개수
+        const allCount = document.querySelectorAll(".chk").length;
+
+        //체크된 체크박스 전체개수
+        const query = 'input[name="chk"]:checked'
+        const selectedElements = document.querySelectorAll(query)
+        const selectedElementsCnt = selectedElements.length;
+
+        //체크박스 전체개수와 체크된 체크박스 전체개수가 같으면 전체 체크박스 체크
+        if(allCount == selectedElementsCnt){
+            document.getElementById('allCheckBox').checked = true;
+        }
+
+        //같지않으면 전체 체크박스 해제
+        else{
+            document.getElementById('allCheckBox').checked = false;
+        }
+    }
+
+    //체크박스 전체 체크
+    function chkAllChecked(){
+        document.querySelectorAll(".chk").forEach(function(v, i) {
+            v.checked = true;
+        });
+    }
+
+    //체크박스 전체 체크 해제
+    function chkAllUnChecked(){
+        document.querySelectorAll(".chk").forEach(function(v, i) {
+            v.checked = false;
+        });
+    }
+
+    //글삭제
+    function boardDelete(){
+        //체크박스 체크된 항목
+        const query = 'input[name="chk"]:checked'
+        const selectedElements = document.querySelectorAll(query)
+
+        //체크박스 체크된 항목의 개수
+        const selectedElementsCnt = selectedElements.length;
+
+        if(selectedElementsCnt == 0){
+            alert("삭제할 항목을 선택해주세요.");
+            return false;
+        }
+
+        else{
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                //배열생성
+                const arr = new Array(selectedElementsCnt);
+
+                document.querySelectorAll('input[name="chk"]:checked').forEach(function(v, i) {
+                    arr[i] = v.value;
+                });
+
+                const form = document.createElement('form');
+                form.setAttribute('method', 'post');        //Post 메소드 적용
+                form.setAttribute('action', '/delete');
+
+                var input1 = document.createElement('input');
+                input1.setAttribute("type", "hidden");
+                input1.setAttribute("name", "boardIds");
+                input1.setAttribute("value", arr);
+                form.appendChild(input1);
+                console.log(form);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    }
+</script>
