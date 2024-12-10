@@ -1,9 +1,6 @@
 package com.ohgiraffers.semiproject.home.model.dao;
 
-import com.ohgiraffers.semiproject.home.model.dto.LoginUserDTO;
-import com.ohgiraffers.semiproject.home.model.dto.NoCheckDTO;
-import com.ohgiraffers.semiproject.home.model.dto.NoSearchDTO;
-import com.ohgiraffers.semiproject.home.model.dto.SignupDTO;
+import com.ohgiraffers.semiproject.home.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -14,4 +11,10 @@ public interface UserMapper {
     LoginUserDTO findByUsername(String username);
 
     NoCheckDTO findByNo(NoSearchDTO noCheckDTO);
+
+    void updatePass(String code, String hashedPassword);
+
+    PassSearchDTO selectEmail(PassSearchDTO code);
+
+    String selectName(String empNo);
 }

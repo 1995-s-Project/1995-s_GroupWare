@@ -58,6 +58,8 @@ public class SecurityConfig {
             login.passwordParameter("pass");
             // 사용자가 로그인에 성공했을 시 보내줄 URL 기술
             login.defaultSuccessUrl("/main", true);
+            // 로그인 실패 시 보내줄 URL 기술
+            login.failureUrl("/home?error=true");
         }).logout(logout -> {
             // 로그아웃을 담당할 핸들러 메소드 요청 URL 기술
             logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
