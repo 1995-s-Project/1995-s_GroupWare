@@ -20,6 +20,11 @@
         <result property="image" column="profile_image"/>
     </resultMap>
 
+    <resultMap id="passSearch" type="com.ohgiraffers.semiproject.home.model.dto.PassSearchDTO">
+        <id property="code" column="emp_code"/>
+        <result property="email" column="emp_email"/>
+    </resultMap>
+
     <insert id="regist" parameterType="com.ohgiraffers.semiproject.home.model.dto.SignupDTO">
         INSERT INTO tbl_emp
         (emp_code, emp_pass, emp_name, emp_email, emp_phone, hire_date, emp_gender, emp_address, job_code, dept_code, authority, profile_image)
@@ -49,5 +54,20 @@
         tbl_emp
         WHERE
         dept_code = #{deptCode} AND emp_name = #{name} AND emp_email = #{email}
+    </select>
+
+    <update id="updatePass" parameterType="String">
+        update tbl_emp
+        set emp_pass = #{hashedPassword}
+        where emp_code = #{code}
+    </update>
+
+    <select id="selectEmail" resultMap="passSearch">
+        select
+            emp_email
+        from
+            tbl_emp
+        where
+            emp_code = #{code}
     </select>
 </mapper>

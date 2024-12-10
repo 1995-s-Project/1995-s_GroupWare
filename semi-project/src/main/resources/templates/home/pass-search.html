@@ -12,12 +12,11 @@
   </div>
 
   <div class="home-body">
-    <label>사번</label>
-    <input type="text" id="employee-id" placeholder="사원번호를 입력해주세요"><br>
-
-    <form action="" method="post" id="password-reset-form" onsubmit="sendTemporaryPassword(event)">
+    <form action="/home/pass-search" method="post" id="password-reset-form" onsubmit="sendTemporaryPassword(event)">
+      <label>사번</label>
+        <input type="text" id="employee-id" name="code" placeholder="사원번호를 입력해주세요"><br>
       <label>이메일</label>
-      <input type="text" id="email-input" placeholder="이메일을 입력해주세요">
+        <input type="text" id="email-input" name="email" placeholder="이메일을 입력해주세요">
       <div class="submit">
         <button type="submit">임시 비밀번호 전송</button>
         <span class="message" id="message" style="display:none;">임시 비밀번호가 발송되었습니다.</span>
@@ -25,7 +24,7 @@
     </form>
 
     <div class="button-container">
-      <form action="" method="get" onsubmit="showLoginAlertAndRedirect(event)">
+      <form action="/" method="get" onsubmit="showLoginAlertAndRedirect(event)">
         <button class="success">로그인 하러가기</button>
       </form>
 
@@ -36,40 +35,65 @@
 <div class="dogImg">
   <img src="/img/dog/dog.png" style="width: 900px; height: auto;">
 </div>
+
 <script>
   function sendTemporaryPassword(event) {
-    event.preventDefault(); // 폼 제출 방지
-    const emailInput = document.getElementById('email-input').value;
-    const employeeIdInput = document.getElementById('employee-id').value; // 사번 입력값
-    const messageElement = document.getElementById('message');
+    event.preventDefault();
 
-    // 이메일 유효성 검사 (간단한 예시)
-    if (!employeeIdInput) {
-      alert('사번을 입력해주세요.'); // 사번 입력 검사
-      return false;
+    const employeeId = document.getElementById('employee-id').value.trim();
+    const email = document.getElementById('email-input').value.trim();
+
+    if (!employeeId || !email) {
+      alert('사번과 이메일을 입력해 주세요.');
+      return;
     }
 
-    if (!emailInput) {
-      alert('이메일을 입력해주세요.');
-      return false;
-    }
-
-    // AJAX 요청을 통해 서버에 이메일 전송 요청
-    // 여기서는 예시로 setTimeout을 사용하여 비동기 처리를 시뮬레이션합니다.
-    setTimeout(() => {
-      // 실제 AJAX 요청을 여기에 추가할 수 있습니다.
-      messageElement.style.display = 'inline'; // 메시지 표시
-    }, 1000); // 1초 후에 메시지 표시
-
-    return false; // 폼 제출 방지
+    // AJAX 요청
+    fetch('/home/pass-search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        code: employeeId,
+        email: email
+      })
+    })
+            .then(response => {
+              if (!response.ok) {
+                // 에러 메시지 처리
+                return response.text().then(text => {
+                  alert(text); // 서버에서 반환된 에러 메시지를 알림창으로 표시
+                  throw new Error(text); // 에러를 발생시켜 이후 코드 실행을 중단
+                });
+              }
+              return response.text(); // 성공 시 메시지 반환
+            })
+            .then(data => {
+              // 성공 메시지 표시
+              document.getElementById('message').innerText = data; // 서버에서 반환된 성공 메시지
+              document.getElementById('message').style.display = 'block';
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              // 에러가 발생했을 때 추가적인 처리를 원한다면 여기에 작성
+            });
   }
+
 
   function showLoginAlertAndRedirect(event) {
     event.preventDefault(); // 기본 폼 제출 방지
-    const confirmation = confirm("📢로그인 후 마이페이지에서 비밀번호를 꼭! 변경해주세요.📢");
-    if (confirmation) {
-      window.location.href = '/home';
+
+    // 알림창 표시
+    const userConfirmed = confirm("임시 비밀번호 확인 후 마이페이지에서 꼭 비밀번호를 수정해주세요.");
+
+    if (userConfirmed) {
+      // 사용자가 확인을 누르면 마이페이지로 리다이렉트
+      window.location.href = '/home'; // 마이페이지 URL로 변경
     }
+
+    // false를 반환하여 폼 제출을 방지
+    return false;
   }
 </script>
 </body>
