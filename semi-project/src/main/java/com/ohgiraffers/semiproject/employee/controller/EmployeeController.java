@@ -21,9 +21,6 @@ public class EmployeeController {
 
         List<EmployeeDTO> test = employeeService.selectemp();
 
-        for (EmployeeDTO test2 : test)
-            System.out.println("test2 = " + test2);
-
         model.addAttribute("test", test);
 
         return "sidemenu/employee/employee";

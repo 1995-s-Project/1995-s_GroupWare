@@ -54,14 +54,16 @@
     <div class="change-screen-board">
         <div id="change-screen-content">
             <div class="board">
-                <div style="text-align: right;">
+                <div class="title-search">
+                    <div>
                         <button class="styled-button" onclick="location.href='/sidemenu/board/regist'">📝 글쓰기</button>
-                </div>
-                <div style="text-align: right; margin-bottom: 10px;">
-                    <form action="sidemenu/board/search" method="get" th:action="@{/sidemenu/board/search}" style="display: inline;">
-                        <input class=search type="text" name="query" placeholder="검색어 입력" required>
-                        <button type="submit" class="styled-button">검색</button>
-                    </form>
+                    </div>
+                    <div>
+                        <form action="sidemenu/board/search" method="get" th:action="@{/sidemenu/board/search}" style="display: flex; align-items: center;">
+                            <input class="search" type="text" name="query" placeholder="검색어 입력" required>
+                            <button type="submit" class="styled-button">검색</button>
+                        </form>
+                    </div>
                 </div>
                     <table border="1" class="post-list">
                         <thead>
@@ -77,7 +79,9 @@
                             <tr th:each="board, stat : ${boardSelect}">
                                 <td class="code-style" th:text="${boardSelect.size() - stat.index}"></td>
                                 <td>
-                                    <a class="styled-link" th:href="@{/sidemenu/board/title(title=${board.boardTitle})}" th:text="${board.boardTitle}"></a>
+                                    <a class="styled-link"
+                                       th:href="@{/sidemenu/board/{boardCode}(boardCode=${board.boardCode})}"
+                                       th:text="${board.boardTitle}"></a>
                                 </td>
                                 <td th:text="${board.empCode}"></td>
                                 <td th:text="${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></td>

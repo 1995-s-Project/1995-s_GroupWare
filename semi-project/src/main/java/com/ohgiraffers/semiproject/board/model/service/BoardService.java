@@ -2,6 +2,7 @@ package com.ohgiraffers.semiproject.board.model.service;
 
 import com.ohgiraffers.semiproject.board.model.dao.BoardMapper;
 import com.ohgiraffers.semiproject.board.model.dto.BoardDTO;
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,25 +27,28 @@ public class BoardService {
         boardMapper.boardRegist(board);
     }
 
-    public BoardDTO title(String title) {
+    public List<BoardDTO> search(String query) {
 
-        return boardMapper.title(title);
+        return boardMapper.search(query);
     }
 
-    @Transactional
     public void delete(Integer boardCode) {
 
         boardMapper.delete(boardCode);
     }
 
+    public BoardDTO title(Integer boardCode) {
 
-    public void update(Integer boardCode) {
-
-        boardMapper.update(boardCode);
+        return boardMapper.title(boardCode);
     }
 
-    public List<BoardDTO> search(String query) {
+    public void update(BoardDTO boardDTO) {
 
-        return boardMapper.search(query);
+        boardMapper.update(boardDTO);
+    }
+
+    public void viewConut(Integer boardCode) {
+
+        boardMapper.viewCount(boardCode);
     }
 }

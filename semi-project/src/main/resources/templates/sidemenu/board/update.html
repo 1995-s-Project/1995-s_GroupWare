@@ -50,20 +50,21 @@
     </ul>
   </div>
 </header>
-<form action="/sidemenu/board/title/update" method="post">
+<form th:action="@{/sidemenu/board/update}" method="post">
   <div class="change-screen-update">
     <div id="change-screen-content">
       <h1>게시판 수정</h1>
       <hr>
       <div class="header-title">
         <div class="title-textarea">
-          <textarea name="boardTitle" class="textareaLabel" placeholder="제목을 수정해주세요..." th:value="${update.boardTitle}"></textarea>
+          <input type="hidden" name="boardCode" th:value="${board.boardCode}"/>
+          <textarea name="boardTitle" class="textareaLabel" style="height: 48px" placeholder="제목을 수정해주세요..." th:text="${board.boardTitle}"></textarea>
         </div>
       </div>
       <div class="title-context">
-        <textarea class="title-con" name="boardContents" placeholder="내용을 수정해주세요..." th:value="${update.boardContents}"></textarea>
+        <textarea class="title-con" name="boardContents" placeholder="내용을 수정해주세요..." th:text="${board.boardContents}"></textarea>
+        <input type="submit" value="수정완료">
       </div>
-      <input type="submit" value="수정완료">
     </div>
   </div>
 </form>

@@ -6,8 +6,6 @@ import com.ohgiraffers.semiproject.board.model.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +33,6 @@ public class BoardController {
 
         model.addAttribute("boardSearch", boardSearch);
 
-        System.out.println("서치 = " + boardSearch);
-
         return "sidemenu/board/search";
     }
 
@@ -56,40 +52,47 @@ public class BoardController {
         return "redirect:/sidemenu/board";
     }
 
-    @GetMapping("/sidemenu/board/title")
-    public String title(@RequestParam String title, Model model) {
-        
-        BoardDTO board = boardService.title(title);
+    @GetMapping("/sidemenu/board/{boardCode}")
+    public String title(@PathVariable Integer boardCode, Model model) {
+
+        BoardDTO board = boardService.title(boardCode);
+        boardService.viewConut(boardCode);
 
         model.addAttribute("board", board);
-
-        System.out.println("결2 = " + board);
 
         return "sidemenu/board/title";
     }
 
-    @GetMapping("/sidemenu/board/title/delete")
-    public String delete(@RequestParam Integer boardCode) {
+    @GetMapping("/sidemenu/board/{boardCode}/delete")
+    public String delete(@PathVariable Integer boardCode) {
 
         boardService.delete(boardCode);
-
-        System.out.println("삭제 = " + boardCode);
 
         return "redirect:/sidemenu/board";
     }
 
-    @GetMapping("/sidemenu/board/title/update")
-    public void update(){}
+    @GetMapping("/sidemenu/board/{boardCode}/update")
+    public String update(@PathVariable Integer boardCode, Model model){
 
-    @PostMapping("/sidemenu/board/title/update")
-    public String boardUpdate(@RequestParam Integer boardCode, Model model) {
+        BoardDTO board = boardService.title(boardCode);
 
-        boardService.update(boardCode);
+        model.addAttribute("board", board);
 
-        model.addAttribute("boardDTO", boardCode);
-
-        return "redirect:/sidemenu/board/";
+        return "sidemenu/board/update";
     }
 
+    @PostMapping("/sidemenu/board/update")
+    public String boardUpdate(@ModelAttribute BoardDTO boardDTO) {
+
+        boardService.update(boardDTO);
+
+        return "redirect:/sidemenu/board";
+    }
+
+    @GetMapping("/sidemenu/title/list")
+    public String list(){
+
+        return "sidemenu/board/board";
+    }
 }
 
