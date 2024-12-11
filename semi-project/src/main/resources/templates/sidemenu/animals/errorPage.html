@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+
+<div class="container" style="text-align: center; margin-top: 50px;">
+    <h1>오류가 발생했습니다</h1>
+    <p th:text="${error}">선택된 동물이 없습니다.</p>
+    <a th:href="@{/sidemenu/animals}" class="btn btn-primary">돌아가기</a>
+</div>
+</body>
+</html>

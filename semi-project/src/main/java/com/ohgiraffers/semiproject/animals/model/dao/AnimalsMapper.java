@@ -25,4 +25,15 @@ public interface AnimalsMapper {
     // 체크박스 선택 후 삭제
     void deleteBoard(String id);
 
+    // 입양완료로 상태 수정
+    void adoptComplete(String code);
+
+    // 입양완료동물 전체조회
+    List<TypeAndBreedAndEmpAndAnimalDTO> adoptAnimalList(Map<String, Integer> params);
+    // 입양완료동물 전체조회 - 페이징처리
+    int getTotalAdoptAnimalCount();
+    // 파양으로 상태 수정
+    void giveUp(List<String> codeList);
+
+
 }

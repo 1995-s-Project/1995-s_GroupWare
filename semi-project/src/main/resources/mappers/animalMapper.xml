@@ -47,6 +47,8 @@
         TBL_ANI_TYPE T
         ON
         A.TYPE_CODE = T.TYPE_CODE
+        WHERE
+        A.animal_status in ('안락사','자연사','반환','공고중','보호중','파양')
 
         LIMIT #{limit} OFFSET #{offset}
     </select>
@@ -54,6 +56,7 @@
     <select id="getTotalAnimalCount" resultType="int">
         SELECT COUNT(*)
         FROM TBL_ANIMAL
+        WHERE animal_status in ('안락사','자연사','반환','공고중','보호중','파양')
     </select>
 
 <!-- 등록할 시 품종 option, 비동기처리를 위한 select문 -->
@@ -111,4 +114,48 @@
         animal_code = #{id}
     </delete>
 
+<!-- 입양완료로 상태 업데이트 -->
+    <update id="adoptComplete">
+        UPDATE tbl_animal
+        SET animal_status = '입양완료'
+        WHERE animal_code = #{code}
+    </update>
+
+<!-- 입양완료 된 동물 조회 -->
+    <select id="adoptAnimalList" resultMap="AllListResultMap">
+        SELECT *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        TBL_EMP E
+        ON
+        A.EMP_CODE = E.EMP_CODE
+        JOIN
+        TBL_ANI_BREED B
+        ON
+        A.BREED_CODE = B.BREED_CODE
+        JOIN
+        TBL_ANI_TYPE T
+        ON
+        A.TYPE_CODE = T.TYPE_CODE
+        WHERE
+        A.animal_status in ('입양완료')
+
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="getTotalAdoptAnimalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM TBL_ANIMAL
+        WHERE animal_status = '입양완료'
+    </select>
+
+    <update id="giveUp" parameterType="java.util.List">
+        UPDATE tbl_animal
+        SET animal_status = '파양'
+        WHERE animal_code IN
+        <foreach collection="codeList" item="code" open="(" separator="," close=")">
+            #{code}
+        </foreach>
+    </update>
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,26 @@ public class AnimalsService {
         animalsMapper.deleteBoard(id);
     }
 
-    
+    // 동물 상태 입양완료로 update
+    public void adoptComplete(String code) {
+        animalsMapper.adoptComplete(code); // 여러 동물 코드 한번에 처리
+    }
 
+    // 입양완료 페이지
+    public List<TypeAndBreedAndEmpAndAnimalDTO> adoptAnimalList(int page, int limit) {
+        int offset = (page - 1) * limit; // 페이지 시작점 계산
+        Map<String, Integer> params = new HashMap<>();
+        params.put("limit", limit);
+        params.put("offset", offset);
+        return animalsMapper.adoptAnimalList(params);
+    }
+    // 입양완료 페이징처리
+    public int getTotalAdoptAnimalCount() {
+        return animalsMapper.getTotalAdoptAnimalCount();
+    }
 
+    public void giveUpComplete(String[] animalCodes) {
+        List<String> codeList = Arrays.asList(animalCodes); // 배열을 리스트로 변환
+        animalsMapper.giveUp(codeList); // 여러 동물 코드 한번에 처리
+    }
 }

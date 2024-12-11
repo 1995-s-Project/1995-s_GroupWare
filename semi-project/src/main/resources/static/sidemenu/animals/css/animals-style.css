@@ -45,30 +45,48 @@ body {
     background: rgba(194,194,194,0.69)
 }
 
-/* Page Navigation styles */
-.page-nav {
-    text-align: center;
+.iduButton {
+    display: flex; /* 버튼들을 한 줄에 나란히 배치 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    margin-right: 10px;
+    margin-bottom: 5px;
 }
 
-.page-nav a {
-    display: inline-block;
-    margin: 0 5px;
-    padding: 5px 10px;
-    text-decoration: none;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    color: #333;
+.insert, .delete, .updateAdoption {
+    margin-left: 10px; /* 버튼 간의 간격 */
 }
 
-.page-nav .page {
-    background-color: #f2f2f2;
+.insert a, .delete a, .updateAdoption a {
+    display: inline-block; /* 버튼처럼 보이게 */
+    padding: 8px 12px; /* 내부 여백 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    text-decoration: none; /* 밑줄 제거 */
+    color: white; /* 글자색 */
+    transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
 }
 
-.page-nav a:hover {
-    background-color: #ddd;
+.insert a {
+    background-color: #29e131; /* 추가 버튼 배경색 */
 }
 
-.page-nav .prev,
-.page-nav .next {
-    font-weight: bold;
+.insert a:hover {
+    background-color: #239f26; /* 추가 버튼 호버 시 색상 */
+}
+
+.delete a {
+    background-color: #ff7043; /* 삭제 버튼 배경색 */
+}
+
+.delete a:hover {
+    background-color: #f4511e; /* 삭제 버튼 호버 시 색상 */
+}
+
+.updateAdoption a {
+    background-color: #05b1fa; /* 수정 버튼 배경색 */
+}
+
+.updateAdoption a:hover {
+    background-color: #0c749f; /* 수정 버튼 호버 시 색상 */
 }
