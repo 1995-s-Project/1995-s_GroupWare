@@ -8,6 +8,8 @@
     <script src="/main/js/main.js"></script>
     <link rel="stylesheet" href="/main/css/mainPage.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/main/js/user-info.js"></script>
+    <link rel="stylesheet" href="/main/css/user-info.css">
 </head>
 <body>
 <header>
@@ -63,11 +65,31 @@
             <div class="main-form1">
 
                 <div class="main-form2">
+                    <div id="user-info">
+                        <div class="profile-container">
+                            <img id="profile-picture" src="" alt="Profile Picture" />
+                            <span id="name" class="welcome-message"></span> <!-- 이름을 표시할 span -->
+                            <div class="dept">
+                                <div id="department" class="department-info"></div> <!-- 부서명 표시할 div -->
+                            </div>
+                            <div class="user-info2">
+                                <div id="user-name" class="name"></div>
+                                <span id="position" class="position-info"></span> <!-- 직급 표시할 span -->
+                            </div>
+                        </div>
+                        <div class="button-form">
+                            <input type="button" class="mypage-button" onclick="location.href='/sidemenu/mypage'" value="마이페이지">
+                            <form id="logout-form" action="/logout" method="post" onsubmit="return confirmLogout();">
+                                <button id="logout-button" class="logout-button" type="button" onclick="confirmLogout()">로그아웃</button> <!-- 로그아웃 버튼 -->
+                            </form>
 
+
+                        </div>
+                    </div>
                 </div>
 
                 <div class="main-form3">
-                    <h2 class="form3-title">📉 현황 📉</h2>
+                    <h2 class="form3-title"> 현황 </h2>
                     <div class="adapt-container1">
                         <div class="adapt-sub-box">
                             <img src="/img/adapt_icon/1.png">
@@ -91,7 +113,7 @@
                 </div>
 
                 <div class="main-form4">
-                    <h2 class="chart-title">📊 품종 📊</h2>
+                    <h2 class="chart-title"> 보유중인 품종 </h2>
                     <!-- 차트 크기는 부모 크기를 조절하면 거기에 맞게 자동으로 맹글어짐-->
                     <div class="chart" style="width:600px;height:700px;border:0px solid gray">
                         <!-- 차트 그릴 위치 지정 canvas webGL(그래픽엔진) 사용 -->

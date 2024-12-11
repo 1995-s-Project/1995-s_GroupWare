@@ -20,21 +20,23 @@ public class UserController {
     public void signupPage(){}
 
     @PostMapping("/user/signup")
-    public ModelAndView signup(@ModelAttribute SignupDTO signupDTO, ModelAndView mv){
-
+    public ModelAndView signup(@ModelAttribute SignupDTO signupDTO, ModelAndView mv) {
         System.out.println(signupDTO);
+
+        // 이미지 경로를 추가
+        String imagePath = "img/profile/" + signupDTO.getImage(); // 예시로 사용자 이름을 파일명으로 사용
+        signupDTO.setImage(imagePath); // SignupDTO에 이미지 경로를 추가하는 메서드 필요
 
         Integer result = memberService.regist(signupDTO);
 
         String message = null;
 
-        /* comment. controller 의 역할은 어떠한 view 를 보여줄 지 선택하는 것 */
-        if(result == null){
+        if (result == null) {
             message = "중복 된 회원이 존재합니다.";
         } else if (result == 0) {
             message = "서버 내부에서 오류가 발생했습니다.";
             mv.setViewName("home");
-        } else if(result >= 1){
+        } else if (result >= 1) {
             message = "회원 가입이 완료되었습니다.";
             mv.setViewName("home");
         }
@@ -43,4 +45,5 @@ public class UserController {
 
         return mv;
     }
+
 }
