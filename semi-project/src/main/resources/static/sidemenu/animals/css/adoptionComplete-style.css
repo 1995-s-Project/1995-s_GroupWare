@@ -4,5 +4,85 @@
     background-color: white;
     border-radius: 10px;
     margin-bottom: 3%;
-    color: red;
+    color: black;
+}
+
+/* Reset some default styles */
+body, table {
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Board styles */
+.image {
+    object-fit: cover;  /* 이미지를 셀 크기에 맞게 자르면서 비율을 유지 */
+}
+.animals {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Post List styles */
+.post-list {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.post-list th, .post-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.post-list th {
+    background: rgba(194,194,194,0.69)
+}
+
+.insert-delete {
+    display: flex;
+    flex-direction: row; /* 기본값 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    margin-left: auto; /* 왼쪽 여백을 자동으로 설정하여 오른쪽으로 밀어냄 */
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.insert, .delete {
+    margin-left: 10px; /* 버튼 간의 간격 */
+}
+
+.insert a, .delete a {
+    display: inline-block; /* 버튼처럼 보이도록 설정 */
+    padding: 8px 12px; /* 버튼 내부 여백 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    font-family: 'Arial', sans-serif; /* 귀여운 느낌의 폰트 사용 */
+    font-size: 14px; /* 글자 크기 */
+    text-decoration: none; /* 밑줄 제거 */
+    transition: background-color 0.3s; /* 배경색 변화에 애니메이션 추가 */
+}
+
+.insert a {
+    background-color: #29e131; /* 수정 버튼 배경색 (밝은 노란색) */
+    color: #3e2723; /* 글자색 (어두운 갈색) */
+}
+
+.insert a:hover {
+    background-color: #239f26; /* 수정 버튼 호버 시 배경색 변화 (더 어두운 노란색) */
+}
+
+.delete a {
+    background-color: #ff7043; /* 삭제 버튼 배경색 (밝은 주황색) */
+    color: white; /* 글자색 */
+}
+
+.delete a:hover {
+    background-color: #f4511e; /* 삭제 버튼 호버 시 배경색 변화 (어두운 주황색) */
 }

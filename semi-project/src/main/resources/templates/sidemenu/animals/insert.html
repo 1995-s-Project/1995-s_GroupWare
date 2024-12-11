@@ -52,7 +52,6 @@
 </header>
 <div class="change-screen-stock">
     <div id="change-screen-content">
-<!--        <form action="/sidemenu/animals/insert" class="insert" method="post" >-->
         <form th:action="@{/sidemenu/animals/insert}" th:object="${animalsDTO}" class="insert" method="post" enctype="multipart/form-data">
         <!-- 프로필 사진 업로드 -->
         <div class="animal-container">
@@ -126,38 +125,57 @@
             </div>
 
             <button type="submit">동물등록하기</button>
-
         </form>
+        <script>
+            // 프로필 미리보기
+            function previewImage(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
 
-                <script>
-                    fetch("/sidemenu/animals/breed").then(res => res.json()).then(date => {
+                reader.onload = function(e) {
+                    const animalPic = document.getElementById('animalPreview');
+                    animalPic.src = e.target.result;
+                }
 
-                        console.log(date)
-                        const $breedCode = document.getElementById("breedCode");
-                        for(let index in date){
-                            const $option = document.createElement("option")
-                            $option.value = date[index].breedCode;
-                            $option.textContent = date[index].breedName;
-                            $breedCode.appendChild($option)
-                        }
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            }
 
-                    })
+            // 서버에서 비동기로 품종 가져오기
+            // 분류를 선택하면 분류에 맞는 품종만 보여주기
+            let breedData = [];
 
-                    function previewImage(event) {
-                        const file = event.target.files[0];
-                        const reader = new FileReader();
+            // 품종 비동기처리
+            fetch("/sidemenu/animals/breed")
+                .then(res => res.json())
+                .then(data => {
+                    breedData = data; // 비동기로 가져온 데이터를 저장
+                    breedsByType(); // 분류에 맞는 품종 메소드
+                })
+                .catch(error => console.error("Error fetching breed data:", error));
 
-                        reader.onload = function(e) {
-                            const animalPic = document.getElementById('animalPreview');
-                            animalPic.src = e.target.result;
-                        }
+            // 분류 선택 후 품종 필터링
+            document.querySelector('select[name="typeCode"]').addEventListener('change', breedsByType);
 
-                        if (file) {
-                            reader.readAsDataURL(file);
-                        }
-                    }
-                </script>
+            function breedsByType() {
+                const selectedType = document.querySelector('select[name="typeCode"]').value; // D1, C1
+                const breedSelect = document.getElementById('breedCode'); // 비동기로 가져온 품종들
 
+                // 기존 옵션 초기화
+                breedSelect.innerHTML = '';
+
+                // 선택된 분류 코드에 맞는 품종만 추가
+                breedData
+                    .filter(breed => breed.breedCode.startsWith(selectedType[0]))
+                    .forEach(breed => {
+                        const option = document.createElement('option');
+                        option.value = breed.breedCode;
+                        option.textContent = breed.breedName;
+                        breedSelect.appendChild(option);
+                    });
+            }
+        </script>
     </div>
 </div>
 </body>

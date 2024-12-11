@@ -3,18 +3,16 @@ package com.ohgiraffers.semiproject.animals.controller;
 import com.ohgiraffers.semiproject.animals.model.dto.TypeAndBreedAndEmpAndAnimalDTO;
 import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
 import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -110,11 +108,51 @@ public class AnimalsController {
         return "redirect:/sidemenu/animals";
     }
 
-    // 입양완료 페이지로 이동
+    // 입양완료으로 상태 수정
+    @PostMapping("/adoptionComplete")
+    public String adoptionComplete(@RequestParam List<String> animalCode) {
+
+
+        for(int i=0; i<animalCode.size(); i++){
+            String code = animalCode.get(i);
+            animalsService.adoptComplete(code);
+        }
+
+        return "redirect:/sidemenu/animals";
+    }
+
+    // 입양완료 페이지
     @GetMapping("/sidemenu/adoptionComplete")
-    public String adoptionComplete(){
+    public String adoptionComplete(@RequestParam(defaultValue = "1") int page,
+                                   @RequestParam(defaultValue = "10") int limit,
+                                   Model model){
+        List<TypeAndBreedAndEmpAndAnimalDTO> adoptList = animalsService.adoptAnimalList(page, limit);
+        model.addAttribute("adoptList", adoptList);
+
+        // 페이지 네비게이션 정보 추가
+        int totalRecords = animalsService.getTotalAdoptAnimalCount(); // 총 레코드 수 조회
+        int totalPages = (int) Math.ceil((double) totalRecords / limit);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+
         return "sidemenu/animals/adoptionComplete";
     }
+
+    // 파양으로 상태 수정
+    @GetMapping("/giveUp")
+    public String giveUp(@RequestParam String animalCode){
+
+        // 쉼표로 구분된 코드들을 배열로 변환
+        String[] animalCodes = animalCode.split(",");
+
+        // 입양 완료 상태로 업데이트
+        animalsService.giveUpComplete(animalCodes);
+
+        return "redirect:/sidemenu/adoptionComplete";
+    }
+
+
+
 
     // 재고관리 페이지로 이동
     @GetMapping("/sidemenu/stock")
