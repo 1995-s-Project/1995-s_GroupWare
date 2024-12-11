@@ -43,11 +43,14 @@ public class SecurityConfig {
             // hasAnyAuthority -> 해당하는 URL 은 권한을 가진 사람만 접근할 수 있다.
             auth.requestMatchers("/sidemenu/manager", "/sidemenu/employeeRegister",
                     "/sidemenu/employeeManagement", "/sidemenu/approvalBox").hasAnyAuthority(UserRole.ADMIN.getRole());
-
             // /user/* 요청은 일반회원 권한을 가진 사람만 접근할 수 있다
             auth.requestMatchers("/main", "/sidemenu/schedule", "/sidemenu/messenger", "/sidemenu/mail"
                     ,"/sidemenu/adoption", "/sidemenu/animals", "/sidemenu/adoptionComplete", "/sidemenu/stock"
                     ,"/sidemenu/facilities", "/sidemenu/board", "/sidemenu/mypage").hasAnyAuthority(UserRole.USER.getRole(), UserRole.ADMIN.getRole());
+
+            // 인증된 사용자만 접근 가능한 URL 추가
+            auth.requestMatchers("/user/info").authenticated(); // 여기에 추가
+
             // 그 외 어떠한 요청들은 권한 상관 없이 들어갈 수 있다. (단, 로그인 된 인원에 한해)
             auth.anyRequest().authenticated();
         }).formLogin(login -> {

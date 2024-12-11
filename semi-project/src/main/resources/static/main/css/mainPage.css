@@ -9,6 +9,7 @@
     height: 50px; /* 슬라이드 보드의 높이 */
     background-color: #ffffff; /* 배경색 (선택 사항) */
     margin-top: 15px;
+    border-radius: 5px;
     margin-bottom: 15px; /* 슬라이드 보드와 메인 폼 간의 간격 */
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
 }
@@ -59,7 +60,6 @@
     height: 280px;
     border-radius: 10px;
     box-shadow: 0 5px 5px 4px rgba(0, 0, 0, 0.1); /* 그림자 아래로 연하게 조정 */
-    border: 1px solid #ff4141;
 }
 
 .adapt-sub-box h1 {
