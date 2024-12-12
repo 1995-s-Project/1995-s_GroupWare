@@ -20,12 +20,8 @@ public class MemberService {
     @Transactional
     public int regist(SignupDTO signupDTO) {
 
-        System.out.println("암호화 전 비밀번호 : " + signupDTO.getPass());
-
         // 비밀번호 암호화
         signupDTO.setPass(encoder.encode(signupDTO.getPass()));
-
-        System.out.println("암호화 후 비밀번호 : " + signupDTO.getPass());
 
         int result = userMapper.regist(signupDTO);
 

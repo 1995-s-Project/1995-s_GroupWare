@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.semiproject.schedule.model.dao.ScheduleMapper">
+
+    <insert id="insertWorkStartTime" parameterType="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
+        insert into tbl_work (emp_code, work_type, workstart_time, work_date)
+        values (#{code}, #{workType}, #{workStartTime}, #{workDate})
+    </insert>
+
+    <update id="insertWorkEndTime" parameterType="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
+        UPDATE tbl_work
+        SET workend_time = #{workEndTime}, work_type = #{workType}
+        WHERE DATE_FORMAT(work_date, '%Y-%m-%d') = DATE_FORMAT(#{workDate}, '%Y-%m-%d')
+        AND emp_code = #{code}
+    </update>
+</mapper>

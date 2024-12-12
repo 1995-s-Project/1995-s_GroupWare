@@ -47,3 +47,221 @@ function confirmLogout() {
     }
     return false; // 기본 폼 제출 방지
 }
+
+let checkInTime = null;
+let timerInterval = null;
+let elapsedSeconds = 0;
+
+// 페이지 로드 시 경과된 시간 복원
+window.onload = function() {
+    const storedTime = localStorage.getItem('elapsedSeconds');
+    if (storedTime) {
+        elapsedSeconds = parseInt(storedTime, 10);
+        updateTimeDisplay();
+    }
+
+    // 출근 시간 복원
+    checkInTime = localStorage.getItem('checkInTime');
+
+    // 타이머가 이미 실행 중인지 확인
+    const checkInStatus = localStorage.getItem('checkInStatus');
+    if (checkInStatus === 'true') {
+        startTimer();
+        document.getElementById('message').innerText = "퇴근 버튼을 눌러주세요👇";
+        document.getElementById('message').classList.remove('checkin-message');
+        document.getElementById('message').classList.add('checkout-message');
+    }
+};
+
+// 페이지를 떠날 때 현재 시간을 저장
+window.onbeforeunload = function() {
+    if (checkInTime) {
+        localStorage.setItem('elapsedSeconds', elapsedSeconds); // 경과 시간 저장
+        localStorage.setItem('checkInStatus', 'true'); // 출근 상태 저장
+        localStorage.setItem('checkInTime', checkInTime); // 출근 시간 저장
+    }
+};
+
+function checkIn() {
+    // 이미 출근 처리가 되었는지 확인
+    if (checkInTime) {
+        alert("이미 출근 처리가 되었습니다."); // 알림창 표시
+        return; // 함수 종료
+    }
+
+    const now = new Date();
+    const date = formatDate(now); // YYYY-MM-DD 형식
+    const time = formatTime(now); // HH:MM:SS 형식
+
+    checkInTime = time;
+    alert(`출근 처리되었습니다. \n현재 시간: ${time}`); // 알림창에 현재 시간 표시
+
+    // 타이머 시작
+    elapsedSeconds = 0; // 초기화
+    localStorage.setItem('checkInStatus', 'true'); // 출근 상태 저장
+    localStorage.setItem('checkInTime', checkInTime); // 출근 시간 저장
+    startTimer();
+
+    // UI 업데이트
+    document.getElementById('message').innerText = "퇴근 버튼을 눌러주세요👇"; // 메시지 업데이트
+    document.getElementById('message').classList.remove('checkin-message'); // 초록색 클래스 제거
+    document.getElementById('message').classList.add('checkout-message'); // 빨간색 클래스 추가
+
+    // 출근 버튼 비활성화
+    document.getElementById('checkInButton').disabled = true; // 버튼 ID에 맞게 수정
+
+    // 서버에 출근 시간 전송
+    sendCheckInData(date, time);
+
+}
+
+// 날짜를 YYYY-MM-DD 형식으로 포맷하는 함수
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+// 출근 시간 데이터를 서버에 전송하는 함수
+function sendCheckInData(date, time) {
+    const checkInData = {
+        date: date,
+        startTime: time
+    };
+
+    fetch('/sidemenu/schedule/checkin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(checkInData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('출근 처리에 실패했습니다.');
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log(data); // 서버로부터의 응답 처리
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('출근 처리 중 오류가 발생했습니다.');
+        });
+}
+
+function checkOut() {
+    if (checkInTime) {
+        // 퇴근 처리 확인 메시지
+        const confirmCheckOut = confirm("퇴근 처리 하시겠습니까?");
+
+        if (confirmCheckOut) {
+            const now = new Date();
+            const checkOutTime = formatTime(now); // HH:MM:SS 형식
+
+            // 총 근무 시간 계산
+            const totalHours = Math.floor(elapsedSeconds / 3600);
+            const totalMinutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const totalSeconds = elapsedSeconds % 60;
+
+            // 알림창에 퇴근 시간과 총 근무 시간 표시
+            alert(`퇴근 처리되었습니다.\n현재 시간: ${checkOutTime}\n총 근무 시간: ${totalHours}시간 ${totalMinutes}분 ${totalSeconds}초`);
+
+            // 서버에 퇴근 시간 전송
+            const date = formatDate(now); // YYYY-MM-DD 형식
+            sendCheckOutData(date, checkOutTime, totalHours, totalMinutes, totalSeconds); // 퇴근 시간 전송 함수 호출
+
+            // 타이머 정지
+            clearInterval(timerInterval);
+            timerInterval = null;
+
+            // 메시지 변경 및 localStorage에 저장
+            document.getElementById('message').innerText = "오늘 하루도 수고하셨습니다👋";
+            localStorage.setItem('endOfDayMessage', '오늘 하루도 수고하셨습니다👋');
+
+            // 타이머 초기화 및 localStorage 정리
+            localStorage.removeItem('elapsedSeconds');
+            localStorage.removeItem('checkInStatus');
+            localStorage.removeItem('checkInTime');
+            document.getElementById('time-display').textContent = '00:00:00';
+            checkInTime = null;
+
+            // 출근 버튼 다시 활성화
+            document.getElementById('checkInButton').disabled = false;
+        }
+    } else {
+        alert("먼저 출근 버튼을 눌러주세요.");
+    }
+}
+
+// 퇴근 시간 데이터를 서버에 전송하는 함수
+function sendCheckOutData(date, time, totalHours, totalMinutes, totalSeconds) {
+    const checkOutData = {
+        date: date,
+        endTime: time,
+        totalHours: totalHours, // 총 근무 시간 (시간 단위)
+        totalMinutes: totalMinutes, // 총 근무 시간 (분 단위)
+        totalSeconds: totalSeconds // 총 근무 시간 (초 단위)
+    };
+
+    fetch('/sidemenu/schedule/checkout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(checkOutData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('퇴근 처리에 실패했습니다.');
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log(data); // 서버로부터의 응답 처리
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('퇴근 처리 중 오류가 발생했습니다.');
+        });
+}
+
+function startTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval); // 기존 타이머가 있으면 정지
+    }
+    timerInterval = setInterval(updateTimeDisplay, 1000); // 1초마다 updateTimeDisplay 호출
+}
+
+function updateTimeDisplay() {
+    elapsedSeconds++; // 초 증가
+    localStorage.setItem('elapsedSeconds', elapsedSeconds); // 경과된 시간 저장
+    const hours = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
+    const seconds = String(elapsedSeconds % 60).padStart(2, '0');
+    document.getElementById('time-display').textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+function formatTime(date) {
+    const hours = String(date.getHours()).padStart(2, '0'); // 24시간 형식으로 변환
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`; // 24시간 형식으로 반환
+}
+
+// 페이지 로드 시 실행되는 초기화 함수에 추가
+function initializePage() {
+    // 기존 초기화 로직...
+
+    // 저장된 퇴근 메시지 확인
+    const savedEndOfDayMessage = localStorage.getItem('endOfDayMessage');
+    if (savedEndOfDayMessage) {
+        document.getElementById('message').innerText = savedEndOfDayMessage;
+        document.getElementById('checkInButton').disabled = false;
+    }
+}
+
+// 페이지 로드 시 initializePage 호출
+window.onload = initializePage;
