@@ -52,6 +52,7 @@ public class SecurityConfig {
             auth.requestMatchers("/user/info").authenticated(); // 여기에 추가
             auth.requestMatchers("/schedule/checkin").authenticated(); // 여기에 추가
             auth.requestMatchers("/schedule/checkout").authenticated(); // 여기에 추가
+            auth.requestMatchers("/api/board").authenticated(); // 여기에 추가
 
             // 그 외 어떠한 요청들은 권한 상관 없이 들어갈 수 있다. (단, 로그인 된 인원에 한해)
             auth.anyRequest().authenticated();

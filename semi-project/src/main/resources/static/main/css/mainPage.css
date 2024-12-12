@@ -4,16 +4,6 @@
     align-items: center; /* 수평 가운데 정렬 */
 }
 
-.slide-board {
-    width: 1800px; /* 슬라이드 보드의 너비 */
-    height: 50px; /* 슬라이드 보드의 높이 */
-    background-color: #ffffff; /* 배경색 (선택 사항) */
-    margin-top: 15px;
-    border-radius: 5px;
-    margin-bottom: 15px; /* 슬라이드 보드와 메인 폼 간의 간격 */
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
-}
-
 .main-form1 {
     display: flex; /* Flexbox를 사용하여 가로 정렬 */
     justify-content: space-between; /* 자식 요소 간의 간격을 균등하게 배분 */
