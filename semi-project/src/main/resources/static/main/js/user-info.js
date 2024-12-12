@@ -177,19 +177,11 @@ function checkOut() {
             clearInterval(timerInterval);
             timerInterval = null;
 
-            // 메시지 변경 및 localStorage에 저장
-            document.getElementById('message').innerText = "오늘 하루도 수고하셨습니다👋";
-            localStorage.setItem('endOfDayMessage', '오늘 하루도 수고하셨습니다👋');
-
-            // 타이머 초기화 및 localStorage 정리
+            // 경과된 시간 초기화
             localStorage.removeItem('elapsedSeconds');
             localStorage.removeItem('checkInStatus');
-            localStorage.removeItem('checkInTime');
-            document.getElementById('time-display').textContent = '00:00:00';
-            checkInTime = null;
-
-            // 출근 버튼 다시 활성화
-            document.getElementById('checkInButton').disabled = false;
+            localStorage.removeItem('checkInTime'); // 출근 시간 초기화
+            checkInTime = null; // 출근 시간 초기화
         }
     } else {
         alert("먼저 출근 버튼을 눌러주세요.");
@@ -251,17 +243,3 @@ function formatTime(date) {
     return `${hours}:${minutes}:${seconds}`; // 24시간 형식으로 반환
 }
 
-// 페이지 로드 시 실행되는 초기화 함수에 추가
-function initializePage() {
-    // 기존 초기화 로직...
-
-    // 저장된 퇴근 메시지 확인
-    const savedEndOfDayMessage = localStorage.getItem('endOfDayMessage');
-    if (savedEndOfDayMessage) {
-        document.getElementById('message').innerText = savedEndOfDayMessage;
-        document.getElementById('checkInButton').disabled = false;
-    }
-}
-
-// 페이지 로드 시 initializePage 호출
-window.onload = initializePage;
