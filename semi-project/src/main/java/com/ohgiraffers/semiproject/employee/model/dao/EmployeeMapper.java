@@ -7,5 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface EmployeeMapper {
-    List<EmployeeDTO> selectemp();
+
+    List<EmployeeDTO> empAll();
 }

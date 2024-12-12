@@ -53,14 +53,15 @@
 <form th:action="@{/sidemenu/board/update}" method="post">
   <div class="change-screen-update">
     <div id="change-screen-content">
-      <h1>게시판 수정</h1>
-      <hr>
+      <h2>게시판 수정</h2>
+      <h3>제목</h3>
       <div class="header-title">
         <div class="title-textarea">
           <input type="hidden" name="boardCode" th:value="${board.boardCode}"/>
           <textarea name="boardTitle" class="textareaLabel" style="height: 48px" placeholder="제목을 수정해주세요..." th:text="${board.boardTitle}"></textarea>
         </div>
       </div>
+      <h3>내용</h3>
       <div class="title-context">
         <textarea class="title-con" name="boardContents" placeholder="내용을 수정해주세요..." th:text="${board.boardContents}"></textarea>
         <input type="submit" value="수정완료">

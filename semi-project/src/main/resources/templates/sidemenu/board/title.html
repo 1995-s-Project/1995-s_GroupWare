@@ -58,8 +58,8 @@
                 <div class="view-head">
                     <div class="view-title" th:text="${board.boardTitle}"></div>
                     <div class="view-info-sub">
-                        <div class="view-date" th:text="날짜 + ${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></div>
-                        <div class="view-count" th:text="조회수 + ${board.viewCnt}"></div>
+                        <div class="view-date" th:text="'날짜 '+ ${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></div>
+                        <div class="view-count" th:text="'조회수 ' + ${board.viewCnt}"></div>
                         <div class="view-ud">
                             <div class="view-update">
                                 <a th:href="@{/sidemenu/board/{boardCode}/update(boardCode=${board.boardCode})}">수정</a>
@@ -69,11 +69,10 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
                 </div>
                 <div class="view-content" th:text="${board.boardContents}">내용</div>
                 <div align="center" class="view-footer">
-                    <a class="view-page" href="@{/sidemenu/title/list}">목록</a>
+                    <a class="view-page" th:href="@{/sidemenu/board}">목록</a>
                 </div>
             </div>
         </div>

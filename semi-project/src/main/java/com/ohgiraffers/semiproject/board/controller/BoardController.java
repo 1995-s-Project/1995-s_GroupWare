@@ -2,6 +2,7 @@ package com.ohgiraffers.semiproject.board.controller;
 
 
 import com.ohgiraffers.semiproject.board.model.dto.BoardDTO;
+import com.ohgiraffers.semiproject.board.model.dto.PageDTO;
 import com.ohgiraffers.semiproject.board.model.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,16 +18,27 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    // 전사게시판 페이지로 이동
+//  게시판 전체 조회 및 페이징처리
     @GetMapping("/sidemenu/board")
-    public String board(Model model){
-        List<BoardDTO> boardSelect = boardService.select();
+    public String board(Model model,
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "15") int size) {
 
-        model.addAttribute("boardSelect", boardSelect);
+        int offset = page * size;
+
+        List<BoardDTO> boardList = boardService.selectAll(offset, size);
+
+        long totalProducts = boardService.getTotalProducts();
+        int totalPages = (int) Math.ceil((double) totalProducts / size);
+
+        PageDTO pageInfo = new PageDTO(page, size, totalPages);
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("pageInfo", pageInfo);
 
         return "sidemenu/board/board";
     }
-
+//  검색기능
     @GetMapping("sidemenu/board/search")
     public String search(@RequestParam String query, Model model) {
         List<BoardDTO> boardSearch = boardService.search(query);
@@ -36,10 +48,10 @@ public class BoardController {
         return "sidemenu/board/search";
     }
 
-
+//  글쓰기로가기
     @GetMapping("/sidemenu/board/regist")
     public void boardRegist(){}
-
+//  글쓰기
     @PostMapping("/sidemenu/board/regist")
     public String regist(@ModelAttribute BoardDTO board){
 
@@ -51,7 +63,7 @@ public class BoardController {
 
         return "redirect:/sidemenu/board";
     }
-
+//  게시판 상세조회
     @GetMapping("/sidemenu/board/{boardCode}")
     public String title(@PathVariable Integer boardCode, Model model) {
 
@@ -62,7 +74,7 @@ public class BoardController {
 
         return "sidemenu/board/title";
     }
-
+//  게시글 삭제
     @GetMapping("/sidemenu/board/{boardCode}/delete")
     public String delete(@PathVariable Integer boardCode) {
 
@@ -70,7 +82,7 @@ public class BoardController {
 
         return "redirect:/sidemenu/board";
     }
-
+//  수정창으로가기
     @GetMapping("/sidemenu/board/{boardCode}/update")
     public String update(@PathVariable Integer boardCode, Model model){
 
@@ -80,7 +92,7 @@ public class BoardController {
 
         return "sidemenu/board/update";
     }
-
+//  게시판 수정
     @PostMapping("/sidemenu/board/update")
     public String boardUpdate(@ModelAttribute BoardDTO boardDTO) {
 
@@ -88,11 +100,8 @@ public class BoardController {
 
         return "redirect:/sidemenu/board";
     }
-
-    @GetMapping("/sidemenu/title/list")
-    public String list(){
-
-        return "sidemenu/board/board";
-    }
+//  메인으로 가기
+    @GetMapping("/sidemenu/board/board")
+    public void inventory() {}
 }
 

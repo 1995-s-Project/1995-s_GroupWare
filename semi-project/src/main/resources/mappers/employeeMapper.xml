@@ -14,15 +14,16 @@
         <result property="empCode" column="emp_code"/>
     </resultMap>
     <!-- 게시글 전체조회 -->
-    <select id="select" resultMap="selectBoard">
-        SELECT
-            *
-        FROM
-            tbl_board
-        WHERE
-            announce_ok = 'Y'
-        order by
-            board_code desc
+    <select id="selectAll" resultMap="selectBoard">
+        SELECT *
+        FROM tbl_board
+        WHERE announce_ok = 'Y'
+        ORDER BY board_code DESC
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM tbl_board WHERE announce_ok = 'Y'
     </select>
     <!-- 게시글 추가 -->
     <insert id="boardRegist" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
