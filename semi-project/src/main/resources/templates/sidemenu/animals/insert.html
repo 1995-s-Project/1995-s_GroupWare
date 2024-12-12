@@ -50,28 +50,28 @@
         </ul>
     </div>
 </header>
-<div class="change-screen-stock">
+<div class="change-screen-animals-insert">
     <div id="change-screen-content">
         <form th:action="@{/sidemenu/animals/insert}" th:object="${animalsDTO}" class="insert" method="post" enctype="multipart/form-data">
-        <!-- 프로필 사진 업로드 -->
-        <div class="animal-container">
-            <div class="animal-pic" id="animalPic">
-                <img id="animalPreview"
-                     th:src="${animalImage != null and animalImage != '' ? '/animalimages/' + animalImage : '/animalimages/default-image.jpg'}"
-                     alt="Animal Picture"
-                     style="display: block;">
-            </div>
+            <!-- 프로필 사진 업로드 -->
+            <div class="animal-container">
+                <div class="animal-pic" id="animalPic">
+                    <img id="animalPreview"
+                         th:src="${animalImage != null and animalImage != '' ? '/animalimages/' + animalImage : '/animalimages/default-image.jpg'}"
+                         alt="Animal Picture"
+                         style="display: block;">
+                </div>
                 <input type="file" name="image" accept="image/*" onchange="previewImage(event)">
-        </div><br>
+            </div><br>
 
             <div class="input-group">
                 <label>동물등록번호 :</label>
-                
+
                 <input type="text" name="animalCode" th:value="${animalCode}">
             </div>
 
             <div class="input-group">
-            <label>분류 :</label>
+                <label>분류 :</label>
                 <select name="typeCode">
                     <option value="C1">고양이</option>
                     <option value="D1">개</option>
