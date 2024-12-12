@@ -29,12 +29,9 @@ public class PassSearchController {
     @PostMapping("pass-search")
     @ResponseBody // JSON 응답을 반환하기 위해 추가
     public ResponseEntity<String> passSearch(@ModelAttribute PassSearchDTO passSearchDTO) {
-        System.out.println("passSearchDTO = " + passSearchDTO);
 
         // 사번으로 이메일 조회
         PassSearchDTO registeredEmail = emailService.findEmailByCode(passSearchDTO);
-
-        System.out.println("registeredEmail = " + registeredEmail);
 
         // 입력된 이메일과 조회된 이메일 비교
         if (registeredEmail == null || registeredEmail.getEmail() == null || !registeredEmail.getEmail().equals(passSearchDTO.getEmail())) {

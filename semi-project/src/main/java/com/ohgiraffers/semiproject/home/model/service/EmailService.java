@@ -55,9 +55,6 @@ public class EmailService {
     @Transactional
     public void updatePassword(String code, String hashedPassword) {
 
-        System.out.println("code = " + code);
-        System.out.println("hashedPassword = " + hashedPassword);
-
         userMapper.updatePass(code, hashedPassword);
     }
 

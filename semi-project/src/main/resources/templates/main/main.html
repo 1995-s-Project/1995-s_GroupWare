@@ -82,8 +82,16 @@
                             <form id="logout-form" action="/logout" method="post" onsubmit="return confirmLogout();">
                                 <button id="logout-button" class="logout-button" type="button" onclick="confirmLogout()">로그아웃</button> <!-- 로그아웃 버튼 -->
                             </form>
-
-
+                        </div>
+                        <div class="time-box">
+                            <h1 id="time-display">00:00:00</h1>
+                            <div id="message" class="checkin-message">👇출근 버튼을 눌러주세요</div>
+                            <div class="button-container">
+                                <!-- 출근 버튼 -->
+                                <input type="button" id="checkInButton" class="checkin-button" value="출근하기" onclick="checkIn()">
+                                <!-- 퇴근 버튼 -->
+                                <input type="button" id="checkOutButton" class="checkout-button" value="퇴근하기" onclick="checkOut()">
+                            </div>
                         </div>
                     </div>
                 </div>
