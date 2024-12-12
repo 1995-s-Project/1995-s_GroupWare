@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.semiproject.animals.model.dao.AnimalsMapper">
+
+    <resultMap id="AllListResultMap" type="com.ohgiraffers.semiproject.animals.model.dto.TypeAndBreedAndEmpAndAnimalDTO">
+        <id property="animalCode" column="animal_code"/>
+        <result property="rescueDate" column="rescue_date"/>
+        <result property="rescueLocation" column="rescue_location"/>
+        <result property="animalImage" column="animal_image"/>
+        <result property="age" column="animal_age"/>
+        <result property="gender" column="animal_gender"/>
+        <result property="animalStatus" column="animal_status"/>
+        <association property="typeDTO" javaType="com.ohgiraffers.semiproject.animals.model.dto.TypeDTO">
+            <id property="typeCode" column="type_code"/>
+            <result property="typeName" column="type_name"/>
+        </association>
+        <association property="breedDTO" javaType="com.ohgiraffers.semiproject.animals.model.dto.BreedDTO">
+            <id property="breedCode" column="breed_code"/>
+            <result property="breedName" column="breed_name"/>
+        </association>
+        <association property="empDTO" javaType="com.ohgiraffers.semiproject.animals.model.dto.EmpDTO">
+            <id property="empCode" column="emp_code"/>
+            <result property="empName" column="emp_name"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="BreedResultMap" type="com.ohgiraffers.semiproject.animals.model.dto.BreedDTO">
+        <id property="breedCode" column="breed_code"/>
+        <result property="breedName" column="breed_name"/>
+    </resultMap>
+<!-- 전체 조회 -->
+    <select id="AllList" resultMap="AllListResultMap">
+        SELECT *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        TBL_EMP E
+        ON
+        A.EMP_CODE = E.EMP_CODE
+        JOIN
+        TBL_ANI_BREED B
+        ON
+        A.BREED_CODE = B.BREED_CODE
+        JOIN
+        TBL_ANI_TYPE T
+        ON
+        A.TYPE_CODE = T.TYPE_CODE
+
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="getTotalAnimalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM TBL_ANIMAL
+    </select>
+
+<!-- 등록할 시 품종 option, 비동기처리를 위한 select문 -->
+    <select id="findBreed" resultMap="BreedResultMap">
+        select
+            *
+        from
+            tbl_ani_breed
+    </select>
+
+<!-- 구조동물 등록 -->
+    <insert id="newAnimal" parameterType="com.ohgiraffers.semiproject.animals.model.dto.TypeAndBreedAndEmpAndAnimalDTO">
+        INSERT INTO tbl_animal
+        (
+        animal_code,
+        rescue_date,
+        rescue_location,
+        animal_image,
+        animal_age,
+        animal_gender,
+        animal_status,
+        type_code,
+        breed_code,
+        emp_code
+        )
+        VALUES
+        (
+        #{animalCode},
+        #{rescueDate},
+        #{rescueLocation},
+        #{animalImage},
+        #{age},
+        #{gender},
+        #{animalStatus},
+        #{typeCode},
+        #{breedCode},
+        #{empCode}
+        )
+    </insert>
+
+<!-- 동물등록번호 자동 부여 -->
+    <select id="findLastAnimalCode">
+        SELECT animal_code
+        FROM tbl_animal
+        ORDER BY animal_code DESC
+        LIMIT 1
+    </select>
+
+<!-- 체크박스 선택 후 삭제 -->
+    <delete id="deleteBoard">
+        delete
+        from
+        tbl_animal
+        Where
+        animal_code = #{id}
+    </delete>
+
+</mapper>

@@ -4,5 +4,71 @@
     background-color: white;
     border-radius: 10px;
     margin-bottom: 3%;
-    color: rebeccapurple;
+    color: #000000;
+}
+/* Reset some default styles */
+body, table {
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Board styles */
+.image {
+    object-fit: cover;  /* 이미지를 셀 크기에 맞게 자르면서 비율을 유지 */
+}
+.animals {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Post List styles */
+.post-list {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.post-list th, .post-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.post-list th {
+    background: rgba(194,194,194,0.69)
+}
+
+/* Page Navigation styles */
+.page-nav {
+    text-align: center;
+}
+
+.page-nav a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+}
+
+.page-nav .page {
+    background-color: #f2f2f2;
+}
+
+.page-nav a:hover {
+    background-color: #ddd;
+}
+
+.page-nav .prev,
+.page-nav .next {
+    font-weight: bold;
 }
