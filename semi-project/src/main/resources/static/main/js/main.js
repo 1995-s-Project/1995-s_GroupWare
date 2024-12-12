@@ -1,7 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    setupEventListeners(); // 페이지 로드 시 초기 이벤트 리스너 설정
-});
-
 function loadContent(page) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', page, true);
