@@ -32,23 +32,26 @@
     </resultMap>
 <!-- 전체 조회 -->
     <select id="AllList" resultMap="AllListResultMap">
-        SELECT *
+        SELECT
+            *
         FROM
-        TBL_ANIMAL A
+            TBL_ANIMAL A
         JOIN
-        TBL_EMP E
+            TBL_EMP E
         ON
-        A.EMP_CODE = E.EMP_CODE
+            A.EMP_CODE = E.EMP_CODE
         JOIN
-        TBL_ANI_BREED B
+            TBL_ANI_BREED B
         ON
-        A.BREED_CODE = B.BREED_CODE
+            A.BREED_CODE = B.BREED_CODE
         JOIN
-        TBL_ANI_TYPE T
+            TBL_ANI_TYPE T
         ON
-        A.TYPE_CODE = T.TYPE_CODE
+            A.TYPE_CODE = T.TYPE_CODE
         WHERE
-        A.animal_status in ('안락사','자연사','반환','공고중','보호중','파양')
+            A.animal_status in ('공고중','보호중','파양/보호중')
+        ORDER BY
+            A.RESCUE_DATE desc , ANIMAL_CODE desc
 
         LIMIT #{limit} OFFSET #{offset}
     </select>
@@ -56,7 +59,7 @@
     <select id="getTotalAnimalCount" resultType="int">
         SELECT COUNT(*)
         FROM TBL_ANIMAL
-        WHERE animal_status in ('안락사','자연사','반환','공고중','보호중','파양')
+        WHERE animal_status in ('공고중','보호중','파양/보호중')
     </select>
 
 <!-- 등록할 시 품종 option, 비동기처리를 위한 select문 -->
@@ -123,23 +126,26 @@
 
 <!-- 입양완료 된 동물 조회 -->
     <select id="adoptAnimalList" resultMap="AllListResultMap">
-        SELECT *
+        SELECT
+            *
         FROM
-        TBL_ANIMAL A
+            TBL_ANIMAL A
         JOIN
-        TBL_EMP E
+            TBL_EMP E
         ON
-        A.EMP_CODE = E.EMP_CODE
+            A.EMP_CODE = E.EMP_CODE
         JOIN
-        TBL_ANI_BREED B
+            TBL_ANI_BREED B
         ON
-        A.BREED_CODE = B.BREED_CODE
+            A.BREED_CODE = B.BREED_CODE
         JOIN
-        TBL_ANI_TYPE T
+            TBL_ANI_TYPE T
         ON
-        A.TYPE_CODE = T.TYPE_CODE
+            A.TYPE_CODE = T.TYPE_CODE
         WHERE
-        A.animal_status in ('입양완료')
+            A.animal_status in ('입양완료')
+        ORDER BY
+            A.RESCUE_DATE desc , ANIMAL_CODE desc
 
         LIMIT #{limit} OFFSET #{offset}
     </select>
@@ -152,7 +158,7 @@
 
     <update id="giveUp" parameterType="java.util.List">
         UPDATE tbl_animal
-        SET animal_status = '파양'
+        SET animal_status = '파양/보호중'
         WHERE animal_code IN
         <foreach collection="codeList" item="code" open="(" separator="," close=")">
             #{code}

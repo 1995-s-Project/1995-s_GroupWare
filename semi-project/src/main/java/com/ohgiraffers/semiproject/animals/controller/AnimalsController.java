@@ -13,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +29,7 @@ public class AnimalsController {
         this.animalsService = animalsService;
     }
 
+// -----------------------------------------구조동물 페이지-----------------------------------------
     // 구조 동물 페이지
     @GetMapping("/sidemenu/animals")
     public String animals(@RequestParam(defaultValue = "1") int page,
@@ -42,6 +46,13 @@ public class AnimalsController {
         model.addAttribute("currentPage", page);
 
         return "sidemenu/animals/animals";
+    }
+
+    // 구조동물 상세페이지
+    @GetMapping("/animalInfo/{id}")
+    public String animalInfo(){
+
+        return "sidemenu/animals/info";
     }
 
     // 동물등록번호 등록 시 자동부여
@@ -95,6 +106,7 @@ public class AnimalsController {
         }
     }
 
+
     // 체크박스 선택 후 삭제
     @PostMapping("/delete")
     public String delete(@RequestParam List<String> boardIds){
@@ -104,7 +116,7 @@ public class AnimalsController {
             animalsService.deleteBoard(id);
             System.out.println("id = " + id);
         }
-        
+
         return "redirect:/sidemenu/animals";
     }
 
@@ -120,7 +132,7 @@ public class AnimalsController {
 
         return "redirect:/sidemenu/animals";
     }
-
+// -----------------------------------------입양완료 페이지-----------------------------------------
     // 입양완료 페이지
     @GetMapping("/sidemenu/adoptionComplete")
     public String adoptionComplete(@RequestParam(defaultValue = "1") int page,
@@ -153,7 +165,7 @@ public class AnimalsController {
 
 
 
-
+// -----------------------------------------재고관리 페이지-----------------------------------------
     // 재고관리 페이지로 이동
     @GetMapping("/sidemenu/stock")
     public String stock(){

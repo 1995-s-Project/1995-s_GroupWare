@@ -90,3 +90,14 @@ body {
 .updateAdoption a:hover {
     background-color: #0c749f; /* 수정 버튼 호버 시 색상 */
 }
+
+.animal-code-cell {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.animal-code-cell:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
+}
