@@ -24,4 +24,6 @@ public interface BoardMapper {
     List<BoardDTO> selectAll(@Param("offset") int offset, @Param("size") int size);
 
     long count();
+
+    List<BoardDTO> select();
 }

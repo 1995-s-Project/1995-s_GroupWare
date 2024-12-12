@@ -93,4 +93,11 @@
         where
             board_code = #{boardCode}
     </update>
+
+    <select id="select" resultMap="selectBoard">
+        select
+            *
+        from
+            tbl_board
+    </select>
 </mapper>
