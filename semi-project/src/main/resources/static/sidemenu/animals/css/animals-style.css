@@ -1,7 +1,7 @@
 .change-screen-animals{
     margin-top: 200px;
     width: 1850px;
-    height: 1000px;
+    height: auto;
     background-color: white;
     border-radius: 10px;
     margin-bottom: 3%;
@@ -18,7 +18,108 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* Board styles */
+/* 검색 */
+/* Form Wrapper */
+.search-form {
+    max-width: 1060px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+/* 폼 래퍼 */
+.search-form {
+    width: 1060px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 500px;
+}
+
+/* 제목 */
+.search-title {
+    text-align: center;
+    color: #d14b87;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+/* 동물 검색 그룹 */
+.animal-search-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;  /* 세로로 가운데 정렬 */
+    justify-content: space-between;  /* 레이블과 입력 박스를 양옆으로 배치 */
+}
+
+/* 동물 검색 그룹 내부 레이아웃: flex로 가로 배치 */
+.animal-search-group-inline {
+    display: flex;
+    justify-content: space-between; /* 요소 간 간격을 동일하게 분배 */
+    gap: 20px;  /* 각 요소 사이에 20px 간격 추가 */
+}
+
+/* 라벨 스타일 */
+.animal-search-group label {
+    font-size: 1rem;
+    color: #d14b87;
+    margin-right: 10px; /* label과 input 간 간격 */
+    width: 100px; /* label의 고정 너비 */
+}
+
+/* 입력 필드와 셀렉트 박스 */
+.animal-search-group select,
+.animal-search-group input {
+    width: 100%; /* select와 input의 너비를 100%로 설정 */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #f0b7d2;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 포커스 시 스타일 */
+.animal-search-group select:focus,
+.animal-search-group input:focus {
+    border-color: #d14b87;
+    outline: none;
+}
+
+/* 버튼 스타일 */
+.search-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #d14b87;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: #f5a0c6;
+}
+
+/* 호버 효과 */
+.animal-search-group select:hover,
+.animal-search-group input:hover {
+    border-color: #f5a0c6;
+}
+
+/* 라벨에 두꺼운 폰트 적용 */
+.animal-search-group label {
+    font-weight: bold;
+}
+
+/* 이미지 */
 .image {
     object-fit: cover;  /* 이미지를 셀 크기에 맞게 자르면서 비율을 유지 */
 }
@@ -28,28 +129,33 @@ body {
     padding: 20px;
 }
 
-/* Post List styles */
-.post-list {
+/* 동물 테이블 */
+.animals-list {
     border-collapse: collapse;
     width: 100%;
     border: 1px solid #ddd;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    bottom: 50px;
+
 }
 
-.post-list th, .post-list td {
+.animals-list th, .animals-list td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
 }
 
-.post-list th {
+
+.animals-list th {
     background: #fd9494;
 }
 
-.iduButton {
-    display: flex; /* 버튼들을 한 줄에 나란히 배치 */
-    justify-content: flex-end; /* 오른쪽 정렬 */
-    margin-right: 10px;
+/* 등록, 삭제, 입양 버튼 */
+.i-d-u-btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-left: auto;
     margin-bottom: 5px;
 }
 
@@ -69,7 +175,7 @@ body {
 }
 
 .insert a{
-    background-color: #29e131; /* 추가 버튼 배경색 */
+    background-color: #59df5e; /* 추가 버튼 배경색 */
 }
 
 .insert a:hover {
@@ -92,6 +198,7 @@ body {
     background-color: #0c749f; /* 수정 버튼 호버 시 색상 */
 }
 
+/* 동물 상세페이지 */
 .animal-code-cell {
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     cursor: pointer;
@@ -103,21 +210,19 @@ body {
     background-color: #f0f0f0;
 }
 
-.btn-group{
+/* 페이징처리 버튼 */
+.page-btn-group {
     text-align: center;
-    display: flex; /* 가로 정렬 */
-    justify-content: center; /* 중앙 정렬 */
-    list-style: none; /* 점 제거 */
+    display: flex;
+    justify-content: center;
+    list-style: none;
     padding: 0;
-    position: absolute;
-    left: 25px;
-    right: 25px;
-    bottom: 10px;
-
+    margin-top: 20px; /* 테이블과의 간격 조정 */
+    margin-bottom: 5px; /* 하단 여백 추가 */
+    position: static; /* 기본 위치 설정으로 변경 */
 }
 
-
-.btn-outline-secondary {
+.page-btn {
     width: 30px;
     height: 30px;
     background: #fd9494;
@@ -127,7 +232,7 @@ body {
     margin: 0 3px; /* 각 페이지 아이템 간의 여백 */
 }
 
-.btn-outline-secondary:hover {
+.page-btn:hover {
     background: #f83b3b;
     color: white;
     border: 1px #f83b3b;

@@ -5,6 +5,7 @@ import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
 import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,18 +36,22 @@ public class AnimalsController {
     @GetMapping("/sidemenu/animals")
     public String animals(@RequestParam(defaultValue = "1") int page,
                           @RequestParam(defaultValue = "10") int limit,
-                          Model model){
+                          @RequestParam(required = false) String animalCode,
+                          @RequestParam(required = false) String typeCode,
+                          @RequestParam(required = false) String breedCode,
+                          @RequestParam(required = false) String gender,
+                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date rescueDate,
+                          Model model) {
 
-        List<TypeAndBreedAndEmpAndAnimalDTO> list = animalsService.getPagedAnimalList(page, limit);
+        List<TypeAndBreedAndEmpAndAnimalDTO> list = animalsService.AllAnimalAndSearchAnimals(page, limit, animalCode, typeCode, breedCode, gender, rescueDate);
         model.addAttribute("list", list);
-        
 
-        
         // 페이지 네비게이션 정보 추가
-        int totalRecords = animalsService.getTotalAnimalCount(); // 총 레코드 수 조회
+        int totalRecords = animalsService.getTotalAnimalCount(animalCode, typeCode, breedCode, gender, rescueDate); // 총 레코드 수 조회
         int totalPages = (int) Math.ceil((double) totalRecords / limit);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
+        model.addAttribute("limit", limit);
 
         return "sidemenu/animals/animals";
     }

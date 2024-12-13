@@ -19,7 +19,7 @@
     object-fit: cover;
 }
 
-.insert {
+.insert-group {
     max-width: 1200px;
     margin: 20px auto;
     display: flex;
@@ -36,34 +36,33 @@
     text-align: center;
 }
 
-.input-group,
-.radio-group {
+.animal-group,
+.animal-radio-group {
     flex: 1 1 calc(50% - 20px);
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
 }
 
-.input-group label,
-.radio-group label {
+.animal-group label,
+.animal-radio-group label {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.input-group input,
-.input-group select {
+.animal-group input, .animal-group select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
 }
 
-.radio-group {
+.animal-radio-group {
     flex-direction: row;
     align-items: center;
 }
 
-.radio-group label {
+.animal-radio-group label {
     margin-right: 15px;
     font-weight: normal;
 }
