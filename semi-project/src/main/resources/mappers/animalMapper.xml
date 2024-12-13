@@ -69,6 +69,11 @@
         from
             tbl_ani_breed
     </select>
+<!-- 동물등록(파일이름 DB에 저장) -->
+    <insert id="saveAnimalImageName" parameterType="String">
+        INSERT INTO tbl_animal (animal_image)
+        VALUES (#{animalImage});
+    </insert>
 
 <!-- 구조동물 등록 -->
     <insert id="newAnimal" parameterType="com.ohgiraffers.semiproject.animals.model.dto.TypeAndBreedAndEmpAndAnimalDTO">
@@ -99,7 +104,6 @@
         #{empCode}
         )
     </insert>
-
 <!-- 동물등록번호 자동 부여 -->
     <select id="findLastAnimalCode">
         SELECT animal_code

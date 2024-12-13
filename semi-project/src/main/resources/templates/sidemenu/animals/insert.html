@@ -52,17 +52,14 @@
 </header>
 <div class="change-screen-animals-insert">
     <div id="change-screen-content">
-        <form th:action="@{/sidemenu/animals/insert}" th:object="${animalsDTO}" class="insert" method="post" enctype="multipart/form-data">
+        <form th:action="@{/sidemenu/animals/insert}" class="insert" method="post">
             <!-- 프로필 사진 업로드 -->
             <div class="animal-container">
-                <div class="animal-pic" id="animalPic">
-                    <img id="animalPreview"
-                         th:src="${animalImage != null and animalImage != '' ? '/animalimages/' + animalImage : '/animalimages/default-image.jpg'}"
-                         alt="Animal Picture"
-                         style="display: block;">
+                <div class="animal-pic" id="animal-pic">
+                    <img id="animalImage" src="" alt="animal image">
                 </div>
-                <input type="file" name="image" accept="image/*" onchange="previewImage(event)">
-            </div><br>
+                <input type="file" name="animalImage" accept="image/*" onchange="previewImage(event)">
+            </div>
 
             <div class="input-group">
                 <label>동물등록번호 :</label>
@@ -133,7 +130,7 @@
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    const animalPic = document.getElementById('animalPreview');
+                    const animalPic = document.getElementById('animalImage');
                     animalPic.src = e.target.result;
                 }
 

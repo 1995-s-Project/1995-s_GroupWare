@@ -16,7 +16,9 @@ public interface AnimalsMapper {
     int getTotalAnimalCount();
 
     // 동물등록
-    void newAnimal(TypeAndBreedAndEmpAndAnimalDTO animalsDTO);
+    void newAnimal(TypeAndBreedAndEmpAndAnimalDTO typeAndBreedAndEmpAndAnimalDTO);
+    // 동물등록 - 파일이름 DB에 저장
+    void saveAnimalImageName(String animalImage);
     // 동물등록 - 품종 비동기처리
     List<BreedDTO> findBreed();
     // 동물등록 - 동물등록번호 자동입력

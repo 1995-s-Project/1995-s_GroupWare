@@ -92,12 +92,8 @@
                         <td th:text="${adopt.empDTO.empName}"></td>
                         <td th:text="${#dates.format(adopt.rescueDate, 'yyyy-MM-dd')}"></td>
                         <td class="image">
-                            <img th:if="${adopt.animalImage != null and adopt.animalImage != ''}"
-                                 th:src="@{'/animalimages/' + ${adopt.animalImage} + '?v=' + ${#dates.format(#dates.createNow(), 'yyyyMMddHHmmss')}}"
+                            <img th:src="@{${adopt.animalImage != null and adopt.animalImage != '' ? '/img/animals/' + adopt.animalImage : '/img/animals/defaultAnimal.jpg'}}"
                                  alt="Animal Image" width="45px" height="45px"/>
-                            <img th:if="${adopt.animalImage == null or adopt.animalImage == ''}"
-                                 th:src="@{/animalimages/defaultAnimal.jpg}"
-                                 alt="Default Animal Image" width="45px" height="45px"/>
                         </td>
                         <td th:text="${adopt.animalCode}"></td>
                         <td th:text="${adopt.typeDTO.typeName}"></td>

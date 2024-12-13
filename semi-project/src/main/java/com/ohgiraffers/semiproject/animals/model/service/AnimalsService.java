@@ -35,11 +35,7 @@ public class AnimalsService {
         return animalsMapper.getTotalAnimalCount();
     }
 
-    // 동물등록
-    @Transactional
-    public void newAnimal(TypeAndBreedAndEmpAndAnimalDTO animalsDTO) {
-        animalsMapper.newAnimal(animalsDTO);
-    }
+
     // 동물등록 - 품종 비동기처리
     public List<BreedDTO> findBreed() {
         return animalsMapper.findBreed();
@@ -55,6 +51,15 @@ public class AnimalsService {
         } else {
             return "A0010";  // 첫 번째 동물 코드
         }
+    }
+    // 동물등록
+    public void newAnimal(TypeAndBreedAndEmpAndAnimalDTO typeAndBreedAndEmpAndAnimalDTO) {
+        animalsMapper.newAnimal(typeAndBreedAndEmpAndAnimalDTO);
+    }
+
+    // 동물등록 - 파일이름 DB에 저장
+    public void saveAnimalImageName(String animalImage) {
+        animalsMapper.saveAnimalImageName(animalImage);
     }
 
     // 체크박스 선택 후 삭제
@@ -85,4 +90,6 @@ public class AnimalsService {
         List<String> codeList = Arrays.asList(animalCodes); // 배열을 리스트로 변환
         animalsMapper.giveUp(codeList); // 여러 동물 코드 한번에 처리
     }
+
+
 }

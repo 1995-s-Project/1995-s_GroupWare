@@ -1,6 +1,7 @@
 .change-screen-animals{
+    margin-top: 200px;
     width: 1850px;
-    height: 800px;
+    height: 1000px;
     background-color: white;
     border-radius: 10px;
     margin-bottom: 3%;
@@ -42,7 +43,7 @@ body {
 }
 
 .post-list th {
-    background: rgba(194,194,194,0.69)
+    background: #fd9494;
 }
 
 .iduButton {
@@ -67,7 +68,7 @@ body {
     transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
 }
 
-.insert a {
+.insert a{
     background-color: #29e131; /* 추가 버튼 배경색 */
 }
 
@@ -100,4 +101,34 @@ body {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #f0f0f0;
+}
+
+.btn-group{
+    text-align: center;
+    display: flex; /* 가로 정렬 */
+    justify-content: center; /* 중앙 정렬 */
+    list-style: none; /* 점 제거 */
+    padding: 0;
+    position: absolute;
+    left: 25px;
+    right: 25px;
+    bottom: 10px;
+
+}
+
+
+.btn-outline-secondary {
+    width: 30px;
+    height: 30px;
+    background: #fd9494;
+    color: white;
+    border-radius: 4px;
+    border: 1px #fd9494;
+    margin: 0 3px; /* 각 페이지 아이템 간의 여백 */
+}
+
+.btn-outline-secondary:hover {
+    background: #f83b3b;
+    color: white;
+    border: 1px #f83b3b;
 }
