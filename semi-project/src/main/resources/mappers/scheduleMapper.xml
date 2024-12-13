@@ -4,15 +4,38 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ohgiraffers.semiproject.schedule.model.dao.ScheduleMapper">
 
+    <resultMap id="scheduleResultMap" type="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
+        <id property="workCode" column="work_code"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="workType" column="work_type"/>
+        <result property="workStartTime" column="workstart_time"/>
+        <result property="workEndTime" column="workend_time"/>
+        <result property="workDate" column="work_date"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="division" column="division"/>
+        <result property="workModifyReason" column="workmodify_reason"/>
+        <result property="managerIdea" column="manager_idea"/>
+        <result property="progressCode" column="progress_code"/>
+    </resultMap>
+
     <insert id="insertWorkStartTime" parameterType="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
         insert into tbl_work (emp_code, work_type, workstart_time, work_date)
-        values (#{code}, #{workType}, #{workStartTime}, #{workDate})
+        values (#{empCode}, #{workType}, #{workStartTime}, #{workDate})
     </insert>
 
     <update id="insertWorkEndTime" parameterType="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
         UPDATE tbl_work
         SET workend_time = #{workEndTime}, work_type = #{workType}
         WHERE DATE_FORMAT(work_date, '%Y-%m-%d') = DATE_FORMAT(#{workDate}, '%Y-%m-%d')
-        AND emp_code = #{code}
+        AND emp_code = #{empCode}
     </update>
+
+    <select id="getSchedulesByUserCode" resultMap="scheduleResultMap">
+        select
+            *
+        from
+            tbl_work
+        where
+            emp_code = #{empCode}
+    </select>
 </mapper>
