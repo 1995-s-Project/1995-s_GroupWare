@@ -91,7 +91,10 @@ window.onbeforeunload = function() {
 // 페이지가 로드될 때 경과 시간 계산
 function calculateElapsedTime() {
     const storedLastCheckTime = localStorage.getItem('lastCheckTime');
-    if (storedLastCheckTime) {
+    const checkInStatus = localStorage.getItem('checkInStatus');
+
+    // 출근 상태일 때만 경과 시간 계산
+    if (storedLastCheckTime && checkInStatus === 'true') {
         const currentTime = Date.now();
         const timeDifference = Math.floor((currentTime - parseInt(storedLastCheckTime, 10)) / 1000);
         elapsedSeconds += timeDifference; // 경과 시간에 시간 차이 추가
