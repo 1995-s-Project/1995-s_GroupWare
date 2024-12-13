@@ -9,4 +9,6 @@ import java.util.List;
 public interface EmployeeMapper {
 
     List<EmployeeDTO> empAll();
+
+    EmployeeDTO empSelect(Integer empCode);
 }

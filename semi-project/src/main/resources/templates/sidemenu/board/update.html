@@ -50,7 +50,7 @@
     </ul>
   </div>
 </header>
-<form th:action="@{/sidemenu/board/update}" method="post">
+<form th:action="@{/sidemenu/board/update}" method="post" id="boardUpdateForm">
   <div class="change-screen-update">
     <div id="change-screen-content">
       <h2>게시판 수정</h2>
@@ -69,5 +69,16 @@
     </div>
   </div>
 </form>
+<script>
+  document.getElementById("boardUpdateForm").addEventListener("submit", function(event) {
+    // 사용자에게 확인을 요청
+    var confirmUpdate = confirm("정말 수정하시겠습니까?");
+
+    // 사용자가 '확인'을 누른 경우에만 폼을 제출
+    if (!confirmUpdate) {
+      event.preventDefault();  // 폼 제출 방지
+    }
+  });
+</script>
 </body>
 </html>

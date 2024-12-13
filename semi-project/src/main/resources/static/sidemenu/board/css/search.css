@@ -5,6 +5,7 @@
     border-radius: 10px;
     margin-bottom: 3%;
     color: #000000;
+    position: relative;
 }
 
 body, table {
@@ -33,6 +34,8 @@ body {
     width: 100%;
     border: none;
     margin-bottom: 20px;
+    table-layout: fixed;
+    height: 30%;
 }
 
 .post-list th, .post-list td {
@@ -106,6 +109,7 @@ body {
     position: absolute;
     left: 25px;
     right: 25px;
+    bottom: 10px;
 }
 
 .page-item {
