@@ -3,7 +3,6 @@ package com.ohgiraffers.semiproject.schedule.model.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -12,7 +11,8 @@ import java.util.Date;
 @Setter
 @ToString
 public class ScheduleDTO {
-    private String code;
+    private int workCode;
+    private String empCode;
     private String workType;
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;

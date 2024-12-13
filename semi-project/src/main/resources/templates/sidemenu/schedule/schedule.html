@@ -53,14 +53,24 @@
         </ul>
     </div>
 </header>
-    <div class="change-screen-schedule">
-        <div id="change-screen-content">
-            <div class="box">
-                <div class="user-info"></div>
+<div class="change-screen-schedule">
+    <div id="change-screen-content">
+        <div class="box">
+            <div class="user-info"></div>
+            <div class="calendar" id='calendar'></div>
+        </div>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
 
-                <div class="calendar" id='calendar'></div>
+            <div class="text-box">
+                <p id="modalStartTime"></p>
+                <p id="modalEndTime"></p>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

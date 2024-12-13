@@ -51,6 +51,7 @@ function confirmLogout() {
 let checkInTime = null;
 let timerInterval = null;
 let elapsedSeconds = 0;
+let lastCheckTime = null; // 마지막 체크인 시간을 저장할 변수
 
 // 페이지 로드 시 경과된 시간 복원
 window.onload = function() {
@@ -71,6 +72,9 @@ window.onload = function() {
         document.getElementById('message').classList.remove('checkin-message');
         document.getElementById('message').classList.add('checkout-message');
     }
+
+    // 페이지가 로드될 때 경과 시간 계산
+    calculateElapsedTime();
 };
 
 // 페이지를 떠날 때 현재 시간을 저장
@@ -79,8 +83,39 @@ window.onbeforeunload = function() {
         localStorage.setItem('elapsedSeconds', elapsedSeconds); // 경과 시간 저장
         localStorage.setItem('checkInStatus', 'true'); // 출근 상태 저장
         localStorage.setItem('checkInTime', checkInTime); // 출근 시간 저장
+        lastCheckTime = Date.now(); // 현재 시간을 저장
+        localStorage.setItem('lastCheckTime', lastCheckTime); // 마지막 체크인 시간 저장
     }
 };
+
+// 페이지가 로드될 때 경과 시간 계산
+function calculateElapsedTime() {
+    const storedLastCheckTime = localStorage.getItem('lastCheckTime');
+    if (storedLastCheckTime) {
+        const currentTime = Date.now();
+        const timeDifference = Math.floor((currentTime - parseInt(storedLastCheckTime, 10)) / 1000);
+        elapsedSeconds += timeDifference; // 경과 시간에 시간 차이 추가
+        localStorage.setItem('elapsedSeconds', elapsedSeconds); // 업데이트된 경과 시간 저장
+    }
+}
+
+function startTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval); // 기존 타이머가 있으면 정지
+    }
+    timerInterval = setInterval(() => {
+        elapsedSeconds++; // 초 증가
+        updateTimeDisplay(); // 시간 표시 업데이트
+    }, 1000); // 1초마다 호출
+}
+
+function updateTimeDisplay() {
+    const hours = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
+    const seconds = String(elapsedSeconds % 60).padStart(2, '0');
+    document.getElementById('time-display').textContent = `${hours}:${minutes}:${seconds}`;
+}
+
 
 function checkIn() {
     // 이미 출근 처리가 되었는지 확인
@@ -220,26 +255,9 @@ function sendCheckOutData(date, time, totalHours, totalMinutes, totalSeconds) {
         });
 }
 
-function startTimer() {
-    if (timerInterval) {
-        clearInterval(timerInterval); // 기존 타이머가 있으면 정지
-    }
-    timerInterval = setInterval(updateTimeDisplay, 1000); // 1초마다 updateTimeDisplay 호출
-}
-
-function updateTimeDisplay() {
-    elapsedSeconds++; // 초 증가
-    localStorage.setItem('elapsedSeconds', elapsedSeconds); // 경과된 시간 저장
-    const hours = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
-    const minutes = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
-    const seconds = String(elapsedSeconds % 60).padStart(2, '0');
-    document.getElementById('time-display').textContent = `${hours}:${minutes}:${seconds}`;
-}
-
 function formatTime(date) {
     const hours = String(date.getHours()).padStart(2, '0'); // 24시간 형식으로 변환
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
     return `${hours}:${minutes}:${seconds}`; // 24시간 형식으로 반환
 }
-

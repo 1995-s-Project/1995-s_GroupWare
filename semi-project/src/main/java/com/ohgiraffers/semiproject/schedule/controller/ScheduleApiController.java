@@ -8,10 +8,7 @@ import com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO;
 import com.ohgiraffers.semiproject.schedule.model.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,6 +17,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/sidemenu/schedule/*")
@@ -65,7 +63,7 @@ public class ScheduleApiController {
             String userCode = userInfo.getCode(); // 사번 가져오기
 
             ScheduleDTO scheduleDTO = new ScheduleDTO();
-            scheduleDTO.setCode(userCode);
+            scheduleDTO.setEmpCode(userCode);
             scheduleDTO.setWorkDate(Date.from(workStartDateTime.atZone(ZoneId.systemDefault()).toInstant())); // Date 타입으로 설정
             scheduleDTO.setWorkStartTime(workStartDateTime); // LocalDateTime으로 설정
             scheduleDTO.setWorkType("출근"); // work_type을 "출근"으로 설정
@@ -134,7 +132,7 @@ public class ScheduleApiController {
             String userCode = userInfo.getCode(); // 사번 가져오기
 
             ScheduleDTO scheduleDTO = new ScheduleDTO();
-            scheduleDTO.setCode(userCode);
+            scheduleDTO.setEmpCode(userCode);
 
             // workEndDateTime을 Date로 변환
             Date workEndDate = Date.from(workEndDateTime.atZone(ZoneId.systemDefault()).toInstant());
@@ -153,4 +151,20 @@ public class ScheduleApiController {
             return ResponseEntity.status(401).body("사용자 정보가 없습니다."); // 인증되지 않은 경우
         }
     }
+
+    @GetMapping("getSchedule")
+    public ResponseEntity<List<ScheduleDTO>> getSchedule() {
+
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        if (userInfo != null) {
+            String userCode = userInfo.getCode();
+            List<ScheduleDTO> schedules = scheduleService.getSchedulesByUserCode(userCode);
+
+            return ResponseEntity.ok(schedules);
+        } else {
+            return ResponseEntity.status(401).body(null); // 인증되지 않은 경우
+        }
+    }
+
 }
