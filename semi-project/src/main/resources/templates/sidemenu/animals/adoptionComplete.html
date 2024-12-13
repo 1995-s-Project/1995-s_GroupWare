@@ -53,33 +53,33 @@
 <div class="change-screen-adoptionComplete">
     <div id="change-screen-content">
         <div class="animals">
-            <div class="insert-delete">
-                <div class="delete">
-                    <a href="javascript:boardDelete();">삭제</a>
-                </div>
+            <div class="sendAdoption-delete">
                 <div class="sendAdoption">
                     <a href="javascript:sendGiveUp();">파양</a>
                 </div>
+                <div class="delete">
+                    <a href="javascript:boardDelete();">삭제</a>
+                </div>
             </div>
             <form th:action th:object="${form}" method="get">
-                <table border="1" class="post-list">
+                <table border="1" class="animals-list">
                     <thead>
                     <tr>
-                        <th>
+                        <th style="width: 30px;">
                             <label class="checkbox-inline">
                                 <input type="checkbox" id="allCheckBox" onclick="allChecked()">
                             </label>
                         </th>
-                        <th>담당자</th>
-                        <th>구조 된 날짜</th>
-                        <th>사진</th>
-                        <th>동물등록번호</th>
-                        <th>분류</th>
-                        <th>품종</th>
-                        <th>성별</th>
-                        <th>나이</th>
-                        <th>구조 된 위치</th>
-                        <th>상태</th>
+                        <th style="width: 80px;">담당자</th>
+                        <th style="width: 150px;">구조 된 날짜</th>
+                        <th style="width: 50px;">사진</th>
+                        <th style="width: 100px;">동물등록번호</th>
+                        <th style="width: 70px;">분류</th>
+                        <th style="width: 170px;">품종</th>
+                        <th style="width: 50px;">성별</th>
+                        <th style="width: 50px;">나이</th>
+                        <th style="width: 270px;">구조 된 위치</th>
+                        <th style="width: 70px;">상태</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -105,8 +105,8 @@
                     </tr>
                     </tbody>
                 </table>
-                <div class="btn-group" role="group" style="text-align: center">
-                    <button type="button" class="btn btn-outline-secondary"
+                <div class="page-btn-group" role="group" style="text-align: center">
+                    <button type="button" class="page-btn"
                             th:each="i : ${#numbers.sequence(1, totalPages)}"
                             th:text="${i}"
                             th:classappend="${currentPage == i ? 'btn-primary' : ''}"

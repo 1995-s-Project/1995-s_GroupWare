@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AnimalsService {
@@ -22,18 +19,12 @@ public class AnimalsService {
         this.animalsMapper = animalsMapper;
     }
 
-    // 구조동물 전체조회
-    public List<TypeAndBreedAndEmpAndAnimalDTO> getPagedAnimalList(int page, int limit) {
-        int offset = (page - 1) * limit; // 페이지 시작점 계산
-        Map<String, Integer> params = new HashMap<>();
-        params.put("limit", limit);
-        params.put("offset", offset);
-        return animalsMapper.AllList(params);
-    }
-    // 구조동물 전체조회 - 페이징처리
-    public int getTotalAnimalCount() {
-        return animalsMapper.getTotalAnimalCount();
-    }
+    // 구조동물 전체조회 및 검색 동물조회
+
+    // 구조동물 전체조회 및 검색 동물조회 - 동물카운트
+
+
+
 
 
     // 동물등록 - 품종 비동기처리
@@ -92,4 +83,19 @@ public class AnimalsService {
     }
 
 
+    public List<TypeAndBreedAndEmpAndAnimalDTO> AllAnimalAndSearchAnimals(int page, int limit,
+                                                                          String animalCode, String typeCode,
+                                                                          String breedCode, String gender,
+                                                                          Date rescueDate) {
+
+        int offset = (page - 1) * limit;
+
+        return animalsMapper.AllAnimalAndSearchAnimals(offset, limit, animalCode, typeCode, breedCode, gender, rescueDate);
+    }
+
+    public int getTotalAnimalCount(String animalCode, String typeCode,
+                                   String breedCode, String gender,
+                                   Date rescueDate) {
+        return animalsMapper.getTotalAnimalCount(animalCode, typeCode, breedCode, gender, rescueDate);
+    }
 }

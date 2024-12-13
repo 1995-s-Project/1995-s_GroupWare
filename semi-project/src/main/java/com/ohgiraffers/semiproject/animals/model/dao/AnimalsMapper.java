@@ -5,15 +5,16 @@ import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Mapper
 public interface AnimalsMapper {
     // 구조동물 전체조회
-    List<TypeAndBreedAndEmpAndAnimalDTO> AllList(Map<String, Integer> params);
-    // 구조동물 전체조회 - 페이징처리
-    int getTotalAnimalCount();
+
+    // 구조동물 전체조회 - 페이징처리(전체동물 카운트)
+
 
     // 동물등록
     void newAnimal(TypeAndBreedAndEmpAndAnimalDTO typeAndBreedAndEmpAndAnimalDTO);
@@ -38,4 +39,12 @@ public interface AnimalsMapper {
     void giveUp(List<String> codeList);
 
 
+    List<TypeAndBreedAndEmpAndAnimalDTO> AllAnimalAndSearchAnimals(int offset, int limit,
+                                                                   String animalCode, String typeCode,
+                                                                   String breedCode, String gender,
+                                                                   Date rescueDate);
+
+    int getTotalAnimalCount(String animalCode, String typeCode,
+                            String breedCode, String gender,
+                            Date rescueDate);
 }

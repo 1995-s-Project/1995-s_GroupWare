@@ -52,7 +52,7 @@
 </header>
 <div class="change-screen-animals-insert">
     <div id="change-screen-content">
-        <form th:action="@{/sidemenu/animals/insert}" class="insert" method="post">
+        <form th:action="@{/sidemenu/animals/insert}" class="insert-group" method="post">
             <!-- 프로필 사진 업로드 -->
             <div class="animal-container">
                 <div class="animal-pic" id="animal-pic">
@@ -61,58 +61,55 @@
                 <input type="file" name="animalImage" accept="image/*" onchange="previewImage(event)">
             </div>
 
-            <div class="input-group">
-                <label>동물등록번호 :</label>
+            <div class="animal-group">
+                <label for="animalCode">동물등록번호 :</label>
 
-                <input type="text" name="animalCode" th:value="${animalCode}">
+                <input type="text" id="animalCode" name="animalCode" th:value="${animalCode}" required>
             </div>
 
-            <div class="input-group">
-                <label>분류 :</label>
-                <select name="typeCode">
+            <div class="animal-group">
+                <label for="typeCode">분류 :</label>
+                <select id="typeCode" name="typeCode" required>
                     <option value="C1">고양이</option>
                     <option value="D1">개</option>
                 </select>
-            </div><br>
+            </div>
 
-            <div class="input-group">
+            <div class="animal-group">
                 <label for="rescueDate">구조 된 날짜 :</label>
                 <input type="date" id="rescueDate" name="rescueDate" required>
             </div>
 
-            <div class="input-group">
-                <label>구조 된 위치 :</label>
-                <input type="text" name="rescueLocation">
+            <div class="animal-group">
+                <label for="rescueLocation">구조 된 위치 :</label>
+                <input type="text" id="rescueLocation" name="rescueLocation" required>
             </div>
 
-            <div class="input-group">
-                <label>품종 :</label>
-                <select name="breedCode" id="breedCode"></select>
+            <div class="animal-group">
+                <label for="breedCode">품종 :</label>
+                <select id="breedCode" name="breedCode" required></select>
             </div>
 
-            <div class="input-group">
-                <label>나이 :</label>
-                <input type="text" name="age">
+            <div class="animal-group">
+                <label for="age">나이 :</label>
+                <input type="text" id="age" name="age" required>
             </div>
 
-            <div class="radio-group">
+            <div class="animal-radio-group">
                 <label>성별 :</label>
-                <label><input type="radio" name="gender" value="M"> M</label>
+                <label><input type="radio" name="gender" value="M" required> M</label>
                 <label><input type="radio" name="gender" value="F"> F</label>
             </div>
 
-            <div class="radio-group">
+            <div class="animal-radio-group">
                 <label>상태 :</label>
-                <label><input type="radio" name="animalStatus" value="공고중"> 공고중</label>
+                <label><input type="radio" name="animalStatus" value="공고중" required> 공고중</label>
                 <label><input type="radio" name="animalStatus" value="보호중"> 보호중</label>
-                <label><input type="radio" name="animalStatus" value="자연사"> 자연사</label>
-                <label><input type="radio" name="animalStatus" value="안락사"> 안락사</label>
-                <label><input type="radio" name="animalStatus" value="반환"> 반환</label>
             </div>
 
-            <div class="input-group">
-                <label>담당자 :</label>
-                <select name="empCode">
+            <div class="animal-group">
+                <label for="empCode">담당자 :</label>
+                <select id="empCode" name="empCode" required>
                     <option value="003">황정만</option>
                     <option value="004">송해교</option>
                     <option value="005">정유성</option>

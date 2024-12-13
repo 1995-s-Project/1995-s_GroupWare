@@ -31,35 +31,58 @@
         <result property="breedName" column="breed_name"/>
     </resultMap>
 <!-- 전체 조회 -->
-    <select id="AllList" resultMap="AllListResultMap">
+    <select id="AllAnimalAndSearchAnimals" resultMap="AllListResultMap">
         SELECT
-            *
+        *
         FROM
-            TBL_ANIMAL A
+        TBL_ANIMAL A
         JOIN
-            TBL_EMP E
-        ON
-            A.EMP_CODE = E.EMP_CODE
+        TBL_EMP E ON A.EMP_CODE = E.EMP_CODE
         JOIN
-            TBL_ANI_BREED B
-        ON
-            A.BREED_CODE = B.BREED_CODE
+        TBL_ANI_BREED B ON A.BREED_CODE = B.BREED_CODE
         JOIN
-            TBL_ANI_TYPE T
-        ON
-            A.TYPE_CODE = T.TYPE_CODE
+        TBL_ANI_TYPE T ON A.TYPE_CODE = T.TYPE_CODE
         WHERE
-            A.animal_status in ('공고중','보호중','파양/보호중')
+        A.animal_status IN ('공고중', '보호중', '파양/보호중')
+        <if test="animalCode != null and animalCode != ''">
+            AND A.animal_code = #{animalCode}
+        </if>
+        <if test="typeCode != null and typeCode != ''">
+            AND A.type_code = #{typeCode}
+        </if>
+        <if test="breedCode != null and breedCode != ''">
+            AND A.breed_code = #{breedCode}
+        </if>
+        <if test="gender != null and gender != ''">
+            AND A.animal_gender = #{gender}
+        </if>
+        <if test="rescueDate != null">
+            AND A.rescue_date = #{rescueDate}
+        </if>
         ORDER BY
-            A.RESCUE_DATE desc , ANIMAL_CODE desc
-
-        LIMIT #{limit} OFFSET #{offset}
+        A.rescue_date DESC, A.animal_code DESC
+        LIMIT #{offset}, #{limit}
     </select>
 
     <select id="getTotalAnimalCount" resultType="int">
         SELECT COUNT(*)
-        FROM TBL_ANIMAL
-        WHERE animal_status in ('공고중','보호중','파양/보호중')
+        FROM tbl_animal
+        WHERE animal_status IN ('공고중', '보호중', '파양/보호중')
+        <if test="animalCode != null and animalCode != ''">
+            AND animal_code = #{animalCode}
+        </if>
+        <if test="typeCode != null and typeCode != ''">
+            AND type_code = #{typeCode}
+        </if>
+        <if test="breedCode != null and breedCode != ''">
+            AND breed_code = #{breedCode}
+        </if>
+        <if test="gender != null and gender != ''">
+            AND animal_gender = #{gender}
+        </if>
+        <if test="rescueDate != null">
+            AND rescue_date = #{rescueDate}
+        </if>
     </select>
 
 <!-- 등록할 시 품종 option, 비동기처리를 위한 select문 -->
