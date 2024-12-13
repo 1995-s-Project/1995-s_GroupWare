@@ -2,9 +2,7 @@ package com.ohgiraffers.semiproject.schedule.controller;
 
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
 import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
-import com.ohgiraffers.semiproject.schedule.model.dto.CheckInRequestDTO;
-import com.ohgiraffers.semiproject.schedule.model.dto.CheckOutRequestDTO;
-import com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO;
+import com.ohgiraffers.semiproject.schedule.model.dto.*;
 import com.ohgiraffers.semiproject.schedule.model.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -152,6 +150,7 @@ public class ScheduleApiController {
         }
     }
 
+
     @GetMapping("getSchedule")
     public ResponseEntity<List<ScheduleDTO>> getSchedule() {
 
@@ -167,4 +166,84 @@ public class ScheduleApiController {
         }
     }
 
+    @GetMapping("checkin")
+    public ResponseEntity<CheckInResponseDTO> getCheckInTime() {
+        // UserInfoService를 통해 현재 로그인한 사용자의 정보를 가져옴
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        if (userInfo != null) {
+            String userCode = userInfo.getCode(); // 사번 가져오기
+
+            // 오늘 날짜를 가져옴
+            LocalDate today = LocalDate.now();
+
+            // 출근 시간을 가져옴
+            LocalDateTime response = scheduleService.getCheckInTime(userCode, today.atStartOfDay());
+            LocalDateTime checkInTime = response; // DTO에서 출근 시간 가져오기
+
+            // CheckInResponseDTO 생성
+            CheckInResponseDTO responseTime = new CheckInResponseDTO();
+            responseTime.setEmpCode(userCode); // 사용자 코드 설정
+
+            if (checkInTime != null) {
+                responseTime.setCheckInTime(checkInTime); // LocalDateTime을 직접 설정
+                return ResponseEntity.ok(responseTime);
+            } else {
+                responseTime.setCheckInTime(null); // 출근 시간이 없는 경우
+                return ResponseEntity.status(404).body(responseTime);
+            }
+        } else {
+            return ResponseEntity.status(401).body(null); // 인증되지 않은 경우
+        }
+    }
+
+    @GetMapping("checkout")
+    public ResponseEntity<CheckOutResponseDTO> getCheckOutTime() {
+        // UserInfoService를 통해 현재 로그인한 사용자의 정보를 가져옴
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        if (userInfo != null) {
+            String userCode = userInfo.getCode(); // 사번 가져오기
+
+            // 오늘 날짜를 가져옴
+            LocalDate today = LocalDate.now();
+
+            // 출근 시간을 가져옴
+            LocalDateTime response = scheduleService.getCheckOutTime(userCode, today.atStartOfDay());
+            LocalDateTime checkOutTime = response; // DTO에서 출근 시간 가져오기
+
+            // CheckInResponseDTO 생성
+            CheckOutResponseDTO responseTime = new CheckOutResponseDTO();
+            responseTime.setEmpCode(userCode); // 사용자 코드 설정
+
+            if (checkOutTime != null) {
+                responseTime.setCheckOutTime(checkOutTime); // LocalDateTime을 직접 설정
+                return ResponseEntity.ok(responseTime);
+            } else {
+                responseTime.setCheckOutTime(null); // 출근 시간이 없는 경우
+                return ResponseEntity.status(404).body(responseTime);
+            }
+        } else {
+            return ResponseEntity.status(401).body(null); // 인증되지 않은 경우
+        }
+    }
+
+    @GetMapping("vacation")
+    public ResponseEntity<VacationDTO> getVacation() {
+        // UserInfoService를 통해 현재 로그인한 사용자의 정보를 가져옴
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        if (userInfo != null) {
+            String userCode = userInfo.getCode(); // 사번 가져오기
+
+            // 사용자 정보를 기반으로 연차와 휴가 정보를 가져오는 로직 추가
+            VacationDTO vacationDTO = scheduleService.getVacation(userCode); // 연차 정보 가져오기
+
+            // ResponseEntity로 반환
+            return ResponseEntity.ok(vacationDTO);
+        } else {
+            // 사용자 정보가 없을 경우 404 Not Found 반환
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

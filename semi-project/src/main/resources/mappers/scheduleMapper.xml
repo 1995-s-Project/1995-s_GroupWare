@@ -18,6 +18,24 @@
         <result property="progressCode" column="progress_code"/>
     </resultMap>
 
+    <resultMap id="checkInResponseDTO" type="com.ohgiraffers.semiproject.schedule.model.dto.CheckInResponseDTO">
+        <id property="workCode" column="work_code"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="checkInTime" column="workstart_time"/>
+    </resultMap>
+
+    <resultMap id="checkOutResponseDTO" type="com.ohgiraffers.semiproject.schedule.model.dto.CheckOutResponseDTO">
+        <id property="workCode" column="work_code"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="checkOutTime" column="workend_time"/>
+    </resultMap>
+
+    <resultMap id="userVacationInfo" type="com.ohgiraffers.semiproject.schedule.model.dto.VacationDTO">
+        <id property="code" column="emp_code"/>
+        <result property="annualLeave" column="vacation_number"/>
+        <result property="vacation" column="yearleave_number"/>
+    </resultMap>
+
     <insert id="insertWorkStartTime" parameterType="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
         insert into tbl_work (emp_code, work_type, workstart_time, work_date)
         values (#{empCode}, #{workType}, #{workStartTime}, #{workDate})
@@ -37,5 +55,32 @@
             tbl_work
         where
             emp_code = #{empCode}
+    </select>
+
+    <select id="getCheckInTime" resultMap="checkInResponseDTO">
+        SELECT
+        workstart_time, work_code, emp_code
+        FROM
+        tbl_work
+        WHERE DATE_FORMAT(work_date, '%Y-%m-%d') = DATE_FORMAT(#{localDateTime}, '%Y-%m-%d')
+        AND emp_code = #{userCode}
+    </select>
+
+    <select id="getCheckOutTime" resultMap="checkOutResponseDTO">
+        SELECT
+        workend_time, work_code, emp_code
+        FROM
+        tbl_work
+        WHERE DATE_FORMAT(work_date, '%Y-%m-%d') = DATE_FORMAT(#{localDateTime}, '%Y-%m-%d')
+        AND emp_code = #{userCode}
+    </select>
+
+    <select id="getVacation" resultMap="userVacationInfo">
+        select
+            *
+        from
+            tbl_vacation
+        where
+            emp_code = #{userCode}
     </select>
 </mapper>
