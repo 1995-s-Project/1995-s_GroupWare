@@ -1,0 +1,104 @@
+.change-screen-employee{
+    width: 1850px;
+    height: 800px;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 3%;
+    color: black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 700px;
+    height: 250px;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 170px;
+}
+th, td {
+    border: 1px solid #000000;
+    padding: 8px;
+}
+th {
+    background-color: #f2f2f2;
+}
+.header-cell {
+    text-align: center;
+}
+.comment-section {
+    width: 1458px;
+    border: none;
+    border-radius: 5px;
+    padding: 20px;
+    margin-left: 170px;
+}
+
+.comment-box {
+    width: 98.5%;
+    resize: none;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.submit-button {
+    background-color: #006a38;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #00532d;
+}
+
+.comment-list {
+    max-height: 180px; /* 최대 높이 설정 */
+    overflow-y: auto; /* 스크롤바 활성화 */
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.comment-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.comment-item:last-child {
+    border-bottom: none; /* 마지막 댓글의 하단 테두리 제거 */
+}
+
+/* 스크롤바 스타일 (선택 사항) */
+.comment-list::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+}
+
+.comment-list::-webkit-scrollbar-thumb {
+    background-color: rgba(193,193,193,0.52); /* 스크롤바 색상 */
+    border-radius: 4px;
+}
+
+.comment-list::-webkit-scrollbar-track {
+    background-color: #f0f0f0; /* 스크롤바 배경 */
+}
+
+.view-page {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: rgba(194, 194, 194, 0.69); /* 부드러운 파란색 */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.view-page:hover {
+    background-color: rgba(177, 177, 177, 0.69); /* 호버 시 더 진한 파란색 */
+}

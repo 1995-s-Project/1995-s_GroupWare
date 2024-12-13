@@ -1,8 +1,11 @@
 package com.ohgiraffers.semiproject.employee.model.service;
 
 import com.ohgiraffers.semiproject.employee.model.dao.EmployeeMapper;
+import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO;
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTOJOB;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,13 +19,23 @@ public class EmployeeService {
         this.employeeMapper = employeeMapper;
     }
 
-    public List<EmployeeDTO> empAll() {
+    public List<EmployeeDTOJOB> empAll() {
 
         return employeeMapper.empAll();
     }
 
-    public EmployeeDTO empSelect(Integer empCode) {
+    public EmployeeDTOJOB empSelect(Integer empCode) {
 
         return employeeMapper.empSelect(empCode);
     }
+    @Transactional
+    public void saveComment(CommentDTO commentDTO) {
+        System.out.println("Saving comment with empCode: " + commentDTO.getEmpCode());  // 로그 추가
+        employeeMapper.saveComment(commentDTO);
+    }
+
+    public List<CommentDTO> comment(Integer empCode) {
+        return employeeMapper.comment(empCode);  // Mapper에서 댓글 목록 가져오기
+    }
+
 }
