@@ -1,6 +1,7 @@
 package com.ohgiraffers.semiproject.board.model.dao;
 
 import com.ohgiraffers.semiproject.board.model.dto.BoardDTO;
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,13 +10,15 @@ import java.util.List;
 public interface BoardMapper {
     List<BoardDTO> select();
 
-    void boardRegist(BoardDTO board);
+    List<BoardDTO> search(String query);
 
-    BoardDTO title(String title);
+    void boardRegist(BoardDTO board);
 
     void delete(Integer boardCode);
 
-    void update(Integer boardCode);
+    BoardDTO title(Integer boardCode);
 
-    List<BoardDTO> search(String query);
+    void update(BoardDTO boardDTO);
+
+    void viewCount(Integer boardCode);
 }

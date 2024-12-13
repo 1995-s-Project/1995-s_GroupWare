@@ -51,33 +51,33 @@
         </ul>
     </div>
 </header>
-<main><!-- form 태그 추가 -->
-        <div class="change-screen-board">
-            <div id="change-screen-content">
-                <div class="ly_view">
-                    <div class="view-head">
-                        <div class="view-title" th:text="${board.boardTitle}"></div>
-                            <div class="view-info-sub">
-                                <div class="view-date" th:text="날짜+${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></div>
-                                <div class="view-count" th:text="조회수+${board.viewCnt}"></div>
-                                <div class="view-ud">
-                                    <div class="view-update">
-                                        <a th:href="@{/sidemenu/board/title/update(boardCode=${board.boardCode})}">수정</a>
-                                    </div>
-                                    <div class="view-delete">
-                                        <a th:href="@{/sidemenu/board/title/delete(boardCode=${board.boardCode})}">삭제</a>
-                                    </div>
-                                </div>
+<main>
+    <div class="change-screen-board">
+        <div id="change-screen-content">
+            <div class="ly_view">
+                <div class="view-head">
+                    <div class="view-title" th:text="${board.boardTitle}"></div>
+                    <div class="view-info-sub">
+                        <div class="view-date" th:text="날짜 + ${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></div>
+                        <div class="view-count" th:text="조회수 + ${board.viewCnt}"></div>
+                        <div class="view-ud">
+                            <div class="view-update">
+                                <a th:href="@{/sidemenu/board/{boardCode}/update(boardCode=${board.boardCode})}">수정</a>
                             </div>
-                        <hr>
+                            <div class="view-delete">
+                                <a th:href="@{/sidemenu/board/{boardCode}/delete(boardCode=${board.boardCode})}">삭제</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="view-content" th:text="${board.boardContents}">내용</div>
-                <div align="center" class="view-footer">
-                    <a class="view-page" href="@{/sidemenu/board/)}">목록</a>
+                    <hr>
                 </div>
+                <div class="view-content" th:text="${board.boardContents}">내용</div>
+                <div align="center" class="view-footer">
+                    <a class="view-page" href="@{/sidemenu/title/list}">목록</a>
                 </div>
             </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>

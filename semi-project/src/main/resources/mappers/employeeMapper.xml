@@ -22,7 +22,7 @@
         WHERE
             announce_ok = 'Y'
         order by
-        board_code desc
+            board_code desc
     </select>
     <!-- 게시글 추가 -->
     <insert id="boardRegist" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
@@ -54,7 +54,7 @@
         from
             tbl_board
         where
-        board_title = #{boardTitle}
+            board_code = #{boardCode}
     </select>
     <!-- 게시판 삭제 -->
     <delete id="delete" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
@@ -69,7 +69,8 @@
         update
             tbl_board
         set
-            board_title = #{boardTitle}, board_contents = #{boardContents}
+            board_title = #{boardTitle},
+            board_contents = #{boardContents}
         where
             board_code = #{boardCode}
     </update>
@@ -82,4 +83,13 @@
         where
             board_title LIKE CONCAT('%', #{query}, '%')
     </select>
+    <!-- 조회수 -->
+    <update id="viewCount">
+        update
+            tbl_board
+        set
+            view_cnt = view_cnt + 1
+        where
+            board_code = #{boardCode}
+    </update>
 </mapper>
