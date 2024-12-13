@@ -55,17 +55,17 @@
     <div id="change-screen-content">
         <div class="animals">
             <div class="iduButton">
+                <div class="updateAdoption">
+                    <a href="javascript:sendAdoption();">입양</a>
+                </div>
                 <div class="insert">
-                <a href="/sidemenu/animals/insert">등록</a>
+                    <a href="/sidemenu/animals/insert">등록</a>
                 </div>
                 <div class="delete">
-                <a href="javascript:boardDelete();">삭제</a>
-                </div>
-                <div class="updateAdoption">
-                <a href="javascript:sendAdoption();">입양</a>
+                    <a href="javascript:boardDelete();">삭제</a>
                 </div>
             </div>
-            <form th:action th:object="${form}" method="get">
+
                 <table border="1" class="post-list">
                 <thead>
                 <tr>
@@ -95,12 +95,8 @@
                 <td th:text="${allList.empDTO.empName}"></td>
                 <td th:text="${#dates.format(allList.rescueDate, 'yyyy-MM-dd')}"></td>
                 <td class="image">
-                    <img th:if="${allList.animalImage != null and allList.animalImage != ''}"
-                         th:src="@{'/animalimages/' + ${allList.animalImage}}"
+                    <img th:src="@{${allList.animalImage != null and allList.animalImage != '' ? '/img/animals/' + allList.animalImage : '/img/animals/defaultAnimal.jpg'}}"
                          alt="Animal Image" width="45px" height="45px"/>
-                    <img th:if="${allList.animalImage == null or allList.animalImage == ''}"
-                         th:src="@{/animalimages/defaultAnimal.jpg}"
-                         alt="Default Animal Image" width="45px" height="45px"/></td>
                 <td th:text="${allList.animalCode}" th:attr="onclick=|location.href='@{/animalInfo/{id}(id=${allList.animalCode})}'|" class="animal-code-cell"></td>
                 <td th:text="${allList.typeDTO.typeName}"></td>
                 <td th:text="${allList.breedDTO.breedName}"></td>
@@ -111,9 +107,9 @@
                 </tr>
                 </tbody>
                 </table>
-            </form>
-                <div class="btn-group" role="group" style="text-align: center">
-                    <button type="button" class="btn btn-outline-secondary"
+
+                <div class="btn-group" role="group" >
+                    <button type="button" class="btn-outline-secondary"
                         th:each="i : ${#numbers.sequence(1, totalPages)}"
                         th:text="${i}"
                         th:classappend="${currentPage == i ? 'btn-primary' : ''}"

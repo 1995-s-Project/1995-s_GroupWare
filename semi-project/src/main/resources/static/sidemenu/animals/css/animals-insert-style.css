@@ -2,7 +2,7 @@
 .animal-pic {
     width: 200px;
     height: 200px;
-    border-radius: 0%; /* 동그라미 모양 */
+    border-radius: 10%; /* 동그라미 모양 */
     overflow: hidden;
     border: 2px solid #ccc;
     display: flex;
@@ -34,13 +34,6 @@
 .animal-container {
     flex: 1 1 100%;
     text-align: center;
-}
-
-.animal-pic img {
-    max-width: 150px;
-    max-height: 150px;
-    border-radius: 8px;
-    margin-bottom: 10px;
 }
 
 .input-group,

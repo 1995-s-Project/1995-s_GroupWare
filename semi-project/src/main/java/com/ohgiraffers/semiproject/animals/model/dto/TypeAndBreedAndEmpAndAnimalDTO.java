@@ -2,6 +2,7 @@ package com.ohgiraffers.semiproject.animals.model.dto;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 

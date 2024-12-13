@@ -38,7 +38,9 @@ public class AnimalsController {
 
         List<TypeAndBreedAndEmpAndAnimalDTO> list = animalsService.getPagedAnimalList(page, limit);
         model.addAttribute("list", list);
+        
 
+        
         // 페이지 네비게이션 정보 추가
         int totalRecords = animalsService.getTotalAnimalCount(); // 총 레코드 수 조회
         int totalPages = (int) Math.ceil((double) totalRecords / limit);
@@ -70,41 +72,34 @@ public class AnimalsController {
     }
     // 구조동물 등록
     @PostMapping("/sidemenu/animals/insert")
-    public String newAnimal(@ModelAttribute TypeAndBreedAndEmpAndAnimalDTO animalsDTO,
-                            @RequestParam(value = "image", required = false) MultipartFile image){
-        System.out.println("image = " + image);
-        if (image != null && !image.isEmpty()) {
-            String imagePath = saveImage(image);  // 이미지 저장 메서드 호출
-            animalsDTO.setAnimalImage(imagePath);
-        } else {
-            animalsDTO.setAnimalImage("defaultAnimal.jpg");  // 기본 이미지 설정
-        }
+    public String newAnimal(@ModelAttribute TypeAndBreedAndEmpAndAnimalDTO typeAndBreedAndEmpAndAnimalDTO){
 
-        animalsService.newAnimal(animalsDTO);
+        animalsService.newAnimal(typeAndBreedAndEmpAndAnimalDTO);
         return "redirect:/sidemenu/animals";
     }
-    // 구조동물 사진등록 메소드
-    private String saveImage(MultipartFile image) {
-        try {
-            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/animalimages/";  // 실제 경로로 변경해야 합니다
-            String fileName = UUID.randomUUID().toString() + "-" + image.getOriginalFilename();
-            File targetFile = new File(uploadDir, fileName);
 
-            // 디렉토리가 없다면 생성
-            if (!targetFile.exists()) {
-                targetFile.mkdirs();
-            }
-
-            // 이미지 저장
-            image.transferTo(targetFile);
-
-            // 저장된 이미지 경로 반환
-            return fileName;  // 웹에서 접근할 수 있는 경로
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;  // 오류 처리
-        }
-    }
+   // 구조동물 사진등록 메소드
+//    private String saveImage(MultipartFile image) {
+//        try {
+//            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/animalimages/";  // 실제 경로로 변경해야 합니다
+//            String fileName = UUID.randomUUID().toString() + "-" + image.getOriginalFilename();
+//            File targetFile = new File(uploadDir, fileName);
+//
+//            // 디렉토리가 없다면 생성
+//            if (!targetFile.exists()) {
+//                targetFile.mkdirs();
+//            }
+//
+//            // 이미지 저장
+//            image.transferTo(targetFile);
+//
+//            // 저장된 이미지 경로 반환
+//            return fileName;  // 웹에서 접근할 수 있는 경로
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;  // 오류 처리
+//        }
+//    }
 
 
     // 체크박스 선택 후 삭제
@@ -124,7 +119,7 @@ public class AnimalsController {
     @PostMapping("/adoptionComplete")
     public String adoptionComplete(@RequestParam List<String> animalCode) {
 
-
+        
         for(int i=0; i<animalCode.size(); i++){
             String code = animalCode.get(i);
             animalsService.adoptComplete(code);
