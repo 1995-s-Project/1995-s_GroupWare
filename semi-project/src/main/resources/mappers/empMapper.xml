@@ -27,6 +27,30 @@
         </association>
     </resultMap>
 
+    <resultMap id="employeeJoinListMap" type="com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO">
+        <id property="empCode" column="emp_code"/>
+        <result property="empPass" column="emp_pass"/>
+        <result property="empName" column="emp_name"/>
+        <result property="empEmail" column="emp_email"/>
+        <result property="empPhone" column="emp_phone"/>
+        <result property="hireDate" column="hire_date"/>
+        <result property="entDate" column="ent_date"/>
+        <result property="empGender" column="emp_gender"/>
+        <result property="empAddress" column="emp_address"/>
+        <result property="jobCode" column="job_code"/>
+        <result property="deptCode" column="dept_code"/>
+        <result property="authority" column="authority"/>
+        <result property="profile_image" column="profile_image"/>
+        <association property="deptDTO" javaType="com.ohgiraffers.semiproject.employee.model.dto.DeptDTO">
+            <id property="deptCode" column="dept_code"/>
+            <result property="deptName" column="dept_name"/>
+        </association>
+        <association property="jobDTO" javaType="com.ohgiraffers.semiproject.employee.model.dto.JobDTO">
+            <id property="jobCode" column="job_code"/>
+            <result property="jobName" column="job_name"/>
+        </association>
+    </resultMap>
+
     <!-- 직원 전체조회 -->
     <select id="empAll" resultMap="empResult">
         SELECT
@@ -67,5 +91,17 @@
         FROM tbl_comment
         WHERE emp_code = #{empCode}
         ORDER BY created_date DESC
+    </select>
+
+    <select id="empAllSelect" resultMap="employeeJoinListMap">
+        select
+            a.emp_code,
+            a.emp_name,
+            b.job_name,
+            c.dept_name
+        from
+            tbl_emp a
+        join tbl_job b on (a.job_code = b.job_code)
+        join tbl_dept c on (a.dept_code = c.dept_code)
     </select>
 </mapper>

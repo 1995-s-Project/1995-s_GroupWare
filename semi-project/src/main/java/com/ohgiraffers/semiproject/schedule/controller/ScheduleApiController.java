@@ -123,6 +123,12 @@ public class ScheduleApiController {
             status = "결근"; // 근무 시간이 0인 경우
         }
 
+        // 지각 여부 판단
+        LocalTime officialStartTime = LocalTime.of(9, 0); // 공식 출근 시간
+        if (workEndTime.isAfter(officialStartTime)) {
+            status = "지각"; // 9시 1분 이후 출근 시 지각으로 설정
+        }
+
         // UserInfoService를 통해 현재 로그인한 사용자의 정보를 가져옴
         UserInfoResponse userInfo = userInfoService.getUserInfo();
 
@@ -149,7 +155,6 @@ public class ScheduleApiController {
             return ResponseEntity.status(401).body("사용자 정보가 없습니다."); // 인증되지 않은 경우
         }
     }
-
 
     @GetMapping("getSchedule")
     public ResponseEntity<List<ScheduleDTO>> getSchedule() {

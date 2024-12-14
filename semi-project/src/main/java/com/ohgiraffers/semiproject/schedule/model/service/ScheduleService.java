@@ -1,10 +1,7 @@
 package com.ohgiraffers.semiproject.schedule.model.service;
 
 import com.ohgiraffers.semiproject.schedule.model.dao.ScheduleMapper;
-import com.ohgiraffers.semiproject.schedule.model.dto.CheckInResponseDTO;
-import com.ohgiraffers.semiproject.schedule.model.dto.CheckOutResponseDTO;
-import com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO;
-import com.ohgiraffers.semiproject.schedule.model.dto.VacationDTO;
+import com.ohgiraffers.semiproject.schedule.model.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,5 +51,20 @@ public class ScheduleService {
         VacationDTO vacationDTO =  scheduleMapper.getVacation(userCode);
 
         return vacationDTO;
+    }
+
+    public ScheduleDTO getAttendanceByWorkStartTime(String userCode, String date) {
+
+        return scheduleMapper.getAttendanceByWorkStartTime(userCode, date);
+    }
+
+    public ScheduleDTO getAttendanceByWorkEndTime(String userCode, String date) {
+
+        return scheduleMapper.getAttendanceByWorkEndTime(userCode, date);
+    }
+
+    @Transactional
+    public void modifyAttendanceRequest(ScheduleDTO attendanceModifyInfo) {
+        scheduleMapper.modifyAttendanceRequest(attendanceModifyInfo);
     }
 }
