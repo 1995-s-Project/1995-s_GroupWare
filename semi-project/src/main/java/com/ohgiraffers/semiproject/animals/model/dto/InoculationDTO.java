@@ -7,10 +7,9 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class EmpDTO {
+public class InoculationDTO {
 
-    private String empCode;
-    private String empName;
-    private String empPhone;
+    private String inoculationCode;
+    private String inoculationName;
 
 }

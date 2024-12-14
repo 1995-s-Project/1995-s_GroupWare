@@ -1,7 +1,7 @@
 package com.ohgiraffers.semiproject.animals.model.service;
 
 import com.ohgiraffers.semiproject.animals.model.dao.AnimalsMapper;
-import com.ohgiraffers.semiproject.animals.model.dto.TypeAndBreedAndEmpAndAnimalDTO;
+import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
 import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +20,23 @@ public class AnimalsService {
     }
 
     // 구조동물 전체조회 및 검색 동물조회
+    public List<AnimalDTO> allAnimalAndSearchAnimals(int page, int limit, String animalCode, String typeCode, String breedCode, String gender, Date rescueDate) {
+
+        int offset = (page - 1) * limit;
+
+        return animalsMapper.AllAnimalAndSearchAnimals(offset, limit, animalCode, typeCode, breedCode, gender, rescueDate);
+    }
 
     // 구조동물 전체조회 및 검색 동물조회 - 동물카운트
+    public int getTotalAnimalCount(String animalCode, String typeCode, String breedCode, String gender, Date rescueDate) {
+        return animalsMapper.getTotalAnimalCount(animalCode, typeCode, breedCode, gender, rescueDate);
+    }
 
+    // 구조동물 상세페이지
+    public AnimalDTO detailAnimal(String animalCode) {
 
-
-
+        return animalsMapper.detailAnimal(animalCode);
+    }
 
     // 동물등록 - 품종 비동기처리
     public List<BreedDTO> findBreed() {
@@ -44,7 +55,7 @@ public class AnimalsService {
         }
     }
     // 동물등록
-    public void newAnimal(TypeAndBreedAndEmpAndAnimalDTO typeAndBreedAndEmpAndAnimalDTO) {
+    public void newAnimal(AnimalDTO typeAndBreedAndEmpAndAnimalDTO) {
         animalsMapper.newAnimal(typeAndBreedAndEmpAndAnimalDTO);
     }
 
@@ -65,7 +76,7 @@ public class AnimalsService {
     }
 
     // 입양완료 페이지
-    public List<TypeAndBreedAndEmpAndAnimalDTO> adoptAnimalList(int page, int limit) {
+    public List<AnimalDTO> adoptAnimalList(int page, int limit) {
         int offset = (page - 1) * limit; // 페이지 시작점 계산
         Map<String, Integer> params = new HashMap<>();
         params.put("limit", limit);
@@ -83,19 +94,11 @@ public class AnimalsService {
     }
 
 
-    public List<TypeAndBreedAndEmpAndAnimalDTO> AllAnimalAndSearchAnimals(int page, int limit,
-                                                                          String animalCode, String typeCode,
-                                                                          String breedCode, String gender,
-                                                                          Date rescueDate) {
-
-        int offset = (page - 1) * limit;
-
-        return animalsMapper.AllAnimalAndSearchAnimals(offset, limit, animalCode, typeCode, breedCode, gender, rescueDate);
+    public AnimalDTO healthAnimal(String animalCode) {
+        return animalsMapper.healthAnimal(animalCode);
     }
 
-    public int getTotalAnimalCount(String animalCode, String typeCode,
-                                   String breedCode, String gender,
-                                   Date rescueDate) {
-        return animalsMapper.getTotalAnimalCount(animalCode, typeCode, breedCode, gender, rescueDate);
+    public AnimalDTO inoculationAnimal(String animalCode) {
+        return animalsMapper.inoculationAnimal(animalCode);
     }
 }

@@ -2,15 +2,15 @@ package com.ohgiraffers.semiproject.animals.model.dto;
 
 import lombok.*;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class EmpDTO {
+public class HealthCheckDTO {
 
-    private String empCode;
-    private String empName;
-    private String empPhone;
-
+    private String healthcheckCode;
+    private String healthcheckName;
 }

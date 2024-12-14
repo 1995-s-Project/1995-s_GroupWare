@@ -1,9 +1,10 @@
 package com.ohgiraffers.semiproject.animals.model.dto;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,15 +13,18 @@ import java.util.Date;
 @ToString
 public class AnimalDTO {
 
-    private String animalCode;
-    private Date rescueDate;
-    private String rescueLocation;
-    private String animalImage;
-    private int age;
-    private String gender;
-    private String animalStatus;
-    private String typeCode;
-    private String breedCode;
-    private String empCode;
-
+    private String animalImage; // 동물 사진
+    private String animalCode; // 동물등록번호
+    private int age; // 나이
+    private String gender; // 성별
+    private List<HealthCheckDTO> healthChecks; // 건강검진리스트
+    private List<InoculationDTO> inoculations; // 접종리스트
+    private Date rescueDate; // 구조날짜
+    private String rescueLocation; // 구조위치
+    private String animalStatus; // 동물상태
+    private AdoptDTO adoptDTO; // 입양자이름, 폰번호, 입양시작날짜, 입양완료날짜
+    private TypeDTO typeDTO; // 분류(개, 고양이)
+    private BreedDTO breedDTO; // 품종
+    private EmpDTO empDTO; // 담당자(사원)번호
+    private String etc; // 기타사항
 }

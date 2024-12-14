@@ -4,14 +4,17 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ohgiraffers.semiproject.animals.model.dao.AnimalsMapper">
 
-    <resultMap id="AllListResultMap" type="com.ohgiraffers.semiproject.animals.model.dto.TypeAndBreedAndEmpAndAnimalDTO">
+    <resultMap id="AllListResultMap" type="com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO">
         <id property="animalCode" column="animal_code"/>
+
         <result property="rescueDate" column="rescue_date"/>
         <result property="rescueLocation" column="rescue_location"/>
         <result property="animalImage" column="animal_image"/>
         <result property="age" column="animal_age"/>
         <result property="gender" column="animal_gender"/>
         <result property="animalStatus" column="animal_status"/>
+        <result property="etc" column="etc"/>
+
         <association property="typeDTO" javaType="com.ohgiraffers.semiproject.animals.model.dto.TypeDTO">
             <id property="typeCode" column="type_code"/>
             <result property="typeName" column="type_name"/>
@@ -23,7 +26,26 @@
         <association property="empDTO" javaType="com.ohgiraffers.semiproject.animals.model.dto.EmpDTO">
             <id property="empCode" column="emp_code"/>
             <result property="empName" column="emp_name"/>
+            <result property="empPhone" column="emp_phone"/>
+
         </association>
+        <association property="adoptDTO" javaType="com.ohgiraffers.semiproject.animals.model.dto.AdoptDTO">
+            <id property="adoptNo" column="adopt_no"/>
+            <result property="adoptName" column="adopt_name"/>
+            <result property="adoptPhone" column="adopt_phone"/>
+            <result property="adoptStartDate" column="adopt_start_date"/>
+            <result property="adoptEndDate" column="adopt_end_date"/>
+        </association>
+
+        <collection property="healthChecks" ofType="com.ohgiraffers.semiproject.animals.model.dto.HealthCheckDTO">
+            <id property="healthcheckCode" column="healthcheck_code"/>
+            <result property="healthcheckName" column="healthcheck_name"/>
+        </collection>
+
+        <collection property="inoculations" ofType="com.ohgiraffers.semiproject.animals.model.dto.InoculationDTO">
+            <id property="inoculationCode" column="inoculation_code"/>
+            <result property="inoculationName" column="inoculation_name"/>
+        </collection>
     </resultMap>
 
     <resultMap id="BreedResultMap" type="com.ohgiraffers.semiproject.animals.model.dto.BreedDTO">
@@ -85,6 +107,51 @@
         </if>
     </select>
 
+<!--  구조동물 상세페이지  -->
+    <select id="detailAnimal" resultMap="AllListResultMap">
+        SELECT
+        *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        TBL_EMP E ON A.EMP_CODE = E.EMP_CODE
+        JOIN
+        TBL_ANI_BREED B ON A.BREED_CODE = B.BREED_CODE
+        JOIN
+        TBL_ANI_TYPE T ON A.TYPE_CODE = T.TYPE_CODE
+        LEFT JOIN
+        TBL_ANI_ADOPT AD ON A.ANIMAL_CODE = AD.ANIMAL_CODE
+        WHERE
+        A.ANIMAL_CODE = #{animalCode}
+    </select>
+
+    <select id="healthAnimal" resultMap="AllListResultMap">
+        SELECT
+        *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        TBL_ANI_HEL_CHECK HC ON A.ANIMAL_CODE = HC.ANIMAL_CODE
+        JOIN
+        TBL_ANI_HEALTH H ON HC.HEALTHCHECK_CODE = H.HEALTHCHECK_CODE
+
+        WHERE
+        A.ANIMAL_CODE = #{animalCode}
+    </select>
+
+    <select id="inoculationAnimal" resultMap="AllListResultMap">
+        SELECT
+        *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        tbl_ani_ino_check IC ON A.ANIMAL_CODE = IC.ANIMAL_CODE
+        JOIN
+        tbl_ani_inoculation I ON IC.inoculation_code = I.inoculation_code
+
+        WHERE
+        A.ANIMAL_CODE = #{animalCode}
+    </select>
 <!-- 등록할 시 품종 option, 비동기처리를 위한 select문 -->
     <select id="findBreed" resultMap="BreedResultMap">
         select
@@ -99,7 +166,7 @@
     </insert>
 
 <!-- 구조동물 등록 -->
-    <insert id="newAnimal" parameterType="com.ohgiraffers.semiproject.animals.model.dto.TypeAndBreedAndEmpAndAnimalDTO">
+    <insert id="newAnimal" parameterType="com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO">
         INSERT INTO tbl_animal
         (
         animal_code,

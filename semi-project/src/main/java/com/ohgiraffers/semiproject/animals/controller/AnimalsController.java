@@ -1,25 +1,16 @@
 package com.ohgiraffers.semiproject.animals.controller;
 
-import com.ohgiraffers.semiproject.animals.model.dto.TypeAndBreedAndEmpAndAnimalDTO;
+import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
 import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
 import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class AnimalsController {
@@ -43,7 +34,7 @@ public class AnimalsController {
                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date rescueDate,
                           Model model) {
 
-        List<TypeAndBreedAndEmpAndAnimalDTO> list = animalsService.AllAnimalAndSearchAnimals(page, limit, animalCode, typeCode, breedCode, gender, rescueDate);
+        List<AnimalDTO> list = animalsService.allAnimalAndSearchAnimals(page, limit, animalCode, typeCode, breedCode, gender, rescueDate);
         model.addAttribute("list", list);
 
         // 페이지 네비게이션 정보 추가
@@ -57,10 +48,19 @@ public class AnimalsController {
     }
 
     // 구조동물 상세페이지
-    @GetMapping("/animalInfo/{id}")
-    public String animalInfo(){
+    @GetMapping("/detailAnimal/{animalCode}")
+    public String DetailAnimal(@PathVariable String animalCode,Model model){
 
-        return "sidemenu/animals/info";
+        AnimalDTO detail = animalsService.detailAnimal(animalCode);
+        model.addAttribute("detail", detail);
+
+        AnimalDTO health = animalsService.healthAnimal(animalCode);
+        model.addAttribute("health", health);
+
+        AnimalDTO inoculate = animalsService.inoculationAnimal(animalCode);
+        model.addAttribute("inoculate", inoculate);
+
+        return "sidemenu/animals/detailAnimal";
     }
 
     // 동물등록번호 등록 시 자동부여
@@ -78,35 +78,11 @@ public class AnimalsController {
     }
     // 구조동물 등록
     @PostMapping("/sidemenu/animals/insert")
-    public String newAnimal(@ModelAttribute TypeAndBreedAndEmpAndAnimalDTO typeAndBreedAndEmpAndAnimalDTO){
+    public String newAnimal(@ModelAttribute AnimalDTO typeAndBreedAndEmpAndAnimalDTO){
 
         animalsService.newAnimal(typeAndBreedAndEmpAndAnimalDTO);
         return "redirect:/sidemenu/animals";
     }
-
-   // 구조동물 사진등록 메소드
-//    private String saveImage(MultipartFile image) {
-//        try {
-//            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/animalimages/";  // 실제 경로로 변경해야 합니다
-//            String fileName = UUID.randomUUID().toString() + "-" + image.getOriginalFilename();
-//            File targetFile = new File(uploadDir, fileName);
-//
-//            // 디렉토리가 없다면 생성
-//            if (!targetFile.exists()) {
-//                targetFile.mkdirs();
-//            }
-//
-//            // 이미지 저장
-//            image.transferTo(targetFile);
-//
-//            // 저장된 이미지 경로 반환
-//            return fileName;  // 웹에서 접근할 수 있는 경로
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;  // 오류 처리
-//        }
-//    }
-
 
     // 체크박스 선택 후 삭제
     @PostMapping("/delete")
@@ -139,7 +115,7 @@ public class AnimalsController {
     public String adoptionComplete(@RequestParam(defaultValue = "1") int page,
                                    @RequestParam(defaultValue = "10") int limit,
                                    Model model){
-        List<TypeAndBreedAndEmpAndAnimalDTO> adoptList = animalsService.adoptAnimalList(page, limit);
+        List<AnimalDTO> adoptList = animalsService.adoptAnimalList(page, limit);
         model.addAttribute("adoptList", adoptList);
 
         // 페이지 네비게이션 정보 추가
