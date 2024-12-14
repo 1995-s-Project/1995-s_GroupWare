@@ -16,6 +16,10 @@ public class BoardService {
         this.boardMapper = boardMapper;
     }
 
+    public List<BoardDTO> select() {
+        return boardMapper.select();
+    }
+
     public List<BoardDTO> selectAll(int offset, int size) {
 
         List<BoardDTO> result = boardMapper.selectAll(offset, size);
