@@ -53,12 +53,13 @@
 <form action="/sidemenu/board/regist" method="post">
 <div class="change-screen-regist">
   <div id="change-screen-content">
-      <h1>게시글쓰기</h1>
-      <hr>
+      <h2>게시글 작성</h2>
       <div class="header-title">
         <div class="title-textarea">
+          <h3>제목</h3>
           <textarea name="boardTitle" class="textareaLabel" style="height: 48px" placeholder="제목을 입력해주세요..."></textarea>
           <div class="emp-select">
+            <h3>작성자</h3>
             <select name="empCode">
               <option value="001">대표</option>
               <option value="002">부사장</option>
@@ -67,6 +68,7 @@
         </div>
       </div>
       <div class="title-context">
+        <h3>내용</h3>
         <textarea class="title-con" name="boardContents" placeholder="내용을 입력해주세요..."></textarea>
           <input type="submit" value="등록">
       </div>

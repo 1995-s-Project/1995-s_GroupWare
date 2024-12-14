@@ -58,7 +58,7 @@
                     <div>
                         <button class="styled-button" onclick="location.href='/sidemenu/board/regist'">📝 글쓰기</button>
                     </div>
-                    <div>
+                    <div class="container">
                         <form action="sidemenu/board/search" method="get" th:action="@{/sidemenu/board/search}" style="display: flex; align-items: center;">
                             <input class="search" type="text" name="query" placeholder="검색어 입력" required>
                             <button type="submit" class="styled-button">검색</button>
@@ -76,30 +76,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="board, stat : ${boardSelect}">
-                                <td class="code-style" th:text="${boardSelect.size() - stat.index}"></td>
-                                <td>
-                                    <a class="styled-link"
-                                       th:href="@{/sidemenu/board/{boardCode}(boardCode=${board.boardCode})}"
-                                       th:text="${board.boardTitle}"></a>
-                                </td>
-                                <td th:text="${board.empCode}"></td>
-                                <td th:text="${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></td>
-                                <td th:text="${board.viewCnt}"></td>
-                            </tr>
+                        <tr th:each="board, stat : ${boardList}">
+                            <td class="code-style" th:text="${boardList.size() - stat.index}"></td>
+                            <td>
+                                <a class="styled-link"
+                                   th:href="@{/sidemenu/board/{boardCode}(boardCode=${board.boardCode})}"
+                                   th:text="${board.boardTitle}"></a>
+                            </td>
+                            <td th:text="${board.empCode}"></td>
+                            <td th:text="${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${board.viewCnt}"></td>
+                        </tr>
                         </tbody>
                     </table>
-                <div style="text-align: center;">
-                    <div>
-                            <a href="#" class="prev">이전</a>
-                            <a href="#" class="page">1</a>
-                            <a href="#" class="page">2</a>
-                            <a href="#" class="page">3</a>
-                            <a href="#" class="next">다음</a>
-                    </div>
                 </div>
             </div>
-        </div>
+        <form action="/sidemenu/board/page" method="get">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${pageInfo.currentPage == 0} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/sidemenu/board(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}">Previous</a>
+                    </li>
+                    <li class="page-item"
+                        th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
+                        th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/sidemenu/board(page=${pageNum}, size=${pageInfo.pageSize})}"
+                           th:text="${pageNum + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/sidemenu/board(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </form>
     </div>
 </body>
 </html>
+

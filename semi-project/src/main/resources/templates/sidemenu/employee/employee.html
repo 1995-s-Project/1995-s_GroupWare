@@ -52,20 +52,39 @@
 </header>
 <div class="change-screen-employee">
     <div id="change-screen-content">
-        <table border="1">
+        <table border="1" class="post-list">
+            <thead>
             <tr>
-                <th>직원코드</th>
-                <th>직원이름</th>
+                <th>사번</th>
+                <th>이름</th>
                 <th>이메일</th>
+                <th>휴대폰번호</th>
+                <th>입사일</th>
+                <th>성별</th>
+                <th>주소지</th>
+                <th>직급</th>
+                <th>부서</th>
             </tr>
-            <tr th:each="row : ${test}">
-                <td th:text="${row.code}"></td>
-                <td th:text="${row.name}"></td>
-                <td th:text="${row.email}"></td>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${emp}">
+                <td class="code-style" th:text="${employee.empCode}"></td>
+                <td>
+                    <a class="styled-link"
+                       th:href="@{/sidemenu/board/{empCode}(empCode=${employee.empCode})}"
+                       th:text="${employee.empName}"></a>
+                </td>
+                <td th:text="${employee.empEmail}"></td>
+                <td th:text="${employee.empPhone}"></td>
+                <td th:text="${employee.hireDate}"></td>
+                <td th:text="${employee.empGender}"></td>
+                <td th:text="${employee.empAddress}"></td>
+                <td th:text="${employee.jobCode}"></td>
+                <td th:text="${employee.deptCode}"></td>
             </tr>
+            </tbody>
         </table>
     </div>
 </div>
-
 </body>
 </html>
