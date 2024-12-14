@@ -16,6 +16,7 @@
         <result property="workModifyReason" column="workmodify_reason"/>
         <result property="managerIdea" column="manager_idea"/>
         <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
     </resultMap>
 
     <resultMap id="checkInResponseDTO" type="com.ohgiraffers.semiproject.schedule.model.dto.CheckInResponseDTO">
@@ -83,4 +84,30 @@
         where
             emp_code = #{userCode}
     </select>
+
+    <select id="getAttendanceByWorkStartTime" resultMap="scheduleResultMap">
+        select
+            workstart_time
+        from
+            tbl_work
+        where
+            emp_code = #{userCode} and work_date = #{date}
+    </select>
+
+    <select id="getAttendanceByWorkEndTime" resultMap="scheduleResultMap">
+        select
+            workend_time
+        from
+            tbl_work
+        where
+            emp_code = #{userCode} and work_date = #{date}
+    </select>
+
+    <update id="modifyAttendanceRequest" parameterType="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
+        update tbl_work
+        set modify_time = #{modifyTime}, division = #{division},
+            workmodify_reason = #{workModifyReason}, admin_code = #{adminCode}
+        where DATE_FORMAT(work_date, '%Y-%m-%d') = DATE_FORMAT(#{workDate}, '%Y-%m-%d')
+        and emp_code = #{empCode}
+    </update>
 </mapper>

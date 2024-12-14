@@ -1,6 +1,7 @@
 package com.ohgiraffers.semiproject.schedule.model.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -16,10 +17,14 @@ public class ScheduleDTO {
     private String workType;
     private LocalDateTime workStartTime;
     private LocalDateTime workEndTime;
-    private Date workDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date workDate; // Date 유지
+
     private LocalDateTime modifyTime;
     private String division;
     private String workModifyReason;
     private String managerIdea;
     private String progressCode;
+    private String adminCode;
 }
