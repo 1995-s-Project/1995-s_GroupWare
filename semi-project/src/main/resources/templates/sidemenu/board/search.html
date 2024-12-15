@@ -60,7 +60,7 @@
                 <div>
                     <form action="/sidemenu/board/search" method="get" style="display: flex; align-items: center;">
                         <input class="search" type="text" name="query" placeholder="제목을 입력해주세요..." required>
-                        <button type="submit" class="styled-button">검색</button>
+                        <button type="submit" class="styled-button">🔎 검색</button>
                     </form>
                 </div>
             </div>
@@ -78,8 +78,7 @@
                 <tr th:each="board, stat : ${boardSearch}">
                     <td class="code-style" th:text="${boardSearch.size() - stat.index}"></td>
                     <td>
-                        <a class="styled-link"
-                           th:href="@{/sidemenu/board/{boardCode}(boardCode=${board.boardCode})}"
+                        <a class="styled-link" th:href="@{/sidemenu/board/{boardCode}(boardCode=${board.boardCode})}"
                            th:text="${board.boardTitle}"></a>
                     </td>
                     <td th:text="${board.empCode}"></td>
@@ -88,24 +87,30 @@
                 </tr>
                 </tbody>
             </table>
+
+            <!-- 페이지 네비게이션 -->
             <form action="/sidemenu/board/page" method="get">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <!-- 이전 페이지 링크 -->
                         <li class="page-item" th:classappend="${pageInfo.currentPage == 0} ? 'disabled'">
-                            <a class="page-link" th:href="@{/sidemenu/board/search(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize}, query=${query})}">Previous</a>
+                            <a class="page-link"
+                               th:href="@{/sidemenu/board/search(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize}, query=${query})}">Previous</a>
                         </li>
 
                         <!-- 페이지 번호 링크 -->
-                        <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
+                        <li class="page-item"
+                            th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
                             th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
-                            <a class="page-link" th:href="@{/sidemenu/board/search(page=${pageNum}, size=${pageInfo.pageSize}, query=${query})}"
+                            <a class="page-link"
+                               th:href="@{/sidemenu/board/search(page=${pageNum}, size=${pageInfo.pageSize}, query=${query})}"
                                th:text="${pageNum + 1}"></a>
                         </li>
 
                         <!-- 다음 페이지 링크 -->
                         <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1} ? 'disabled'">
-                            <a class="page-link" th:href="@{/sidemenu/board/search(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize}, query=${query})}">Next</a>
+                            <a class="page-link"
+                               th:href="@{/sidemenu/board/search(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize}, query=${query})}">Next</a>
                         </li>
                     </ul>
                 </nav>

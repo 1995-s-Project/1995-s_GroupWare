@@ -23,7 +23,7 @@ public class EmployeeDTOJOB {
     private String jobCode;
     private String deptCode;
     private String authority;
-    private String profile_image;
+    private String profileImage;
     private DeptDTO deptDTO;
     private JobDTO jobDTO;
 }

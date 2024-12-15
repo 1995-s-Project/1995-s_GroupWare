@@ -50,53 +50,64 @@
         </ul>
     </div>
 </header>
-<table border="1px" style="width: 1500px;">
-    <tr>
-        <td rowspan="4" class="header-cell">
-            <img src="your_image_path_here" alt="캐릭터 이미지" style="width:100px; height:auto;">
-        </td>
-        <td><b>이름</b></td>
-        <td th:text="${emp.empName}"></td> <!-- 직원 이름 출력 -->
-        <td><b>부서</b></td>
-        <td th:text="${emp.jobDTO.jobName}"></td> <!-- 직무 이름 출력 -->
-    </tr>
-    <tr>
-        <td><b>사번</b></td>
-        <td th:text="${emp.empCode}"></td> <!-- 직원 사번 출력 -->
-        <td><b>입사일</b></td>
-        <td th:text="${#dates.format(emp.hireDate, 'yyyy-MM-dd')}"></td> <!-- 입사일 출력 -->
-    </tr>
-    <tr>
-        <td><b>이메일</b></td>
-        <td th:text="${emp.empEmail}"></td> <!-- 이메일 출력 -->
-        <td><b>휴대폰</b></td>
-        <td th:text="${emp.empPhone}"></td> <!-- 휴대폰 번호 출력 -->
-    </tr>
-    <tr>
-        <td><b>직급</b></td>
-        <td th:text="${emp.jobDTO.jobName}"></td> <!-- 직급 정보 출력 -->
-        <td><b>주소</b></td>
-        <td th:text="${emp.empAddress}"></td> <!-- 주소 출력 -->
-    </tr>
-</table>
+<div class="change-screen-employee">
+    <div id="change-screen-content">
+        <table border="1px" style="width: 1500px;">
+            <tr>
+                <td rowspan="4" class="header-cell">
+                    <div class="image-container">
+                        <img th:src="@{${'/img/profile/' + emp.profileImage}}"
+                             alt="profile Image" />
+                    </div>
+                </td>
+                <td class="type-cell"><b>이름</b></td>
+                <td th:text="${emp.empName}"></td> <!-- 직원 이름 출력 -->
+                <td class="type-cell"><b>부서</b></td>
+                <td th:text="${emp.jobDTO.jobName}"></td> <!-- 직무 이름 출력 -->
+            </tr>
+            <tr>
+                <td class="type-cell"><b>사번</b></td>
+                <td th:text="${emp.empCode}"></td> <!-- 직원 사번 출력 -->
+                <td class="type-cell"><b>입사일</b></td>
+                <td th:text="${#dates.format(emp.hireDate, 'yyyy-MM-dd')}"></td> <!-- 입사일 출력 -->
+            </tr>
+            <tr>
+                <td class="type-cell"><b>이메일</b></td>
+                <td th:text="${emp.empEmail}"></td> <!-- 이메일 출력 -->
+                <td class="type-cell"><b>휴대폰</b></td>
+                <td th:text="${emp.empPhone}"></td> <!-- 휴대폰 번호 출력 -->
+            </tr>
+            <tr>
+                <td class="type-cell"><b>직급</b></td>
+                <td th:text="${emp.jobDTO.jobName}"></td> <!-- 직급 정보 출력 -->
+                <td class="type-cell"><b>주소</b></td>
+                <td th:text="${emp.empAddress}"></td> <!-- 주소 출력 -->
+            </tr>
+        </table>
 
-<!-- 댓글 작성 폼 -->
-<div class="comment-section">
-    <h3>댓글</h3>
+        <!-- 댓글 작성 폼 -->
+        <div class="comment-section">
+            <h3>댓글</h3>
+            <form action="/comments/add" method="POST">
+                <textarea name="text" class="comment-box" rows="4" placeholder="기분좋은 소식이나 덕담 한마디씩 건네주세요" required></textarea>
+                <input type="hidden" name="empCode" th:value="${emp.empCode}" /> <!-- empCode 전달 -->
+                <button type="submit" class="submit-button">댓글 작성</button>
+            </form>
 
-    <!-- 댓글 작성 폼 -->
-    <form action="/comments/add" method="POST">
-        <textarea name="text" class="comment-box" rows="4" placeholder="기분좋은 소식이나 덕담 한마디씩 건네주세요" required></textarea>
-        <input type="hidden" name="empCode" th:value="${emp.empCode}" /> <!-- empCode 전달 -->
-        <button type="submit" class="submit-button">댓글 작성</button>
-    </form>
-
-    <!-- 댓글 목록 -->
-    <div class="comment-list">
-        <div th:each="comment : ${comment}">
-            <div class="comment-item">
-                <p th:text="${comment.text}"></p>
-                <small th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd')}"></small>
+            <!-- 댓글 목록 -->
+            <div class="comment-list">
+                <div th:each="comment : ${comment}">
+                    <div class="comment-item">
+                        <p th:text="${comment.text}"></p>
+                        <small th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd')}"></small>
+                        <small style="margin-left: auto">
+                            <a th:href="@{/sidemenu/employee/{empCode}/update(empCode=${emp.empCode})}">📃 수정</a>
+                        </small>
+                        <small style="margin-left: auto">
+                            <a th:href="@{/sidemenu/employee/{empCode}/delete(empCode=${emp.empCode})}">📃 삭제</a>
+                        </small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
