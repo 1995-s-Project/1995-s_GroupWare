@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/sidemenu/schedule/css/attendance.css">
   <script src="/sidemenu/schedule/js/attedance.js"></script>
   <script src="/sidemenu/schedule/js/getAttendance.js"></script>
+  <script src="/sidemenu/schedule/js/selectAttendanceRequest.js"></script>
+  <script src="/sidemenu/schedule/js/deleteAttedanceRequest.js"></script>
 </head>
 <body>
 <header>
@@ -56,8 +58,24 @@
   <div id="change-screen-content">
     <div class="box">
       <div class="select-box">
-
+        <h2>📜근태수정 목록</h2>
+        <div class="select-box2">
+          <ul id="item-list"></ul> <!-- 리스트를 추가할 ul 요소 -->
+        </div>
+        <div class="delete-attendance">
+          <button id="delete-button">근태수정 삭제하기</button>
+        </div>
       </div>
+
+      <!-- 모달 구조 -->
+      <div id="attendance-modal" class="modal" style="display:none;">
+        <div class="modal-attendance-content">
+          <span class="modal-close-button">&times;</span>
+          <h2>근태사유</h2>
+          <p id="modal-reason"></p>
+        </div>
+      </div>
+
       <div class="attendance-request">
         <h2>🗒️근태수정 등록</h2>
         <form action="/attendance-request" method="post">

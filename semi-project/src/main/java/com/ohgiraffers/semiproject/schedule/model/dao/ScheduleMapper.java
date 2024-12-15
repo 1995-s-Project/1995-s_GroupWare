@@ -28,4 +28,8 @@ public interface ScheduleMapper {
     ScheduleDTO getAttendanceByWorkEndTime(String userCode, String date);
 
     void modifyAttendanceRequest(ScheduleDTO attendanceModifyInfo);
+
+    List<ScheduleDTO> getAllAttendanceRequests(String userCode);
+
+    void deleteAttendanceRequest(ScheduleDTO deleteAttendance);
 }
