@@ -2,6 +2,7 @@ package com.ohgiraffers.semiproject.animals.controller;
 
 import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
 import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
+import com.ohgiraffers.semiproject.animals.model.dto.InventoryDTO;
 import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,8 +49,8 @@ public class AnimalsController {
     }
 
     // 구조동물 상세페이지
-    @GetMapping("/detailAnimal/{animalCode}")
-    public String DetailAnimal(@PathVariable String animalCode,Model model){
+    @GetMapping("/animals/detailAnimal/{animalCode}")
+    public String detailAnimal(@PathVariable String animalCode,Model model){
 
         AnimalDTO detail = animalsService.detailAnimal(animalCode);
         model.addAttribute("detail", detail);
@@ -109,6 +110,7 @@ public class AnimalsController {
 
         return "redirect:/sidemenu/animals";
     }
+
 // -----------------------------------------입양완료 페이지-----------------------------------------
     // 입양완료 페이지
     @GetMapping("/sidemenu/adoptionComplete")
@@ -127,6 +129,23 @@ public class AnimalsController {
         return "sidemenu/animals/adoptionComplete";
     }
 
+    // 구조동물 상세페이지
+    @GetMapping("/adoptionComplete/detailAnimal/{animalCode}")
+    public String adoptionCompleteDetailAnimal(@PathVariable String animalCode,Model model){
+
+        AnimalDTO detail = animalsService.adoptionDetailAnimal(animalCode);
+        model.addAttribute("detail", detail);
+
+        AnimalDTO health = animalsService.adoptionHealthAnimal(animalCode);
+        model.addAttribute("health", health);
+
+        AnimalDTO inoculate = animalsService.adoptionInoculationAnimal(animalCode);
+        model.addAttribute("inoculate", inoculate);
+
+        return "sidemenu/animals/adoptionDetailAnimal";
+    }
+
+
     // 파양으로 상태 수정
     @GetMapping("/giveUp")
     public String giveUp(@RequestParam String animalCode){
@@ -140,12 +159,15 @@ public class AnimalsController {
         return "redirect:/sidemenu/adoptionComplete";
     }
 
-
-
 // -----------------------------------------재고관리 페이지-----------------------------------------
     // 재고관리 페이지로 이동
     @GetMapping("/sidemenu/stock")
-    public String stock(){
+    public String stock(Model model){
+
+        List<InventoryDTO> inventoryList = animalsService.stock();
+        System.out.println("inventoryList = " + inventoryList);
+        model.addAttribute("inventoryList", inventoryList);
+
         return "sidemenu/animals/stock";
     }
 }

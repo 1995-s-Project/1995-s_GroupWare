@@ -136,7 +136,7 @@
                                 <img th:src="@{${allList.animalImage != null and allList.animalImage != '' ? '/img/animals/' + allList.animalImage : '/img/animals/defaultAnimal.jpg'}}"
                                         alt="Animal Image" width="45px" height="45px"/>
                             </td>
-                            <td th:text="${allList.animalCode}" th:attr="onclick=|location.href='@{/detailAnimal/{animalCode}(animalCode=${allList.animalCode})}'|" class="animal-code-cell"></td>
+                            <td th:text="${allList.animalCode}" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${allList.animalCode})}'|" class="animal-code-cell"></td>
                             <td th:text="${allList.typeDTO.typeName}"></td>
                             <td th:text="${allList.breedDTO.breedName}"></td>
                             <td th:text="${allList.gender}"></td>
