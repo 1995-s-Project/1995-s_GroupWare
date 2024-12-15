@@ -1,5 +1,6 @@
 package com.ohgiraffers.semiproject.board.model.dto;
 
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

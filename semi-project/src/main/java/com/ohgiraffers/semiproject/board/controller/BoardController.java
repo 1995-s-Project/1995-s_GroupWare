@@ -58,6 +58,7 @@ public String search(@RequestParam String query,
     model.addAttribute("boardSearch", boardSearch);  // boardSearch 모델에 저장
     model.addAttribute("pageInfo", pageInfo);
     model.addAttribute("query", query);  // 검색어 쿼리도 전달
+    
 
     return "sidemenu/board/search";
 }

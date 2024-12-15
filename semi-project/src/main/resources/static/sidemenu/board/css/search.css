@@ -98,9 +98,9 @@ body {
     padding: 10px;
     font-size: 15px;
     border: 1px solid
-    #ccc; border-radius: 4px;
-}
+    white; border-radius: 30px;
 
+}
 .pagination {
     display: flex; /* 가로 정렬 */
     justify-content: center; /* 중앙 정렬 */
@@ -120,6 +120,7 @@ body {
     display: block; /* 블록 요소로 설정 */
     padding: 5px 10px; /* 패딩 */
     font-size: 0.875rem; /* 글자 크기 */
+    font-weight: bold;
     color: #006a38; /* 링크 색상 */
     text-decoration: none; /* 밑줄 제거 */
     border: 1px solid #006a38; /* 테두리 */
