@@ -58,9 +58,9 @@ public class EmployeeService {
     public long getTotalProducts1() {
 
         return employeeMapper.countAll1();
+    }
 
     public List<EmployeeJoinListDTO> empAllSelect() {
         return employeeMapper.empAllSelect();
-
     }
 }

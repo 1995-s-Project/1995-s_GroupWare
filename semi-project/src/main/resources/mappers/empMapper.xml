@@ -122,7 +122,8 @@
 
     <select id="countAll1" resultType="long">
         SELECT COUNT(*) FROM tbl_emp
-
+    </select>
+    
     <select id="empAllSelect" resultMap="employeeJoinListMap">
         select
             a.emp_code,
