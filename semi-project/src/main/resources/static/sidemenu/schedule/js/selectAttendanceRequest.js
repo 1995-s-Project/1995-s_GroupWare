@@ -83,31 +83,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const checkboxes = document.querySelectorAll('.item-checkbox:checked');
         const idsToDelete = Array.from(checkboxes).map(checkbox => checkbox.getAttribute('data-id'));
 
-        console.log("Sending IDs:", idsToDelete); // 전송할 ID 배열 로그
 
-        const confirmDelete = confirm("정말로 삭제하시겠습니까?");
-        
-        if (confirmDelete) {
-            // 삭제 요청
-            fetch('/api/deleteAttendanceRequest', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ids: idsToDelete }), // 삭제할 ID 배열
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    } else {
-                        checkboxes.forEach(checkbox => {
-                            checkbox.parentElement.remove(); // 체크된 항목 삭제
-                        });
-                    }
-                    location.href = '/attendance-request';
-                }).catch(error => {
-                    console.error('There was a problem with the delete operation:', error);
-                });
+        if (idsToDelete.length > 0) {
+            // 삭제 확인
+            const confirmDelete = confirm("정말로 삭제하시겠습니까?");
+            if (confirmDelete) {
+                // 삭제 요청
+                fetch('/api/deleteAttendanceRequest', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ ids: idsToDelete }), // 삭제할 ID 배열
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        } else {
+                            checkboxes.forEach(checkbox => {
+                                checkbox.parentElement.remove(); // 체크된 항목 삭제
+                            });
+                        }
+                        location.href = '/attendance-request';
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the delete operation:', error);
+                    });
+            } else {
+                alert('삭제가 취소되었습니다.');
+            }
         } else {
             alert('삭제할 항목을 선택하세요.');
         }
