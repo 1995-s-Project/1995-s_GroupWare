@@ -54,7 +54,7 @@
     <div class="change-screen-animals">
         <div id="change-screen-content">
             <!--  검색  -->
-            <form th:action="@{/sidemenu/animals}" method="post" class="search-form">
+            <form th:action="@{/sidemenu/animals}" method="get" class="search-form">
                 <div class="search">
                     <div class="animal-search-group">
                         <label for="animalCode">동물등록번호 :</label>
@@ -136,7 +136,7 @@
                                 <img th:src="@{${allList.animalImage != null and allList.animalImage != '' ? '/img/animals/' + allList.animalImage : '/img/animals/defaultAnimal.jpg'}}"
                                         alt="Animal Image" width="45px" height="45px"/>
                             </td>
-                            <td th:text="${allList.animalCode}" th:attr="onclick=|location.href='@{/animalInfo/{id}(id=${allList.animalCode})}'|" class="animal-code-cell"></td>
+                            <td th:text="${allList.animalCode}" th:attr="onclick=|location.href='@{/detailAnimal/{animalCode}(animalCode=${allList.animalCode})}'|" class="animal-code-cell"></td>
                             <td th:text="${allList.typeDTO.typeName}"></td>
                             <td th:text="${allList.breedDTO.breedName}"></td>
                             <td th:text="${allList.gender}"></td>

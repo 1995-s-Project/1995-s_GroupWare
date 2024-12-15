@@ -1,9 +1,6 @@
 package com.ohgiraffers.semiproject.schedule.model.dao;
 
-import com.ohgiraffers.semiproject.schedule.model.dto.CheckInResponseDTO;
-import com.ohgiraffers.semiproject.schedule.model.dto.CheckOutResponseDTO;
-import com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO;
-import com.ohgiraffers.semiproject.schedule.model.dto.VacationDTO;
+import com.ohgiraffers.semiproject.schedule.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.time.LocalDateTime;
@@ -25,4 +22,14 @@ public interface ScheduleMapper {
     CheckOutResponseDTO getCheckOutTime(String userCode, LocalDateTime localDateTime);
 
     VacationDTO getVacation(String userCode);
+
+    ScheduleDTO getAttendanceByWorkStartTime(String userCode, String date);
+
+    ScheduleDTO getAttendanceByWorkEndTime(String userCode, String date);
+
+    void modifyAttendanceRequest(ScheduleDTO attendanceModifyInfo);
+
+    List<ScheduleDTO> getAllAttendanceRequests(String userCode);
+
+    void deleteAttendanceRequest(ScheduleDTO deleteAttendance);
 }

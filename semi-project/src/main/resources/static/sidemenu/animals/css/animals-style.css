@@ -1,5 +1,5 @@
 .change-screen-animals{
-    margin-top: 200px;
+    margin-top: 350px;
     width: 1850px;
     height: auto;
     background-color: white;
@@ -37,7 +37,7 @@ body {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 500px;
+
 }
 
 /* 제목 */

@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 case '결근':
                     backgroundColor = 'rgba(128, 128, 128, 0.7)'; // 결근 배경색
                     break;
+                case '지각':
+                    backgroundColor = 'rgba(113,2,246,0.7)'; // 결근 배경색
+                    break;
                 default:
                     backgroundColor = 'rgba(0, 0, 0, 0.7)'; // 기본 배경색
             }

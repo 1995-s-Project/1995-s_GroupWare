@@ -4,6 +4,8 @@ import com.ohgiraffers.semiproject.board.model.dto.BoardDTO;
 import com.ohgiraffers.semiproject.employee.model.dao.EmployeeMapper;
 import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTOJOB;
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
-
+    @Autowired
     private final EmployeeMapper employeeMapper;
 
     public EmployeeService(EmployeeMapper employeeMapper) {
@@ -40,6 +42,7 @@ public class EmployeeService {
         return employeeMapper.comment(empCode);  // Mapper에서 댓글 목록 가져오기
     }
 
+
     public long getTotalProducts() {
 
         return employeeMapper.countAll();
@@ -55,5 +58,9 @@ public class EmployeeService {
     public long getTotalProducts1() {
 
         return employeeMapper.countAll1();
+
+    public List<EmployeeJoinListDTO> empAllSelect() {
+        return employeeMapper.empAllSelect();
+
     }
 }
