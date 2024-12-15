@@ -52,6 +52,8 @@
         <id property="breedCode" column="breed_code"/>
         <result property="breedName" column="breed_name"/>
     </resultMap>
+
+<!-- ********************************* 구조동물 페이지 ************************************* -->
 <!-- 전체 조회 -->
     <select id="AllAnimalAndSearchAnimals" resultMap="AllListResultMap">
         SELECT
@@ -152,18 +154,13 @@
         WHERE
         A.ANIMAL_CODE = #{animalCode}
     </select>
-<!-- 등록할 시 품종 option, 비동기처리를 위한 select문 -->
+<!-- 등록할 시 품종 option, 비동기처리를 위한 select 문 -->
     <select id="findBreed" resultMap="BreedResultMap">
         select
             *
         from
             tbl_ani_breed
     </select>
-<!-- 동물등록(파일이름 DB에 저장) -->
-    <insert id="saveAnimalImageName" parameterType="String">
-        INSERT INTO tbl_animal (animal_image)
-        VALUES (#{animalImage});
-    </insert>
 
 <!-- 구조동물 등록 -->
     <insert id="newAnimal" parameterType="com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO">
@@ -217,7 +214,8 @@
         SET animal_status = '입양완료'
         WHERE animal_code = #{code}
     </update>
-
+    
+<!-- ********************************* 입양완료 페이지 ************************************* -->
 <!-- 입양완료 된 동물 조회 -->
     <select id="adoptAnimalList" resultMap="AllListResultMap">
         SELECT
@@ -250,6 +248,52 @@
         WHERE animal_status = '입양완료'
     </select>
 
+<!-- 입양완료 된 구조동물 상세페이지  -->
+    <select id="adoptionDetailAnimal" resultMap="AllListResultMap">
+        SELECT
+        *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        TBL_EMP E ON A.EMP_CODE = E.EMP_CODE
+        JOIN
+        TBL_ANI_BREED B ON A.BREED_CODE = B.BREED_CODE
+        JOIN
+        TBL_ANI_TYPE T ON A.TYPE_CODE = T.TYPE_CODE
+        LEFT JOIN
+        TBL_ANI_ADOPT AD ON A.ANIMAL_CODE = AD.ANIMAL_CODE
+        WHERE
+        A.ANIMAL_CODE = #{animalCode}
+    </select>
+
+    <select id="adoptionHealthAnimal" resultMap="AllListResultMap">
+        SELECT
+        *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        TBL_ANI_HEL_CHECK HC ON A.ANIMAL_CODE = HC.ANIMAL_CODE
+        JOIN
+        TBL_ANI_HEALTH H ON HC.HEALTHCHECK_CODE = H.HEALTHCHECK_CODE
+
+        WHERE
+        A.ANIMAL_CODE = #{animalCode}
+    </select>
+
+    <select id="adoptionInoculationAnimal" resultMap="AllListResultMap">
+        SELECT
+        *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        tbl_ani_ino_check IC ON A.ANIMAL_CODE = IC.ANIMAL_CODE
+        JOIN
+        tbl_ani_inoculation I ON IC.inoculation_code = I.inoculation_code
+
+        WHERE
+        A.ANIMAL_CODE = #{animalCode}
+    </select>
+
     <update id="giveUp" parameterType="java.util.List">
         UPDATE tbl_animal
         SET animal_status = '파양/보호중'
@@ -258,4 +302,31 @@
             #{code}
         </foreach>
     </update>
+
+    <!-- ********************************* 재고관리 페이지 ************************************* -->
+    <resultMap id="stockResultMap" type="com.ohgiraffers.semiproject.animals.model.dto.InventoryDTO">
+        <id property="itemCode" column="item_code"/>
+        <result property="itemType" column="item_type"/>
+        <result property="itemGroup" column="item_group"/>
+        <result property="dealName" column="deal_name"/>
+        <result property="dealDate" column="deal_date"/>
+        <result property="itemName" column="item_name"/>
+        <result property="itemNum" column="item_number"/>
+        <result property="typeCode" column="type_code"/>
+
+        <association property="typeDTO" javaType="com.ohgiraffers.semiproject.animals.model.dto.TypeDTO">
+            <id property="typeCode" column="type_code"/>
+            <result property="typeName" column="type_name"/>
+        </association>
+    </resultMap>
+
+    <select id="stock" resultMap="stockResultMap">
+        SELECT
+        *
+        FROM
+        TBL_ANI_INVENTORY I
+        JOIN
+        TBL_ANI_TYPE T ON I.TYPE_CODE = T.TYPE_CODE
+    </select>
+
 </mapper>

@@ -51,7 +51,36 @@
     </div>
 </header>
 <div class="change-screen-stock">
-    <div id="change-screen-content">재고관리 페이지</div>
+    <div id="change-screen-content">
+
+        <table>
+        <thead>
+        <tr>
+            <th style="width: 80px;">품목코드</th>
+            <th style="width: 150px;">대분류</th>
+            <th style="width: 50px;">품목구분</th>
+            <th style="width: 100px;">품목그룹</th>
+            <th style="width: 70px;">거래처명</th>
+            <th style="width: 170px;">거래일자</th>
+            <th style="width: 200px;">품목명</th>
+            <th style="width: 50px;">재고수량</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 자동으로 menuList 의 크기까지 반복 -->
+        <tr th:each="inventory : ${inventoryList}">
+            <td th:text="${inventory.itemCode}"></td>
+            <td th:text="${inventory.typeDTO.typeName}"></td>
+            <td th:text="${inventory.itemType}"></td>
+            <td th:text="${inventory.itemGroup}"></td>
+            <td th:text="${inventory.dealName}"></td>
+            <td th:text="${#dates.format(inventory.dealDate, 'yyyy-MM-dd')}"></td>
+            <td th:text="${inventory.itemName}"></td>
+            <td th:text="${inventory.itemNum}"></td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.ohgiraffers.semiproject.animals.model.service;
 import com.ohgiraffers.semiproject.animals.model.dao.AnimalsMapper;
 import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
 import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
+import com.ohgiraffers.semiproject.animals.model.dto.InventoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class AnimalsService {
         this.animalsMapper = animalsMapper;
     }
 
+// -----------------------------------------구조동물 페이지-----------------------------------------
     // 구조동물 전체조회 및 검색 동물조회
     public List<AnimalDTO> allAnimalAndSearchAnimals(int page, int limit, String animalCode, String typeCode, String breedCode, String gender, Date rescueDate) {
 
@@ -33,10 +35,9 @@ public class AnimalsService {
     }
 
     // 구조동물 상세페이지
-    public AnimalDTO detailAnimal(String animalCode) {
-
-        return animalsMapper.detailAnimal(animalCode);
-    }
+    public AnimalDTO detailAnimal(String animalCode) {return animalsMapper.detailAnimal(animalCode);}
+    public AnimalDTO healthAnimal(String animalCode) {return animalsMapper.healthAnimal(animalCode);}
+    public AnimalDTO inoculationAnimal(String animalCode) {return animalsMapper.inoculationAnimal(animalCode);}
 
     // 동물등록 - 품종 비동기처리
     public List<BreedDTO> findBreed() {
@@ -59,12 +60,7 @@ public class AnimalsService {
         animalsMapper.newAnimal(typeAndBreedAndEmpAndAnimalDTO);
     }
 
-    // 동물등록 - 파일이름 DB에 저장
-    public void saveAnimalImageName(String animalImage) {
-        animalsMapper.saveAnimalImageName(animalImage);
-    }
-
-    // 체크박스 선택 후 삭제
+    // 삭제(체크박스 선택)
     @Transactional
     public void deleteBoard(String id) {
         animalsMapper.deleteBoard(id);
@@ -75,6 +71,7 @@ public class AnimalsService {
         animalsMapper.adoptComplete(code); // 여러 동물 코드 한번에 처리
     }
 
+// -----------------------------------------입양완료 페이지-----------------------------------------
     // 입양완료 페이지
     public List<AnimalDTO> adoptAnimalList(int page, int limit) {
         int offset = (page - 1) * limit; // 페이지 시작점 계산
@@ -88,17 +85,18 @@ public class AnimalsService {
         return animalsMapper.getTotalAdoptAnimalCount();
     }
 
+    // 입양완료동물 상세페이지
+    public AnimalDTO adoptionDetailAnimal(String animalCode) {return animalsMapper.adoptionDetailAnimal(animalCode);}
+    public AnimalDTO adoptionHealthAnimal(String animalCode) {return animalsMapper.adoptionHealthAnimal(animalCode);}
+    public AnimalDTO adoptionInoculationAnimal(String animalCode) {return animalsMapper.adoptionInoculationAnimal(animalCode);}
+
     public void giveUpComplete(String[] animalCodes) {
         List<String> codeList = Arrays.asList(animalCodes); // 배열을 리스트로 변환
         animalsMapper.giveUp(codeList); // 여러 동물 코드 한번에 처리
     }
 
-
-    public AnimalDTO healthAnimal(String animalCode) {
-        return animalsMapper.healthAnimal(animalCode);
-    }
-
-    public AnimalDTO inoculationAnimal(String animalCode) {
-        return animalsMapper.inoculationAnimal(animalCode);
+// -----------------------------------------재고관리 페이지-----------------------------------------
+    public List<InventoryDTO> stock() {
+        return animalsMapper.stock();
     }
 }
