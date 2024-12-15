@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initialView: 'dayGridMonth',
         locale: 'ko',
         initialDate: '2024-12-01',
+        timeZone: 'Asia/Seoul', // 한국 시간대 설정
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
@@ -59,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // 데이터를 캘린더 이벤트 형식으로 변환
             data.forEach(schedule => {
                 // 출근 및 퇴근 시간을 UTC로 변환
-                const startTime = new Date(schedule.workStartTime).toISOString().split('T')[0]; // YYYY-MM-DD 형식
-                const endTime = schedule.workEndTime ? new Date(schedule.workEndTime).toISOString().split('T')[0] : null; // 퇴근 시간이 없으면 null
+                const startTime = new Date(schedule.workStartTime).toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0]; // YYYY-MM-DD 형식
+                const endTime = schedule.workEndTime ? new Date(schedule.workEndTime).toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0] : null; // 퇴근 시간이 없으면 null
 
                 calendar.addEvent({
                     title: schedule.workType, // 근태 타입을 제목으로 설정
