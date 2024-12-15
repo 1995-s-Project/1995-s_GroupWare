@@ -110,4 +110,34 @@
         where DATE_FORMAT(work_date, '%Y-%m-%d') = DATE_FORMAT(#{workDate}, '%Y-%m-%d')
         and emp_code = #{empCode}
     </update>
+
+    <select id="getAllAttendanceRequests" resultMap="scheduleResultMap">
+        select
+            workstart_time,
+            workend_time,
+            work_date,
+            modify_time,
+            division,
+            workmodify_reason,
+            manager_idea,
+            progress_code,
+            admin_code
+        from
+            tbl_work
+        where
+            emp_code = #{userCode} and modify_time is not null
+    </select>
+
+    <update id="deleteAttendanceRequest" parameterType="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
+        update tbl_work
+        set
+        modify_time = null,
+        division = null,
+        workmodify_reason = null,
+        manager_idea = null,
+        admin_code = null
+        where DATE_FORMAT(work_date, '%Y-%m-%d') = DATE_FORMAT(#{workDate}, '%Y-%m-%d')
+        and emp_code = #{empCode}
+    </update>
+
 </mapper>

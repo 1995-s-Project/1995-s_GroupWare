@@ -67,4 +67,13 @@ public class ScheduleService {
     public void modifyAttendanceRequest(ScheduleDTO attendanceModifyInfo) {
         scheduleMapper.modifyAttendanceRequest(attendanceModifyInfo);
     }
+
+    public List<ScheduleDTO> getAllAttendanceRequests(String userCode) {
+        return scheduleMapper.getAllAttendanceRequests(userCode);
+    }
+
+    @Transactional
+    public void deleteAttendanceRequest(ScheduleDTO deleteAttendance) {
+        scheduleMapper.deleteAttendanceRequest(deleteAttendance);
+    }
 }

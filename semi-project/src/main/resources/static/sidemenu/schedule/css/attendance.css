@@ -19,6 +19,154 @@
     margin: 10px;
     background-color: white; /* 흰 배경 추가 */
     box-shadow: 0 5px 5px 4px rgba(0, 0, 0, 0.1); /* 그림자 아래로 연하게 조정 */
+    text-align: center;
+}
+
+.select-box2 {
+    width: 400px;
+    height: 630px;
+    border-radius: 10px;
+    margin-left: 9.5%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    overflow-y: auto; /* 세로 스크롤 추가 */
+}
+
+
+#item-list {
+    list-style-type: none; /* 기본 리스트 스타일 제거 */
+    padding: 0; /* 패딩 제거 */
+    max-width: 600px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+#item-list li {
+    padding: 20px; /* 리스트 항목 패딩 */
+    border: 1px solid #e0e0e0; /* 항목 간 구분선 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    margin-bottom: 15px; /* 항목 간 여백 */
+    background-color: #ffffff; /* 배경색 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    transition: transform 0.2s; /* 부드러운 변환 효과 */
+    height: 200px;
+    position: relative;
+}
+
+.item-checkbox {
+    position: absolute; /* 절대 위치 설정 */
+    top: 10px; /* 상단에서 10px 떨어진 위치 */
+    right: 10px; /* 오른쪽에서 10px 떨어진 위치 */
+}
+
+#item-list li:hover {
+    transform: translateY(-2px); /* 마우스 오버 시 약간 위로 이동 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 강화 */
+}
+
+.request-date, .division, .admin-code, .progress-status, .time-info {
+    display: flex; /* Flexbox 사용 */
+    justify-content: space-between; /* 양쪽 끝으로 정렬 */
+    margin-bottom: 10px; /* 아래 여백 */
+    font-size: 1.1em; /* 글자 크기 조정 */
+}
+
+.label {
+    font-weight: bold; /* 레이블 강조 */
+    color: #333; /* 레이블 색상 */
+    flex: 0 0 150px; /* 레이블의 너비 고정 */
+}
+
+.value {
+    flex: 1; /* 값이 오른쪽에 붙도록 설정 */
+    text-align: center; /* 값 왼쪽 정렬 */
+    color: #555; /* 값 색상 */
+}
+
+.before-time, .after-time {
+    margin-left: 10px; /* 왼쪽 여백 */
+}
+
+.space {
+    display: inline-block; /* 인라인 블록으로 설정 */
+    width: 21px; /* 원하는 간격 설정 (예: 10px) */
+}
+
+.space2 {
+    display: inline-block; /* 인라인 블록으로 설정 */
+    width: 100px; /* 원하는 간격 설정 (예: 10px) */
+}
+
+.progress-status {
+    text-align: center; /* 자식 요소를 수평 가운데 정렬 */
+    margin-left: 34%;
+    margin-top: 4%;
+}
+
+
+.label-message {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    color: white; /* 텍스트 색상 */
+    font-weight: bold;
+    width: 100px;
+}
+
+.label-gray {
+    background-color: gray; /* 대기중 */
+}
+
+.label-blue {
+    background-color: blue; /* 확인중 */
+}
+
+.label-green {
+    background-color: green; /* 승인됨 */
+}
+
+.label-red {
+    background-color: red; /* 반려됨 */
+}
+
+
+/* 모달 콘텐츠 스타일 */
+.modal-attendance-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    height: 300px;
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
+/* 닫기 버튼 스타일 */
+.modal-close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer; /* 커서 포인터로 변경 */
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer; /* 커서 포인터로 변경 */
+}
+
+/* 모달 제목 스타일 */
+.modal-attendance-content h2 {
+    margin: 0; /* 기본 마진 제거 */
+    color: #333; /* 제목 색상 */
+}
+
+/* 모달 내용 스타일 */
+#modal-reason {
+    margin-top: 10%; /* 내용과 제목 간격 */
+    color: #555; /* 내용 색상 */
 }
 
 .attendance-request{
@@ -297,4 +445,25 @@
 
 .request-button button:hover {
     background-color: #218838; /* 호버 시 배경색 변경 */
+}
+
+.delete-attendance {
+    text-align: center; /* 버튼을 가운데 정렬 */
+    margin-top: 10px; /* 버튼과 리스트 사이의 간격 */
+}
+
+#delete-button {
+    padding: 10px 20px; /* 버튼 패딩 */
+    border: none; /* 기본 테두리 제거 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    background-color: #ff4d4d; /* 배경색 */
+    color: white; /* 글자색 */
+    cursor: pointer; /* 커서 모양 변경 */
+    margin-top: 11px;
+    transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+    font-weight: bold;
+}
+
+#delete-button:hover {
+    background-color: #ff1a1a; /* 호버 시 배경색 변경 */
 }
