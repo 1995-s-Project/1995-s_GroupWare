@@ -71,7 +71,7 @@
                 <td class="code-style" th:text="${employee.empCode}"></td>
                 <td>
                     <a class="styled-link"
-                       th:href="@{/sidemenu/board/{empCode}(empCode=${employee.empCode})}"
+                       th:href="@{/sidemenu/employee/{empCode}(empCode=${employee.empCode})}"
                        th:text="${employee.empName}"></a>
                 </td>
                 <td th:text="${employee.empEmail}"></td>

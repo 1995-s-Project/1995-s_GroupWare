@@ -62,10 +62,10 @@
                         <div class="view-count" th:text="'조회수 ' + ${board.viewCnt}"></div>
                         <div class="view-ud">
                             <div class="view-update">
-                                <a th:href="@{/sidemenu/board/{boardCode}/update(boardCode=${board.boardCode})}">수정</a>
+                                <a th:href="@{/sidemenu/board/{boardCode}/update(boardCode=${board.boardCode})}">📃 수정</a>
                             </div>
                             <div class="view-delete">
-                                <a th:href="@{/sidemenu/board/{boardCode}/delete(boardCode=${board.boardCode})}">삭제</a>
+                                <a id="delete" th:href="@{/sidemenu/board/{boardCode}/delete(boardCode=${board.boardCode})}">🗑 삭제</a>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@
     border-radius: 10px;
     margin-bottom: 3%;
     color: #000000;
+    position: relative;
 }
 /* Reset some default styles */
 body, table {
@@ -108,6 +109,7 @@ body {
     position: absolute;
     left: 25px;
     right: 25px;
+    bottom: 10px;
 }
 
 .page-item {

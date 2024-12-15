@@ -104,7 +104,7 @@ body {
 .view-page {
     display: inline-block;
     padding: 8px 12px;
-    background-color: #007bff; /* 부드러운 파란색 */
+    background-color: rgba(194, 194, 194, 0.69); /* 부드러운 파란색 */
     color: white;
     text-decoration: none;
     font-weight: bold;
@@ -114,5 +114,5 @@ body {
 }
 
 .view-page:hover {
-    background-color: #0056b3; /* 호버 시 더 진한 파란색 */
+    background-color: rgba(177, 177, 177, 0.69); /* 호버 시 더 진한 파란색 */
 }

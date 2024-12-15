@@ -50,9 +50,9 @@
     </ul>
   </div>
 </header>
-<form action="/sidemenu/board/regist" method="post">
-<div class="change-screen-regist">
-  <div id="change-screen-content">
+<form action="/sidemenu/board/regist" method="post" id="registForm">
+  <div class="change-screen-regist">
+    <div id="change-screen-content">
       <h2>게시글 작성</h2>
       <div class="header-title">
         <div class="title-textarea">
@@ -70,10 +70,23 @@
       <div class="title-context">
         <h3>내용</h3>
         <textarea class="title-con" name="boardContents" placeholder="내용을 입력해주세요..."></textarea>
-          <input type="submit" value="등록">
+        <input type="submit" value="등록">
       </div>
     </div>
-</div>
+  </div>
 </form>
+<script>
+  document.getElementById('registForm').addEventListener('submit', function(event) {
+    const boardTitle = document.querySelector('textarea[name="boardTitle"]').value.trim();
+    const boardContents = document.querySelector('textarea[name="boardContents"]').value.trim();
+
+    if (!boardTitle || !boardContents) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      event.preventDefault();
+    } else {
+      alert("글이 추가되었습니다!");
+    }
+  });
+</script>
 </body>
 </html>

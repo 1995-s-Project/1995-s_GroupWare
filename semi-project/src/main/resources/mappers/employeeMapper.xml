@@ -21,8 +21,22 @@
         ORDER BY board_code DESC
         LIMIT #{offset}, #{size}
     </select>
+    <!-- 게시판 검색조회 -->
+    <select id="search" resultMap="selectBoard">
+        SELECT *
+        FROM tbl_board
+        WHERE (#{query} IS NULL OR #{query} = '' OR board_title LIKE CONCAT('%', #{query}, '%'))
+        ORDER BY board_code DESC
+        LIMIT #{offset}, #{size}
+    </select>
 
-    <select id="count" resultType="long">
+    <!-- 전체 게시글 개수 조회 -->
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM tbl_board WHERE announce_ok = 'Y'
+    </select>
+
+    <!-- 게시글 검색 개수 조회 -->
+    <select id="countSearch" resultType="long">
         SELECT COUNT(*) FROM tbl_board WHERE announce_ok = 'Y'
     </select>
     <!-- 게시글 추가 -->
@@ -51,11 +65,11 @@
     <!-- 제목으로 상세조회 -->
     <select id="title" resultMap="selectBoard">
         select
-            *
+        *
         from
-            tbl_board
+        tbl_board
         where
-            board_code = #{boardCode}
+        board_code = #{boardCode}
     </select>
     <!-- 게시판 삭제 -->
     <delete id="delete" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
@@ -68,36 +82,27 @@
     <!-- 게시판 수정 -->
     <update id="update" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
         update
-            tbl_board
+        tbl_board
         set
-            board_title = #{boardTitle},
-            board_contents = #{boardContents}
+        board_title = #{boardTitle},
+        board_contents = #{boardContents}
         where
-            board_code = #{boardCode}
+        board_code = #{boardCode}
     </update>
-    <!-- 게시판 검색조회 -->
-    <select id="search" resultMap="selectBoard">
-        select
-            *
-        from
-            tbl_board
-        where
-            board_title LIKE CONCAT('%', #{query}, '%')
-    </select>
     <!-- 조회수 -->
     <update id="viewCount">
         update
-            tbl_board
+        tbl_board
         set
-            view_cnt = view_cnt + 1
+        view_cnt = view_cnt + 1
         where
-            board_code = #{boardCode}
+        board_code = #{boardCode}
     </update>
-
+    <!-- 목록 -->
     <select id="select" resultMap="selectBoard">
         select
-            *
+        *
         from
-            tbl_board
+        tbl_board
     </select>
 </mapper>

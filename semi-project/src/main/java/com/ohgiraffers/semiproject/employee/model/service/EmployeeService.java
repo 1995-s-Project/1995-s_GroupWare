@@ -20,4 +20,9 @@ public class EmployeeService {
 
         return employeeMapper.empAll();
     }
+
+    public EmployeeDTO empSelect(Integer empCode) {
+
+        return employeeMapper.empSelect(empCode);
+    }
 }

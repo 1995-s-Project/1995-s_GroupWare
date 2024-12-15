@@ -8,8 +8,15 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
+    List<BoardDTO> selectAll(@Param("offset") int offset, @Param("size") int size);
 
-    List<BoardDTO> search(String query);
+    long countAll();
+
+    List<BoardDTO> search(String query,
+                                 @Param("offset") int offset,
+                                 @Param("size") int size);
+
+    long countSearch();
 
     void boardRegist(BoardDTO board);
 
@@ -21,9 +28,6 @@ public interface BoardMapper {
 
     void viewCount(Integer boardCode);
 
-    List<BoardDTO> selectAll(@Param("offset") int offset, @Param("size") int size);
-
-    long count();
-
     List<BoardDTO> select();
+
 }

@@ -18,12 +18,22 @@
         <result property="authority" column="authority"/>
         <result property="profile_image" column="profile_image"/>
     </resultMap>
-
+    <!-- 직원 전체조회 -->
     <select id="empAll" resultMap="empResult">
         SELECT
             *
         FROM
             TBL_EMP
+    </select>
+    <!-- 직원 상세조회 -->
+    <select id="empSelect" resultMap="empResult">
+        SELECT
+            *
+        FROM
+            TBL_EMP
+        WHERE
+            emp_code = #{empCode}
+
     </select>
 
 
