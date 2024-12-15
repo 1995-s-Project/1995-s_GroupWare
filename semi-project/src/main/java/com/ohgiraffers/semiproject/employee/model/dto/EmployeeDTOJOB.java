@@ -1,6 +1,5 @@
 package com.ohgiraffers.semiproject.employee.model.dto;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -10,12 +9,8 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@Entity
-@Table(name = "tbl_emp")
 public class EmployeeDTOJOB {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer empCode;
     private String empPass;
     private String empName;
@@ -29,4 +24,6 @@ public class EmployeeDTOJOB {
     private String deptCode;
     private String authority;
     private String profile_image;
+    private DeptDTO deptDTO;
+    private JobDTO jobDTO;
 }
