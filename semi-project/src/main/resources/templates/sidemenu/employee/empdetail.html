@@ -104,6 +104,10 @@
                         <small th:text="'날짜 : ' + ${#dates.format(comment.createdDate, 'yyyy-MM-dd')}"></small>
                         <small style="margin-left: auto">
                             <a th:href="@{/sidemenu/employee/{empCode}/delete(empCode=${emp.empCode})}" class="delete">📃 삭제</a>
+
+
+
+                            
                         </small>
                     </div>
                 </div>
