@@ -52,7 +52,8 @@
 </header>
 <div class="change-screen-animals-insert">
     <div id="change-screen-content">
-        <form th:action="@{/sidemenu/animals/insert}" class="insert-group" method="post">
+
+        <form action="/sidemenu/animals/insert" class="insert-group" method="post">
             <!-- 프로필 사진 업로드 -->
             <div class="animal-container">
                 <div class="animal-pic" id="animal-pic">
@@ -68,8 +69,8 @@
             </div>
 
             <div class="animal-group">
-                <label for="typeCode">분류 :</label>
-                <select id="typeCode" name="typeCode" required>
+                <label>분류 :</label>
+                <select name="typeCode" required>
                     <option value="C1">고양이</option>
                     <option value="D1">개</option>
                 </select>

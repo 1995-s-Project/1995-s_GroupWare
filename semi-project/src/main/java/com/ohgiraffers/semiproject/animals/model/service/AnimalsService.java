@@ -21,6 +21,10 @@ public class AnimalsService {
     }
 
 // -----------------------------------------구조동물 페이지-----------------------------------------
+    // 검색 동물코드 비동기처리
+    public List<AnimalDTO> findAnimalCode() {
+    return animalsMapper.findAnimalCode();
+}
     // 구조동물 전체조회 및 검색 동물조회
     public List<AnimalDTO> allAnimalAndSearchAnimals(int page, int limit, String animalCode, String typeCode, String breedCode, String gender, Date rescueDate) {
 
@@ -56,6 +60,7 @@ public class AnimalsService {
         }
     }
     // 동물등록
+    @Transactional
     public void newAnimal(AnimalDTO typeAndBreedAndEmpAndAnimalDTO) {
         animalsMapper.newAnimal(typeAndBreedAndEmpAndAnimalDTO);
     }
@@ -96,7 +101,21 @@ public class AnimalsService {
     }
 
 // -----------------------------------------재고관리 페이지-----------------------------------------
+    // 재고관리 조회
     public List<InventoryDTO> stock() {
         return animalsMapper.stock();
     }
+
+    // 재고수량 수정
+    @Transactional
+    public void inventoryUpdate(int itemNum, String itemCode) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("itemNum", itemNum);
+        params.put("itemCode", itemCode);
+
+        animalsMapper.inventoryUpdate(params);
+    }
+
+
+
 }

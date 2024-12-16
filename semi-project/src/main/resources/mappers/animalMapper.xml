@@ -54,6 +54,14 @@
     </resultMap>
 
 <!-- ********************************* 구조동물 페이지 ************************************* -->
+<!-- 카테고리 검색 동물등록번호 비동기처리를 위한 select 문 -->
+    <select id="findAnimalCode" resultMap="AllListResultMap">
+        select
+        *
+        from
+        tbl_animal
+    </select>
+
 <!-- 전체 조회 -->
     <select id="AllAnimalAndSearchAnimals" resultMap="AllListResultMap">
         SELECT
@@ -162,6 +170,7 @@
             tbl_ani_breed
     </select>
 
+
 <!-- 구조동물 등록 -->
     <insert id="newAnimal" parameterType="com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO">
         INSERT INTO tbl_animal
@@ -186,9 +195,9 @@
         #{age},
         #{gender},
         #{animalStatus},
-        #{typeCode},
-        #{breedCode},
-        #{empCode}
+        #{typeDTO.typeCode},
+        #{breedDTO.breedCode},
+        #{empDTO.empCode}
         )
     </insert>
 <!-- 동물등록번호 자동 부여 -->
@@ -309,6 +318,7 @@
         <result property="itemType" column="item_type"/>
         <result property="itemGroup" column="item_group"/>
         <result property="dealName" column="deal_name"/>
+        <result property="dealUrl" column="deal_url"/>
         <result property="dealDate" column="deal_date"/>
         <result property="itemName" column="item_name"/>
         <result property="itemNum" column="item_number"/>
@@ -319,7 +329,7 @@
             <result property="typeName" column="type_name"/>
         </association>
     </resultMap>
-
+<!-- 재고관리 조회 -->
     <select id="stock" resultMap="stockResultMap">
         SELECT
         *
@@ -328,5 +338,10 @@
         JOIN
         TBL_ANI_TYPE T ON I.TYPE_CODE = T.TYPE_CODE
     </select>
-
+<!-- 재고수량 수정 -->
+    <update id="inventoryUpdate" parameterType="map">
+        UPDATE tbl_ani_inventory
+        SET item_number = #{itemNum}
+        WHERE item_code = #{itemCode}
+    </update>
 </mapper>
