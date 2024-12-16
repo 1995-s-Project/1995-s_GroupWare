@@ -5,6 +5,8 @@ import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTOJOB;
 import com.ohgiraffers.semiproject.employee.model.service.EmployeeService;
+import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
+import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +20,11 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final UserInfoService userInfoService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService,UserInfoService userInfoService) {
         this.employeeService = employeeService;
+        this.userInfoService = userInfoService;
     }
     // 직원 전체 조회
     @GetMapping("sidemenu/employee")
@@ -87,6 +91,11 @@ public class EmployeeController {
         System.out.println("Comment List: " + commentList);  // 댓글 목록 확인
         model.addAttribute("comment", commentList);  // 댓글 목록 전달
 
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String name = userInfo.getName();
+
+        model.addAttribute("name", name);
+
         return "sidemenu/employee/empdetail";  // 상세 페이지로 이동
     }
 
@@ -99,6 +108,6 @@ public class EmployeeController {
 
         employeeService.saveComment(commentDTO);
 
-        return "redirect:/employee/" + empCode + "/details";
+        return "redirect:/employee/details/" + empCode;
     }
 }

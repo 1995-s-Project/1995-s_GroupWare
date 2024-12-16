@@ -155,3 +155,8 @@ th {
 .type-cell {
     background: #eeeeee;
 }
+
+.delete {
+    display: flex;
+    justify-content: flex-end;
+}
