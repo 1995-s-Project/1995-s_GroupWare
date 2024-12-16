@@ -19,6 +19,7 @@ public class AnimalDTO {
     private String gender; // 성별
     private List<HealthCheckDTO> healthChecks; // 건강검진리스트
     private List<InoculationDTO> inoculations; // 접종리스트
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date rescueDate; // 구조날짜
     private String rescueLocation; // 구조위치
     private String animalStatus; // 동물상태

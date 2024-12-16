@@ -16,6 +16,7 @@ public class InventoryDTO {
     private String itemType;
     private String itemGroup;
     private String dealName;
+    private String dealUrl;
     private Date dealDate;
     private String itemName;
     private int itemNum;

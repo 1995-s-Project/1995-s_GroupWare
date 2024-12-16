@@ -13,6 +13,8 @@ import java.util.Map;
 public interface AnimalsMapper {
 
 // -----------------------------------------구조동물 페이지-----------------------------------------
+    // 검색 동물코드 비동기처리
+    List<AnimalDTO> findAnimalCode();
     // 구조동물 전체조회
     List<AnimalDTO> AllAnimalAndSearchAnimals(int offset, int limit, String animalCode, String typeCode, String breedCode, String gender, Date rescueDate);
     // 구조동물 전체조회 - 페이징처리(전체동물 카운트)
@@ -52,4 +54,7 @@ public interface AnimalsMapper {
 
 // -----------------------------------------재고관리 페이지-----------------------------------------
     List<InventoryDTO> stock();
+
+
+    void inventoryUpdate(Map<String, Object> params);
 }

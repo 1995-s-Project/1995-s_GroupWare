@@ -1,8 +1,6 @@
 package com.ohgiraffers.semiproject.animals.controller;
 
-import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
-import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
-import com.ohgiraffers.semiproject.animals.model.dto.InventoryDTO;
+import com.ohgiraffers.semiproject.animals.model.dto.*;
 import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -70,6 +68,7 @@ public class AnimalsController {
         String animalCode = animalsService.autoAnimalCode();
 
         model.addAttribute("animalCode", animalCode);
+
         return "sidemenu/animals/insert";
     }
     @GetMapping(value = "/sidemenu/animals/breed", produces = "application/json; charset=UTF-8")
@@ -77,13 +76,37 @@ public class AnimalsController {
     public List<BreedDTO> findCategoryList(){
         return animalsService.findBreed();
     }
+
+    @GetMapping(value = "/animals/code", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public List<AnimalDTO> findAnimalCode(){
+        return animalsService.findAnimalCode();
+    }
+
     // 구조동물 등록
     @PostMapping("/sidemenu/animals/insert")
-    public String newAnimal(@ModelAttribute AnimalDTO typeAndBreedAndEmpAndAnimalDTO){
+    public String newAnimal(@ModelAttribute AnimalDTO typeAndBreedAndEmpAndAnimalDTO,
+                            @ModelAttribute TypeDTO typeDTO,
+                            @ModelAttribute AdoptDTO adoptDTO,
+                            @ModelAttribute BreedDTO breedDTO,
+                            @ModelAttribute EmpDTO empDTO){
 
-        animalsService.newAnimal(typeAndBreedAndEmpAndAnimalDTO);
+        AnimalDTO animalDTO = new AnimalDTO();
+        animalDTO.setAnimalImage(typeAndBreedAndEmpAndAnimalDTO.getAnimalImage());
+        animalDTO.setAnimalCode(typeAndBreedAndEmpAndAnimalDTO.getAnimalCode());
+        animalDTO.setAge(typeAndBreedAndEmpAndAnimalDTO.getAge());
+        animalDTO.setGender(typeAndBreedAndEmpAndAnimalDTO.getGender());
+        animalDTO.setRescueDate(typeAndBreedAndEmpAndAnimalDTO.getRescueDate());
+        animalDTO.setRescueLocation(typeAndBreedAndEmpAndAnimalDTO.getRescueLocation());
+        animalDTO.setAnimalStatus(typeAndBreedAndEmpAndAnimalDTO.getAnimalStatus());
+        animalDTO.setTypeDTO(typeDTO);
+        animalDTO.setBreedDTO(breedDTO);
+        animalDTO.setEmpDTO(empDTO);
+
+        animalsService.newAnimal(animalDTO);
         return "redirect:/sidemenu/animals";
     }
+
 
     // 체크박스 선택 후 삭제
     @PostMapping("/delete")
@@ -165,9 +188,20 @@ public class AnimalsController {
     public String stock(Model model){
 
         List<InventoryDTO> inventoryList = animalsService.stock();
-        System.out.println("inventoryList = " + inventoryList);
+
         model.addAttribute("inventoryList", inventoryList);
 
         return "sidemenu/animals/stock";
+    }
+
+    @PostMapping("/inventory/update")
+    public String inventoryUpdate(@RequestParam int itemNum,
+                                  @RequestParam String itemCode){
+        System.out.println("itemNum = " + itemNum);
+        System.out.println("itemCode = " + itemCode);
+        animalsService.inventoryUpdate(itemNum, itemCode);
+
+
+        return "redirect:/sidemenu/stock";
     }
 }

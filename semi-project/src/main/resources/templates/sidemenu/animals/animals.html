@@ -54,40 +54,46 @@
     <div class="change-screen-animals">
         <div id="change-screen-content">
             <!--  검색  -->
+            <div class="form-container">
             <form th:action="@{/sidemenu/animals}" method="get" class="search-form">
                 <div class="search">
-                    <div class="animal-search-group">
+                    <div class="animalCode-group">
                         <label for="animalCode">동물등록번호 :</label>
                         <select id="animalCode" name="animalCode"></select>
                     </div>
                     <div class="animal-search-group-inline">
-                    <div class="animal-search-group">
+                    <div class="typeCode-group">
                         <label for="typeCode">분류 :</label>
                         <select id="typeCode" name="typeCode">
+                            <option class="default-option">선택</option>
                             <option value="C1">고양이</option>
                             <option value="D1">개</option>
                         </select>
                     </div>
-                    <div class="animal-search-group">
+                    <div class="breedCode-group">
                         <label for="breedCode">품종 :</label>
                         <select id="breedCode" name="breedCode"></select>
                     </div>
-                    <div class="animal-search-group">
+                    <div class="gender-group">
                         <label for="gender">성별 :</label>
                         <select id="gender" name="gender">
+                            <option class="default-option">선택</option>
                             <option value="M">M</option>
                             <option value="F">F</option>
                         </select>
                     </div>
                     </div>
-                    <div class="animal-search-group">
+                    <div class="rescueDate-group">
                         <label for="rescueDate">구조 된 날짜 :</label>
                         <input type="date" id="rescueDate" name="rescueDate"> ( 구조 된 접수일 기준 )
                     </div>
                     <hr>
-                    <button type="submit">🔍조회하기</button>
+                    <div class="btn-container">
+                        <button class="btn">🔍조회하기</button>
+                    </div>
                 </div>
             </form>
+            </div>
 
             <!--  동물 리스트 테이블  -->
             <div class="animals">
@@ -282,4 +288,41 @@
             }
         }
     }
+
+    fetch("/sidemenu/animals/breed")
+        .then(res => res.json())
+        .then(data => {
+            breedData = data; // 비동기로 가져온 데이터를 저장
+            breedsByType(); // 분류에 맞는 품종 메소드
+        })
+        .catch(error => console.error("Error fetching breed data:", error));
+
+    // 분류 선택 후 품종 필터링
+    document.querySelector('select[name="typeCode"]').addEventListener('change', breedsByType);
+
+    function breedsByType() {
+        const selectedType = document.querySelector('select[name="typeCode"]').value; // D1, C1
+        const breedSelect = document.getElementById('breedCode'); // 비동기로 가져온 품종들
+
+        // 기존 옵션 초기화
+        breedSelect.innerHTML = '';
+
+        // "선택 안함" 옵션 추가
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';  // 선택하지 않은 상태
+        defaultOption.textContent = '선택'; // 기본 텍스트
+        defaultOption.classList.add('default-option'); // 'default-option' 클래스 추가
+        breedSelect.appendChild(defaultOption);
+
+        // 선택된 분류 코드에 맞는 품종만 추가
+        breedData
+            .filter(breed => breed.breedCode.startsWith(selectedType[0]))
+            .forEach(breed => {
+                const option = document.createElement('option');
+                option.value = breed.breedCode;
+                option.textContent = breed.breedName;
+                breedSelect.appendChild(option);
+            });
+    }
+    
 </script>
