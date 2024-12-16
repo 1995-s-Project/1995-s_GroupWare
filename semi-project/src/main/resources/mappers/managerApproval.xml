@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.semiproject.manager.model.dao.ManagerApprovalMapper">
+
+    <resultMap id="CacPaymentResultMap" type="com.ohgiraffers.semiproject.manager.model.dto.CacPaymentDTO">
+        <id property="documentNo" column="document_no"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="deadline_date" column="deadline_date"/>
+        <result property="type" column="type"/>
+        <result property="cacStartDate" column="cac_start_date"/>
+        <result property="cacEndDate" column="cac_end_date"/>
+        <result property="cacReason" column="cac_reason"/>
+        <result property="accountNum" column="account_num"/>
+        <result property="managerAccept" column="manager_accept"/>
+        <result property="presidentAccept" column="president_accept"/>
+        <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
+        <result property="ownerCode" column="owner_code"/>
+    </resultMap>
+
+    <resultMap id="OverTimeResultMap" type="com.ohgiraffers.semiproject.manager.model.dto.OverTimeDTO">
+        <id property="documentNo" column="document_no"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="deadline_date" column="deadline_date"/>
+        <result property="type" column="type"/>
+        <result property="overTime" column="over_time"/>
+        <result property="ovrTimeReason" column="ovr_time_reason"/>
+        <result property="managerAccept" column="manager_accept"/>
+        <result property="presidentAccept" column="president_accept"/>
+        <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
+        <result property="ownerCode" column="owner_code"/>
+    </resultMap>
+
+    <resultMap id="RetirementResultMap" type="com.ohgiraffers.semiproject.manager.model.dto.RetirementDTO">
+        <id property="documentNo" column="document_no"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="deadline_date" column="deadline_date"/>
+        <result property="type" column="type"/>
+        <result property="retireDate" column="retire_date"/>
+        <result property="yearService" column="year_service"/>
+        <result property="retireReason" column="retire_reason"/>
+        <result property="managerAccept" column="manager_accept"/>
+        <result property="presidentAccept" column="president_accept"/>
+        <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
+        <result property="ownerCode" column="owner_code"/>
+    </resultMap>
+
+    <resultMap id="VacPaymentResultMap" type="com.ohgiraffers.semiproject.manager.model.dto.VacPaymentDTO">
+        <id property="documentNo" column="document_no"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="deadline_date" column="deadline_date"/>
+        <result property="type" column="type"/>
+        <result property="vacStartDate" column="vac_start_date"/>
+        <result property="vacEndDate" column="vac_end_date"/>
+        <result property="vacReason" column="vac_reason"/>
+        <result property="managerAccept" column="manager_accept"/>
+        <result property="presidentAccept" column="president_accept"/>
+        <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
+        <result property="ownerCode" column="owner_code"/>
+    </resultMap>
+
+    <select id="getCacPaymentList" resultMap="CacPaymentResultMap">
+        select
+            emp_code,
+            deadline_date,
+            type,
+            manager_accept,
+            president_accept,
+            progress_code
+        from
+            tbl_cacpayment
+        where
+            admin_code = #{code} or owner_code = #{code}
+    </select>
+
+    <select id="getOverTimeList" resultMap="OverTimeResultMap">
+        select
+            emp_code,
+            deadline_date,
+            type,
+            manager_accept,
+            president_accept,
+            progress_code
+        from
+            tbl_overtime
+        where
+            admin_code = #{code} or owner_code = #{code}
+    </select>
+
+    <select id="getRetirement" resultMap="RetirementResultMap">
+        select
+            emp_code,
+            deadline_date,
+            type,
+            manager_accept,
+            president_accept,
+            progress_code
+        from
+            tbl_retirement
+        where
+            admin_code = #{code} or owner_code = #{code}
+    </select>
+
+    <select id="getVacPayment" resultMap="VacPaymentResultMap">
+        select
+            emp_code,
+            deadline_date,
+            type,
+            manager_accept,
+            president_accept,
+            progress_code
+        from
+            tbl_vacpayment
+        where
+            admin_code = #{code} or owner_code = #{code}
+    </select>
+</mapper>
