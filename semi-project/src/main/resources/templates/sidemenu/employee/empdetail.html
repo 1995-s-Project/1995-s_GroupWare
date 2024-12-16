@@ -99,12 +99,11 @@
                 <div th:each="comment : ${comment}">
                     <div class="comment-item">
                         <p th:text="${comment.text}"></p>
-                        <small th:text="${#dates.format(comment.createdDate, 'yyyy-MM-dd')}"></small>
+                        <small th:text="'작성자 : ' + ${name}"></small>
+                        <br>
+                        <small th:text="'날짜 : ' + ${#dates.format(comment.createdDate, 'yyyy-MM-dd')}"></small>
                         <small style="margin-left: auto">
-                            <a th:href="@{/sidemenu/employee/{empCode}/update(empCode=${emp.empCode})}">📃 수정</a>
-                        </small>
-                        <small style="margin-left: auto">
-                            <a th:href="@{/sidemenu/employee/{empCode}/delete(empCode=${emp.empCode})}">📃 삭제</a>
+                            <a th:href="@{/sidemenu/employee/{empCode}/delete(empCode=${emp.empCode})}" class="delete">📃 삭제</a>
                         </small>
                     </div>
                 </div>
