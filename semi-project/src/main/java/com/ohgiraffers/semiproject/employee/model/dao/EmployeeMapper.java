@@ -28,4 +28,5 @@ public interface EmployeeMapper {
 
     List<EmployeeJoinListDTO> empAllSelect();
 
+    void commentDelete(CommentDTO commentDTO);
 }

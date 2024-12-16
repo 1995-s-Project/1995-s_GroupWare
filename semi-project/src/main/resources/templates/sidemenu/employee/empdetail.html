@@ -89,28 +89,30 @@
         <div class="comment-section">
             <h3>댓글</h3>
             <form action="/comments/add" method="POST">
-                <textarea name="text" class="comment-box" rows="4" placeholder="기분좋은 소식이나 덕담 한마디씩 건네주세요" required></textarea>
+                <textarea name="text" class="comment-box" rows="4" placeholder="기분좋은 소식이나 덕담 한마디씩 건네주세요.." required></textarea>
                 <input type="hidden" name="empCode" th:value="${emp.empCode}" /> <!-- empCode 전달 -->
                 <button type="submit" class="submit-button">댓글 작성</button>
             </form>
 
             <!-- 댓글 목록 -->
             <div class="comment-list">
-                <div th:each="comment : ${comment}">
+                <div th:if="${#lists.isEmpty(comment)}">
+                    <p class="no-comment">댓글이 없어요... 도움의손길을 주세요..</p> <!-- 댓글이 없을 때 출력 -->
+                </div>
+                <div th:unless="${#lists.isEmpty(comment)}" th:each="comment : ${comment}">
                     <div class="comment-item">
                         <p th:text="${comment.text}"></p>
                         <small th:text="'작성자 : ' + ${name}"></small>
                         <br>
-                        <small th:text="'날짜 : ' + ${#dates.format(comment.createdDate, 'yyyy-MM-dd')}"></small>
+                        <small th:text="'날짜 : ' + ${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></small>
                         <small style="margin-left: auto">
-                            <a th:href="@{/sidemenu/employee/{empCode}/delete(empCode=${emp.empCode})}" class="delete">📃 삭제</a>
-
-
-
-                            
+                            <a th:href="@{/sidemenu/employee/{empCode}/comment/{id}/delete(empCode=${emp.empCode}, id=${comment.id})}" class="delete">📃 삭제</a>
                         </small>
                     </div>
                 </div>
+            </div>
+            <div align="center" class="view-footer">
+                <a class="view-page" th:href="@{/sidemenu/employee}">목록</a>
             </div>
         </div>
     </div>

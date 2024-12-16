@@ -2,8 +2,8 @@ package com.ohgiraffers.semiproject.employee.model.dto;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
 
-import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -20,8 +20,12 @@ public class CommentDTO {
     @Column(name = "emp_code")
     private Integer empCode;
 
-    @Column(name = "comment_contents")  // 컬럼 이름이 "comment_contents"
+    @Column(name = "comment_contents")
     private String text;
 
-    private Date createdDate = new Date();
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+
+    @Column(name = "comment_emp_code")
+    private String commentEmpCode;
 }

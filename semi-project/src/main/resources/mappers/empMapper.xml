@@ -51,6 +51,14 @@
         </association>
     </resultMap>
 
+    <resultMap id="CommentResultMap" type="com.ohgiraffers.semiproject.employee.model.dto.CommentDTO">
+        <result property="id" column="id" />
+        <result property="empCode" column="emp_code" />
+        <result property="text" column="comment_contents" />
+        <result property="createdDate" column="created_date" jdbcType="TIMESTAMP" />
+        <result property="commentEmpCode" column="comment_emp_code" />
+    </resultMap>
+
     <!-- 직원 전체조회 -->
     <select id="empAll" resultMap="empResult">
         SELECT
@@ -90,17 +98,16 @@
     </select>
 
     <insert id="saveComment" parameterType="com.ohgiraffers.semiproject.employee.model.dto.CommentDTO">
-        INSERT INTO tbl_comment (emp_code, comment_contents, created_date)
-        VALUES (#{empCode}, #{text}, NOW())
+        INSERT INTO tbl_comment (emp_code, comment_contents, comment_emp_code)
+        VALUES (#{empCode}, #{text}, #{commentEmpCode})
     </insert>
 
-    <select id="comment" resultType="com.ohgiraffers.semiproject.employee.model.dto.CommentDTO">
-        SELECT id, emp_code, comment_contents AS text, created_date
+    <select id="comment" resultMap="CommentResultMap">
+        SELECT id, emp_code, comment_contents, created_date, comment_emp_code
         FROM tbl_comment
         WHERE emp_code = #{empCode}
         ORDER BY created_date DESC
     </select>
-
 
     <!-- 직원 검색 -->
     <select id="empSearch" resultMap="empResult">
@@ -136,4 +143,11 @@
         join tbl_dept c on (a.dept_code = c.dept_code)
 
     </select>
+
+    <delete id="commentDelete" parameterType="com.ohgiraffers.semiproject.employee.model.dto.CommentDTO">
+        DELETE FROM tbl_comment
+        WHERE id = #{id}
+        AND emp_code = #{empCode}
+        AND comment_emp_code = #{commentEmpCode}
+    </delete>
 </mapper>

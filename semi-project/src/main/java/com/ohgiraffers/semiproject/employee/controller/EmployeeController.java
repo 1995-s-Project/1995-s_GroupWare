@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.AbstractAuditable_.createdDate;
 
 @Controller
 public class EmployeeController {
@@ -36,11 +41,13 @@ public class EmployeeController {
         List<EmployeeDTOJOB> emp = employeeService.empAll(offset, size);
 
         long totalProducts = employeeService.getTotalProducts();
+
         int totalPages = (int) Math.ceil((double) totalProducts / size);
 
         PageDTO pageInfo = new PageDTO(page, size, totalPages);
 
         model.addAttribute("pageInfo", pageInfo);
+
         model.addAttribute("emp", emp);
 
         return "sidemenu/employee/employee";
@@ -50,64 +57,99 @@ public class EmployeeController {
     public String empSearch(@RequestParam String query, Model model,
                             @RequestParam(defaultValue = "0") int page,
                             @RequestParam(defaultValue = "15") int size) {
+
         int offset = page * size;
 
-        // 데이터 조회
         List<EmployeeDTOJOB> emp = employeeService.empSearch(query, offset, size);
 
-        // 전체 데이터 개수 조회
         long totalProducts = employeeService.getTotalProducts1();
+
         int totalPages = (int) Math.ceil((double) totalProducts / size);
 
-        // totalPages가 0일 경우 1페이지로 설정
         if (totalPages == 0) {
             totalPages = 1;
         }
 
-        // PageDTO 객체에 페이지 정보 설정
         PageDTO pageInfo = new PageDTO(page, size, totalPages);
 
-        // 모델에 페이지 정보, 검색 결과, 쿼리 파라미터 전달
         model.addAttribute("pageInfo", pageInfo);
-        model.addAttribute("emp", emp);
-        model.addAttribute("query", query);
 
-        System.out.println("Total Products: " + totalProducts);
-        System.out.println("Total Pages: " + totalPages);
-        System.out.println("Offset: " + offset);
+        model.addAttribute("emp", emp);
+
+        model.addAttribute("query", query);
 
         return "/sidemenu/employee/search";
     }
 
     @GetMapping("/employee/details/{empCode}")
     public String getEmployeeDetails(@PathVariable Integer empCode, Model model) {
-        // 직원 정보 조회
-        EmployeeDTOJOB employee = employeeService.empSelect(empCode);
-        System.out.println("Employee Object: " + employee);  // EmployeeDTOJOB 객체 확인
-        model.addAttribute("emp", employee);  // 직원 객체 전달
 
-        // 해당 직원의 댓글 목록 가져오기
-        List<CommentDTO> commentList = employeeService.comment(empCode);
-        System.out.println("Comment List: " + commentList);  // 댓글 목록 확인
-        model.addAttribute("comment", commentList);  // 댓글 목록 전달
+        EmployeeDTOJOB employee = employeeService.empSelect(empCode);
+
+        List<CommentDTO> comment = employeeService.comment(empCode);
 
         UserInfoResponse userInfo = userInfoService.getUserInfo();
-        String name = userInfo.getName();
+
+        if (comment == null) {
+            comment = new ArrayList<>();
+        }
+
+        String name = (userInfo != null) ? userInfo.getName() : "익명 사용자";
 
         model.addAttribute("name", name);
 
-        return "sidemenu/employee/empdetail";  // 상세 페이지로 이동
+        model.addAttribute("comment", comment);
+
+        model.addAttribute("emp", employee);
+
+        return "sidemenu/employee/empdetail";
     }
 
     @PostMapping("/comments/add")
     public String addComment(@RequestParam Integer empCode, @RequestParam String text) {
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String code = userInfo.getCode();
 
         CommentDTO commentDTO = new CommentDTO();
+
         commentDTO.setEmpCode(empCode);
+
         commentDTO.setText(text);
+
+        commentDTO.setCommentEmpCode(code);
+
+        LocalDateTime createdDate = LocalDateTime.now();
+
+        commentDTO.setCreatedDate(createdDate);
 
         employeeService.saveComment(commentDTO);
 
         return "redirect:/employee/details/" + empCode;
     }
+
+    @GetMapping("/sidemenu/employee/{empCode}/comment/{id}/delete")
+    public String commentDelete(@PathVariable Integer empCode, @PathVariable Integer id) {
+
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        String code = userInfo.getCode();
+
+        CommentDTO commentDTO = new CommentDTO();
+
+        commentDTO.setEmpCode(empCode);
+
+        commentDTO.setId(id);
+
+        commentDTO.setCommentEmpCode(code);
+
+        employeeService.commentDelete(commentDTO);
+
+        return "redirect:/employee/details/" + empCode;
+    }
+
+    @GetMapping("/sidemenu/employee/employee")
+    public void employee() {
+
+    }
 }
+
