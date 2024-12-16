@@ -25,3 +25,4 @@ public class BoardDTO {
     private String boardContents;
     private String empCode;
 }
+

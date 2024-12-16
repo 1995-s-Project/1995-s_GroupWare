@@ -62,7 +62,7 @@ public class EmployeeController {
 
         List<EmployeeDTOJOB> emp = employeeService.empSearch(query, offset, size);
 
-        long totalProducts = employeeService.getTotalProducts1();
+        long totalProducts = employeeService.getTotalProducts1(query);
 
         int totalPages = (int) Math.ceil((double) totalProducts / size);
 
@@ -77,6 +77,8 @@ public class EmployeeController {
         model.addAttribute("emp", emp);
 
         model.addAttribute("query", query);
+
+        model.addAttribute("isEmpty", emp.isEmpty());
 
         return "/sidemenu/employee/search";
     }

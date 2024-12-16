@@ -58,7 +58,7 @@
                     <button class="styled-button" onclick="location.href='/sidemenu/board/regist'">📝 글쓰기</button>
                 </div>
                 <div>
-                    <form action="/sidemenu/board/search" method="get" style="display: flex; align-items: center;">
+                    <form action="/sidemenu/board/search" method="get">
                         <input class="search" type="text" name="query" placeholder="제목을 입력해주세요..." required>
                         <button type="submit" class="styled-button">🔎 검색</button>
                     </form>
@@ -75,7 +75,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="board, stat : ${boardSearch}">
+                <!-- 검색결과 X -->
+                <tr th:if="${boardSearch.isEmpty}">
+                    <td colspan="5" style="text-align: center;">검색 결과가 없습니다</td>
+                </tr>
+                <tr th:each="board, stat : ${boardSearch}" th:if="${!boardSearch.isEmpty}">
                     <td class="code-style" th:text="${boardSearch.size() - stat.index}"></td>
                     <td>
                         <a class="styled-link" th:href="@{/sidemenu/board/{boardCode}(boardCode=${board.boardCode})}"

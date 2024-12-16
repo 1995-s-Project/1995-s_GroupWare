@@ -18,12 +18,12 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-//  게시판 전체 조회 및 페이징처리
+    //  게시판 전체 조회 및 페이징처리
     @GetMapping("/sidemenu/board")
     public String board(Model model,
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "15") int size) {
-        
+
         int offset = page * size;
 
         List<BoardDTO> boardList = boardService.selectAll(offset, size);
@@ -35,38 +35,45 @@ public class BoardController {
 
         model.addAttribute("boardList", boardList);
         model.addAttribute("pageInfo", pageInfo);
-        
+
         return "sidemenu/board/board";
     }
-//  검색기능
-@GetMapping("sidemenu/board/search")
-public String search(@RequestParam String query,
-                     @RequestParam(defaultValue = "0") int page,
-                     @RequestParam(defaultValue = "15") int size,
-                     Model model) {
+    //  검색기능
+    @GetMapping("sidemenu/board/search")
+    public String search(@RequestParam String query,
+                         @RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "15") int size,
+                         Model model) {
 
-    int offset = page * size;
+        int offset = page * size;
 
-    List<BoardDTO> boardSearch = boardService.search(query, offset, size);
+        List<BoardDTO> boardSearch = boardService.search(query, offset, size);
 
-    // 전체 게시물 수 (검색된 게시물 개수)
-    long totalProducts = boardService.getTotalProducts1();  // 여기서 getTotalProducts1()을 사용합니다.
-    int totalPages = (int) Math.ceil((double) totalProducts / size);
+        long totalProducts = boardService.getTotalProducts1(query);
 
-    PageDTO pageInfo = new PageDTO(page, size, totalPages);
+        int totalPages = (int) Math.ceil((double) totalProducts / size);
 
-    model.addAttribute("boardSearch", boardSearch);  // boardSearch 모델에 저장
-    model.addAttribute("pageInfo", pageInfo);
-    model.addAttribute("query", query);  // 검색어 쿼리도 전달
-    
+        if (totalPages == 0) {
+            totalPages = 1;
+        }
 
-    return "sidemenu/board/search";
-}
+        PageDTO pageInfo = new PageDTO(page, size, totalPages);
 
-//  글쓰기로가기
+        model.addAttribute("boardSearch", boardSearch);
+
+        model.addAttribute("pageInfo", pageInfo);
+
+        model.addAttribute("query", query);
+
+        model.addAttribute("isEmpty", boardSearch.isEmpty());
+
+        return "sidemenu/board/search";
+    }
+
+    //  글쓰기로가기
     @GetMapping("/sidemenu/board/regist")
     public void boardRegist(){}
-//  글쓰기
+    //  글쓰기
     @PostMapping("/sidemenu/board/regist")
     public String regist(@ModelAttribute BoardDTO board){
 
@@ -78,7 +85,7 @@ public String search(@RequestParam String query,
 
         return "redirect:/sidemenu/board";
     }
-//  게시판 상세조회
+    //  게시판 상세조회
     @GetMapping("/sidemenu/board/{boardCode}")
     public String title(@PathVariable Integer boardCode, Model model) {
 
@@ -89,7 +96,7 @@ public String search(@RequestParam String query,
 
         return "sidemenu/board/title";
     }
-//  게시글 삭제
+    //  게시글 삭제
     @GetMapping("/sidemenu/board/{boardCode}/delete")
     public String delete(@PathVariable Integer boardCode) {
 
@@ -97,7 +104,7 @@ public String search(@RequestParam String query,
 
         return "redirect:/sidemenu/board";
     }
-//  수정창으로가기
+    //  수정창으로가기
     @GetMapping("/sidemenu/board/{boardCode}/update")
     public String update(@PathVariable Integer boardCode, Model model){
 
@@ -107,7 +114,7 @@ public String search(@RequestParam String query,
 
         return "sidemenu/board/update";
     }
-//  게시판 수정
+    //  게시판 수정
     @PostMapping("/sidemenu/board/update")
     public String boardUpdate(@ModelAttribute BoardDTO boardDTO) {
 
@@ -115,7 +122,7 @@ public String search(@RequestParam String query,
 
         return "redirect:/sidemenu/board";
     }
-//  메인으로 가기
+    //  메인으로 가기
     @GetMapping("/sidemenu/board/board")
     public void inventory() {}
 }

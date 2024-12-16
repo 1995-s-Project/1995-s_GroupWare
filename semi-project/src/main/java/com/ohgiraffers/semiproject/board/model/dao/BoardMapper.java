@@ -16,7 +16,7 @@ public interface BoardMapper {
                                  @Param("offset") int offset,
                                  @Param("size") int size);
 
-    long countSearch();
+    long countSearch(String query);
 
     void boardRegist(BoardDTO board);
 
