@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -46,6 +47,9 @@ public class AnimalsController {
         return "sidemenu/animals/animals";
     }
 
+    @GetMapping("sidemenu/animals/animals")
+    public void animalHome(){}
+
     // 구조동물 상세페이지
     @GetMapping("/animals/detailAnimal/{animalCode}")
     public String detailAnimal(@PathVariable String animalCode,Model model){
@@ -75,12 +79,6 @@ public class AnimalsController {
     @ResponseBody
     public List<BreedDTO> findCategoryList(){
         return animalsService.findBreed();
-    }
-
-    @GetMapping(value = "/animals/code", produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public List<AnimalDTO> findAnimalCode(){
-        return animalsService.findAnimalCode();
     }
 
     // 구조동물 등록
@@ -196,12 +194,16 @@ public class AnimalsController {
 
     @PostMapping("/inventory/update")
     public String inventoryUpdate(@RequestParam int itemNum,
-                                  @RequestParam String itemCode){
-        System.out.println("itemNum = " + itemNum);
-        System.out.println("itemCode = " + itemCode);
-        animalsService.inventoryUpdate(itemNum, itemCode);
+                                  @RequestParam String itemCode,
+                                  RedirectAttributes redirectAttributes) {
 
+        animalsService.inventoryUpdate(itemNum, itemCode); // 재고 업데이트
+
+        // 쿼리 파라미터로 updateSuccess 값을 전달
+        redirectAttributes.addAttribute("updateSuccess", true);
 
         return "redirect:/sidemenu/stock";
     }
+
+
 }

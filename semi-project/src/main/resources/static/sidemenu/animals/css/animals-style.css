@@ -1,5 +1,5 @@
 .change-screen-animals{
-    margin-top: 350px;
+    margin-top: 288px;
     width: 1850px;
     height: auto;
     background-color: white;
@@ -39,8 +39,14 @@ body {
 
     width: 1440px;
     padding: 20px;
-    background-color: rgb(248, 231, 235);
+    background: #ffc4c4;
     border-radius: 10px;
+}
+
+hr {
+    border: none;           /* 기본 테두리 제거 */
+    height: 2px;            /* 밑줄의 두께 설정 */
+    background-color: white; /* 밑줄 색상을 흰색으로 설정 */
 }
 
 /* 동물 검색 그룹 */
@@ -57,15 +63,6 @@ body {
     justify-content: space-between; /* 요소 간 간격을 동일하게 분배 */
     gap: 20px;  /* 각 요소 사이에 20px 간격 추가 */
 }
-
-/* 라벨 스타일 */
-.animal-search-group label {
-    font-size: 1rem;
-    color: #d14b87;
-    margin-right: 10px; /* label과 input 간 간격 */
-    width: 100px; /* label의 고정 너비 */
-}
-
 
 .animalCode-group select{
         width: 300px; /* select와 input의 너비를 100%로 설정 */
@@ -108,7 +105,13 @@ body {
 }
 
 .btn {
-
+    padding: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
 }
 
 /* 이미지 */

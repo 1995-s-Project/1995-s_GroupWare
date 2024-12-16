@@ -21,10 +21,6 @@ public class AnimalsService {
     }
 
 // -----------------------------------------구조동물 페이지-----------------------------------------
-    // 검색 동물코드 비동기처리
-    public List<AnimalDTO> findAnimalCode() {
-    return animalsMapper.findAnimalCode();
-}
     // 구조동물 전체조회 및 검색 동물조회
     public List<AnimalDTO> allAnimalAndSearchAnimals(int page, int limit, String animalCode, String typeCode, String breedCode, String gender, Date rescueDate) {
 
