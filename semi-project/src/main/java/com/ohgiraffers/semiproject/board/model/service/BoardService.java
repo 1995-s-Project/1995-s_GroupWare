@@ -66,7 +66,7 @@ public class BoardService {
             return boardMapper.countAll();
     }
 
-    public long getTotalProducts1() {
-            return boardMapper.countSearch();
+    public long getTotalProducts1(String query) {
+            return boardMapper.countSearch(query);
     }
 }

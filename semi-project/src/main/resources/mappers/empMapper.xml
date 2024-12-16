@@ -74,13 +74,6 @@
         ORDER BY emp_code
         LIMIT #{offset}, #{size}
     </select>
-
-    <!-- 전체 게시글 개수 조회 -->
-    <select id="countAll" resultType="long">
-        SELECT COUNT(*) FROM tbl_emp
-    </select>
-
-
     <!-- 직원 상세조회 -->
     <select id="empSelect" resultMap="empResult">
         SELECT
@@ -127,8 +120,21 @@
         LIMIT #{offset}, #{size}
     </select>
 
+    <!-- 조건부 검색 게시글 개수 조회 -->
     <select id="countAll1" resultType="long">
-        SELECT COUNT(*) FROM tbl_emp
+        SELECT COUNT(*)
+        FROM tbl_emp
+        <where>
+            <if test="query != null and query != ''">
+                emp_name LIKE CONCAT('%', #{query}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 전체 게시글 개수 조회 -->
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*)
+        FROM tbl_emp
     </select>
     
     <select id="empAllSelect" resultMap="employeeJoinListMap">

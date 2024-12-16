@@ -33,6 +33,7 @@ body {
     width: 100%;
     border: none;
     margin-bottom: 20px;
+    height: 30%;
 }
 
 .post-list th, .post-list td {
@@ -107,15 +108,13 @@ body {
     font-size: 15px;
     border: 1px solid
     white; border-radius: 30px;
-
-
 }
 
 .title-search {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 13px;
+    margin-left: 78%;
+
 }
 
 .styled-button {
@@ -135,4 +134,13 @@ body {
 
 .styled-button:hover {
     background-color: #00532d;
+}
+
+.styled-link {
+    color: black;
+    text-decoration: none;
+}
+
+.styled-link:hover {
+    color: black; /* 호버 시 색상 변화 */
 }

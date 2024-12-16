@@ -55,7 +55,7 @@
         <div class="employee">
             <div class="title-search">
                 <div class="container">
-                    <form action="sidemenu/board/search" method="get" th:action="@{/sidemenu/employee/search}" style="display: flex; float: right;">
+                    <form action="sidemenu/board/search" method="get" th:action="@{/sidemenu/employee/search}">
                         <input class="search" type="text" name="query" placeholder="이름을 입력하세요..." required>
                         <button type="submit" class="styled-button">🔎 검색</button>
                     </form>
@@ -90,7 +90,7 @@
             <tr th:each="emp : ${emp}">
                 <td th:text="${emp.empCode}"></td>
                 <td >
-                    <a th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}" th:text="${emp.empName}"></a>
+                    <a th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}" th:text="${emp.empName}" class="styled-link"></a>
                 </td>
                 <td th:text="${emp.empEmail}"></td>
                 <td th:text="${emp.empPhone}"></td>

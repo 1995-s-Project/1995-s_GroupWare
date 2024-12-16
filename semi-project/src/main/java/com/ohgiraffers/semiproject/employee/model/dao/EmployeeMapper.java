@@ -18,7 +18,7 @@ public interface EmployeeMapper {
     List<EmployeeDTOJOB> empSearch(String query, @Param("offset") int offset,
                                                  @Param("size") int size);
 
-    long countAll1();
+    long countAll1(String query);
 
     EmployeeDTOJOB empSelect(Integer empCode);
 

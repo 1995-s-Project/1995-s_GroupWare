@@ -57,9 +57,9 @@ public class EmployeeService {
         return result;
     }
 
-    public long getTotalProducts1() {
+    public long getTotalProducts1(String query) {
 
-        return employeeMapper.countAll1();
+        return employeeMapper.countAll1(query);
     }
 
     public List<EmployeeJoinListDTO> empAllSelect() {

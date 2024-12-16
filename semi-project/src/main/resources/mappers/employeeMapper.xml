@@ -25,19 +25,29 @@
     <select id="search" resultMap="selectBoard">
         SELECT *
         FROM tbl_board
-        WHERE (#{query} IS NULL OR #{query} = '' OR board_title LIKE CONCAT('%', #{query}, '%'))
-        ORDER BY board_code DESC
+        WHERE announce_ok = 'Y'
+        <if test="query != null and query != ''">
+            AND board_title LIKE CONCAT('%', #{query}, '%')
+        </if>
         LIMIT #{offset}, #{size}
     </select>
-
     <!-- 전체 게시글 개수 조회 -->
     <select id="countAll" resultType="long">
-        SELECT COUNT(*) FROM tbl_board WHERE announce_ok = 'Y'
+        SELECT COUNT(*)
+        FROM tbl_board
+        WHERE announce_ok = 'Y'
     </select>
 
     <!-- 게시글 검색 개수 조회 -->
     <select id="countSearch" resultType="long">
-        SELECT COUNT(*) FROM tbl_board WHERE announce_ok = 'Y'
+        SELECT COUNT(*)
+        FROM tbl_board
+        <where>
+            announce_ok = 'Y'
+            <if test="query != null and query != ''">
+                AND board_title LIKE CONCAT('%', #{query}, '%')
+            </if>
+        </where>
     </select>
     <!-- 게시글 추가 -->
     <insert id="boardRegist" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
