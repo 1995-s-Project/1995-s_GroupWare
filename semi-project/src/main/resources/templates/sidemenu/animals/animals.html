@@ -65,9 +65,9 @@
                     <div class="typeCode-group">
                         <label for="typeCode">분류 :</label>
                         <select id="typeCode" name="typeCode">
-                            <option class="default-option">선택</option>
-                            <option value="C1">고양이</option>
-                            <option value="D1">개</option>
+                            <option class="default-option" value="">선택</option>
+                            <option value="C1" th:selected="${param.typeCode == 'C1'}">고양이</option>
+                            <option value="D1" th:selected="${param.typeCode == 'D1'}">개</option>
                         </select>
                     </div>
                     <div class="breedCode-group">
@@ -77,7 +77,7 @@
                     <div class="gender-group">
                         <label for="gender">성별 :</label>
                         <select id="gender" name="gender">
-                            <option class="default-option">선택</option>
+                            <option class="default-option" value="">선택</option>
                             <option value="M">M</option>
                             <option value="F">F</option>
                         </select>
@@ -90,6 +90,7 @@
                     <hr>
                     <div class="btn-container">
                         <button class="btn">🔍조회하기</button>
+                        <button class="btn" th:href="@{/sidemenu/animals}">📃목록으로</button>
                     </div>
                 </div>
             </form>
@@ -324,5 +325,5 @@
                 breedSelect.appendChild(option);
             });
     }
-    
+
 </script>

@@ -89,6 +89,20 @@
                         <button type="submit">수정</button>
                     </form>
                 </td>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // 쿼리 파라미터에서 updateSuccess 값을 가져오기
+                        var urlParams = new URLSearchParams(window.location.search);
+                        var updateSuccess = urlParams.get('updateSuccess');
+
+                        if (updateSuccess === 'true') {
+                            alert("재고 수정이 완료되었습니다!");
+
+                            // 쿼리 파라미터에서 updateSuccess를 제거
+                            history.replaceState(null, '', window.location.pathname);  // 쿼리 파라미터 제거
+                        }
+                    });
+                </script>
             </tr>
             </tbody>
         </table>
@@ -96,3 +110,4 @@
 </div>
 </body>
 </html>
+
