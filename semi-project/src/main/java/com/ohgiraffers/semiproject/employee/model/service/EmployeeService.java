@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -39,6 +40,7 @@ public class EmployeeService {
     }
 
     public List<CommentDTO> comment(Integer empCode) {
+
         return employeeMapper.comment(empCode);  // Mapper에서 댓글 목록 가져오기
     }
 
@@ -62,5 +64,11 @@ public class EmployeeService {
 
     public List<EmployeeJoinListDTO> empAllSelect() {
         return employeeMapper.empAllSelect();
+    }
+
+    @Transactional
+    public void commentDelete(CommentDTO commentDTO) {
+
+        employeeMapper.commentDelete(commentDTO);
     }
 }

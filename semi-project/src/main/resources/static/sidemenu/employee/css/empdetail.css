@@ -62,6 +62,7 @@ th {
     font-size: 14px;
     margin-bottom: 10px;
     background: #fdfdfd;
+    color: #888888;
 }
 
 .submit-button {
@@ -80,19 +81,17 @@ th {
 }
 
 .comment-list {
-    max-height: 180px; /* 최대 높이 설정 */
+    max-height: 200px; /* 최대 높이 설정 */
     overflow-y: auto; /* 스크롤바 활성화 */
     border: 1px solid #ddd;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
     border-radius: 10px;
     background: #fdfdfd;
 }
 
 .comment-item {
     padding: 10px;
-
-
 }
 
 .comment-item:last-child {
@@ -101,7 +100,7 @@ th {
 
 /* 스크롤바 스타일 (선택 사항) */
 .comment-list::-webkit-scrollbar {
-    width: 8px; /* 스크롤바 너비 */
+    width: 10px; /* 스크롤바 너비 */
 }
 
 .comment-list::-webkit-scrollbar-thumb {
@@ -159,4 +158,22 @@ th {
 .delete {
     display: flex;
     justify-content: flex-end;
+    color: #888888;
+    width: 50px;
+    margin-left: 97%;
+    text-decoration: none;
 }
+
+small {
+    color: #888888;
+}
+
+.view-footer {
+    margin-top: 10px;
+}
+
+.no-comment {
+    color: #888888;
+    font-size: 14px;
+}
+
