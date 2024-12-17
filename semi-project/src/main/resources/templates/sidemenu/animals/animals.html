@@ -53,14 +53,11 @@
 <div class="body-main">
     <div class="change-screen-animals">
         <div id="change-screen-content">
+            <div class="animal">
             <!--  검색  -->
             <div class="form-container">
             <form th:action="@{/sidemenu/animals}" method="get" class="search-form">
                 <div class="search">
-                    <div class="animalCode-group">
-                        <label for="animalCode">동물등록번호 :</label>
-                        <select id="animalCode" name="animalCode"></select>
-                    </div>
                     <div class="animal-search-group-inline">
                     <div class="typeCode-group">
                         <label for="typeCode">분류 :</label>
@@ -96,9 +93,12 @@
             </form>
             </div>
 
-            <!--  동물 리스트 테이블  -->
-            <div class="animals">
+            <!--  동물 리스트 -->
+            <div class="animalList">
                 <div class="i-d-u-btn-group">
+                    <div class="count">
+                        전체 <span th:text="${totalRecords}"></span> 건
+                    </div>
                     <div class="updateAdoption">
                         <a href="javascript:sendAdoption();">입양</a>
                     </div>
@@ -110,67 +110,45 @@
                     </div>
                 </div>
 
-                <table border="1" class="animals-list">
-                    <thead>
-                        <tr>
-                            <th style="width: 30px;">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" id="allCheckBox" onclick="allChecked()">
-                                </label>
-                            </th>
-                            <th style="width: 80px;">담당자</th>
-                            <th style="width: 150px;">구조 된 날짜</th>
-                            <th style="width: 50px;">사진</th>
-                            <th style="width: 100px;">동물등록번호</th>
-                            <th style="width: 70px;">분류</th>
-                            <th style="width: 170px;">품종</th>
-                            <th style="width: 50px;">성별</th>
-                            <th style="width: 50px;">나이</th>
-                            <th style="width: 270px;">구조 된 위치</th>
-                            <th style="width: 70px;">상태</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="admin-info" th:each="allList : ${list}">
-                            <td>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="chk" class="chk" onclick="chkClicked()" th:value="${allList.animalCode}">
-                                </label>
-                            </td>
-                            <td th:text="${allList.empDTO.empName}"></td>
-                            <td th:text="${#dates.format(allList.rescueDate, 'yyyy-MM-dd')}"></td>
-                            <td class="image">
-                                <img th:src="@{${allList.animalImage != null and allList.animalImage != '' ? '/img/animals/' + allList.animalImage : '/img/animals/defaultAnimal.jpg'}}"
-                                        alt="Animal Image" width="45px" height="45px"/>
-                            </td>
-                            <td th:text="${allList.animalCode}" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${allList.animalCode})}'|" class="animal-code-cell"></td>
-                            <td th:text="${allList.typeDTO.typeName}"></td>
-                            <td th:text="${allList.breedDTO.breedName}"></td>
-                            <td th:text="${allList.gender}"></td>
-                            <td th:text="${allList.age}"></td>
-                            <td th:text="${allList.rescueLocation}"></td>
-                            <td th:text="${allList.animalStatus}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="card-container">
+                    <div class="card" th:each="allList : ${list}">
+                        <div class="card-image">
+                            <img th:src="@{${allList.animalImage != null and allList.animalImage != '' ? '/img/animals/' + allList.animalImage : '/img/animals/defaultAnimal.jpg'}}"
+                                 alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${allList.animalCode})}'|"/>
+                        </div>
+                        <div class="card-status"
+                             th:style="${allList.animalStatus == '공고중' ? 'background-color: #00827F;' :
+                                        (allList.animalStatus == '보호중' ? 'background-color: #4CAF50;' : 'background-color: #FF9800;')}">
+                            <span th:text="${allList.animalStatus}"></span>
+                        </div>
+                        <p class="card-body">
+                            <span class="by-name" th:text="${allList.typeDTO.typeName}"></span>/
+                            <span class="date" th:text="${allList.breedDTO.breedName}"></span>
+                        </p>
+                        <label class="card-title">
+                            <input type="checkbox" name="chk" class="chk" onclick="chkClicked()" th:value="${allList.animalCode}">
+                            <span th:text="${allList.animalCode}"></span>
+                        </label>
+                        <p class="footer" th:text="${#dates.format(allList.rescueDate, 'yyyy-MM-dd')}"></p>
+                        <p class="footer">구조 된 날짜</p>
+                    </div>
+                </div>
 
                 <div class="page-btn-group" role="group" >
                     <button type="button" class="page-btn"
                             th:each="i : ${#numbers.sequence(1, totalPages)}"
                             th:text="${i}"
                             th:classappend="${currentPage == i ? 'btn-primary' : ''}"
-                            th:onclick="|location.href='/sidemenu/animals?page=' + ${i} + '&limit=10'|">
+                            th:onclick="|location.href='/sidemenu/animals?page=' + ${i} + '&limit=8'|">
                     </button>
                 </div>
             </div>
-
-
+            </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-
 <script>
     // 체크박스 전체 선택 클릭 이벤트
     function allChecked(target){

@@ -26,7 +26,7 @@ public class AnimalsController {
     // 구조 동물 페이지
     @GetMapping("/sidemenu/animals")
     public String animals(@RequestParam(defaultValue = "1") int page,
-                          @RequestParam(defaultValue = "10") int limit,
+                          @RequestParam(defaultValue = "8") int limit,
                           @RequestParam(required = false) String animalCode,
                           @RequestParam(required = false) String typeCode,
                           @RequestParam(required = false) String breedCode,
@@ -40,6 +40,7 @@ public class AnimalsController {
         // 페이지 네비게이션 정보 추가
         int totalRecords = animalsService.getTotalAnimalCount(animalCode, typeCode, breedCode, gender, rescueDate); // 총 레코드 수 조회
         int totalPages = (int) Math.ceil((double) totalRecords / limit);
+        model.addAttribute("totalRecords",totalRecords);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
         model.addAttribute("limit", limit);
