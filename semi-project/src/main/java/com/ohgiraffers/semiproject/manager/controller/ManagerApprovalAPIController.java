@@ -41,4 +41,18 @@ public class ManagerApprovalAPIController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/api/approvalUser")
+    public ResponseEntity<ApprovalUserDTO> approvalUser() {
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        String code = userInfo.getCode();
+        String name = userInfo.getName();
+        String deptCode = userInfo.getDepartment();
+
+        ApprovalUserDTO response = new ApprovalUserDTO(code, name, deptCode);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
