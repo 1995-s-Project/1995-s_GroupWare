@@ -1,16 +1,24 @@
 .change-screen-animals{
-    margin-top: 288px;
+    width: 1850px;
+    height: 800px;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 3%;
+    color: black;
+}
+
+#change-screen-content{
     width: 1850px;
     height: auto;
     background-color: white;
     border-radius: 10px;
-    margin-bottom: 3%;
     color: #000000;
 }
 /* Reset some default styles */
 body, table {
+    font-family: "SCoreDream", "Malgun Gothic", "AppleGothic", sans-serif;
     margin: 0;
-    padding: 0;
+    padding-bottom: 220px;
 }
 
 /* Basic styling */
@@ -19,6 +27,7 @@ body {
 }
 
 .form-container{
+    font-weight: bold;
     display: flex;
     justify-content: center;  /* 가로 중앙 정렬 */
     align-items: center;      /* 세로 중앙 정렬 */
@@ -37,9 +46,9 @@ body {
 /* Form Wrapper */
 .search-form {
 
-    width: 1440px;
-    padding: 20px;
-    background: #ffc4c4;
+    width: 1610px;
+    padding: 10px;
+    background: rgba(170, 170, 170, 0.26);
     border-radius: 10px;
 }
 
@@ -114,48 +123,116 @@ hr {
     cursor: pointer;
 }
 
-/* 이미지 */
-.image {
-    object-fit: cover;  /* 이미지를 셀 크기에 맞게 자르면서 비율을 유지 */
-}
-.animals {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* 동물 테이블 */
-.animals-list {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ddd;
-    margin-bottom: 30px;
-    bottom: 50px;
-
-}
-
-.animals-list th, .animals-list td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-
-.animals-list th {
-    background: #fd9494;
-}
-
-/* 등록, 삭제, 입양 버튼 */
-.i-d-u-btn-group {
+.card-container {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    margin-left: auto;
-    margin-bottom: 5px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1px;
+    padding: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
 }
 
-.insert, .delete, .updateAdoption {
-    margin-left: 10px; /* 버튼 간의 간격 */
+.card {
+    flex-basis: calc(25% - 20px);
+    min-width: 220px;
+    max-width: 300px;
+    padding: 25px;
+    width: 200px;
+    min-height: 150px;
+    border-radius: 20px;
+    background: rgb(255, 255, 255);
+    box-shadow: 5px 5px 8px #d8d8d8, -5px -5px 8px #d8d8d8;
+    transition: 0.4s;
+    margin-bottom: 20px;
+    position: relative;  /* 부모 요소에 relative 위치 추가 */
+}
+
+.card:hover {
+    translate: 0 -10px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+    margin: 15px 0 0 10px;
+}
+
+.card-status {
+    width: 60px;
+    height: 60px;
+    background-color: #00827F;
+    border-radius: 0 0 15px 15px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;  /* 부모를 기준으로 절대 위치 지정 */
+    top: 20px;  /* 상단에서 20px 떨어짐 */
+    right: 20px;  /* 오른쪽에서 20px 떨어짐 */
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    margin: 13px 0 0 10px;
+    color: rgb(184, 184, 184);
+    font-size: 18px;
+}
+
+.footer {
+    float: right;
+    margin: 28px 0 0 18px;
+    font-size: 15px;
+    color: #b3b3b3;
+}
+
+.by-name {
+    font-weight: 700;
+}
+
+.i-d-u-btn-group {
+    padding-top: 10px;
+    display: flex;                 /* 수평 배치 */
+    align-items: center;           /* 세로 가운데 정렬 */
+    width: 100%;  /* 부모 요소의 전체 너비를 사용 */
+}
+
+.count {
+    padding-left: 100px;
+    margin-right: auto;            /* 'count'는 왼쪽에 고정 */
+}
+
+.count span {
+        color: #00813e;
+        font-weight: 500;
+}
+
+.i-d-u-btn-group > div {
+    margin-left: 10px;             /* 각 버튼들 간의 간격 */
+}
+
+.i-d-u-btn-group > div:not(.count) {
+
+    margin-left: 10px;             /* 오른쪽 버튼들 간에 간격 추가 */
+}
+
+.delete {
+    padding-right: 110px;
 }
 
 .insert a, .delete a, .updateAdoption a {
@@ -169,41 +246,16 @@ hr {
     transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
 }
 
-.insert a{
-    background-color: #59df5e; /* 추가 버튼 배경색 */
+.insert a, .delete a, .updateAdoption a {
+    background-color: #aaaaaa; /* 추가 버튼 배경색 */
 }
 
-.insert a:hover {
-    background-color: #239f26; /* 추가 버튼 호버 시 색상 */
+.insert a:hover, .delete a:hover , .updateAdoption a:hover {
+    background-color: #5a5a5a; /* 추가 버튼 호버 시 색상 */
 }
 
-.delete a {
-    background-color: #ff7043; /* 삭제 버튼 배경색 */
-}
 
-.delete a:hover {
-    background-color: #f4511e; /* 삭제 버튼 호버 시 색상 */
-}
 
-.updateAdoption a {
-    background-color: #05b1fa; /* 수정 버튼 배경색 */
-}
-
-.updateAdoption a:hover {
-    background-color: #0c749f; /* 수정 버튼 호버 시 색상 */
-}
-
-/* 동물 상세페이지 */
-.animal-code-cell {
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    cursor: pointer;
-}
-
-.animal-code-cell:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f0f0f0;
-}
 
 /* 페이징처리 버튼 */
 .page-btn-group {
@@ -211,24 +263,23 @@ hr {
     display: flex;
     justify-content: center;
     list-style: none;
-    padding: 0;
-    margin-top: 20px; /* 테이블과의 간격 조정 */
-    margin-bottom: 5px; /* 하단 여백 추가 */
+    padding-bottom: 40px; /* 하단 여백 추가 */
     position: static; /* 기본 위치 설정으로 변경 */
+
 }
 
 .page-btn {
     width: 30px;
     height: 30px;
-    background: #fd9494;
+    background: #aaaaaa;
     color: white;
     border-radius: 4px;
-    border: 1px #fd9494;
+    border: 1px #aaaaaa;
     margin: 0 3px; /* 각 페이지 아이템 간의 여백 */
 }
 
 .page-btn:hover {
-    background: #f83b3b;
+    background: #5a5a5a;
     color: white;
-    border: 1px #f83b3b;
+    border: 1px #5a5a5a;
 }
