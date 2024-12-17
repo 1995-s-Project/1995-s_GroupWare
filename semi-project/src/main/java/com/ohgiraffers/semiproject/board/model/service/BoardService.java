@@ -2,6 +2,7 @@ package com.ohgiraffers.semiproject.board.model.service;
 
 import com.ohgiraffers.semiproject.board.model.dao.BoardMapper;
 import com.ohgiraffers.semiproject.board.model.dto.BoardDTO;
+import com.ohgiraffers.semiproject.board.model.dto.BoardEmpDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,16 +21,16 @@ public class BoardService {
         return boardMapper.select();
     }
 
-    public List<BoardDTO> selectAll(int offset, int size) {
+    public List<BoardEmpDTO> selectAll(int offset, int size) {
 
-        List<BoardDTO> result = boardMapper.selectAll(offset, size);
+        List<BoardEmpDTO> result = boardMapper.selectAll(offset, size);
 
         return result;
     }
 
-    public List<BoardDTO> search(String query, int offset, int size) {
+    public List<BoardEmpDTO> search(String query, int offset, int size) {
 
-        List<BoardDTO> result = boardMapper.search(query, offset, size);
+        List<BoardEmpDTO> result = boardMapper.search(query, offset, size);
 
         return result;
     }

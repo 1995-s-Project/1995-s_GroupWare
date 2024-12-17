@@ -2,6 +2,7 @@ package com.ohgiraffers.semiproject.board.controller;
 
 
 import com.ohgiraffers.semiproject.board.model.dto.BoardDTO;
+import com.ohgiraffers.semiproject.board.model.dto.BoardEmpDTO;
 import com.ohgiraffers.semiproject.board.model.dto.PageDTO;
 import com.ohgiraffers.semiproject.board.model.service.BoardService;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ public class BoardController {
 
         int offset = page * size;
 
-        List<BoardDTO> boardList = boardService.selectAll(offset, size);
+        List<BoardEmpDTO> boardList = boardService.selectAll(offset, size);
 
         long totalProducts = boardService.getTotalProducts();
         int totalPages = (int) Math.ceil((double) totalProducts / size);
@@ -47,7 +48,7 @@ public class BoardController {
 
         int offset = page * size;
 
-        List<BoardDTO> boardSearch = boardService.search(query, offset, size);
+        List<BoardEmpDTO> boardSearch = boardService.search(query, offset, size);
 
         long totalProducts = boardService.getTotalProducts1(query);
 

@@ -83,7 +83,7 @@
                                    th:href="@{/sidemenu/board/{boardCode}(boardCode=${board.boardCode})}"
                                    th:text="${board.boardTitle}"></a>
                             </td>
-                            <td th:text="${board.empCode}"></td>
+                            <td th:text="${board.employeeDTO.empName}"></td>
                             <td th:text="${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></td>
                             <td th:text="${board.viewCnt}"></td>
                         </tr>
