@@ -13,18 +13,47 @@
         <result property="boardContents" column="board_contents"/>
         <result property="empCode" column="emp_code"/>
     </resultMap>
+
+    <resultMap id="selectJoinBoard" type="com.ohgiraffers.semiproject.board.model.dto.BoardEmpDTO">
+        <id property="boardCode" column="board_code"/>
+        <result property="announceOk" column="announce_ok"/>
+        <result property="boardDate" column="board_date"/>
+        <result property="viewCnt" column="view_cnt"/>
+        <result property="boardTitle" column="board_title"/>
+        <result property="boardContents" column="board_contents"/>
+        <result property="empCode" column="emp_code"/>
+        <association property="employeeDTO" javaType="com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO">
+            <id property="empCode" column="emp_code"/>
+            <result property="empPass" column="emp_pass"/>
+            <result property="empName" column="emp_name"/>
+            <result property="empEmail" column="emp_email"/>
+            <result property="empPhone" column="emp_phone"/>
+            <result property="hireDate" column="hire_date"/>
+            <result property="entDate" column="ent_date"/>
+            <result property="empGender" column="emp_gender"/>
+            <result property="empAddress" column="emp_address"/>
+            <result property="jobCode" column="job_code"/>
+            <result property="deptCode" column="dept_code"/>
+            <result property="authority" column="authority"/>
+            <result property="profile_image" column="profile_image"/>
+        </association>
+    </resultMap>
     <!-- 게시글 전체조회 -->
-    <select id="selectAll" resultMap="selectBoard">
-        SELECT *
-        FROM tbl_board
+    <select id="selectAll" resultMap="selectJoinBoard">
+        SELECT a.*,
+               b.emp_name
+        FROM tbl_board a
+        JOIN tbl_emp b ON a.emp_code = b.emp_code
         WHERE announce_ok = 'Y'
         ORDER BY board_code DESC
         LIMIT #{offset}, #{size}
     </select>
     <!-- 게시판 검색조회 -->
-    <select id="search" resultMap="selectBoard">
-        SELECT *
-        FROM tbl_board
+    <select id="search" resultMap="selectJoinBoard">
+        SELECT a.*,
+               b.emp_name
+        FROM tbl_board a
+        JOIN tbl_emp b ON a.emp_code = b.emp_code
         WHERE announce_ok = 'Y'
         <if test="query != null and query != ''">
             AND board_title LIKE CONCAT('%', #{query}, '%')

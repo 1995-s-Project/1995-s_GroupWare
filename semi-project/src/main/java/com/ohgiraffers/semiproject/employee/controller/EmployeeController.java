@@ -80,7 +80,7 @@ public class EmployeeController {
 
         model.addAttribute("isEmpty", emp.isEmpty());
 
-        return "/sidemenu/employee/search";
+        return "sidemenu/employee/search";
     }
 
     @GetMapping("/employee/details/{empCode}")
@@ -110,6 +110,7 @@ public class EmployeeController {
     @PostMapping("/comments/add")
     public String addComment(@RequestParam Integer empCode, @RequestParam String text) {
         UserInfoResponse userInfo = userInfoService.getUserInfo();
+
         String code = userInfo.getCode();
 
         CommentDTO commentDTO = new CommentDTO();
