@@ -19,4 +19,9 @@ public class MailService {
 
         return mailMapper.mailAllSelect();
     }
+
+//    public void registMail(MailDTO mailDTO) {
+//
+//        mailMapper.registMail(mailDTO);
+//    }
 }

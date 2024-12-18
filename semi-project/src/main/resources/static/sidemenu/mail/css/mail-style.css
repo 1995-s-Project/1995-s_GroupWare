@@ -13,6 +13,33 @@
     display: flex;
 }
 
+.post-list {
+    border-collapse: collapse;
+    border: none;
+    table-layout: fixed;
+    margin: 50px;
+}
+
+.post-list th, .post-list td {
+    padding: 8px;
+    text-align: center;
+}
+
+.post-list td {
+    border: 1px solid gainsboro;
+    border-left: none;
+    border-right: none;
+}
+
+.post-list th {
+    font-family: HY견고딕, sans-serif;
+    color: black;
+    font-weight: 900;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}
+
 .navigation {
     width: 300px;
     height: 750px;
@@ -105,6 +132,10 @@ input[type="checkbox"]#selectAllStars:checked + label#selectAllStarsLabel::befor
     cursor: pointer;
 }
 
+.select-item {
+    margin-left: 5px;
+}
+
 /* 체크된 상태에서 별 색상 변경 */
 .star-checkbox input[type="checkbox"]:checked + i {
     color: #ffcc00; /* 체크된 별은 노란색 */
@@ -139,7 +170,7 @@ input[type="checkbox"]#selectAllStars:checked + label#selectAllStarsLabel::befor
     margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 1500px;
+    width: 1425px;
     height: 600px;
     border-radius: 10px;
 }
@@ -222,7 +253,7 @@ textarea {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #ccc;
-    width: 500px;
+    width: 430px;
     border-radius: 8px;
     font-family: Arial, sans-serif;
     position: relative;
@@ -314,8 +345,8 @@ textarea {
 }
 
 .textbox2 {
-    width: 400px;
-    height: 40px;
+    width: 360px;
+    height: 30px;
     border-radius: 10px;
 }
 .styled-button2 {
@@ -331,7 +362,7 @@ textarea {
     cursor: pointer; /* 커서 포인터 */
     border-radius: 12px; /* 둥근 모서리 */
     float: right;
-    margin-right: 77px;
+    margin-right: 5px;
     margin-top: -25px;
     margin-bottom: 25px;
 }
@@ -366,3 +397,43 @@ textarea {
 .select-all input {
     margin-right: 10px;
 }
+
+.main-button {
+    margin-left: 50px;
+    margin-top: 15px;
+    margin-bottom: -35px;
+}
+
+.main-button1 {
+    font-size: 13px;
+    padding: 0;
+    text-decoration: none;
+    color: black;
+    background: none;
+    border: none;
+    display: inline;
+    cursor: pointer;
+}
+
+.main-button2 {
+    font-size: 13px;
+    padding: 0;
+    text-decoration: none;
+    color: black;
+    background: none;
+    border: none;
+    display: inline;
+    cursor: pointer;
+}
+
+.main-button3 {
+    font-size: 13px;
+    padding: 0;
+    text-decoration: none;
+    color: black;
+    background: none;
+    border: none;
+    display: inline;
+    cursor: pointer;
+}
+
