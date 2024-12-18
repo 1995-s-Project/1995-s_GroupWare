@@ -18,4 +18,7 @@ public interface ManagerApprovalMapper {
     List<RetirementDTO> getRetirement(String code);
 
     List<VacPaymentDTO> getVacPayment(String code);
+
+    // 연차 휴가 결재건 불러오기
+    VacPaymentDTO getVacRequest(String documentNo);
 }

@@ -13,7 +13,7 @@ public class RetirementDTO {
 
     private int documentNo;
     private String empCode;
-    private Date deadline_date;
+    private Date deadLineDate;
     private String type;
     private Date retireDate;
     private String yearService;
@@ -22,5 +22,6 @@ public class RetirementDTO {
     private String presidentAccept;
     private String progressCode;
     private String adminCode;
+    private String adminName;
     private String ownerCode;
 }

@@ -13,7 +13,7 @@ public class CacPaymentDTO {
 
     private int documentNo;
     private String empCode;
-    private Date deadline_date;
+    private Date deadLineDate;
     private String type;
     private Date cacStartDate;
     private Date cacEndDate;
@@ -23,5 +23,6 @@ public class CacPaymentDTO {
     private String presidentAccept;
     private String progressCode;
     private String adminCode;
+    private String adminName;
     private String ownerCode;
 }

@@ -7,6 +7,7 @@ import com.ohgiraffers.semiproject.manager.model.dto.RetirementDTO;
 import com.ohgiraffers.semiproject.manager.model.dto.VacPaymentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,5 +35,10 @@ public class ManagerApprovalService {
 
     public List<VacPaymentDTO> getVacPayment(String code) {
         return managerApprovalMapper.getVacPayment(code);
+    }
+
+    public VacPaymentDTO getVacRequest(String documentNo) {
+
+        return managerApprovalMapper.getVacRequest(documentNo);
     }
 }

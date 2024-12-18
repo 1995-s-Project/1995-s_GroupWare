@@ -25,22 +25,27 @@ function getDepartmentName(deptCode) {
     return departmentMap[deptCode] || '부서 정보 없음';
 }
 
-// 페이지가 로드될 때 실행되는 함수
 async function populateUserInfo() {
     const userInfo = await fetchUserInfo();
     if (userInfo) {
         document.getElementById('department').textContent = getDepartmentName(userInfo.deptCode);
         const authorElement = document.getElementById('author');
         authorElement.textContent = userInfo.name || '이름 정보 없음';
-        authorElement.setAttribute('data-emp-code', userInfo.empCode || '사번 정보 없음');
+        authorElement.setAttribute('empCode', userInfo.empCode || '사번 정보 없음');
     }
 
     const today = new Date();
     const formattedDate = today.getFullYear() + '-' +
         String(today.getMonth() + 1).padStart(2, '0') + '-' +
         String(today.getDate()).padStart(2, '0');
+
+    // 날짜를 표시하는 td 요소에 설정
     document.getElementById('date').textContent = formattedDate;
+
+    // 숨겨진 입력 필드에 날짜 값을 설정
+    document.getElementById('deadline_date').value = formattedDate;
 }
+
 
 // 직원 목록을 가져오는 함수
 async function fetchEmployeeList() {
@@ -133,9 +138,16 @@ async function openEmployeeModal() {
 function selectEmployee(employee) {
     const managerCell = document.getElementById('managerCell'); // id로 매니저 셀 선택
     managerCell.textContent = employee.empName; // 선택한 직원의 이름 추가
-    managerCell.setAttribute('data-emp-code', employee.empCode); // 사번 코드 추가
+    managerCell.setAttribute('adminCode', employee.empCode); // 사번 코드 추가
+    // managerCell.setAttribute('adminName', employee.empName); // 이 줄은 필요 없음
+
+    // 숨겨진 필드에 값 설정
+    document.getElementById('adminCode').value = employee.empCode || 'N/A'; // adminCode 설정
+    document.getElementById('adminName').value = employee.empName || 'N/A'; // adminName 설정
+
     closeEmployeeModal(); // 모달 닫기
 }
+
 
 
 // 모달 닫기
@@ -157,5 +169,62 @@ window.onclick = function(event) {
         closeEmployeeModal();
     }
 };
+
+// 날짜 입력 필드에 이벤트 리스너 추가
+document.getElementById('startDate').addEventListener('change', calculateTotalDays);
+document.getElementById('endDate').addEventListener('change', calculateTotalDays);
+
+function calculateTotalDays() {
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const totalDaysInput = document.getElementById('totalDays');
+
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+
+    // 날짜가 유효한 경우에만 계산
+    if (!isNaN(startDate) && !isNaN(endDate)) {
+        if (startDate > endDate) {
+            alert("시작일자보다 더 빠른 날짜로 설정하실 수 없습니다.");
+            endDateInput.value = ''; // 종료일자 필드를 비웁니다.
+            totalDaysInput.value = ''; // 총 일수도 비웁니다.
+            return; // 함수 종료
+        }
+
+        // 시작일과 종료일이 같으면 1일로 설정
+        if (startDate.getTime() === endDate.getTime()) {
+            totalDaysInput.value = 1;
+        } else {
+            const timeDiff = endDate - startDate; // 밀리초 단위 차이
+            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // 일 단위로 변환
+
+            // 종료일이 시작일 다음 날인 경우 2일로 설정
+            totalDaysInput.value = daysDiff + 1; // 시작일과 종료일이 다르면 1일 추가
+        }
+    } else {
+        totalDaysInput.value = ''; // 유효하지 않은 경우 빈 값으로 설정
+    }
+}
+
+document.getElementById('submitButton').addEventListener('click', function(event) {
+    event.preventDefault(); // 기본 동작 방지
+
+    const managerCell = document.getElementById('managerCell').innerHTML.trim();
+    const vacReason = document.querySelector('textarea[name="vacReason"]').value.trim();
+    const startDate = document.getElementById('startDate').value.trim();
+    const endDate = document.getElementById('endDate').value.trim();
+
+    // 입력 필드가 비어 있는지 확인
+    if (!managerCell || !vacReason || !startDate || !endDate) {
+        alert("모든 필드를 입력해 주세요.");
+        return; // 입력이 부족하면 함수 종료
+    }
+
+    // 모든 필드가 채워진 경우, 폼 제출 또는 다른 작업 수행
+    const confirmation = confirm("제출하시겠습니까?");
+    if (confirmation) {
+        document.getElementById('vacationFormRequest').submit(); // 폼 제출
+    }
+});
 
 
