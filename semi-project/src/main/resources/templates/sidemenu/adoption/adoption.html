@@ -53,9 +53,94 @@
 <div class="change-screen-adoption">
     <div id="change-screen-content">
 
+        <div class="tab-container">
+            <button class="tab-button active" data-tab="in-progress">입양진행중</button>
+            <button class="tab-button" data-tab="completed">입양완료</button>
+            <button class="tab-button" data-tab="canceled">입양취소</button>
+        </div>
 
+        <!-- 탭 콘텐츠 -->
+        <div class="tab-content" id="in-progress">
+            <div class="adopterList-container">
+                <div class="card" th:each="adopting : ${adoptingList}">
+                    <div class="adoptStatus">
+                        <span th:text="${adopting.adoptStatus}"></span>
+                    </div>
+                    <p class="body">
+                        <span class="body-text" th:text="${'입양번호 ' + adopting.adoptNo}"></span>
+                        <span class="body-text" th:text="${'입양자 ' + adopting.adoptName}"></span>
+                        <span class="body-text" th:text="${'입양시작날짜 ' + adopting.adoptStartDate}"></span>
+                        <span class="body-text" th:text="${'입양완료날짜 ' + (adopting.adoptEndDate != null ? adopting.adoptEndDate : '')}"></span>
+                        <span class="body-text" th:text="${'동물등록번호 ' + adopting.animalDTO.animalCode}"></span>
+                    </p>
+                    <div class="action-buttons">
+                        <a href="/adoption/adopterDetail" class="detail-adopter">상세보기</a>
+                        <a href="/adoption/adopterDelete" class="delete-adopter">입양취소</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="tab-content hidden" id="completed">
+            <div class="adopterList-container">
+                <div class="card" th:each="completed : ${adoptCompletedList}">
+                    <div class="adoptStatus">
+                        <span th:text="${completed.adoptStatus}"></span>
+                    </div>
+                    <p class="body">
+                        <span class="body-text" th:text="${'입양번호 ' + completed.adoptNo}"></span>
+                        <span class="body-text" th:text="${'입양자 ' + completed.adoptName}"></span>
+                        <span class="body-text" th:text="${'입양시작날짜 ' + completed.adoptStartDate}"></span>
+                        <span class="body-text" th:text="${'입양완료날짜 ' + (completed.adoptEndDate != null ? completed.adoptEndDate : '')}"></span>
+                        <span class="body-text" th:text="${'동물등록번호 ' + completed.animalDTO.animalCode}"></span>
+                    </p>
+                    <div class="action-buttons">
+                        <a href="/adoption/adopterDetail" class="detail-adopter">상세보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content hidden" id="canceled">
+            <div class="adopterList-container">
+                <div class="card" th:each="canceled : ${adoptCanceledList}">
+                    <div class="adoptStatus">
+                        <span th:text="${canceled.adoptStatus}"></span>
+                    </div>
+                    <p class="body">
+                        <span class="body-text" th:text="${'입양번호 ' + canceled.adoptNo}"></span>
+                        <span class="body-text" th:text="${'입양자 ' + canceled.adoptName}"></span>
+                        <span class="body-text" th:text="${'입양시작날짜 ' + canceled.adoptStartDate}"></span>
+                        <span class="body-text" th:text="${'입양완료날짜 ' + (canceled.adoptEndDate != null ? canceled.adoptEndDate : '')}"></span>
+                        <span class="body-text" th:text="${'동물등록번호 ' + canceled.animalDTO.animalCode}"></span>
+                    </p>
+                    <div class="action-buttons">
+                        <a href="/adoption/adopterDetail" class="detail-adopter">상세보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(".tab-button");
+        const contents = document.querySelectorAll(".tab-content");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                // 모든 버튼과 콘텐츠 초기화
+                buttons.forEach(btn => btn.classList.remove("active"));
+                contents.forEach(content => content.classList.add("hidden"));
+
+                // 클릭한 버튼과 콘텐츠 활성화
+                button.classList.add("active");
+                const tabId = button.getAttribute("data-tab");
+                document.getElementById(tabId).classList.remove("hidden");
+            });
+        });
+    });
+</script>
 </body>
 </html>
