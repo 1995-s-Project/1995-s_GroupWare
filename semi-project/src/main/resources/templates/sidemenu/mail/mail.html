@@ -50,169 +50,172 @@
         </ul>
     </div>
 </header>
-<div class="change-screen-email">
-    <div id="change-screen-content">
-        <div class="form">
-            <div class="navigation">
-                <nav>
-                    <ul>
-                        <li style="font-size: 20px;"><b>📮&nbsp;&nbsp;&nbsp;&nbsp;전체쪽지</b></li><br><br><br>
-                        <li style="font-size: 20px;"><b>📥&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지함</b></li><br><br><br>
-                        <li style="font-size: 20px;"><b>📤&nbsp;&nbsp;&nbsp;&nbsp;보낸쪽지함</b></li><br><br><br>
-                        <li style="font-size: 20px;"><b>⭐&nbsp;&nbsp;&nbsp;&nbsp;중요쪽지함</b></li><br><br><br>
-                        <li style="font-size: 20px;"><b>❌&nbsp;&nbsp;&nbsp;&nbsp;휴지통</b></li><br><br><br>
-                        <li style="font-size: 20px;"><b>📦&nbsp;&nbsp;&nbsp;&nbsp;보관함</b>
-                            <br><br><ul>
-                                <li style="font-size: 15px;"><b>- 받은쪽지 보관함</b></li>
-                                <li style="font-size: 15px;"><b>- 보낸쪽지 보관함</b></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <button id="messageModalBtn" class="styled-button">🖍 쪽지 쓰기</button>
-                </nav>
-            </div>
+<!--<div class="change-screen-email">-->
+<!--    <div id="change-screen-content">-->
+<!--        <div class="form">-->
+<!--            <div class="navigation">-->
+<!--                <nav>-->
+<!--                    <ul>-->
+<!--                        <li style="font-size: 20px;"><b>📮&nbsp;&nbsp;&nbsp;&nbsp;전체쪽지</b></li><br><br><br>-->
+<!--                        <li style="font-size: 20px;"><b>📥&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지함</b></li><br><br><br>-->
+<!--                        <li style="font-size: 20px;"><b>📤&nbsp;&nbsp;&nbsp;&nbsp;보낸쪽지함</b></li><br><br><br>-->
+<!--                        <li style="font-size: 20px;"><b>⭐&nbsp;&nbsp;&nbsp;&nbsp;중요쪽지함</b></li><br><br><br>-->
+<!--                        <li style="font-size: 20px;"><b>❌&nbsp;&nbsp;&nbsp;&nbsp;휴지통</b></li><br><br><br>-->
+<!--                        <li style="font-size: 20px;"><b>📦&nbsp;&nbsp;&nbsp;&nbsp;보관함</b>-->
+<!--                            <br><br><ul>-->
+<!--                                <li style="font-size: 15px;"><b>- 받은쪽지 보관함</b></li>-->
+<!--                                <li style="font-size: 15px;"><b>- 보낸쪽지 보관함</b></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <button id="messageModalBtn" class="styled-button" onclick="location.href='/sidemenu/mail/regist'">🖍 쪽지 쓰기</button>-->
+<!--                </nav>-->
+<!--            </div>-->
 
-            <div class="form1">
-                <table border="1" class="post-list">
-                    <colgroup>
-                        <col style="width: 2%;">
-                        <col style="width: 2%;">
-                        <col style="width: 4%;">
-                        <col style="width: 10%;">
-                        <col style="width: 10%;">
-                        <col style="width: 5%;">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>
-                            <!-- 전체 선택 체크박스 -->
-                            <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
-                        </th>
-                        <th>
-                            <input type="checkbox" id="selectAllStars" onclick="toggleStarSelectAll(this)">
-                            <label for="selectAllStars" id="selectAllStarsLabel"></label>
-                        </th>
-                        <th>메일번호</th>
-                        <th>보낸사람</th>
-                        <th>제목</th>
-                        <th>날짜</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="mail : ${mail}">
-                        <td>
-                            <!-- 기본 체크박스 -->
-                            <input type="checkbox" class="select-item" name="selectedMail" th:value="${mail.emailCode}">
-                        </td>
-                        <td>
-                            <label class="star-checkbox">
-                                <input type="checkbox" class="star-check" id="star_{{mail.emailCode}}" name="starredMail" th:value="${mail.importantEmail}" onchange="toggleStar(this)">
-                                <i></i>
-                            </label>
-                        </td>
-                        <td>
-                            <a th:href="@{/mail/details/{emailCode}(emailCode=${mail.emailCode})}" class="styled-link"></a>
-                        </td>
-                        <td th:text="${mail.employeeDTO.empName}"></td>
-                        <td th:text="${mail.emailTitle}"></td>
-                        <td th:text="${#dates.format(mail.sendDate, 'yyyy-MM-dd')}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+<!--            <div class="form1">-->
+<!--                <div class="main-button">-->
+<!--                    <button class="main-button1">❌ 휴지통</button>-->
+<!--                    <button class="main-button2">⭐ 중요보관함</button>-->
+<!--                    <button class="main-button3">📦 받은쪽지보관함</button>-->
+<!--                </div>-->
+<!--                <table border="1" class="post-list">-->
+<!--                    <colgroup>-->
+<!--                        <col style="width: 1%;">-->
+<!--                        <col style="width: 1%;">-->
+<!--                        <col style="width: 2%;">-->
+<!--                        <col style="width: 3%;">-->
+<!--                        <col style="width: 12%;">-->
+<!--                        <col style="width: 1%;">-->
+<!--                    </colgroup>-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th>-->
+<!--                            <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAll(this)">-->
+<!--                        </th>-->
+<!--                        <th>-->
+<!--                            <input type="checkbox" id="selectAllStars" class="checkbox2" onclick="toggleStarSelectAll(this)">-->
+<!--                            <label for="selectAllStars" id="selectAllStarsLabel"></label>-->
+<!--                        </th>-->
+<!--                        <th>메일번호</th>-->
+<!--                        <th>보낸사람</th>-->
+<!--                        <th>제목</th>-->
+<!--                        <th>날짜</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                    <tr th:each="mail : ${mail}">-->
+<!--                        <td>-->
+<!--                            <input type="checkbox" class="select-item" name="selectedMail" th:value="${mail.emailCode}">-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <label class="star-checkbox">-->
+<!--                                <input type="checkbox" class="star-check" id="star_{{mail.emailCode}}" name="starredMail" th:value="${mail.importantEmail}" onchange="toggleStar(this)">-->
+<!--                                <i></i>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <a th:href="@{/mail/details/{emailCode}(emailCode=${mail.emailCode})}" class="styled-link"></a>-->
+<!--                        </td>-->
+<!--                        <td th:text="${mail.senderId}"></td>-->
+<!--                        <td th:text="${mail.emailTitle}"></td>-->
+<!--                        <td th:text="${#dates.format(mail.sendDate, 'yyyy-MM-dd')}"></td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
 
-                <div id="messageModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-btn" id="closeModalBtn">&times;</span>
-                        <h2>쪽지 보내기</h2>
-                        <button id="openModalBtn" class="styled-button2"><b>🔎 찾기</b></button>
-                        <form id="messageForm">
-                            <div class="form-group">
-                                <label for="recipient">받는 사람</label>
-                                <input class="textbox" type="text" id="recipient" name="recipient" placeholder="받는 사람을 입력하세요" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">쪽지 내용</label>
-                                <textarea id="message" name="message" placeholder="내용을 입력하세요" required></textarea>
-                            </div>
-                            <button type="submit" id="sendMessageBtn" class="submit">보내기</button>
-                        </form>
-                    </div>
-                </div>
+<!--                <div id="messageModal" class="modal">-->
+<!--                    <div class="modal-content">-->
+<!--                        <span class="close-btn" id="closeModalBtn">&times;</span>-->
+<!--                        <h2>쪽지 보내기</h2>-->
+<!--                        <button id="openModalBtn" class="styled-button2"><b>🔎 찾기</b></button>-->
+<!--                        <form id="messageForm" action="/sidemenu/mail/regist" method="post">-->
+<!--                            <div class="form-group">-->
+<!--                                <label for="recipient">받는 사람</label>-->
+<!--                                <input class="textbox" type="text" id="recipient" name="recipient" placeholder="받는 사람을 입력하세요" required>-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <label for="message">쪽지 내용</label>-->
+<!--                                <textarea id="message" name="message" placeholder="내용을 입력하세요" required></textarea>-->
+<!--                            </div>-->
+<!--                            <button type="submit" id="sendMessageBtn" class="submit">보내기</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div id="addressBookModal" class="modal2">
-                    <div class="modal-content2">
-                        <span class="close-btn" id="closeModalBtn2">&times;</span>
-                        <h2>주소록</h2>
-                        <div class="search-bar">
-                            <input class="textbox2" type="text" id="searchInput2" placeholder="직원 검색..." oninput="filterEmployees()">
-                        </div>
-                        <div class="select-all">
-                            <input type="checkbox" id="selectAllEmployees" onclick="toggleEmployeeSelectAll(this)"> 전체 선택
-                        </div>
-                        <div id="addressBookContainer2">
-                            <div class="department-group">
-                                <h3>📂 경영부</h3>
-                                <div class="employee-list">
-                                    <label><input type="checkbox" class="employee-check 경영부"> 이순제</label>
-                                    <label><input type="checkbox" class="employee-check 경영부"> 최만식</label>
-                                </div>
-                            </div>
+<!--                <div id="addressBookModal" class="modal2">-->
+<!--                    <div class="modal-content2">-->
+<!--                        <span class="close-btn" id="closeModalBtn2">&times;</span>-->
+<!--                        <h2>주소록</h2>-->
+<!--                        <div class="search-bar">-->
+<!--                            <input class="textbox2" type="text" id="searchInput2" placeholder="직원 검색..." oninput="filterEmployees()">-->
+<!--                        </div>-->
+<!--                        <div class="select-all">-->
+<!--                            <input type="checkbox" id="selectAllEmployees" onclick="toggleEmployeeSelectAll(this)"> 전체 선택-->
+<!--                        </div>-->
+<!--                        <div id="addressBookContainer2">-->
+<!--                            <div class="department-group">-->
+<!--                                <h3>📂 경영부</h3>-->
+<!--                                <div class="employee-list">-->
+<!--                                    <label><input type="checkbox" class="employee-check 경영부" data-emp-name="이순제"> 이순제</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 경영부" data-emp-name="최만식"> 최만식</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <div class="department-group">
-                                <h3>📂 애견담당부</h3>
-                                <div class="employee-list">
-                                    <label><input type="checkbox" class="employee-check 애견담당부"> 황정만</label>
-                                    <label><input type="checkbox" class="employee-check 애견담당부"> 송해교</label>
-                                    <label><input type="checkbox" class="employee-check 애견담당부"> 정유성</label>
-                                    <label><input type="checkbox" class="employee-check 애견담당부"> 마동식</label>
-                                    <label><input type="checkbox" class="employee-check 애견담당부"> 김윤식</label>
-                                </div>
-                            </div>
+<!--                            <div class="department-group">-->
+<!--                                <h3>📂 애견담당부</h3>-->
+<!--                                <div class="employee-list">-->
+<!--                                    <label><input type="checkbox" class="employee-check 애견담당부" data-emp-name="황정만"> 황정만</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 애견담당부" data-emp-name="송해교"> 송해교</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 애견담당부" data-emp-name="정유성"> 정유성</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 애견담당부" data-emp-name="마동식"> 마동식</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 애견담당부" data-emp-name="김윤식"> 김윤식</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <div class="marketing-group">
-                                <h3>📂 마케팅부</h3>
-                                <div class="employee-list">
-                                    <label><input type="checkbox" class="employee-check 마케팅부"> 류승용</label>
-                                    <label><input type="checkbox" class="employee-check 마케팅부"> 전도언</label>
-                                    <label><input type="checkbox" class="employee-check 마케팅부"> 김해수</label>
-                                    <label><input type="checkbox" class="employee-check 마케팅부"> 조정식</label>
-                                    <label><input type="checkbox" class="employee-check 마케팅부"> 한지만</label>
-                                </div>
-                            </div>
+<!--                            <div class="marketing-group">-->
+<!--                                <h3>📂 마케팅부</h3>-->
+<!--                                <div class="employee-list">-->
+<!--                                    <label><input type="checkbox" class="employee-check 마케팅부" data-emp-name="류승용"> 류승용</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 마케팅부" data-emp-name="전도언"> 전도언</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 마케팅부" data-emp-name="김해수"> 김해수</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 마케팅부" data-emp-name="조정식"> 조정식</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 마케팅부" data-emp-name="한지만"> 한지만</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <div class="business-group">
-                                <h3>📂 영업부</h3>
-                                <div class="employee-list">
-                                    <label><input type="checkbox" class="employee-check 영업부"> 변우식</label>
-                                    <label><input type="checkbox" class="employee-check 영업부"> 김고운</label>
-                                    <label><input type="checkbox" class="employee-check 영업부"> 이병현</label>
-                                </div>
-                            </div>
+<!--                            <div class="business-group">-->
+<!--                                <h3>📂 영업부</h3>-->
+<!--                                <div class="employee-list">-->
+<!--                                    <label><input type="checkbox" class="employee-check 영업부" data-emp-name="변우식"> 변우식</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 영업부" data-emp-name="김고운"> 김고운</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 영업부" data-emp-name="이병현"> 이병현</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <div class="distribution-group">
-                                <h3>📂 물류부</h3>
-                                <div class="employee-list">
-                                    <label><input type="checkbox" class="employee-check 물류부"> 송강효</label>
-                                    <label><input type="checkbox" class="employee-check 물류부"> 설경규</label>
-                                    <label><input type="checkbox" class="employee-check 물류부"> 장동검</label>
-                                </div>
-                            </div>
+<!--                            <div class="distribution-group">-->
+<!--                                <h3>📂 물류부</h3>-->
+<!--                                <div class="employee-list">-->
+<!--                                    <label><input type="checkbox" class="employee-check 물류부" data-emp-name="송강효"> 송강효</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 물류부" data-emp-name="설경규"> 설경규</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 물류부" data-emp-name="장동검"> 장동검</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <div class="Service-group">
-                                <h3>📂 고객업무부</h3>
-                                <div class="employee-list">
-                                    <label><input type="checkbox" class="employee-check 고객업무부"> 고운정</label>
-                                    <label><input type="checkbox" class="employee-check 고객업무부"> 김태라</label>
-                                </div>
-                            </div>
-                        </div>
-                        <button id="submitSelection2" onclick="submitSelections()" class="styled-button3">선택 완료</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--                            <div class="Service-group">-->
+<!--                                <h3>📂 고객업무부</h3>-->
+<!--                                <div class="employee-list">-->
+<!--                                    <label><input type="checkbox" class="employee-check 고객업무부" data-emp-name="고운정"> 고운정</label>-->
+<!--                                    <label><input type="checkbox" class="employee-check 고객업무부" data-emp-name="김태라"> 김태라</label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <button id="submitSelection2" onclick="submitSelections()" class="styled-button3">선택 완료</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 </body>
 <script>
     // 쪽지 쓰기 모달 열기
@@ -235,25 +238,39 @@
         document.getElementById('addressBookModal').style.display = 'none';
     });
 
-    // 주소록 모달에서 '선택 완료' 버튼 클릭 시 처리 (선택된 직원 목록 제출하는 로직)
+    // 선택된 직원들의 이름을 가져와서 처리
     function submitSelections() {
-        // 선택된 직원들의 이름을 배열로 가져오기
-        const selectedEmployees = document.querySelectorAll('.employee-check:checked');
+        const selectedEmployees = [];
+        const checkboxes = document.querySelectorAll('.employee-check:checked');
 
-        // 선택된 직원들의 이름을 저장할 배열
-        let selectedNames = [];
-
-        selectedEmployees.forEach(function(employee) {
-            const nameElement = employee.nextElementSibling;
-            if (nameElement) {
-                selectedNames.push(nameElement.textContent.trim()); // 체크박스 옆의 이름을 가져옵니다
-            }
+        checkboxes.forEach(cb => {
+            const employee = {
+                empCode: cb.getAttribute('data-emp-code'),
+                empName: cb.getAttribute('data-emp-name'),
+                empEmail: cb.getAttribute('data-emp-email'),
+                empPhone: cb.getAttribute('data-emp-phone'),
+                hireDate: cb.getAttribute('data-hire-date'),
+                jobName: cb.getAttribute('data-job-name'),
+                deptCode: cb.getAttribute('data-dept-code')
+            };
+            selectedEmployees.push(employee);
         });
+
+        // 배열 확인: 선택된 직원 확인
+        console.log("선택된 직원 배열:", selectedEmployees);
+
+        if (selectedEmployees.length === 0) {
+            alert('선택된 직원이 없습니다.');
+            return;
+        }
 
         // '받는 사람' 입력 필드에 이름을 쉼표로 구분하여 입력
         const recipientField = document.getElementById('recipient');
         if (recipientField) {
-            recipientField.value = selectedNames.join(', ');
+            // 선택된 직원들의 이름을 배열로 가져와 쉼표로 구분하여 입력
+            const selectedNames = selectedEmployees.map(employee => employee.empName); // 이름만 추출
+            console.log("선택된 직원 이름들:", selectedNames); // 이름 확인
+            recipientField.value = selectedNames.join(', '); // 쉼표로 구분하여 입력
         }
 
         // 주소록 모달을 닫습니다
@@ -263,14 +280,14 @@
         }
     }
 
-    // 직원 검색 필터링 (주소록)
+    // 직원 검색 필터링
     function filterEmployees() {
-        let searchInput = document.getElementById('searchInput2').value.toLowerCase();
-        let employees = document.querySelectorAll('.employee-list label');
+        const query = document.getElementById('searchInput2').value.toLowerCase();
+        const employees = document.querySelectorAll('.employee-list label');
 
-        employees.forEach(function(employee) {
-            let employeeName = employee.textContent.toLowerCase();
-            if (employeeName.indexOf(searchInput) > -1) {
+        employees.forEach(employee => {
+            const name = employee.textContent.toLowerCase();
+            if (name.includes(query)) {
                 employee.style.display = '';
             } else {
                 employee.style.display = 'none';
@@ -280,7 +297,7 @@
 
     // 전체 선택 체크박스 처리
     function toggleEmployeeSelectAll(source) {
-        let checkboxes = document.querySelectorAll('.employee-check');
+        const checkboxes = document.querySelectorAll('.employee-check');
         checkboxes.forEach(function(checkbox) {
             checkbox.checked = source.checked;
         });
@@ -288,7 +305,7 @@
 
     // 메일 목록에서 전체 선택 체크박스 처리
     function toggleSelectAll(source) {
-        let checkboxes = document.querySelectorAll('.select-item');
+        const checkboxes = document.querySelectorAll('.select-item');
         checkboxes.forEach(function(checkbox) {
             checkbox.checked = source.checked;
         });
@@ -296,7 +313,7 @@
 
     // 별표 선택 전체 처리
     function toggleStarSelectAll(source) {
-        let checkboxes = document.querySelectorAll('.star-check');
+        const checkboxes = document.querySelectorAll('.star-check');
         checkboxes.forEach(function(checkbox) {
             checkbox.checked = source.checked;
         });
@@ -304,11 +321,13 @@
 
     // 별표 클릭 처리
     function toggleStar(checkbox) {
-        let starIcon = checkbox.nextElementSibling;
-        if (checkbox.checked) {
-            starIcon.classList.add('checked');
+        const isChecked = checkbox.checked;
+        const starElement = checkbox.closest('.email-item').querySelector('.star');
+
+        if (isChecked) {
+            starElement.classList.add('highlighted');
         } else {
-            starIcon.classList.remove('checked');
+            starElement.classList.remove('highlighted');
         }
     }
 </script>

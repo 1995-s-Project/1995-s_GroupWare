@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface MailMapper {
-
     List<MailDTO> mailAllSelect();
 
+//    void registMail(MailDTO mailDTO);
 }

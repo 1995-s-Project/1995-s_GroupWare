@@ -11,19 +11,18 @@ import java.util.Date;
 @ToString
 public class MailDTO {
 
-    private String emailCode;
-    private String importantEmail;
-    private String emailTitle;
-    private String emailFile;
-    private String emailContent;
-    private Date sendDate;
-    private Date deleteDate;
-    private String address;
-    private String mailboxNo;
-    private String receptionType;
-    private String receptionStatus;
-    private String senderId;
-    private String recipientId;
-    private EmployeeDTO employeeDTO;
+    private String emailCode; // 메일코드
+    private String importantEmail; // 중요여부
+    private String emailTitle; // 쪽지제목
+    private String emailFile; // 첨부파일
+    private String emailContent; // 내용
+    private Date sendDate; // 전송일자
+    private Date deleteDate; // 삭제일자
+    private String address; // 메일주소
+    private String mailboxNo; // 메일함번호
+    private String receptionType; // 수신종류
+    private String receptionStatus; // 수신상태
+    private String senderId; // 발신자 사번
+    private String recipientId; // 수신자 사번
 
 }

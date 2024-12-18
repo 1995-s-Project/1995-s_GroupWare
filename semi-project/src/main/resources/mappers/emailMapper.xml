@@ -17,30 +17,47 @@
         <result property="receptionStatus" column="reception_status"/>
         <result property="senderId" column="sender_id"/>
         <result property="recipientId" column="recipient_id"/>
-        <association property="EmployeeDTO" javaType="com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO">
-            <id property="empCode" column="emp_code"/>
-            <result property="empPass" column="emp_pass"/>
-            <result property="empName" column="emp_name"/>
-            <result property="empEmail" column="emp_email"/>
-            <result property="empPhone" column="emp_phone"/>
-            <result property="hireDate" column="hire_date"/>
-            <result property="entDate" column="ent_date"/>
-            <result property="empGender" column="emp_gender"/>
-            <result property="empAddress" column="emp_address"/>
-            <result property="jobCode" column="job_code"/>
-            <result property="deptCode" column="dept_code"/>
-            <result property="authority" column="authority"/>
-            <result property="profile_image" column="profile_image"/>
-        </association>
     </resultMap>
 
     <select id="mailAllSelect" resultMap="mailSelect">
         SELECT
-            A.*
-            B.*
+            *
         FROM
-            TBL_EMAIL A
-        JOIN
-            TBL_EMP B ON A.sender_id = B.emp_code
+            TBL_EMAIL
     </select>
+
+<!--    <insert id="registMail" parameterType="com.ohgiraffers.semiproject.mail.model.dto.MailDTO">-->
+<!--        insert into tbl_email-->
+<!--        (-->
+<!--        emailCode,-->
+<!--        importantEmail,-->
+<!--        emailTitle,-->
+<!--        emailFile,-->
+<!--        emailContent,-->
+<!--        sendDate,-->
+<!--        deleteDate,-->
+<!--        address,-->
+<!--        mailboxNo,-->
+<!--        receptionType,-->
+<!--        receptionStatus,-->
+<!--        senderId,-->
+<!--        recipientId-->
+<!--        )-->
+<!--        values-->
+<!--        (-->
+<!--        #{email_code},-->
+<!--        #{important_email},-->
+<!--        #{title},-->
+<!--        #{file},-->
+<!--        #{content},-->
+<!--        #{send_date},-->
+<!--        #{delete_date},-->
+<!--        #{address},-->
+<!--        #{mailbox_no},-->
+<!--        #{reception_type},-->
+<!--        #{reception_status},-->
+<!--        #{sender_id},-->
+<!--        #{recipient_id}-->
+<!--        )-->
+<!--    </insert>-->
 </mapper>
