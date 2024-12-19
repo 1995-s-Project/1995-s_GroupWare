@@ -34,9 +34,6 @@ public interface AnimalsMapper {
     // 삭제(체크박스 선택)
     void deleteBoard(String id);
 
-    // 수정(입양완료로 상태 update)
-    void adoptComplete(String code);
-
 // -----------------------------------------입양완료 페이지-----------------------------------------
     // 입양완료동물 전체조회
     List<AnimalDTO> adoptAnimalList(Map<String, Integer> params);

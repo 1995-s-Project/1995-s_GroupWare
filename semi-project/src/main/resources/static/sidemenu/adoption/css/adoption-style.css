@@ -70,9 +70,9 @@
 }
 
 .adoptStatus {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    color: #007bff;
+    color: #052d59;
     margin-bottom: 10px;
 }
 
@@ -94,7 +94,7 @@
     margin-top: 10px;
 }
 
-.detail-adopter, .delete-adopter {
+.detail-adopter {
     display: inline-block;
     padding: 8px 15px;
     background-color: #007bff;
@@ -104,6 +104,20 @@
     transition: background-color 0.3s ease;
 }
 
-.detail-adopter:hover, .delete-adopter:hover {
+.delete-adopter{
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #fb1b1b;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.detail-adopter:hover {
     background-color: #0056b3;
+}
+
+.delete-adopter:hover {
+    background-color: #bc1616;
 }

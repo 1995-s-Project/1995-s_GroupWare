@@ -67,11 +67,6 @@ public class AnimalsService {
         animalsMapper.deleteBoard(id);
     }
 
-    // 동물 상태 입양완료로 update
-    public void adoptComplete(String code) {
-        animalsMapper.adoptComplete(code); // 여러 동물 코드 한번에 처리
-    }
-
 // -----------------------------------------입양완료 페이지-----------------------------------------
     // 입양완료 페이지
     public List<AnimalDTO> adoptAnimalList(int page, int limit) {

@@ -99,9 +99,6 @@
                     <div class="count">
                         전체 <span th:text="${totalRecords}"></span> 건
                     </div>
-                    <div class="updateAdoption">
-                        <a href="javascript:sendAdoption();">입양</a>
-                    </div>
                     <div class="insert">
                         <a href="/sidemenu/animals/insert">등록</a>
                     </div>
@@ -223,42 +220,6 @@
                 var input1 = document.createElement('input');
                 input1.setAttribute("type", "hidden");
                 input1.setAttribute("name", "boardIds");
-                input1.setAttribute("value", arr);
-                form.appendChild(input1);
-                console.log(form);
-                document.body.appendChild(form);
-                form.submit();
-            }
-        }
-    }
-    // 입양완료 페이지로 보내기
-    function sendAdoption(){
-        //체크박스 체크된 항목
-        const query = 'input[name="chk"]:checked'
-        const selectedElements = document.querySelectorAll(query)
-        //체크박스 체크된 항목의 개수
-        const selectedElementsCnt = selectedElements.length;
-
-        if(selectedElementsCnt == 0){
-            alert("항목을 선택해주세요.");
-            return false;
-        }
-        else{
-            if (confirm("입양완료로 상태를 변경하시겠습니까?")) {
-                //배열생성
-                const arr = new Array(selectedElementsCnt);
-
-                document.querySelectorAll('input[name="chk"]:checked').forEach(function(v, i) {
-                    arr[i] = v.value;
-                });
-
-                const form = document.createElement('form');
-                form.setAttribute('method', 'post');
-                form.setAttribute('action', '/adoptionComplete');
-
-                var input1 = document.createElement('input');
-                input1.setAttribute("type", "hidden");
-                input1.setAttribute("name", "animalCode");
                 input1.setAttribute("value", arr);
                 form.appendChild(input1);
                 console.log(form);

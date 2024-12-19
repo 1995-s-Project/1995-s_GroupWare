@@ -217,13 +217,6 @@
         animal_code = #{id}
     </delete>
 
-<!-- 입양완료로 상태 업데이트 -->
-    <update id="adoptComplete">
-        UPDATE tbl_animal
-        SET animal_status = '입양완료'
-        WHERE animal_code = #{code}
-    </update>
-    
 <!-- ********************************* 입양완료 페이지 ************************************* -->
 <!-- 입양완료 된 동물 조회 -->
     <select id="adoptAnimalList" resultMap="AllListResultMap">

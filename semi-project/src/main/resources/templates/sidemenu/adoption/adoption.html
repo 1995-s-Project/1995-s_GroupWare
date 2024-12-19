@@ -59,6 +59,13 @@
             <button class="tab-button" data-tab="canceled">입양취소</button>
         </div>
 
+        <div class="count">
+            전체 <span></span> 건
+        </div>
+        <span id="in-progress-count" th:text="${adoptingList.size()}" style="display: none;"></span>
+        <span id="completed-count" th:text="${adoptCompletedList.size()}" style="display: none;"></span>
+        <span id="canceled-count" th:text="${adoptCanceledList.size()}" style="display: none;"></span>
+
         <!-- 탭 콘텐츠 -->
         <div class="tab-content" id="in-progress">
             <div class="adopterList-container">
@@ -74,8 +81,8 @@
                         <span class="body-text" th:text="${'동물등록번호 ' + adopting.animalDTO.animalCode}"></span>
                     </p>
                     <div class="action-buttons">
-                        <a href="/adoption/adopterDetail" class="detail-adopter">상세보기</a>
-                        <a href="/adoption/adopterDelete" class="delete-adopter">입양취소</a>
+                        <a th:href="@{/adopterDetail/adopting/{adoptNo}(adoptNo=${adopting.adoptNo})}" class="detail-adopter">상세보기</a>
+                        <a th:href="@{/adopterCanceled/{adoptNo}(adoptNo=${adopting.adoptNo})}" class="delete-adopter" onclick="return confirmCancel()">입양취소</a>
                     </div>
                 </div>
             </div>
@@ -95,7 +102,7 @@
                         <span class="body-text" th:text="${'동물등록번호 ' + completed.animalDTO.animalCode}"></span>
                     </p>
                     <div class="action-buttons">
-                        <a href="/adoption/adopterDetail" class="detail-adopter">상세보기</a>
+                        <a th:href="@{/adopterDetail/completed/{adoptNo}(adoptNo=${completed.adoptNo})}" class="detail-adopter">상세보기</a>
                     </div>
                 </div>
             </div>
@@ -115,7 +122,7 @@
                         <span class="body-text" th:text="${'동물등록번호 ' + canceled.animalDTO.animalCode}"></span>
                     </p>
                     <div class="action-buttons">
-                        <a href="/adoption/adopterDetail" class="detail-adopter">상세보기</a>
+                        <a th:href="@{/adopterDetail/canceled/{adoptNo}(adoptNo=${canceled.adoptNo})}" class="detail-adopter">상세보기</a>
                     </div>
                 </div>
             </div>
@@ -124,20 +131,66 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const buttons = document.querySelectorAll(".tab-button");
-        const contents = document.querySelectorAll(".tab-content");
+    function confirmCancel() {
+        const userConfirmed = confirm("취소하시겠습니까?");
+        if (!userConfirmed) {
+            return false; // 사용자가 취소하면 아무 일도 일어나지 않음
+        }
+        return true; // 사용자가 확인하면 계속해서 링크가 실행됨
+    }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.tab-button');
+        const contents = document.querySelectorAll('.tab-content');
+        const countDisplay = document.querySelector('.count span');
+
+        // 각 탭의 건수를 가져오기
+        const counts = {
+            'in-progress': document.getElementById('in-progress-count').textContent,
+            'completed': document.getElementById('completed-count').textContent,
+            'canceled': document.getElementById('canceled-count').textContent
+        };
+
+        function updateCount(tabId) {
+            countDisplay.textContent = counts[tabId];
+        }
+
+        // URL 파라미터로 탭을 변경
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTab = urlParams.get('tab') || 'in-progress'; // 기본값은 '입양진행중' 탭
+
+        // 탭 초기화
         buttons.forEach(button => {
-            button.addEventListener("click", () => {
+            button.classList.remove('active');
+            if (button.getAttribute('data-tab') === activeTab) {
+                button.classList.add('active');
+            }
+        });
+
+        contents.forEach(content => {
+            content.classList.add('hidden');
+            if (content.id === activeTab) {
+                content.classList.remove('hidden');
+            }
+        });
+
+        // 초기 건수 표시
+        updateCount(activeTab);
+
+        // 버튼 클릭 이벤트 처리
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
                 // 모든 버튼과 콘텐츠 초기화
-                buttons.forEach(btn => btn.classList.remove("active"));
-                contents.forEach(content => content.classList.add("hidden"));
+                buttons.forEach(btn => btn.classList.remove('active'));
+                contents.forEach(content => content.classList.add('hidden'));
 
                 // 클릭한 버튼과 콘텐츠 활성화
-                button.classList.add("active");
-                const tabId = button.getAttribute("data-tab");
-                document.getElementById(tabId).classList.remove("hidden");
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.remove('hidden');
+
+                // 건수 업데이트
+                updateCount(tabId);
             });
         });
     });
