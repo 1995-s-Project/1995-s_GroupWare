@@ -56,7 +56,7 @@
             <tr>
                 <td rowspan="4" class="header-cell">
                     <div class="image-container">
-                        <img th:src="@{${'/img/profile/' + emp.profileImage}}"
+                        <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('img/profile/') ? '/' + emp.profileImage : '/img/profile/' + emp.profileImage)}"
                              alt="profile Image" />
                     </div>
                 </td>

@@ -1,4 +1,4 @@
-.change-screen-email{
+.change-screen-mailDetail{
     width: 1850px;
     height: 800px;
     background-color: white;
@@ -11,33 +11,6 @@
     width: 1850px;
     height: 800px;
     display: flex;
-}
-
-.post-list {
-    border-collapse: collapse;
-    border: none;
-    table-layout: fixed;
-    margin: 50px;
-}
-
-.post-list th, .post-list td {
-    padding: 8px;
-    text-align: center;
-}
-
-.post-list td {
-    border: 1px solid gainsboro;
-    border-left: none;
-    border-right: none;
-}
-
-.post-list th {
-    font-family: HY견고딕, sans-serif;
-    color: black;
-    font-weight: 900;
-    border-right: none;
-    border-left: none;
-    border-top: none;
 }
 
 .navigation {
@@ -87,68 +60,6 @@ ul li {
 
 .styled-button:hover {
     background-color: #00532d;
-}
-
-/* 전체 선택/해제 별 아이콘 스타일 */
-#selectAllStarsLabel {
-    cursor: pointer;
-    font-size: 20px;
-    color: #ccc;
-    transition: color 0.3s ease;
-}
-
-/* 전체 선택 체크박스를 별 아이콘으로 표시 */
-input[type="checkbox"]#selectAllStars {
-    display: none; /* 기본 체크박스는 숨김 */
-}
-
-/* 전체 선택 체크박스가 체크되었을 때 */
-input[type="checkbox"]#selectAllStars:checked + label#selectAllStarsLabel {
-    color: #ffcc00; /* 체크된 상태는 노란색 별 */
-}
-
-#selectAllStarsLabel::before {
-    content: '☆'; /* 기본 빈 별 */
-}
-
-input[type="checkbox"]#selectAllStars:checked + label#selectAllStarsLabel::before {
-    content: '★'; /* 체크된 상태는 채워진 별 */
-}
-
-/* 별 체크박스 스타일 */
-.star-checkbox {
-    position: relative;
-    cursor: pointer;
-    font-size: 20px;
-    color: #ccc;
-    transition: color 0.3s ease;
-}
-
-.star-checkbox input[type="checkbox"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.select-item {
-    margin-left: 5px;
-}
-
-/* 체크된 상태에서 별 색상 변경 */
-.star-checkbox input[type="checkbox"]:checked + i {
-    color: #ffcc00; /* 체크된 별은 노란색 */
-}
-
-/* 빈 별 아이콘 */
-.star-checkbox i::before {
-    content: '☆'; /* 빈 별 */
-}
-
-/* 체크된 상태는 채워진 별 */
-.star-checkbox input[type="checkbox"]:checked + i::before {
-    content: '★'; /* 채워진 별 */
 }
 
 .modal {
@@ -459,4 +370,28 @@ textarea {
 .form-group2 {
     margin-top: 20px;
     margin-bottom: 15px;
+}
+
+.form-main {
+    margin-left: 50px;
+    margin-top: 56px;
+    border: none;
+    width: 1307px;
+    height: 146px;
+    border-radius: 20px;
+    padding: 25px;
+    padding-left: 35px;
+    padding-top: 1px;
+    background: #fbfbfb;
+}
+
+.content-box {
+    border: none;
+    width: 1317px;
+    height: 350px;
+    border-radius: 20px;
+    margin-left: 50px;
+    margin-top: 20px;
+    padding: 27px;
+    background: #fbfbfb;
 }
