@@ -245,3 +245,11 @@ textarea {
     height: 100%; /* 부모 요소의 높이에 맞춤 */
 }
 
+#adminStampImage, #ownerStampImage {
+    max-width: 100%; /* 이미지 크기를 조정 */
+    height: auto; /* 비율 유지 */
+    display: block; /* 블록 요소로 설정하여 여백 제거 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+

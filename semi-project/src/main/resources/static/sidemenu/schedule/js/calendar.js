@@ -31,7 +31,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     backgroundColor = 'rgba(128, 128, 128, 0.7)'; // 결근 배경색
                     break;
                 case '지각':
-                    backgroundColor = 'rgba(113,2,246,0.7)'; // 결근 배경색
+                    backgroundColor = 'rgba(113,2,246,0.7)'; // 지각 배경색
+                    break;
+                case '연차': // 연차 이벤트 색상
+                    backgroundColor = 'rgba(255, 165, 0, 0.7)'; // 주황색
+                    break;
+                case '휴가': // 휴가 이벤트 색상
+                    backgroundColor = 'rgba(0, 128, 255, 0.7)'; // 파란색
                     break;
                 default:
                     backgroundColor = 'rgba(0, 0, 0, 0.7)'; // 기본 배경색
@@ -61,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             data.forEach(schedule => {
                 // 출근 및 퇴근 시간을 UTC로 변환
                 const startTime = new Date(schedule.workStartTime).toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0]; // YYYY-MM-DD 형식
-                const endTime = schedule.workEndTime ? new Date(schedule.workEndTime).toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0] : null; // 퇴근 시간이 없으면 null
+                const endTime = schedule.workEndTime ? new Date(schedule.workEndTime).toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0] : null; // 퇴근 시간이 없으면 null로 설정
 
                 calendar.addEvent({
                     title: schedule.workType, // 근태 타입을 제목으로 설정
@@ -75,11 +81,43 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             });
+
+            // 연차 또는 휴가 데이터 가져오기
+            return fetch('/sidemenu/schedule/getVacationInfo');
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 좋지 않습니다.');
+            }
+            return response.json();
+        })
+        .then(vacationData => {
+            // 연차 또는 휴가 데이터를 캘린더 이벤트 형식으로 변환
+            vacationData.forEach(vacation => {
+                const startDate = new Date(vacation.vacStartDate).toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0]; // YYYY-MM-DD 형식
+                const endDate = new Date(vacation.vacEndDate); // 종료 날짜를 Date 객체로 변환
+                endDate.setDate(endDate.getDate() + 1); // 종료 날짜를 하루 더하기
+                const formattedEndDate = endDate.toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0]; // YYYY-MM-DD 형식으로 변환
+
+                calendar.addEvent({
+                    title: vacation.type, // 연차 또는 휴가 타입을 제목으로 설정
+                    start: startDate, // 시작 날짜
+                    end: formattedEndDate, // 종료 날짜를 하루 더한 값으로 설정
+                    allDay: true, // 하루 종일 이벤트로 설정
+                    extendedProps: { // 추가 속성으로 연차 및 휴가 정보 저장
+                        vacationId: vacation.id,
+                        vacationType: vacation.type,
+                        vacationReason: vacation.reason
+                    }
+                });
+            });
+
             calendar.render(); // 캘린더 렌더링
         })
         .catch(error => {
             console.error('문제가 발생했습니다:', error);
         });
+
 
     // 날짜 및 시간 포맷팅 함수
     function formatDateTime(dateTime) {
@@ -101,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 모달 내용 업데이트
         document.getElementById('modalTitle').innerText = event.title;
-        document.getElementById('modalStartTime').innerText = '출근 시간: ' + startTime;
+        document.getElementById('modalStartTime').innerText = startTime ? '출근 시간: ' + startTime : '출근 시간이 기록되지 않았습니다';
         document.getElementById('modalEndTime').innerText = endTime ? '퇴근 시간: ' + endTime : '퇴근 시간이 기록되지 않았습니다.'; // 퇴근 시간이 없을 경우 메시지 표시
 
         // 모달 표시

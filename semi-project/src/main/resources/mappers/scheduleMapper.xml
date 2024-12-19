@@ -33,8 +33,95 @@
 
     <resultMap id="userVacationInfo" type="com.ohgiraffers.semiproject.schedule.model.dto.VacationDTO">
         <id property="code" column="emp_code"/>
-        <result property="annualLeave" column="vacation_number"/>
-        <result property="vacation" column="yearleave_number"/>
+        <result property="vacation" column="vacation_number"/>
+        <result property="annualLeave" column="yearleave_number"/>
+    </resultMap>
+
+    <resultMap id="CacPaymentResultMap" type="com.ohgiraffers.semiproject.manager.model.dto.CacPaymentDTO">
+        <id property="documentNo" column="document_no"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="deadLineDate" column="deadline_date"/>
+        <result property="type" column="type"/>
+        <result property="cacStartDate" column="cac_start_date"/>
+        <result property="cacEndDate" column="cac_end_date"/>
+        <result property="cacReason" column="cac_reason"/>
+        <result property="accountNum" column="account_num"/>
+        <result property="managerAccept" column="manager_accept"/>
+        <result property="presidentAccept" column="president_accept"/>
+        <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
+        <result property="adminName" column="admin_name"/>
+        <result property="ownerCode" column="owner_code"/>
+    </resultMap>
+
+    <resultMap id="OverTimeResultMap" type="com.ohgiraffers.semiproject.manager.model.dto.OverTimeDTO">
+        <id property="documentNo" column="document_no"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="deadLineDate" column="deadline_date"/>
+        <result property="type" column="type"/>
+        <result property="overTime" column="over_time"/>
+        <result property="ovrTimeReason" column="ovr_time_reason"/>
+        <result property="managerAccept" column="manager_accept"/>
+        <result property="presidentAccept" column="president_accept"/>
+        <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
+        <result property="adminName" column="admin_name"/>
+        <result property="ownerCode" column="owner_code"/>
+    </resultMap>
+
+    <resultMap id="RetirementResultMap" type="com.ohgiraffers.semiproject.manager.model.dto.RetirementDTO">
+        <id property="documentNo" column="document_no"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="deadLineDate" column="deadline_date"/>
+        <result property="type" column="type"/>
+        <result property="retireDate" column="retire_date"/>
+        <result property="yearService" column="year_service"/>
+        <result property="retireReason" column="retire_reason"/>
+        <result property="managerAccept" column="manager_accept"/>
+        <result property="presidentAccept" column="president_accept"/>
+        <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
+        <result property="adminName" column="admin_name"/>
+        <result property="ownerCode" column="owner_code"/>
+    </resultMap>
+
+    <resultMap id="VacPaymentResultMap" type="com.ohgiraffers.semiproject.manager.model.dto.VacPaymentDTO">
+        <id property="documentNo" column="document_no"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="deadLineDate" column="deadline_date"/>
+        <result property="type" column="type"/>
+        <result property="vacStartDate" column="vac_start_date"/>
+        <result property="vacEndDate" column="vac_end_date"/>
+        <result property="vacReason" column="vac_reason"/>
+        <result property="managerAccept" column="manager_accept"/>
+        <result property="presidentAccept" column="president_accept"/>
+        <result property="progressCode" column="progress_code"/>
+        <result property="adminCode" column="admin_code"/>
+        <result property="adminName" column="admin_name"/>
+        <result property="ownerCode" column="owner_code"/>
+        <association property="userInfo" javaType="com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO">
+            <id property="empCode" column="emp_code"/>
+            <result property="empPass" column="emp_pass"/>
+            <result property="empName" column="emp_name"/>
+            <result property="empEmail" column="emp_email"/>
+            <result property="empPhone" column="emp_phone"/>
+            <result property="hireDate" column="hire_date"/>
+            <result property="entDate" column="ent_date"/>
+            <result property="empGender" column="emp_gender"/>
+            <result property="empAddress" column="emp_address"/>
+            <result property="jobCode" column="job_code"/>
+            <result property="deptCode" column="dept_code"/>
+            <result property="authority" column="authority"/>
+            <result property="profile_image" column="profile_image"/>
+            <association property="deptDTO" javaType="com.ohgiraffers.semiproject.employee.model.dto.DeptDTO">
+                <id property="deptCode" column="dept_code"/>
+                <result property="deptName" column="dept_name"/>
+            </association>
+            <association property="jobDTO" javaType="com.ohgiraffers.semiproject.employee.model.dto.JobDTO">
+                <id property="jobCode" column="job_code"/>
+                <result property="jobName" column="job_name"/>
+            </association>
+        </association>
     </resultMap>
 
     <insert id="insertWorkStartTime" parameterType="com.ohgiraffers.semiproject.schedule.model.dto.ScheduleDTO">
@@ -140,4 +227,25 @@
         and emp_code = #{empCode}
     </update>
 
+    <select id="getVactionInfo" resultMap="VacPaymentResultMap">
+        select
+            type,
+            vac_start_date,
+            vac_end_date
+        from
+            tbl_vacpayment
+        where
+            emp_code = #{userCode}
+            and manager_accept = '/img/icon/Stamp.png'
+            and president_accept = '/img/icon/Stamp.png'
+    </select>
+
+    <update id="updateVacation" parameterType="map">
+        update
+            tbl_vacation
+        set
+            vacation_number = #{vacationDTO.vacation}, yearleave_number = #{vacationDTO.annualLeave}
+        where
+            emp_code = #{code}
+    </update>
 </mapper>

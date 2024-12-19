@@ -19,9 +19,9 @@ async function fetchApprovalData() {
         };
 
         const getStatus = (value) => {
-            if (value === null) {
+            if (value === null || value === '') {
                 return '확인중';
-            } else if (value === 'Y') {
+            } else if (value === '/img/icon/Stamp.png') {
                 return '승인';
             } else if (value === 'N') {
                 return '반려';

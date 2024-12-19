@@ -41,4 +41,17 @@ public class ManagerApprovalService {
 
         return managerApprovalMapper.getVacRequest(documentNo);
     }
+
+    @Transactional
+    public void vacationProcess(VacPaymentDTO process) {
+        managerApprovalMapper.vacationProcess(process);
+    }
+
+    public VacPaymentDTO getVacationDetails(String documentNo) {
+        return managerApprovalMapper.getVacationDetails(documentNo);
+    }
+
+    public VacPaymentDTO getDate(int documentNo) {
+        return managerApprovalMapper.getDate(documentNo);
+    }
 }
