@@ -53,6 +53,7 @@
 <div class="change-screen-vacationForm">
   <div id="change-screen-content">
     <form action="/vacationProcess" id="vacationFormRequest" method="post">
+      <input type="hidden" name="documentNo" th:value="${no}">
       <div class="form-title">
         <h2>✈️연차 휴가 신청서✈️</h2>
         <div class="form-box">
@@ -66,13 +67,20 @@
             <tbody>
             <tr>
               <td>
-                <input type="hidden" name="managerAccept" th:value="${vacRequestInfo.getAdminCode()}">
-                <div th:if="${vacRequestInfo.getAdminCode() == currentEmpCode}">
-                  <img src="/img/icon/Stamp.png" alt="도장" />
+                <input type="hidden" name="managerAccept" value="">
+                <div th:if="${adminAccept != null && adminAccept != '' && adminAccept == '/img/icon/Stamp.png'}">
+                  <img src="/img/icon/Stamp.png" alt="Admin Stamp" id="adminStampImage" />
                 </div>
+                <span id="adminRejectText" style="display:none; color:red;">반려</span> <!-- 반려 텍스트 추가 -->
+                <span th:if="${adminAccept == '반려'}" style="color:red;">반려</span> <!-- 반려 텍스트 표시 -->
               </td>
               <td>
-                <input type="hidden" name="managerAccept" th:value="${vacRequestInfo.getOwnerCode()}">
+                <input type="hidden" name="presidentAccept" value="">
+                <div th:if="${ownerAccept != null && ownerAccept != '' && ownerAccept == '/img/icon/Stamp.png'}">
+                  <img src="/img/icon/Stamp.png" alt="Owner Stamp" id="ownerStampImage" />
+                </div>
+                <span id="ownerRejectText" style="display:none; color:red;">반려</span> <!-- 반려 텍스트 추가 -->
+                <span th:if="${ownerAccept == '반려'}" style="color:red;">반려</span> <!-- 반려 텍스트 표시 -->
               </td>
             </tr>
             </tbody>
@@ -85,19 +93,19 @@
           <tr>
             <td style="width: 40%; background-color: #f2f2f2; font-weight: bold;">부서명</td>
             <td id="department" style="background-color: white; width: 70%; height: 30px;"
-                th:text="${vacRequestInfo.getUserInfo().getDeptDTO().getDeptName()}">&nbsp;</td> <!-- 빈 셀 -->
+                th:text="${vacRequestInfo.getUserInfo().getDeptDTO().getDeptName()}">&nbsp;</td>
             <td style="width: 40%; background-color: #f2f2f2; font-weight: bold;">기안자</td>
             <td id="author" style="background-color: white; width: 70%; height: 30px;"
-                th:text="${vacRequestInfo.getUserInfo().getEmpName()}">&nbsp;</td> <!-- 빈 셀 -->
+                th:text="${vacRequestInfo.getUserInfo().getEmpName()}">&nbsp;</td>
           </tr>
           <tr>
             <td style="width: 40%; background-color: #f2f2f2; font-weight: bold;">기안일자</td>
             <td id="date" style="background-color: white; width: 70%; height: 30px;"
-                th:text="${formattedDeadLineDate}">&nbsp;</td> <!-- 빈 셀 -->
+                th:text="${formattedDeadLineDate}">&nbsp;</td>
             <input type="hidden" name="deadLineDate" id="deadline_date" value="">
             <td style="width: 40%; background-color: #f2f2f2; font-weight: bold;">관리자</td>
             <td id="managerCell" style="background-color: white; width: 70%; height: 30px;"
-                th:text="${vacRequestInfo.getAdminName()}">&nbsp;</td> <!-- 빈 셀 -->
+                th:text="${vacRequestInfo.getAdminName()}">&nbsp;</td>
           </tr>
           </tbody>
         </table>
@@ -126,11 +134,104 @@
         </table>
       </div>
       <div class="form4">
-        <button id="submitButton">승인</button>
-        <input type="button" onclick="location.href='/sidemenu/approvalBox'" value="반려">
+        <button id="submitButton" type="button">승인</button>
+        <input type="button" id="rejectButton" value="반려"> <!-- 반려 버튼을 button 태그로 변경 -->
       </div>
     </form>
+
   </div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var currentEmpCode = `[[${currentEmpCode}]]`;
+    var adminCode = `[[${adminCode}]]`;
+    var ownerCode = `[[${ownerCode}]]`;
+    var adminAccept = `[[${adminAccept}]]`; // 관리자 승인 값
+    var ownerAccept = `[[${ownerAccept}]]`; // 대표 승인 값
+
+    const submitButton = document.getElementById("submitButton");
+    const rejectButton = document.getElementById("rejectButton");
+
+    // 페이지 로드 시 버튼 활성화 확인
+    function enableOwnerSubmit() {
+      if (adminAccept === '/img/icon/Stamp.png') {
+        // 관리자 승인 후에만 대표가 버튼을 클릭할 수 있도록 활성화
+        submitButton.disabled = false;
+        rejectButton.disabled = false;
+      } else if (adminAccept === "반려") {
+        // 관리자가 반려한 경우, 대표는 버튼을 클릭할 수 없도록 비활성화
+        alert("관리자가 반려 처리를 하여 최종 반려처리가 되었습니다.");
+        submitButton.disabled = true;
+        rejectButton.disabled = true;
+      } else {
+        // 관리자가 결재를 처리하지 않은 경우
+        submitButton.disabled = !(currentEmpCode === adminCode || currentEmpCode === ownerCode); // 관리자 또는 대표일 경우 승인 버튼 활성화
+        rejectButton.disabled = false; // 반려 버튼은 항상 활성화
+      }
+    }
+
+    submitButton.addEventListener("click", function(event) {
+      event.preventDefault(); // 기본 서브밋 동작 방지
+
+      // 관리자가 결재를 처리한 경우 승인 처리 가능
+      if (currentEmpCode === adminCode) {
+        // 관리자 코드로 로그인한 경우 승인 처리 가능
+        if (confirm("승인 처리 하시겠습니까?")) {
+          document.querySelector('input[name="managerAccept"]').value = '/img/icon/Stamp.png';
+          alert("승인 처리가 완료되었습니다."); // 승인 완료 알림
+          // 폼 제출
+          document.getElementById("vacationFormRequest").submit();
+        }
+      } else if (currentEmpCode === ownerCode) {
+        // 대표 승인 시
+        if (adminAccept === '/img/icon/Stamp.png') {
+          if (confirm("승인 처리 하시겠습니까?")) {
+            document.querySelector('input[name="presidentAccept"]').value = '/img/icon/Stamp.png';
+            alert("승인 처리가 완료되었습니다."); // 승인 완료 알림
+            // 폼 제출
+            document.getElementById("vacationFormRequest").submit();
+          }
+        } else {
+          alert("관리자가 결재를 처리하기 전에는 승인할 수 없습니다."); // 추가된 알림
+        }
+      } else {
+        alert("승인할 수 없는 상태입니다."); // 추가된 알림
+      }
+    });
+
+    rejectButton.addEventListener("click", function(event) {
+      event.preventDefault(); // 기본 서브밋 동작 방지
+
+      // 관리자가 결재를 처리하기 전에는 반려할 수 없음
+      if (adminAccept !== '/img/icon/Stamp.png' && adminAccept !== "반려") {
+        alert("관리자가 결재를 처리하기 전에는 반려할 수 없습니다.");
+        console.log("현재 adminAccept 상태:", adminAccept); // 현재 상태 로그
+        return; // 폼 제출 방지
+      }
+
+      // 관리자가 반려 버튼을 클릭한 경우
+      if (currentEmpCode === adminCode) {
+        if (confirm("반려 처리 하시겠습니까?")) {
+          document.querySelector('input[name="managerAccept"]').value = "반려";
+          alert("반려 처리가 되었습니다."); // 반려 처리 알림
+          // 폼 제출
+          document.getElementById("vacationFormRequest").submit();
+        }
+      } else if (currentEmpCode === ownerCode) {
+        // 대표 반려 처리
+        if (confirm("반려 처리 하시겠습니까?")) {
+          document.querySelector('input[name="presidentAccept"]').value = "반려";
+          alert("반려 처리가 되었습니다."); // 반려 처리 알림
+          alert("최종 반려 처리가 되었습니다."); // 최종 반려 알림
+          // 폼 제출
+          document.getElementById("vacationFormRequest").submit();
+        }
+      }
+    });
+
+    // 페이지 로드 시 대표 버튼 활성화 확인
+    enableOwnerSubmit();
+  });
+</script>
 </body>
 </html>

@@ -21,4 +21,13 @@ public interface ManagerApprovalMapper {
 
     // 연차 휴가 결재건 불러오기
     VacPaymentDTO getVacRequest(String documentNo);
+
+    // 연차 휴가 도장 이미지 저장
+    void vacationProcess(VacPaymentDTO process);
+
+    // 승인 or 반려 값 가져오기
+    VacPaymentDTO getVacationDetails(String documentNo);
+
+    // 날짜 가져오기
+    VacPaymentDTO getDate(int documentNo);
 }

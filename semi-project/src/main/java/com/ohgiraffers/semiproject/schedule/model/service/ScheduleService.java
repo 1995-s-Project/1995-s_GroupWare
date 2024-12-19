@@ -1,5 +1,6 @@
 package com.ohgiraffers.semiproject.schedule.model.service;
 
+import com.ohgiraffers.semiproject.manager.model.dto.VacPaymentDTO;
 import com.ohgiraffers.semiproject.schedule.model.dao.ScheduleMapper;
 import com.ohgiraffers.semiproject.schedule.model.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,14 @@ public class ScheduleService {
     @Transactional
     public void deleteAttendanceRequest(ScheduleDTO deleteAttendance) {
         scheduleMapper.deleteAttendanceRequest(deleteAttendance);
+    }
+
+    public List<VacPaymentDTO> getVactionInfo(String userCode) {
+        return scheduleMapper.getVactionInfo(userCode);
+    }
+
+    @Transactional
+    public void updateVacation(String code, VacationDTO vacationDTO) {
+        scheduleMapper.updateVacation(code, vacationDTO);
     }
 }

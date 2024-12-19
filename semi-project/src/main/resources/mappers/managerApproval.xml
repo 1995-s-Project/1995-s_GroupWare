@@ -156,6 +156,7 @@
         SELECT
             a.emp_code,
             a.admin_code,
+            a.owner_code,
             a.deadline_date,
             a.type,
             a.vac_start_date,
@@ -172,5 +173,39 @@
             JOIN tbl_job d ON b.job_code = d.job_code
         WHERE
             a.document_no = #{documentNo}
+    </select>
+
+    <update id="vacationProcess" parameterType="com.ohgiraffers.semiproject.manager.model.dto.VacPaymentDTO">
+        update
+            tbl_vacpayment
+        set
+            manager_accept = #{managerAccept}, president_accept = #{presidentAccept}, progress_code = #{progressCode}
+        where
+            document_no = #{documentNo}
+    </update>
+
+    <select id="getVacationDetails" resultMap="VacPaymentResultMap">
+        select
+            document_no,
+            manager_accept,
+            president_accept
+        from
+            tbl_vacpayment
+        where
+            document_no = #{no}
+    </select>
+
+    <select id="getDate" resultMap="VacPaymentResultMap">
+        select
+            emp_code,
+            type,
+            vac_start_date,
+            vac_end_date,
+            manager_accept,
+            president_accept
+        from
+            tbl_vacpayment
+        where
+            document_no = #{documentNo}
     </select>
 </mapper>
