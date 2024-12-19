@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,17 +23,56 @@ public class AdoptionController {
 
     // 입양 페이지로 이동
     @GetMapping("/sidemenu/adoption")
-    public String adoption(Model model){
+    public String adoptionList(Model model){
 
-        List<AdoptionDTO> adoptingList = adoptionService.adopting();
+        List<AdoptionDTO> adoptingList = adoptionService.adoptingList();
         model.addAttribute("adoptingList", adoptingList);
 
-        List<AdoptionDTO> adoptCompletedList = adoptionService.adoptCompleted();
+        List<AdoptionDTO> adoptCompletedList = adoptionService.adoptCompletedList();
         model.addAttribute("adoptCompletedList", adoptCompletedList);
 
-        List<AdoptionDTO> adoptCanceledList = adoptionService.adoptCanceled();
+        List<AdoptionDTO> adoptCanceledList = adoptionService.adoptCanceledList();
         model.addAttribute("adoptCanceledList", adoptCanceledList);
 
         return "sidemenu/adoption/adoption";
+    }
+
+    // 입양진행중 탭에서 입양취소로 상태 업데이트
+    @GetMapping("/adopterCanceled/{adoptNo}")
+    public String updateByCanceled(@PathVariable String adoptNo){
+        adoptionService.updateByCanceled(adoptNo);
+
+        return "redirect:/sidemenu/adoption?tab=canceled";
+    }
+
+    // 입양진행중 상세페이지
+    @GetMapping("/adopterDetail/adopting/{adoptNo}")
+    public String adoptingAdopterDetail(@PathVariable String adoptNo, Model model){
+
+        AdoptionDTO adoptingDetail = adoptionService.adoptingDetail(adoptNo);
+        model.addAttribute("adoptingDetail", adoptingDetail);
+
+        return "sidemenu/adoption/adoptingDetail";
+    }
+
+    // 입양진행중 상세페이지에서 입양완료로 상태 업데이트
+    @GetMapping("/adoptCompleted/{adoptNo}")
+    public String updateByCompleted(@PathVariable String adoptNo){
+
+        adoptionService.updateByCompleted(adoptNo);
+
+        return "redirect:/sidemenu/adoption?tab=completed";
+    }
+
+
+    // 입양완료 상세페이지
+    @GetMapping("/adopterDetail/completed/{adoptNo}")
+    public String completedAdopterDetail(){
+        return "sidemenu/adoption/adoptCompletedDetail";
+    }
+    // 입양취소 상세페이지
+    @GetMapping("/adopterDetail/canceled/{adoptNo}")
+    public String canceledAdopterDetail(){
+        return "sidemenu/adoption/adoptCanceledDetail";
     }
 }

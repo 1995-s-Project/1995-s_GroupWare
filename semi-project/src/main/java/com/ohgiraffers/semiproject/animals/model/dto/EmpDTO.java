@@ -12,5 +12,6 @@ public class EmpDTO {
     private String empCode;
     private String empName;
     private String empPhone;
+    private String profileImage;
 
 }

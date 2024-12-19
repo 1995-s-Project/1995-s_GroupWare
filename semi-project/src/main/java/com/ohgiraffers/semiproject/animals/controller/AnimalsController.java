@@ -120,19 +120,6 @@ public class AnimalsController {
         return "redirect:/sidemenu/animals";
     }
 
-    // 입양완료으로 상태 수정
-    @PostMapping("/adoptionComplete")
-    public String adoptionComplete(@RequestParam List<String> animalCode) {
-
-        
-        for(int i=0; i<animalCode.size(); i++){
-            String code = animalCode.get(i);
-            animalsService.adoptComplete(code);
-        }
-
-        return "redirect:/sidemenu/animals";
-    }
-
 // -----------------------------------------입양완료 페이지-----------------------------------------
     // 입양완료 페이지
     @GetMapping("/sidemenu/adoptionComplete")
