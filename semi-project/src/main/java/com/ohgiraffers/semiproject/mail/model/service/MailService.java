@@ -15,13 +15,28 @@ public class MailService {
         this.mailMapper = mailMapper;
     }
 
-    public List<MailDTO> mailAllSelect() {
+    public List<MailDTO> mailAllSelect(String code) {
 
-        return mailMapper.mailAllSelect();
+        return mailMapper.mailAllSelect(code);
     }
 
-//    public void registMail(MailDTO mailDTO) {
-//
-//        mailMapper.registMail(mailDTO);
-//    }
+    public void registMail(MailDTO mailDTO) {
+
+        mailMapper.registMail(mailDTO);
+    }
+
+    public MailDTO mailDetail(Integer emailCode) {
+
+        return mailMapper.mailDetail(emailCode);
+    }
+
+    public List<MailDTO> mailSentSelect(String code) {
+
+        return mailMapper.mailSentSelect(code);
+    }
+
+    public void mailTrash(Integer emailCode) {
+
+        mailMapper.mailTrash(emailCode);
+    }
 }
