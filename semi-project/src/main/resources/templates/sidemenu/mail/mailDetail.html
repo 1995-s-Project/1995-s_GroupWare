@@ -103,6 +103,7 @@
           <small th:text="'날짜 : ' + ${#dates.format(mail.sendDate, 'yyyy-MM-dd')}"></small>
         </div>
           <br>
+          <h2 class="h2">내용</h2>
           <div class="content-box" th:text="${mail.content}"></div>
         <div id="messageModal" class="modal">
           <div class="modal-content">

@@ -1,17 +1,18 @@
 package com.ohgiraffers.semiproject.mail.model.dto;
 
 import lombok.*;
+
 import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
+@Getter
 @ToString
-public class MailDTO {
+public class MailDTO2 {
 
-    private Integer emailCode; // 메일코드
+    private List<Long> emailCode; // 메일코드
     private String title; // 쪽지제목
     private String file; // 첨부파일
     private String content; // 내용
@@ -22,9 +23,5 @@ public class MailDTO {
     private String senderId; // 발신자 사번
     private String recipientId; // 다수의 recipientId를 저장할 리스트
     private String recipientName; // 다수의 recipientName을 저장할 리스트
-    private EmployeeDTO employeeDTO;
-    private JobDTO jobDTO;
-    private DeptDTO deptDTO;
     private String folder;
-
 }
