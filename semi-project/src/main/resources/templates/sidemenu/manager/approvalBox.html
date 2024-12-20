@@ -65,7 +65,7 @@
             <div class="form2">
                 <img src="/img/icon/document.png" alt="">
                 <div class="form-title"><h3>경조사 신청서</h3></div>
-                <input type="button" class="create-from" onclick="location.href='/approval/congratulations-form'" value="신청하기">
+                <input type="button" class="create-from" onclick="location.href='/approval/cac-form'" value="신청하기">
             </div>
             <div class="form3">
                 <img src="/img/icon/document.png" alt="">
@@ -79,7 +79,46 @@
             </div>
         </div>
         <div class="approval-list">
-            <h2 class="select-approval">🗒️결재 대기 목록</h2>
+            <div class="filter-box">
+                <h2 class="select-approval">🗒️결재 목록</h2>
+
+                <div class="filters">
+                    <div class="filter-set">
+                        <label class="red-text">기간</label>
+                        <div class="date-range">
+                            <input type="date" id="startDate" />
+                            <span>~</span>
+                            <input type="date" id="endDate" />
+                        </div>
+                    </div>
+
+                    <div class="filter-set">
+                        <label for="typeFilter">문서종류</label>
+                        <select id="typeFilter">
+                            <option value="">모두</option>
+                            <option value="연차">연차</option>
+                            <option value="휴가">휴가</option>
+                            <option value="결혼">결혼</option>
+                            <option value="조사">조사</option>
+                            <option value="연장근무">연장근무</option>
+                            <option value="퇴직">퇴직</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-set">
+                        <label for="statusFilter">진행상태</label>
+                        <select id="statusFilter">
+                            <option value="">모두</option>
+                            <option value="대기중">대기중</option>
+                            <option value="진행중">진행중</option>
+                            <option value="승인">승인</option>
+                            <option value="반려">승인</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
             <div class="header-title">
                 <span>사원코드</span>
                 <span>작성일자</span>

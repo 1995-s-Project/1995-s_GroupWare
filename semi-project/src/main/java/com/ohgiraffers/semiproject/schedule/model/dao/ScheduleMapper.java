@@ -1,5 +1,7 @@
 package com.ohgiraffers.semiproject.schedule.model.dao;
 
+import com.ohgiraffers.semiproject.manager.model.dto.CacPaymentDTO;
+import com.ohgiraffers.semiproject.manager.model.dto.RetirementDTO;
 import com.ohgiraffers.semiproject.manager.model.dto.VacPaymentDTO;
 import com.ohgiraffers.semiproject.schedule.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,4 +41,10 @@ public interface ScheduleMapper {
 
     // 승인된 신청서 연차 or 휴가 차감 후 업데이트
     void updateVacation(String code, VacationDTO vacationDTO);
+
+    // 경조사 신청서 정보 가져오기
+    List<CacPaymentDTO> getCacInfo(String userCode);
+
+    // 퇴직원 신청서 정보 가져오기
+    List<RetirementDTO> getRetirementInfo(String userCode);
 }

@@ -96,12 +96,13 @@
 .header-title {
     display: flex; /* 가로 방향으로 정렬 */
     font-weight: bold; /* 헤드라인 두껍게 */
-    background-color: #f0f0f0; /* 헤드라인 배경색 */
+    background-color: #0079ff; /* 헤드라인 배경색 */
     padding: 10px; /* 패딩 추가 */
     border-bottom: 2px solid #ccc; /* 아래쪽 경계선 */
     position: sticky; /* 스크롤 시 고정 */
     top: 0; /* 상단에 고정 */
     z-index: 10; /* 다른 요소 위에 표시 */
+    color: white;
 }
 
 .header-title span {
@@ -129,4 +130,55 @@
 
 .approval li:hover {
     background-color: #e0e0e0; /* 호버 시 배경색 변경 */
+}
+
+.filter-box {
+    display: flex;
+}
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    gap: 40px; /* 각 필터 세트 간의 간격 */
+    align-items: center; /* 세트의 수직 정렬 */
+    margin-left: 47%; /* 전체 필터 박스의 왼쪽 여백 */
+}
+
+.filter-set {
+    display: flex;
+    flex-direction: row; /* 각 세트 내에서 레이블과 인풋을 가로로 배치 */
+    align-items: center; /* 레이블과 인풋을 수직으로 중앙 정렬 */
+}
+
+label {
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 0;
+    width: 64px;
+    text-align: center;
+}
+
+input[type="date"],
+select {
+    padding: 10px; /* 내부 여백 */
+    border: 1px solid #ccc; /* 테두리 색상 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    font-size: 14px; /* 글자 크기 */
+    transition: border-color 0.3s; /* 포커스 시 테두리 색상 변화 애니메이션 */
+}
+
+input[type="date"]:focus,
+select:focus {
+    border-color: #007bff; /* 포커스 시 테두리 색상 */
+    outline: none; /* 기본 포커스 아웃라인 제거 */
+}
+
+/* 추가된 스타일 */
+.date-range {
+    display: flex;
+    align-items: center; /* 날짜 입력 필드와 ~ 기호를 수직으로 중앙 정렬 */
+}
+
+.date-range span {
+    margin: 0 10px; /* ~ 기호의 좌우 여백 */
 }

@@ -11,4 +11,25 @@
         (#{empCode}, DATE_FORMAT(#{deadLineDate}, '%Y-%m-%d'), #{type}, DATE_FORMAT(#{vacStartDate}, '%Y-%m-%d'), DATE_FORMAT(#{vacEndDate}, '%Y-%m-%d'), #{vacReason}, #{progressCode}, #{adminCode}, #{adminName},#{ownerCode})
     </insert>
 
+    <insert id="insertCacForm" parameterType="com.ohgiraffers.semiproject.manager.model.dto.CacPaymentDTO">
+        insert into tbl_cacpayment
+        (emp_code, deadline_date, type, cac_start_date, cac_end_date, cac_reason, account_number, progress_code, admin_code, admin_name,owner_code)
+        values
+        (#{empCode}, DATE_FORMAT(#{deadLineDate}, '%Y-%m-%d'), #{type}, DATE_FORMAT(#{cacStartDate}, '%Y-%m-%d'), DATE_FORMAT(#{cacEndDate}, '%Y-%m-%d'), #{cacReason}, #{accountNum}, #{progressCode}, #{adminCode}, #{adminName},#{ownerCode})
+    </insert>
+
+    <insert id="insertOverTimeForm" parameterType="com.ohgiraffers.semiproject.manager.model.dto.OverTimeDTO">
+        insert into tbl_overtime
+        (emp_code, deadline_date, type, overtime, overtime_reason, progress_code, admin_code, admin_name,owner_code)
+        values
+        (#{empCode}, DATE_FORMAT(#{deadLineDate}, '%Y-%m-%d'), #{type}, #{overTime}, #{overTimeReason}, #{progressCode}, #{adminCode}, #{adminName},#{ownerCode})
+    </insert>
+
+    <insert id="insertRetireMentForm" parameterType="com.ohgiraffers.semiproject.manager.model.dto.RetirementDTO">
+        insert into tbl_retirement
+        (emp_code, deadline_date, type, retire_date, retire_reason, progress_code, admin_code, admin_name,owner_code)
+        values
+        (#{empCode}, DATE_FORMAT(#{deadLineDate}, '%Y-%m-%d'), #{type}, DATE_FORMAT(#{retireDate}, '%Y-%m-%d'), #{retireReason}, #{progressCode}, #{adminCode}, #{adminName},#{ownerCode})
+    </insert>
+
 </mapper>
