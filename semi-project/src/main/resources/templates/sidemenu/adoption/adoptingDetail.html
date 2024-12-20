@@ -52,6 +52,7 @@
 </header>
 <div class="change-screen-adoptingDetail">
     <div id="change-screen-content">
+
         <div class="container">
             <!-- 입양 정보 섹션 -->
             <section class="adoption-section">
@@ -59,7 +60,7 @@
                 <div class="adoption-card">
                 <div class="btn-adoptCompleted">
                     <h1><span th:text="${adoptingDetail.adoptStatus}"></span></h1>
-                    <a th:href="@{/adoptCompleted/{adoptNo}(adoptNo=${adoptingDetail.adoptNo})}" class="complete-button" onclick="return confirmCompleted()">입양 완료</a>
+                    <a th:href="@{/adoptCompleted/{adoptNo}(adoptNo=${adoptingDetail.adoptNo})}" class="complete-button" onclick="return confirmCompleted()">입양완료</a>
                 </div>
                     <p><strong>입양번호 : </strong> <span th:text="${adoptingDetail.adoptNo}"></span></p>
                     <p><strong>이름 : </strong> <span th:text="${adoptingDetail.adoptName}"></span></p>
@@ -72,7 +73,6 @@
                 </div>
             </section>
 
-            <!-- 동물 정보 섹션과 담당자 정보 섹션을 감싸는 컨테이너 -->
             <div class="right-sections">
                 <!-- 동물 정보 섹션 -->
                 <section class="animal-section">

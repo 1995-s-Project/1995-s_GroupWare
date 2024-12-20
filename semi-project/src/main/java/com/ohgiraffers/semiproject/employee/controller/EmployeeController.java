@@ -86,10 +86,11 @@ public class EmployeeController {
     @GetMapping("/employee/details/{empCode}")
     public String getEmployeeDetails(@PathVariable Integer empCode, Model model) {
 
+        // 상세페이지 사원코드
         EmployeeDTOJOB employee = employeeService.empSelect(empCode);
-
+        // 댓글 조회
         List<CommentDTO> comment = employeeService.comment(empCode);
-
+        // 로그인한 유저
         UserInfoResponse userInfo = userInfoService.getUserInfo();
 
         if (comment == null) {

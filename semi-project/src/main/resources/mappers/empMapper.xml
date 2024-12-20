@@ -52,11 +52,16 @@
     </resultMap>
 
     <resultMap id="CommentResultMap" type="com.ohgiraffers.semiproject.employee.model.dto.CommentDTO">
-        <result property="id" column="id" />
-        <result property="empCode" column="emp_code" />
-        <result property="text" column="comment_contents" />
-        <result property="createdDate" column="created_date" jdbcType="TIMESTAMP" />
-        <result property="commentEmpCode" column="comment_emp_code" />
+        <id property="id" column="id"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="text" column="comment_contents"/>
+        <result property="createdDate" column="created_date" jdbcType="TIMESTAMP"/>
+        <result property="commentEmpCode" column="comment_emp_code"/>
+
+        <association property="employeeDTO" javaType="com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO">
+            <id property="empCode" column="emp_code"/>
+            <result property="empName" column="emp_name"/>
+        </association>
     </resultMap>
 
     <!-- 직원 전체조회 -->
@@ -156,4 +161,18 @@
         AND emp_code = #{empCode}
         AND comment_emp_code = #{commentEmpCode}
     </delete>
+
+<!-- 마이페이지 - 내댓글 조회하기 -->
+    <select id="getUserComment" resultMap="CommentResultMap">
+        SELECT
+            C.*,
+            E.emp_code,
+            E.emp_name
+        FROM
+            TBL_COMMENT C
+        JOIN
+            TBL_EMP E ON C.COMMENT_EMP_CODE = E.EMP_CODE
+        WHERE
+            C.COMMENT_EMP_CODE = #{code}
+    </select>
 </mapper>

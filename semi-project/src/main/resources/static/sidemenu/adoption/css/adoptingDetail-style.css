@@ -5,9 +5,17 @@
     border-radius: 10px;
     margin-bottom: 3%;
     color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* 공통 컨테이너 스타일 */
+#change-screen-content {
+    width: 100%;
+    max-width: 98%;
+    height: auto;
+}
+
 .container {
     display: flex;
     gap: 20px;

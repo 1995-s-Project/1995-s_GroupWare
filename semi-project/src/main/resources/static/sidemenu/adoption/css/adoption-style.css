@@ -15,10 +15,9 @@
 
 .tab-container {
     display: flex;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 1.5px solid #ccc;
     margin-bottom: 20px;
     overflow-x: auto; /* 수평 스크롤바 추가 */
-    padding-bottom: 10px;
 }
 
 .tab-button {
