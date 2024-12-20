@@ -52,10 +52,10 @@
 </header>
 <div class="change-screen-vacationForm">
   <div id="change-screen-content">
-    <form action="/vacationProcess" id="vacationFormRequest" method="post">
+    <form action="/cacProcess" id="vacationFormRequest" method="post">
       <input type="hidden" name="documentNo" th:value="${no}">
       <div class="form-title">
-        <h2>✈️연차 휴가 신청서✈️</h2>
+        <h2>📜경조사 신청서📜</h2>
         <div class="form-box">
           <table class="data-table">
             <thead>
@@ -93,10 +93,10 @@
           <tr>
             <td style="width: 40%; background-color: #f2f2f2; font-weight: bold;">부서명</td>
             <td id="department" style="background-color: white; width: 70%; height: 30px;"
-                th:text="${vacRequestInfo.getUserInfo().getDeptDTO().getDeptName()}">&nbsp;</td>
+                th:text="${cacRequestInfo.getUserInfo().getDeptDTO().getDeptName()}">&nbsp;</td>
             <td style="width: 40%; background-color: #f2f2f2; font-weight: bold;">기안자</td>
             <td id="author" style="background-color: white; width: 70%; height: 30px;"
-                th:text="${vacRequestInfo.getUserInfo().getEmpName()}">&nbsp;</td>
+                th:text="${cacRequestInfo.getUserInfo().getEmpName()}">&nbsp;</td>
           </tr>
           <tr>
             <td style="width: 40%; background-color: #f2f2f2; font-weight: bold;">기안일자</td>
@@ -105,7 +105,7 @@
             <input type="hidden" name="deadLineDate" id="deadline_date" value="">
             <td style="width: 40%; background-color: #f2f2f2; font-weight: bold;">관리자</td>
             <td id="managerCell" style="background-color: white; width: 70%; height: 30px;"
-                th:text="${vacRequestInfo.getAdminName()}">&nbsp;</td>
+                th:text="${cacRequestInfo.getAdminName()}">&nbsp;</td>
           </tr>
           </tbody>
         </table>
@@ -115,19 +115,25 @@
         <table class="data-table">
           <tbody>
           <tr>
-            <td style="width: 10%; background-color: #f2f2f2; font-weight: bold;">휴가 종류</td>
-            <td style="background-color: white; width: 70%; height: 30px; text-align: left" th:text="${vacRequestInfo.getType()}">
+            <td style="width: 10%; background-color: #f2f2f2; font-weight: bold;">경조사 종류</td>
+            <td style="background-color: white; width: 70%; height: 30px; text-align: left" th:text="${cacRequestInfo.getType()}">
             </td>
           </tr>
           <tr>
-            <td style="width: 10%; background-color: #f2f2f2; font-weight: bold;">휴가 일시</td>
+            <td style="width: 10%; background-color: #f2f2f2; font-weight: bold;">경조사 일시</td>
             <td style="background-color: white; width: 70%; height: 30px; text-align: left">
               <p th:text="${formattedVacStartDate} + ' ~ ' + ${formattedVacEndDate}"></p>
             </td>
           </tr>
           <tr>
-            <td style="width: 30%; background-color: #f2f2f2; font-weight: bold;">휴가 사유</td>
-            <td style="background-color: white; width: 70%; height: 140px; text-align: left;" th:text="${vacRequestInfo.getVacReason()}">
+            <td style="width: 30%; background-color: #f2f2f2; font-weight: bold;">경조사 사유</td>
+            <td style="background-color: white; width: 70%; height: 140px; text-align: left;" th:text="${cacRequestInfo.getCacReason()}">
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width: 30%; background-color: #f2f2f2; font-weight: bold;">계좌번호</td>
+            <td style="background-color: white; width: 70%; height: 30px; text-align: left;" th:text="${cacRequestInfo.getAccountNum()}">
             </td>
           </tr>
           </tbody>

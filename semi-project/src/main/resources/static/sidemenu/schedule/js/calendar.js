@@ -39,6 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 case '휴가': // 휴가 이벤트 색상
                     backgroundColor = 'rgba(0, 128, 255, 0.7)'; // 파란색
                     break;
+                case '결혼': // 휴가 이벤트 색상
+                    backgroundColor = 'rgba(255,0,174,0.7)'; // 파란색
+                    break;
+                case '조사': // 휴가 이벤트 색상
+                    backgroundColor = 'rgba(133,136,138,0.7)'; // 파란색
+                    break;
+                case '퇴직': // 휴가 이벤트 색상
+                    backgroundColor = 'rgb(246,2,22)'; // 파란색
+                    break;
                 default:
                     backgroundColor = 'rgba(0, 0, 0, 0.7)'; // 기본 배경색
             }
@@ -112,11 +121,72 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
 
+            // CacInfo 데이터 가져오기
+            return fetch('/sidemenu/schedule/getCacInfo');
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 좋지 않습니다.');
+            }
+            return response.json();
+        })
+        .then(cacData => {
+            // CacInfo 데이터를 캘린더 이벤트 형식으로 변환
+            cacData.forEach(cac => {
+                const startDate = new Date(cac.cacStartDate).toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0]; // YYYY-MM-DD 형식
+                const endDate = new Date(cac.cacEndDate); // 종료 날짜를 Date 객체로 변환
+                endDate.setDate(endDate.getDate() + 1); // 종료 날짜를 하루 더하기
+                const formattedEndDate = endDate.toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0]; // YYYY-MM-DD 형식으로 변환
+
+                calendar.addEvent({
+                    title: cac.type, // 경조사 타입을 제목으로 설정
+                    start: startDate, // 시작 날짜
+                    end: formattedEndDate, // 종료 날짜를 하루 더한 값으로 설정
+                    allDay: true, // 하루 종일 이벤트로 설정
+                    extendedProps: { // 추가 속성으로 경조사 정보 저장
+                        cacId: cac.id,
+                        cacType: cac.type,
+                        cacReason: cac.reason
+                    }
+                });
+            });
+
+            // retirementInfo 데이터 가져오기
+            return fetch('/sidemenu/schedule/getRetirementInfo');
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 좋지 않습니다.');
+            }
+            return response.json();
+        })
+        .then(retireData => {
+            // CacInfo 데이터를 캘린더 이벤트 형식으로 변환
+            retireData.forEach(retire => {
+                const startDate = new Date(retire.retireDate).toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0]; // YYYY-MM-DD 형식
+                const endDate = new Date(retire.retireDate); // 종료 날짜를 시작 날짜와 동일하게 설정
+                endDate.setDate(endDate.getDate() + 1); // 종료 날짜를 하루 더하기
+                const formattedEndDate = endDate.toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }).split('T')[0]; // YYYY-MM-DD 형식으로 변환
+
+                calendar.addEvent({
+                    title: retire.type, // 경조사 타입을 제목으로 설정
+                    start: startDate, // 시작 날짜
+                    end: formattedEndDate, // 종료 날짜를 하루 더한 값으로 설정
+                    allDay: true, // 하루 종일 이벤트로 설정
+                    extendedProps: { // 추가 속성으로 경조사 정보 저장
+                        retireId: retire.id, // 적절한 키로 변경
+                        retireType: retire.type,
+                        retireReason: retire.reason
+                    }
+                });
+            });
+
             calendar.render(); // 캘린더 렌더링
         })
         .catch(error => {
             console.error('문제가 발생했습니다:', error);
         });
+
 
 
     // 날짜 및 시간 포맷팅 함수

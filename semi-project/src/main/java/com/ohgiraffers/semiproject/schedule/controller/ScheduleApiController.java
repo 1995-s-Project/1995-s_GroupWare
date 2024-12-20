@@ -2,6 +2,8 @@ package com.ohgiraffers.semiproject.schedule.controller;
 
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
 import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
+import com.ohgiraffers.semiproject.manager.model.dto.CacPaymentDTO;
+import com.ohgiraffers.semiproject.manager.model.dto.RetirementDTO;
 import com.ohgiraffers.semiproject.manager.model.dto.VacPaymentDTO;
 import com.ohgiraffers.semiproject.schedule.model.dto.*;
 import com.ohgiraffers.semiproject.schedule.model.service.ScheduleService;
@@ -264,7 +266,6 @@ public class ScheduleApiController {
             // 사용자 정보를 기반으로 연차와 휴가 정보를 가져오는 로직 추가
             List<VacPaymentDTO> vacPaymentDTO = scheduleService.getVactionInfo(userCode); // 연차 정보 가져오기
 
-            System.out.println("vacPaymentDTO = " + vacPaymentDTO);
 
             // ResponseEntity로 반환
             return ResponseEntity.ok(vacPaymentDTO);
@@ -274,4 +275,41 @@ public class ScheduleApiController {
         }
     }
 
+    @GetMapping("getCacInfo")
+    public ResponseEntity< List<CacPaymentDTO>> getCacInfo(){
+        // UserInfoService를 통해 현재 로그인한 사용자의 정보를 가져옴
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        if (userInfo != null) {
+            String userCode = userInfo.getCode(); // 사번 가져오기
+
+            // 사용자 정보를 기반으로 경조사 정보 가져오는 로직 추가
+            List<CacPaymentDTO> cacPaymentDTO = scheduleService.getCactionInfo(userCode); // 연차 정보 가져오기
+
+            // ResponseEntity로 반환
+            return ResponseEntity.ok(cacPaymentDTO);
+        } else {
+            // 사용자 정보가 없을 경우 404 Not Found 반환
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("getRetirementInfo")
+    public ResponseEntity< List<RetirementDTO>> getRetirementInfo(){
+        // UserInfoService를 통해 현재 로그인한 사용자의 정보를 가져옴
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        if (userInfo != null) {
+            String userCode = userInfo.getCode(); // 사번 가져오기
+
+            // 사용자 정보를 기반으로 경조사 정보 가져오는 로직 추가
+            List<RetirementDTO> retirementDTO = scheduleService.getRetirementInfo(userCode); // 연차 정보 가져오기
+
+            // ResponseEntity로 반환
+            return ResponseEntity.ok(retirementDTO);
+        } else {
+            // 사용자 정보가 없을 경우 404 Not Found 반환
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

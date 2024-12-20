@@ -30,4 +30,31 @@ public interface ManagerApprovalMapper {
 
     // 날짜 가져오기
     VacPaymentDTO getDate(int documentNo);
+
+    // 경조사 정보 가져오기
+    CacPaymentDTO getCacRequest(String documentNo);
+
+    // 승인 or 반려 값 가져오기
+    CacPaymentDTO getCacDetails(String documentNo);
+
+    // 경조사 도장 이미지 저장
+    void cacProcess(CacPaymentDTO process);
+
+    // 연장근무 신청서 정보 가져오기
+    OverTimeDTO getOverTimeRequest(String documentNo);
+
+    // 승인 or 반려 값 가져오기
+    OverTimeDTO getOverTimeDetails(String documentNo);
+
+    // 연장근무 도장 이미지 저장
+    void overTimeProcess(OverTimeDTO process);
+
+    // 퇴직원 정보 가져오기
+    RetirementDTO getRetirementRequest(String documentNo);
+
+    // 승인 or 반려 값 가져오기
+    RetirementDTO getRetirementDetails(String documentNo);
+
+    // 퇴직원 도장 이미지 저장
+    void retirementProcess(RetirementDTO process);
 }

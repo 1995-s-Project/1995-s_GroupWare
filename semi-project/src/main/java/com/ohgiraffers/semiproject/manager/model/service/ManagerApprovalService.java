@@ -54,4 +54,47 @@ public class ManagerApprovalService {
     public VacPaymentDTO getDate(int documentNo) {
         return managerApprovalMapper.getDate(documentNo);
     }
+
+
+
+    public CacPaymentDTO getCacRequest(String documentNo) {
+
+        return managerApprovalMapper.getCacRequest(documentNo);
+    }
+
+    public CacPaymentDTO getCacDetails(String documentNo) {
+        return managerApprovalMapper.getCacDetails(documentNo);
+    }
+
+    @Transactional
+    public void cacProcess(CacPaymentDTO process) {
+        managerApprovalMapper.cacProcess(process);
+    }
+
+
+    public OverTimeDTO getOverTimeRequest(String documentNo) {
+        return managerApprovalMapper.getOverTimeRequest(documentNo);
+    }
+
+    public OverTimeDTO getOverTimeDetails(String documentNo) {
+        return managerApprovalMapper.getOverTimeDetails(documentNo);
+    }
+
+    @Transactional
+    public void overTimeProcess(OverTimeDTO process) {
+        managerApprovalMapper.overTimeProcess(process);
+    }
+
+    public RetirementDTO getRetirementRequest(String documentNo) {
+        return managerApprovalMapper.getRetirementRequest(documentNo);
+    }
+
+    public RetirementDTO getRetirementDetails(String documentNo) {
+        return managerApprovalMapper.getRetirementDetails(documentNo);
+    }
+
+    @Transactional
+    public void retirementProcess(RetirementDTO process) {
+        managerApprovalMapper.retirementProcess(process);
+    }
 }

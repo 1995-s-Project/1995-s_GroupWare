@@ -173,7 +173,7 @@ function calculateTotalDays() {
     const startDateInput = document.getElementById('startDate');
     const endDateInput = document.getElementById('endDate');
     const totalDaysInput = document.getElementById('totalDays');
-    const vacationTypeSelect = document.getElementById('vacationType');
+    const vacationTypeSelect = document.getElementById('cacType');
 
     const startDate = new Date(startDateInput.value);
     const endDate = new Date(endDateInput.value);
@@ -245,15 +245,16 @@ function calculateTotalDays() {
 
 
 document.getElementById('submitButton').addEventListener('click', function (event) {
-    event.preventDefault(); // 기본 동작 방지
+    // 기본 동작 방지
+    event.preventDefault();
 
     const managerCell = document.getElementById('managerCell').innerHTML.trim();
-    const vacReason = document.querySelector('textarea[name="vacReason"]').value.trim();
+    const cacReason = document.querySelector('textarea[name="cacReason"]').value.trim();
     const startDate = document.getElementById('startDate').value.trim();
     const endDate = document.getElementById('endDate').value.trim();
 
     // 입력 필드가 비어 있는지 확인
-    if (!managerCell || !vacReason || !startDate || !endDate) {
+    if (!managerCell || !cacReason || !startDate || !endDate) {
         alert("모든 필드를 입력해 주세요.");
         return; // 입력이 부족하면 함수 종료
     }
@@ -261,9 +262,11 @@ document.getElementById('submitButton').addEventListener('click', function (even
     // 모든 필드가 채워진 경우, 폼 제출 또는 다른 작업 수행
     const confirmation = confirm("제출하시겠습니까?");
     if (confirmation) {
-        document.getElementById('vacationFormRequest').submit(); // 폼 제출
+        // 기본 동작 방지 제거
+        document.getElementById('cacFormRequest').submit(); // 폼 제출
     }
 });
+
 
 
 

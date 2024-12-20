@@ -170,90 +170,42 @@ window.onclick = function (event) {
 };
 
 function calculateTotalDays() {
-    const startDateInput = document.getElementById('startDate');
-    const endDateInput = document.getElementById('endDate');
+    const retireDate = document.getElementById('retireDate');
     const totalDaysInput = document.getElementById('totalDays');
-    const vacationTypeSelect = document.getElementById('vacationType');
 
-    const startDate = new Date(startDateInput.value);
-    const endDate = new Date(endDateInput.value);
+    const retirementDate = new Date(retireDate.value);
     const today = new Date(); // 현재 날짜
 
     // 현재 날짜를 자정으로 설정 (시간 부분을 무시하기 위해)
     today.setHours(0, 0, 0, 0);
 
     // 날짜가 유효한 경우에만 계산
-    if (!isNaN(startDate) && !isNaN(endDate)) {
+    if (!isNaN(retirementDate)) {
         // 시작일이 현재 날짜보다 이전인 경우
-        if (startDate < today) {
+        if (retirementDate < today) {
             alert("현재 날짜보다 빠른 날짜로 설정하실 수 없습니다.");
-            startDateInput.value = ''; // 시작일 필드를 비웁니다.
+            retireDate.value = ''; // 시작일 필드를 비웁니다.
             totalDaysInput.value = ''; // 총 일수도 비웁니다.
             return; // 함수 종료
         }
 
-        // 종료일이 시작일보다 빠른 경우
-        if (startDate > endDate) {
-            alert("시작일자보다 더 빠른 날짜로 설정하실 수 없습니다.");
-            endDateInput.value = ''; // 종료일자 필드를 비웁니다.
-            totalDaysInput.value = ''; // 총 일수도 비웁니다.
-            return; // 함수 종료
-        }
-
-        // 시작일과 종료일이 같으면 1일로 설정
-        if (startDate.getTime() === endDate.getTime()) {
-            totalDaysInput.value = 1;
-        } else {
-            const timeDiff = endDate - startDate; // 밀리초 단위 차이
-            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // 일 단위로 변환
-
-            // 종료일이 시작일 다음 날인 경우 2일로 설정
-            totalDaysInput.value = daysDiff + 1; // 시작일과 종료일이 다르면 1일 추가
-        }
-
-        // 남은 연차 또는 휴가 갯수 확인
-        const vacationType = vacationTypeSelect.value;
-        const yearLeaveCountInfo = parseInt(document.getElementById('yearLeaveCount').dataset.count) || 0;
-        const vacationCountInfo = parseInt(document.getElementById('vacationCount').dataset.count) || 0;
-
-        let remainingDays;
-        if (vacationType === "연차") {
-            remainingDays = yearLeaveCountInfo;
-
-            console.log('연차', remainingDays)
-
-        } else if (vacationType === "휴가") {
-            remainingDays = vacationCountInfo;
-
-            console.log('휴가', remainingDays)
-        }
-
-        // 총 일수와 남은 일수 비교
-        const totalDays = parseInt(totalDaysInput.value) || 0;
-
-        console.log("Total Days:", totalDays);
-        console.log("Remaining Days:", remainingDays);
-
-        if (totalDays > remainingDays) {
-            alert("신청하실 수 있는 연차/휴가 갯수를 초과하였습니다.");
-            totalDaysInput.value = ''; // 총 일수도 비웁니다.
-        }
     } else {
         totalDaysInput.value = ''; // 유효하지 않은 경우 빈 값으로 설정
     }
 }
 
 
+
 document.getElementById('submitButton').addEventListener('click', function (event) {
-    event.preventDefault(); // 기본 동작 방지
+    // 기본 동작 방지
+    event.preventDefault();
 
     const managerCell = document.getElementById('managerCell').innerHTML.trim();
-    const vacReason = document.querySelector('textarea[name="vacReason"]').value.trim();
-    const startDate = document.getElementById('startDate').value.trim();
-    const endDate = document.getElementById('endDate').value.trim();
+    const retireReason = document.querySelector('textarea[name="retireReason"]').value.trim();
+    const retireDate = document.getElementById('retireDate').value.trim();
 
     // 입력 필드가 비어 있는지 확인
-    if (!managerCell || !vacReason || !startDate || !endDate) {
+    if (!managerCell || !retireReason || !retireDate) {
         alert("모든 필드를 입력해 주세요.");
         return; // 입력이 부족하면 함수 종료
     }
@@ -261,9 +213,11 @@ document.getElementById('submitButton').addEventListener('click', function (even
     // 모든 필드가 채워진 경우, 폼 제출 또는 다른 작업 수행
     const confirmation = confirm("제출하시겠습니까?");
     if (confirmation) {
-        document.getElementById('vacationFormRequest').submit(); // 폼 제출
+        // 기본 동작 방지 제거
+        document.getElementById('retirementFormRequest').submit(); // 폼 제출
     }
 });
+
 
 
 

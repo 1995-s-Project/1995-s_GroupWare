@@ -252,4 +252,6 @@ textarea {
     margin: 0 auto; /* 중앙 정렬 */
 }
 
-
+.countInfo{
+    margin-right: 17%;
+}

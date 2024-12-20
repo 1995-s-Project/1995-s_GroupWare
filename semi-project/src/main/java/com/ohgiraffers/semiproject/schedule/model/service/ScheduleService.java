@@ -1,5 +1,7 @@
 package com.ohgiraffers.semiproject.schedule.model.service;
 
+import com.ohgiraffers.semiproject.manager.model.dto.CacPaymentDTO;
+import com.ohgiraffers.semiproject.manager.model.dto.RetirementDTO;
 import com.ohgiraffers.semiproject.manager.model.dto.VacPaymentDTO;
 import com.ohgiraffers.semiproject.schedule.model.dao.ScheduleMapper;
 import com.ohgiraffers.semiproject.schedule.model.dto.*;
@@ -85,5 +87,13 @@ public class ScheduleService {
     @Transactional
     public void updateVacation(String code, VacationDTO vacationDTO) {
         scheduleMapper.updateVacation(code, vacationDTO);
+    }
+
+    public List<CacPaymentDTO> getCactionInfo(String userCode) {
+        return scheduleMapper.getCacInfo(userCode);
+    }
+
+    public List<RetirementDTO> getRetirementInfo(String userCode) {
+        return scheduleMapper.getRetirementInfo(userCode);
     }
 }
