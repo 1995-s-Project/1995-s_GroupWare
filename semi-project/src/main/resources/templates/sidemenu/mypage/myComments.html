@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/main/css/main-style.css"> <!-- 메인 스타일 연결 -->
     <script src="/main/js/main.js"></script> <!-- 메인 자바스크립트 연결 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_arrow_down" />
-    <link rel="stylesheet" href="/sidemenu/mypage/css/mypage-style.css">
+    <link rel="stylesheet" href="/sidemenu/mypage/css/myComments-style.css">
 </head>
 <body>
 <header>
@@ -50,7 +50,7 @@
         </ul>
     </div>
 </header>
-<div class="change-screen-myPage">
+<div class="change-screen-myComments">
     <div id="change-screen-content">
 
         <div class="navigation">
@@ -81,7 +81,22 @@
         </div>
 
         <div class="content-container">
-            <h1>내용</h1>
+            <h2>내 댓글</h2>
+
+            <div>
+                <ul>
+                    <!-- 댓글이 없을 경우 표시 -->
+                    <div th:if="${#lists.isEmpty(comments)}">
+                        <p>댓글이 없습니다.</p>
+                    </div>
+
+                    <!-- 댓글이 있을 경우 -->
+                    <li th:each="comment : ${comments}">
+                        <p><span th:text="${#temporals.format(comment.createdDate, 'yyyy-MM-dd')}"></span> -
+                            <span th:text="${comment.employeeDTO.empName}"></span> 님 상세페이지에 댓글을 남겼습니다.</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -111,8 +126,6 @@
             }
         });
     });
-
-
 </script>
 </body>
 </html>

@@ -29,4 +29,10 @@ public interface EmployeeMapper {
     List<EmployeeJoinListDTO> empAllSelect();
 
     void commentDelete(CommentDTO commentDTO);
+
+    // 마이페이지 - 내 댓글 조회 메소드
+    List<CommentDTO> getUserComment(String code);
+
+
+
 }

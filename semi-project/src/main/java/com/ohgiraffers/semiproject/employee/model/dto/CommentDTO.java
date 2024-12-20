@@ -28,4 +28,8 @@ public class CommentDTO {
 
     @Column(name = "comment_emp_code")
     private String commentEmpCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_code", referencedColumnName = "emp_Code", insertable = false, updatable = false)
+    private EmployeeDTO employeeDTO;
 }

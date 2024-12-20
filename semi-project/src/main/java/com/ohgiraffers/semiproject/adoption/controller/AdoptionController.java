@@ -21,6 +21,7 @@ public class AdoptionController {
         this.adoptionService = adoptionService;
     }
 
+/* comment.--------------------------------- 입양진행중 Tab --------------------------------- */
     // 입양 페이지로 이동
     @GetMapping("/sidemenu/adoption")
     public String adoptionList(Model model){
@@ -40,6 +41,7 @@ public class AdoptionController {
     // 입양진행중 탭에서 입양취소로 상태 업데이트
     @GetMapping("/adopterCanceled/{adoptNo}")
     public String updateByCanceled(@PathVariable String adoptNo){
+
         adoptionService.updateByCanceled(adoptNo);
 
         return "redirect:/sidemenu/adoption?tab=canceled";
@@ -64,15 +66,34 @@ public class AdoptionController {
         return "redirect:/sidemenu/adoption?tab=completed";
     }
 
-
+/* comment.--------------------------------- 입양완료 Tab --------------------------------- */
     // 입양완료 상세페이지
     @GetMapping("/adopterDetail/completed/{adoptNo}")
-    public String completedAdopterDetail(){
+    public String completedAdopterDetail(@PathVariable String adoptNo, Model model){
+
+        AdoptionDTO completedDetail = adoptionService.completedAdopterDetail(adoptNo);
+        model.addAttribute("completedDetail", completedDetail);
+
         return "sidemenu/adoption/adoptCompletedDetail";
     }
+
+    // 입양완료 상세페이지에서 파양으로 상태 업데이트
+    @GetMapping("/giveUp/{adoptNo}")
+    public String updateByGiveUp(@PathVariable String adoptNo){
+
+        adoptionService.updateByGiveUp(adoptNo);
+
+        return "redirect:/sidemenu/adoption?tab=canceled";
+    }
+
+/* comment.--------------------------------- 입양취소 Tab --------------------------------- */
     // 입양취소 상세페이지
     @GetMapping("/adopterDetail/canceled/{adoptNo}")
-    public String canceledAdopterDetail(){
+    public String canceledAdopterDetail(@PathVariable String adoptNo, Model model){
+
+        AdoptionDTO canceledDetail = adoptionService.canceledAdopterDetail(adoptNo);
+        model.addAttribute("canceledDetail", canceledDetail);
+
         return "sidemenu/adoption/adoptCanceledDetail";
     }
 }

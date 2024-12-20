@@ -71,4 +71,9 @@ public class EmployeeService {
 
         employeeMapper.commentDelete(commentDTO);
     }
+
+    // 마이페이지 - 내 댓글 조회 메소드
+    public List<CommentDTO> getUserComment(String code) {
+        return employeeMapper.getUserComment(code);
+    }
 }

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/main/css/main-style.css"> <!-- 메인 스타일 연결 -->
     <script src="/main/js/main.js"></script> <!-- 메인 자바스크립트 연결 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_arrow_down" />
-    <link rel="stylesheet" href="/sidemenu/mypage/css/mypage-style.css">
+    <link rel="stylesheet" href="/sidemenu/mypage/css/myPosts-style.css">
 </head>
 <body>
 <header>
@@ -50,7 +50,7 @@
         </ul>
     </div>
 </header>
-<div class="change-screen-myPage">
+<div class="change-screen-myPosts">
     <div id="change-screen-content">
 
         <div class="navigation">
@@ -99,6 +99,15 @@
 
         // 클릭한 드롭다운 메뉴 토글
         dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+
+        // 메뉴 클릭 시 활성화된 상태를 적용
+        const allDropdownTitles = document.querySelectorAll('.dropdown-title');
+        allDropdownTitles.forEach(title => {
+            title.classList.remove('active'); // 다른 메뉴의 활성화 클래스 제거
+        });
+
+        // 현재 클릭된 메뉴 항목에 'active' 클래스 추가
+        dropdownTitle.classList.toggle('active');
     }
 
     // 외부 클릭 시 드롭다운 닫기
@@ -108,11 +117,10 @@
             const dropdownMenu = title.nextElementSibling;
             if (!title.contains(event.target) && !dropdownMenu.contains(event.target)) {
                 dropdownMenu.style.display = 'none';
+                title.classList.remove('active'); // 외부 클릭 시 'active' 클래스 제거
             }
         });
     });
-
-
 </script>
 </body>
 </html>
