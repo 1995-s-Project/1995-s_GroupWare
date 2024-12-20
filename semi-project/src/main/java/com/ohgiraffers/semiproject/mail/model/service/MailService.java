@@ -2,9 +2,12 @@ package com.ohgiraffers.semiproject.mail.model.service;
 
 import com.ohgiraffers.semiproject.mail.model.dao.MailMapper;
 import com.ohgiraffers.semiproject.mail.model.dto.MailDTO;
+import com.ohgiraffers.semiproject.mail.model.dto.MailDTO2;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MailService {
@@ -35,8 +38,21 @@ public class MailService {
         return mailMapper.mailSentSelect(code);
     }
 
-    public void mailTrash(Integer emailCode) {
+    public List<MailDTO> mailFolderImportant(String code) {
 
-        mailMapper.mailTrash(emailCode);
+        return mailMapper.mailFolderImportant(code);
+    }
+
+    public List<MailDTO> mailFolderTrash(String code) {
+
+        return mailMapper.mailFolderTrash(code);
+    }
+
+    public List<MailDTO> mailFolderArchived(String code) {
+
+        return mailMapper.mailFolderArchived(code);
     }
 }
+
+
+

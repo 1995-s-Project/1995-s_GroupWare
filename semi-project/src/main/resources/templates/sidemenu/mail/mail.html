@@ -69,43 +69,34 @@
                         </li>
                         <br><br><br>
                         <li style="font-size: 20px;">
-                            <a href="/mail/important" style="text-decoration: none;">
+                            <a th:href="@{/mail/important}" style="text-decoration: none;">
                                 <b>⭐&nbsp;&nbsp;&nbsp;&nbsp;중요쪽지함</b>
                             </a>
                         </li>
                         <br><br><br>
                         <li style="font-size: 20px;">
-<!--                            <a th:href="@{/mail/{emailCode}/trash(emailCode=${mail.emailCode})}" style="text-decoration: none;">-->
-                                <b>❌&nbsp;&nbsp;&nbsp;&nbsp;휴지통</b>
+                            <a th:href="@{/mail/trash}" style="text-decoration: none;">
+                            <b>❌&nbsp;&nbsp;&nbsp;&nbsp;휴지통</b>
                             </a>
                         </li>
                         <br><br><br>
                         <li style="font-size: 20px;">
-                            <a href="/mail/archived" style="text-decoration: none;">
+                            <a th:href="@{/mail/archived}" style="text-decoration: none;">
                                 <b>📦&nbsp;&nbsp;&nbsp;&nbsp;보관함</b>
                             </a>
-                            <br><br>
                         </li>
                     </ul>
-                        <button id="messageModalBtn" class="styled-button">🖍 쪽지 쓰기</button>
+                    <button id="messageModalBtn" class="styled-button">🖍 쪽지 쓰기</button>
                 </nav>
             </div>
 
             <div class="form1">
                 <div class="main-button">
-                    <button class="main-button1">❌ 휴지통</button>
-                    <button class="main-button2">⭐ 중요보관함</button>
-                    <button class="main-button3">📦 받은쪽지보관함</button>
+                    <button id="moveToTrash" onclick="moveToFolder('trash')">❌ 휴지통</button>
+                    <button id="moveToImportant" onclick="moveToFolder('important')">⭐ 중요보관함</button>
+                    <button id="moveToReceived" onclick="moveToFolder('archived')">📦 보관함</button>
                 </div>
                 <table border="1" class="post-list">
-                    <colgroup>
-                        <col style="width: 1%;">
-                        <col style="width: 1%;">
-                        <col style="width: 2%;">
-                        <col style="width: 3%;">
-                        <col style="width: 12%;">
-                        <col style="width: 1%;">
-                    </colgroup>
                     <thead>
                     <tr>
                         <th>
@@ -113,7 +104,6 @@
                         </th>
                         <th>
                             <input type="checkbox" id="selectAllStars" class="checkbox2" onclick="toggleStarSelectAll(this)">
-                            <label for="selectAllStars" id="selectAllStarsLabel"></label>
                         </th>
                         <th>메일번호</th>
                         <th>보낸사람</th>
@@ -124,11 +114,11 @@
                     <tbody>
                     <tr th:each="mail : ${mailList}">
                         <td>
-                            <input type="checkbox" class="select-item" name="selectedMail">
+                            <input type="checkbox" class="select-item" name="selectedMail" value="${mail.emailCode}" onchange="handleEmailSelection()">
                         </td>
                         <td>
                             <label class="star-checkbox">
-                                <input type="checkbox" class="star-check" id="star_{{mail.emailCode}}" name="starredMail" onchange="toggleStar(this)">
+                                <input type="checkbox" class="star-check" id="star_{{mail.emailCode}}" name="starredMail" value="${mail.emailCode}" onchange="toggleStar(this)">
                                 <i></i>
                             </label>
                         </td>
@@ -144,9 +134,9 @@
                 <div id="messageModal" class="modal">
                     <div class="modal-content">
                         <form class=modal2-form id="messageForm" action="/sidemenu/mail/regist" method="post">
-                        <span class="close-btn" id="closeModalBtn">&times;</span>
-                        <h2>쪽지 보내기</h2>
-                        <button id="openModalBtn" class="styled-button2"><b>🔎 찾기</b></button>
+                            <span class="close-btn" id="closeModalBtn">&times;</span>
+                            <h2>쪽지 보내기</h2>
+                            <button id="openModalBtn" class="styled-button2"><b>🔎 찾기</b></button>
                             <div class="form-group">
                                 <label for="recipient">받는 사람</label>
                                 <input class="textbox" type="text" id="recipient" name="recipient" placeholder="받는 사람을 입력하세요" required readonly>
@@ -207,22 +197,18 @@
 </div>
 </body>
 <script>
-    // 모달 열기
     document.getElementById('messageModalBtn').addEventListener('click', function() {
         document.getElementById('messageModal').style.display = 'block';
     });
 
-    // 모달 닫기
     document.getElementById('closeModalBtn').addEventListener('click', function() {
         document.getElementById('messageModal').style.display = 'none';
     });
 
-    // 주소록 모달 열기
     document.getElementById('openModalBtn').addEventListener('click', function() {
         document.getElementById('addressBookModal').style.display = 'block';
     });
 
-    // 주소록 모달 닫기
     document.getElementById('closeModalBtn2').addEventListener('click', function() {
         document.getElementById('addressBookModal').style.display = 'none';
     });
@@ -244,11 +230,8 @@
             alert("받는 사람을 선택해 주세요!");
             return;  // 선택된 받는 사람이 없으면 실행을 중단
         }
-
-        // 여기서 폼 제출 등의 후속 처리를 진행할 수 있습니다.
     }
 
-    // 직원 목록을 가져오기 위한 API 호출
     function fetchEmployees() {
         // 부서별 목록을 담을 DOM 요소들
         const departments = {
@@ -287,7 +270,6 @@
             });
     }
 
-    // 직원 선택 시 처리
     function selectEmployee(employee) {
         const recipientField = document.getElementById('recipient');
         const recipientIdField = document.getElementById('recipient_id');
@@ -300,7 +282,6 @@
         document.getElementById('addressBookModal').style.display = 'none';
     }
 
-    // 직원 검색 필터
     function filterEmployees() {
         const searchInput = document.getElementById('searchInput2').value.toLowerCase();
         const employeeListItems = document.querySelectorAll('#addressBookContainer2 .employee-list li');
@@ -318,7 +299,9 @@
     // 페이지 로드 시 직원 목록 가져오기
     window.onload = function() {
         fetchEmployees();
+        initializeEventListeners();
     };
+
 
     // 전체 선택 체크박스 처리
     function toggleSelectAll(source) {
@@ -334,28 +317,6 @@
         checkboxes.forEach(function(checkbox) {
             checkbox.checked = source.checked;
         });
-    }
-
-    // 직원 목록을 가져오고 필터링하는 함수 호출
-    function updateRecipientField() {
-        const selectedEmployees = [];
-        const selectedNames = [];
-        const checkboxes = document.querySelectorAll('.employee-check:checked');
-
-        checkboxes.forEach(cb => {
-            const employeeId = cb.getAttribute('data-emp-id');  // 사원의 사번을 가져옴
-            const employeeName = cb.getAttribute('data-emp-name');  // 사원의 이름을 가져옴
-            selectedEmployees.push(employeeId);
-            selectedNames.push(employeeName);  // 이름도 함께 추가
-        });
-
-        const recipientIdField = document.getElementById('recipient_id');
-        const recipientNameField = document.getElementById('recipient_name'); // 이름을 담을 hidden 필드
-
-        if (recipientIdField && recipientNameField) {
-            recipientIdField.value = selectedEmployees.join(',');  // 여러 명 선택 시 ,로 구분
-            recipientNameField.value = selectedNames.join(', ');  // 선택된 이름들을 ,로 구분하여 설정
-        }
     }
 </script>
 </html>

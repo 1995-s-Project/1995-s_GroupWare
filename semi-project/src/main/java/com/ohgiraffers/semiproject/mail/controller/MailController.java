@@ -3,18 +3,18 @@ package com.ohgiraffers.semiproject.mail.controller;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO;
 import com.ohgiraffers.semiproject.employee.model.service.EmployeeService;
 import com.ohgiraffers.semiproject.mail.model.dto.MailDTO;
+import com.ohgiraffers.semiproject.mail.model.dto.MailDTO2;
 import com.ohgiraffers.semiproject.mail.model.service.MailService;
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
 import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class MailController {
@@ -105,11 +105,50 @@ public class MailController {
         return "redirect:/sidemenu/mail"; // 메인 페이지로 리다이렉트
     }
 
-//    @GetMapping("/mail/{emailCode}/trash/")
-//    public String mailTrash(@PathVariable Integer emailCode, Model model) {
-//
-//        mailService.mailTrash(emailCode);
-//
-//        return "";
-//    }
+    @GetMapping("/mail/important")
+    public String mailImportant(Model model){
+
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        String code = userInfo.getCode();
+
+        List<MailDTO> important = mailService.mailFolderImportant(code);
+
+        System.out.println("important = " + important);
+
+        model.addAttribute("important", important);
+
+        return "sidemenu/mail/important";
+    }
+    @GetMapping("/mail/trash")
+    public String mailTrash(Model model) {
+
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        String code = userInfo.getCode();
+
+        List<MailDTO> trash = mailService.mailFolderTrash(code);
+
+        System.out.println("trash = " + trash);
+
+        model.addAttribute("trash", trash);
+
+        return "sidemenu/mail/trash";
+    }
+    @GetMapping("/mail/archived")
+    public String mailArchived(Model model) {
+
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        String code = userInfo.getCode();
+
+        List<MailDTO> archived = mailService.mailFolderArchived(code);
+
+        System.out.println("archived = " + archived);
+
+        model.addAttribute("archived", archived);
+
+        return "sidemenu/mail/archived";
+    }
 }
+

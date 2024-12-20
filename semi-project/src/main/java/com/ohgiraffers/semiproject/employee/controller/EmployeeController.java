@@ -116,7 +116,7 @@ public class EmployeeController {
         CommentDTO commentDTO = new CommentDTO();
 
         commentDTO.setEmpCode(empCode);
-
+        System.out.println("empCode = " + empCode);
         commentDTO.setText(text);
 
         commentDTO.setCommentEmpCode(code);
@@ -152,7 +152,6 @@ public class EmployeeController {
 
     @GetMapping("/sidemenu/employee/employee")
     public void employee() {
-
     }
 }
 
