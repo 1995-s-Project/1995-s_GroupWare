@@ -116,7 +116,7 @@
 .container { /* 부모 요소에 대한 클래스 추가 */
     display: flex; /* Flexbox 사용 */
     align-items: center; /* 수직 정렬 */
-    justify-content: flex-end;
+    justify-content: center;
     position: relative;
 }
 

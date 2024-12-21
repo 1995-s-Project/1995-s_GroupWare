@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ApprovalService {
 
@@ -37,5 +39,42 @@ public class ApprovalService {
     @Transactional
     public void insertRetireMentForm(RetirementDTO retirementDTO) {
         approvalMapper.insertRetireMentForm(retirementDTO);
+    }
+
+    public List<CacPaymentDTO> getMyCacPaymentList(String code) {
+        return approvalMapper.getMyCacPaymentList(code);
+    }
+
+    public List<OverTimeDTO> getMyOverTimeList(String code) {
+        return approvalMapper.getMyOverTimeList(code);
+    }
+
+    public List<RetirementDTO> getMyRetirement(String code) {
+        return approvalMapper.getMyRetirement(code);
+    }
+
+    public List<VacPaymentDTO> getMyVacPayment(String code) {
+        return approvalMapper.getMyVacPayment(code);
+    }
+
+    // 경조사 데이터 삭제하기
+    @Transactional
+    public void deleteCacProcess(int no) {
+        approvalMapper.deleteCacProcess(no);
+    }
+
+    // 연장근무 데이터 삭제하기
+    public void deleteOverTimeProcess(int no) {
+        approvalMapper.deleteOverTimeProcess(no);
+    }
+
+    // 퇴직서 데이터 삭제하기
+    public void deleteRetirementProcess(int no) {
+        approvalMapper.deleteRetirementProcess(no);
+    }
+
+    // 연차 휴가 데이터 삭제하기
+    public void deleteVacationProcess(int no) {
+        approvalMapper.deleteVacationProcess(no);
     }
 }
