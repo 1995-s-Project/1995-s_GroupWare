@@ -14,12 +14,10 @@ body, table {
     box-sizing: border-box;
 }
 
-/* Basic styling */
 body {
     font-family: Arial, sans-serif;
 }
 
-/* Board styles */
 .board {
     width: 80%;
     margin: 0 auto;
@@ -28,7 +26,6 @@ body {
     border-radius: 10px; /* 둥근 모서리 */
 }
 
-/* Post List styles */
 .post-list {
     border-collapse: collapse;
     width: 100%;
@@ -60,16 +57,16 @@ body {
 
 .styled-button {
     background-color: #006a38;
-    border: none; /* 테두리 없음 */
-    color: white; /* 글자색 흰색 */
-    padding: 10px 20px; /* 패딩 */
-    text-align: center; /* 텍스트 중앙 정렬 */
-    text-decoration: none; /* 밑줄 없음 */
-    display: inline-block; /* 인라인 블록 */
-    font-size: 15px; /* 글자 크기 */
-    margin: 4px 2px; /* 마진 */
-    cursor: pointer; /* 커서 포인터 */
-    border-radius: 12px; /* 둥근 모서리 */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
 }
 
 .styled-button:hover {
@@ -82,7 +79,7 @@ body {
 }
 
 .styled-link:hover {
-    color: black; /* 호버 시 색상 변화 */
+    color: black;
 }
 
 .title-search {
@@ -102,9 +99,9 @@ body {
 
 }
 .pagination {
-    display: flex; /* 가로 정렬 */
-    justify-content: center; /* 중앙 정렬 */
-    list-style: none; /* 점 제거 */
+    display: flex;
+    justify-content: center;
+    list-style: none;
     padding: 0;
     position: absolute;
     left: 25px;
@@ -113,35 +110,35 @@ body {
 }
 
 .page-item {
-    margin: 0 3px; /* 각 페이지 아이템 간의 여백 */
+    margin: 0 3px;
 }
 
 .page-link {
-    display: block; /* 블록 요소로 설정 */
-    padding: 5px 10px; /* 패딩 */
-    font-size: 0.875rem; /* 글자 크기 */
+    display: block;
+    padding: 5px 10px;
+    font-size: 0.875rem;
     font-weight: bold;
-    color: #006a38; /* 링크 색상 */
-    text-decoration: none; /* 밑줄 제거 */
-    border: 1px solid #006a38; /* 테두리 */
-    border-radius: 4px; /* 모서리 둥글게 */
-    transition: background-color 0.3s, color 0.3s; /* 전환 효과 */
+    color: #006a38;
+    text-decoration: none;
+    border: 1px solid #006a38;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .page-link:hover {
-    background-color: #006a38; /* 호버 시 배경색 */
-    color: white; /* 호버 시 글자색 */
+    background-color: #006a38;
+    color: white;
 }
 
 .page-item.active .page-link {
-    background-color: #006a38; /* 활성화된 페이지 배경색 */
-    color: white; /* 활성화된 글자색 */
-    border: 1px solid #006a38; /* 테두리 */
+    background-color: #006a38;
+    color: white;
+    border: 1px solid #006a38;
 }
 
 .page-item.disabled .page-link {
-    color: #6c757d; /* 비활성화된 링크 색상 */
-    pointer-events: none; /* 클릭 비활성화 */
-    background-color: transparent; /* 비활성화된 배경색 */
-    border: 1px solid #6c757d; /* 비활성화된 테두리 */
+    color: #6c757d;
+    pointer-events: none;
+    background-color: transparent;
+    border: 1px solid #6c757d;
 }

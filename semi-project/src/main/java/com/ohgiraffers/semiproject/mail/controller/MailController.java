@@ -3,18 +3,16 @@ package com.ohgiraffers.semiproject.mail.controller;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO;
 import com.ohgiraffers.semiproject.employee.model.service.EmployeeService;
 import com.ohgiraffers.semiproject.mail.model.dto.MailDTO;
-import com.ohgiraffers.semiproject.mail.model.dto.MailDTO2;
 import com.ohgiraffers.semiproject.mail.model.service.MailService;
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
 import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class MailController {
@@ -70,13 +68,13 @@ public class MailController {
         return "sidemenu/mail/mailDetail";
     }
 
-    // 직원정보 보내기
+
     @GetMapping("api/employee")
     public ResponseEntity<List<EmployeeJoinListDTO>> employee() {
 
         List<EmployeeJoinListDTO> employeeList = employeeService.empAllSelect();
         for (EmployeeJoinListDTO list : employeeList) {
-            System.out.println("list = " + list);
+
         }
         return ResponseEntity.ok(employeeList);
     }
@@ -84,25 +82,24 @@ public class MailController {
     @PostMapping("/sidemenu/mail/regist")
     public String registMail(@RequestParam("recipientId") String recipientId, @RequestParam("recipientName") String recipientName, @ModelAttribute MailDTO mailDTO) {
 
-        // recipientId 값을 mailDTO에 설정
-        mailDTO.setRecipientId(recipientId);
-        mailDTO.setRecipientName(recipientName);
-        System.out.println("쪽지 = " + mailDTO);
 
-        // 나머지 로직
+        mailDTO.setRecipientId(recipientId);
+
+        mailDTO.setRecipientName(recipientName);
+
         UserInfoResponse userInfo = userInfoService.getUserInfo();
-        String code = userInfo.getCode(); // 로그인된 사번
+
+        String code = userInfo.getCode();
+
         Date now = new Date();
 
         mailDTO.setSendDate(now);
 
-        mailDTO.setSenderId(code); // 로그인한 사용자 사번으로 발신자 설정
+        mailDTO.setSenderId(code);
 
         mailService.registMail(mailDTO);
 
-        System.out.println("쪽지쓰기 = " + mailDTO);
-
-        return "redirect:/sidemenu/mail"; // 메인 페이지로 리다이렉트
+        return "redirect:/sidemenu/mail";
     }
 
     @GetMapping("/mail/important")
@@ -114,12 +111,11 @@ public class MailController {
 
         List<MailDTO> important = mailService.mailFolderImportant(code);
 
-        System.out.println("important = " + important);
-
         model.addAttribute("important", important);
 
         return "sidemenu/mail/important";
     }
+
     @GetMapping("/mail/trash")
     public String mailTrash(Model model) {
 
@@ -135,6 +131,7 @@ public class MailController {
 
         return "sidemenu/mail/trash";
     }
+
     @GetMapping("/mail/archived")
     public String mailArchived(Model model) {
 
@@ -144,11 +141,32 @@ public class MailController {
 
         List<MailDTO> archived = mailService.mailFolderArchived(code);
 
-        System.out.println("archived = " + archived);
-
         model.addAttribute("archived", archived);
 
         return "sidemenu/mail/archived";
+    }
+
+    @PostMapping("/mail/move")
+    @ResponseBody
+    public ResponseEntity<String> moveMails(@RequestBody MailDTO mailDTO) {
+        if (mailDTO.getEmailCode() == null || mailDTO.getEmailCode().isEmpty()) {
+            return ResponseEntity.badRequest().body("메일 ID가 비어 있습니다.");
+        }
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
+        String code = userInfo.getCode();
+
+        String[] emailCodes = mailDTO.getEmailCode().split(",");
+
+        List<Integer> mail = Arrays.stream(emailCodes)
+
+                .map(Integer::valueOf)
+
+                .collect(Collectors.toList());
+
+        mailService.moveMails(mail, mailDTO.getFolder(), code);
+
+        return ResponseEntity.ok("메일 이동 성공");
     }
 }
 

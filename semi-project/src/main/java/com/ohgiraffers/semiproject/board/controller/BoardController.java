@@ -30,11 +30,13 @@ public class BoardController {
         List<BoardEmpDTO> boardList = boardService.selectAll(offset, size);
 
         long totalProducts = boardService.getTotalProducts();
+
         int totalPages = (int) Math.ceil((double) totalProducts / size);
 
         PageDTO pageInfo = new PageDTO(page, size, totalPages);
 
         model.addAttribute("boardList", boardList);
+
         model.addAttribute("pageInfo", pageInfo);
 
         return "sidemenu/board/board";
@@ -91,6 +93,7 @@ public class BoardController {
     public String title(@PathVariable Integer boardCode, Model model) {
 
         BoardDTO board = boardService.title(boardCode);
+
         boardService.viewConut(boardCode);
 
         model.addAttribute("board", board);

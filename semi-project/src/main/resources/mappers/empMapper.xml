@@ -64,7 +64,6 @@
         </association>
     </resultMap>
 
-    <!-- 직원 전체조회 -->
     <select id="empAll" resultMap="empResult">
         SELECT
         a.job_name,
@@ -79,7 +78,7 @@
         ORDER BY emp_code
         LIMIT #{offset}, #{size}
     </select>
-    <!-- 직원 상세조회 -->
+
     <select id="empSelect" resultMap="empResult">
         SELECT
         a.job_name,
@@ -107,7 +106,6 @@
         ORDER BY created_date DESC
     </select>
 
-    <!-- 직원 검색 -->
     <select id="empSearch" resultMap="empResult">
         SELECT
         a.job_name,
@@ -125,7 +123,6 @@
         LIMIT #{offset}, #{size}
     </select>
 
-    <!-- 조건부 검색 게시글 개수 조회 -->
     <select id="countAll1" resultType="long">
         SELECT COUNT(*)
         FROM tbl_emp
@@ -136,7 +133,6 @@
         </where>
     </select>
 
-    <!-- 전체 게시글 개수 조회 -->
     <select id="countAll" resultType="long">
         SELECT COUNT(*)
         FROM tbl_emp
@@ -162,7 +158,6 @@
         AND comment_emp_code = #{commentEmpCode}
     </delete>
 
-<!-- 마이페이지 - 내댓글 조회하기 -->
     <select id="getUserComment" resultMap="CommentResultMap">
         SELECT
             C.*,

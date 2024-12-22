@@ -92,18 +92,21 @@
 
             <div class="form1">
                 <div class="main-button">
-                    <button id="moveToTrash" onclick="moveToFolder('trash')">❌ 휴지통</button>
-                    <button id="moveToImportant" onclick="moveToFolder('important')">⭐ 중요보관함</button>
-                    <button id="moveToReceived" onclick="moveToFolder('archived')">📦 보관함</button>
+                    <button class="main-button1" id="moveToTrash" onclick="moveMails('휴지통')">❌ 휴지통</button>
+                    <button class="main-button2" id="moveToImportant" onclick="moveMails('중요쪽지함')">⭐ 중요보관함</button>
+                    <button class="main-button3" id="moveToReceived" onclick="moveMails('보관함')">📦 보관함</button>
                 </div>
                 <table border="1" class="post-list">
+                    <colgroup>
+                        <col style="width: 5%;">
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
                     <thead>
                     <tr>
                         <th>
                             <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAll(this)">
-                        </th>
-                        <th>
-                            <input type="checkbox" id="selectAllStars" class="checkbox2" onclick="toggleStarSelectAll(this)">
                         </th>
                         <th>메일번호</th>
                         <th>보낸사람</th>
@@ -114,13 +117,7 @@
                     <tbody>
                     <tr th:each="mail : ${mailList}">
                         <td>
-                            <input type="checkbox" class="select-item" name="selectedMail" value="${mail.emailCode}" onchange="handleEmailSelection()">
-                        </td>
-                        <td>
-                            <label class="star-checkbox">
-                                <input type="checkbox" class="star-check" id="star_{{mail.emailCode}}" name="starredMail" value="${mail.emailCode}" onchange="toggleStar(this)">
-                                <i></i>
-                            </label>
+                            <input type="checkbox" class="select-item" name="selectedMail" th:value="${mail.emailCode}" onchange="handleEmailSelection()">
                         </td>
                         <td th:text="${mail.emailCode}"></td>
                         <td th:text="${mail.senderId}"></td>
@@ -214,26 +211,24 @@
     });
 
     function submitSelections() {
-        updateRecipientField();  // 이름을 실시간으로 업데이트
+        updateRecipientField();
 
-        // 주소록 모달 닫기
         const addressBookModal = document.getElementById('addressBookModal');
         if (addressBookModal) {
             addressBookModal.style.display = 'none';
         }
 
-        // recipient_id 값이 비어있는지 확인 후 폼 제출 방지
         const recipientIdsField = document.getElementById('recipient_id');
-        const recipientNameField = document.getElementById('recipient_name');  // recipient_name 필드 추가 확인
+        const recipientNameField = document.getElementById('recipient_name');
 
         if (!recipientIdsField || !recipientIdsField.value || !recipientNameField || !recipientNameField.value) {
             alert("받는 사람을 선택해 주세요!");
-            return;  // 선택된 받는 사람이 없으면 실행을 중단
+            return;
         }
     }
 
     function fetchEmployees() {
-        // 부서별 목록을 담을 DOM 요소들
+
         const departments = {
             '경영부': document.getElementById('managementDept'),
             '애견담당부': document.getElementById('dogDept'),
@@ -273,11 +268,11 @@
     function selectEmployee(employee) {
         const recipientField = document.getElementById('recipient');
         const recipientIdField = document.getElementById('recipient_id');
-        const recipientNameField = document.getElementById('recipient_name');  // recipient_name 필드 추가
+        const recipientNameField = document.getElementById('recipient_name');
 
         recipientField.value = employee.empName;
         recipientIdField.value = employee.empCode;
-        recipientNameField.value = employee.empName;  // 선택된 직원의 이름을 recipient_name에 설정
+        recipientNameField.value = employee.empName;
 
         document.getElementById('addressBookModal').style.display = 'none';
     }
@@ -296,14 +291,52 @@
         });
     }
 
-    // 페이지 로드 시 직원 목록 가져오기
+
     window.onload = function() {
         fetchEmployees();
-        initializeEventListeners();
     };
 
 
-    // 전체 선택 체크박스 처리
+
+    function getSelectedMailIds() {
+        const selected = [];
+        document.querySelectorAll('input.select-item:checked').forEach(function (checkbox) {
+            selected.push(checkbox.value);
+        });
+        return selected;
+    }
+
+    function moveMails(targetFolder) {
+        const selectedMailIds = getSelectedMailIds();
+
+        if (selectedMailIds.length === 0) {
+            alert("이동할 메일을 선택하세요.");
+            return;
+        }
+
+        fetch('/mail/move', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                emailCode: selectedMailIds.join(","),
+                folder: targetFolder
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("메일 이동 실패");
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error("메일 이동 중 오류 발생:", error);
+            });
+    }
+
     function toggleSelectAll(source) {
         const checkboxes = document.querySelectorAll('.select-item');
         checkboxes.forEach(function(checkbox) {
@@ -311,12 +344,5 @@
         });
     }
 
-    // 별표 선택 전체 처리
-    function toggleStarSelectAll(source) {
-        const checkboxes = document.querySelectorAll('.star-check');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = source.checked;
-        });
-    }
 </script>
 </html>
