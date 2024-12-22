@@ -16,7 +16,7 @@ public class EmployeeDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer empCode;
+    private String empCode;
     private String empPass;
     private String empName;
     private String empEmail;

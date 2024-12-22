@@ -165,14 +165,20 @@
 <!-- 마이페이지 - 내댓글 조회하기 -->
     <select id="getUserComment" resultMap="CommentResultMap">
         SELECT
-            C.*,
-            E.emp_code,
-            E.emp_name
+        C.id,
+        C.emp_code,         -- 상세 페이지 직원 코드
+        C.comment_contents,
+        C.created_date,
+        C.comment_emp_code,                    -- 댓글 작성자 코드
+        E1.emp_name,        -- 상세 페이지 직원 이름
+        E2.emp_name         -- 댓글 작성자 이름
         FROM
-            TBL_COMMENT C
-        JOIN
-            TBL_EMP E ON C.COMMENT_EMP_CODE = E.EMP_CODE
+        TBL_COMMENT C
+        LEFT JOIN
+        TBL_EMP E1 ON C.emp_code = E1.emp_code -- 상세 페이지 직원과 조인
+        LEFT JOIN
+        TBL_EMP E2 ON C.comment_emp_code = E2.emp_code -- 댓글 작성자와 조인
         WHERE
-            C.COMMENT_EMP_CODE = #{code}
+        C.comment_emp_code = #{code}
     </select>
 </mapper>

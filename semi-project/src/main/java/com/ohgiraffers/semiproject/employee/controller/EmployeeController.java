@@ -84,7 +84,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/details/{empCode}")
-    public String getEmployeeDetails(@PathVariable Integer empCode, Model model) {
+    public String getEmployeeDetails(@PathVariable String empCode, Model model) {
 
         // 상세페이지 사원코드
         EmployeeDTOJOB employee = employeeService.empSelect(empCode);
@@ -109,7 +109,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/comments/add")
-    public String addComment(@RequestParam Integer empCode, @RequestParam String text) {
+    public String addComment(@RequestParam String empCode, @RequestParam String text) {
         UserInfoResponse userInfo = userInfoService.getUserInfo();
 
         String code = userInfo.getCode();
@@ -132,7 +132,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/sidemenu/employee/{empCode}/comment/{id}/delete")
-    public String commentDelete(@PathVariable Integer empCode, @PathVariable Integer id) {
+    public String commentDelete(@PathVariable String empCode, @PathVariable Integer id) {
 
         UserInfoResponse userInfo = userInfoService.getUserInfo();
 

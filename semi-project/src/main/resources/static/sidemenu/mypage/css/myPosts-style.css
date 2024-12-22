@@ -49,14 +49,13 @@ h1 {
     margin: 23px 23px 15px 30px;
 }
 
+/* 기본 스타일 */
 .dropdown {
     position: relative;
-    width: 100%;
     margin-bottom: 15px;
 }
 
 .dropdown-title {
-    background-color: transparent;
     color: #007bff;
     padding: 10px;
     cursor: pointer;
@@ -68,22 +67,27 @@ h1 {
     width: 100%;
 }
 
-.dropdown-title:hover {
-    color: #0056b3;
-}
-
+/* 드롭다운 메뉴 숨기기 */
 .dropdown-menu {
-    display: none;
+    display: block; /* 기본적으로 display block으로 설정 */
     position: relative;
     background-color: transparent;
     width: 100%;
-    margin: 0;
     padding: 0;
     list-style: none;
-    z-index: 1000;
-    box-shadow: none;
+    max-height: 0; /* 메뉴 기본 상태에서 높이를 0으로 설정 */
+    overflow: hidden; /* 메뉴가 늘어나지 않도록 숨김 */
+    opacity: 0; /* 투명 상태로 시작 */
+    transition: max-height 0.3s ease, opacity 0.3s ease; /* 애니메이션을 통한 부드러운 효과 */
 }
 
+/* 드롭다운 메뉴가 열릴 때 */
+.dropdown-menu.open {
+    max-height: 300px; /* 최대 높이를 설정하여 메뉴가 열릴 때 보이게 함 */
+    opacity: 1; /* 메뉴 항목을 보여줌 */
+}
+
+/* 드롭다운 메뉴 항목 */
 .dropdown-menu li {
     padding: 10px;
     border-bottom: 1px solid #ccc;
@@ -102,4 +106,9 @@ h1 {
 
 .dropdown-menu li:last-child {
     border-bottom: none;
+}
+
+/* 클릭된 메뉴 항목 강조 */
+.dropdown-menu.open li a:hover {
+    background-color: #e0e0e0; /* 선택된 메뉴 항목 색 */
 }
