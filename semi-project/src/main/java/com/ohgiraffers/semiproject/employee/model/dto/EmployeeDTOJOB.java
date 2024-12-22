@@ -11,7 +11,7 @@ import java.util.Date;
 @ToString
 public class EmployeeDTOJOB {
 
-    private Integer empCode;
+    private String empCode;
     private String empPass;
     private String empName;
     private String empEmail;

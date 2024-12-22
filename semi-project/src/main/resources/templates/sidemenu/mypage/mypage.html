@@ -85,34 +85,40 @@
         </div>
     </div>
 </div>
+<!-- 이 스크립트는 모든 페이지에서 공통으로 포함 -->
 <script>
-    function toggleDropdown(dropdownTitle) {
-        const dropdownMenu = dropdownTitle.nextElementSibling;
+    function toggleDropdown(element) {
+        const dropdown = element.closest('.dropdown');
+        const dropdownTitle = dropdown.querySelector('.dropdown-title');
+        const isActive = dropdownTitle.classList.contains('active');
 
-        // 모든 드롭다운 메뉴 닫기
-        const allDropdownMenus = document.querySelectorAll('.dropdown-menu');
-        allDropdownMenus.forEach(menu => {
-            if (menu !== dropdownMenu) {
-                menu.style.display = 'none';
-            }
-        });
+        // 드롭다운 메뉴 상태 토글
+        if (isActive) {
+            dropdownTitle.classList.remove('active');
+            dropdown.querySelector('.dropdown-menu').classList.remove('open');
+        } else {
+            dropdownTitle.classList.add('active');
+            dropdown.querySelector('.dropdown-menu').classList.add('open');
+        }
 
-        // 클릭한 드롭다운 메뉴 토글
-        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        // 드롭다운 상태를 로컬 스토리지에 저장
+        const dropdownStates = JSON.parse(localStorage.getItem('dropdownStates')) || {};
+        dropdownStates[dropdownTitle.textContent.trim()] = !isActive;
+        localStorage.setItem('dropdownStates', JSON.stringify(dropdownStates));
     }
 
-    // 외부 클릭 시 드롭다운 닫기
-    document.addEventListener('click', function(event) {
-        const dropdownTitle = document.querySelectorAll('.dropdown-title');
-        dropdownTitle.forEach(title => {
-            const dropdownMenu = title.nextElementSibling;
-            if (!title.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.style.display = 'none';
+    document.addEventListener("DOMContentLoaded", () => {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        const dropdownStates = JSON.parse(localStorage.getItem('dropdownStates')) || {};
+
+        dropdowns.forEach(dropdown => {
+            const dropdownTitle = dropdown.querySelector('.dropdown-title').textContent.trim();
+            if (dropdownStates[dropdownTitle]) {
+                dropdown.querySelector('.dropdown-title').classList.add('active');
+                dropdown.querySelector('.dropdown-menu').classList.add('open');
             }
         });
     });
-
-
 </script>
 </body>
 </html>

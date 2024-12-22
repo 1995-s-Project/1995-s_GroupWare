@@ -26,7 +26,7 @@ public class EmployeeService {
         return result;
     }
 
-    public EmployeeDTOJOB empSelect(Integer empCode) {
+    public EmployeeDTOJOB empSelect(String empCode) {
 
         return employeeMapper.empSelect(empCode);
     }
@@ -36,7 +36,7 @@ public class EmployeeService {
         employeeMapper.saveComment(commentDTO);
     }
 
-    public List<CommentDTO> comment(Integer empCode) {
+    public List<CommentDTO> comment(String empCode) {
 
         return employeeMapper.comment(empCode);
     }

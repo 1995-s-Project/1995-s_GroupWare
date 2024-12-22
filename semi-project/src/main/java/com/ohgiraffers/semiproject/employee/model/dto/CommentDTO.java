@@ -18,7 +18,7 @@ public class CommentDTO {
     private Integer id;
 
     @Column(name = "emp_code")
-    private Integer empCode;
+    private String empCode;
 
     @Column(name = "comment_contents")
     private String text;

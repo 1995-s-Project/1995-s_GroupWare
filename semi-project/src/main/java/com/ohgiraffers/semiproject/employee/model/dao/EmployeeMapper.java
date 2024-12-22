@@ -20,11 +20,11 @@ public interface EmployeeMapper {
 
     long countAll1(String query);
 
-    EmployeeDTOJOB empSelect(Integer empCode);
+    EmployeeDTOJOB empSelect(String empCode);
 
     void saveComment(CommentDTO commentDTO);
 
-    List<CommentDTO> comment(Integer empCode);
+    List<CommentDTO> comment(String empCode);
 
     List<EmployeeJoinListDTO> empAllSelect();
 
