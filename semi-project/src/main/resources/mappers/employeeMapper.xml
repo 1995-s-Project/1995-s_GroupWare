@@ -38,7 +38,7 @@
             <result property="profile_image" column="profile_image"/>
         </association>
     </resultMap>
-    <!-- 게시글 전체조회 -->
+
     <select id="selectAll" resultMap="selectJoinBoard">
         SELECT a.*,
                b.emp_name
@@ -48,7 +48,7 @@
         ORDER BY board_code DESC
         LIMIT #{offset}, #{size}
     </select>
-    <!-- 게시판 검색조회 -->
+
     <select id="search" resultMap="selectJoinBoard">
         SELECT a.*,
                b.emp_name
@@ -60,14 +60,13 @@
         </if>
         LIMIT #{offset}, #{size}
     </select>
-    <!-- 전체 게시글 개수 조회 -->
+
     <select id="countAll" resultType="long">
         SELECT COUNT(*)
         FROM tbl_board
         WHERE announce_ok = 'Y'
     </select>
 
-    <!-- 게시글 검색 개수 조회 -->
     <select id="countSearch" resultType="long">
         SELECT COUNT(*)
         FROM tbl_board
@@ -78,7 +77,7 @@
             </if>
         </where>
     </select>
-    <!-- 게시글 추가 -->
+
     <insert id="boardRegist" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
         insert into tbl_board
         (
@@ -101,7 +100,7 @@
         #{empCode}
         )
     </insert>
-    <!-- 제목으로 상세조회 -->
+
     <select id="title" resultMap="selectBoard">
         select
         *
@@ -110,7 +109,7 @@
         where
         board_code = #{boardCode}
     </select>
-    <!-- 게시판 삭제 -->
+
     <delete id="delete" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
         delete
         from
@@ -118,7 +117,7 @@
         where
         board_code = #{boardCode}
     </delete>
-    <!-- 게시판 수정 -->
+
     <update id="update" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
         update
         tbl_board
@@ -128,7 +127,7 @@
         where
         board_code = #{boardCode}
     </update>
-    <!-- 조회수 -->
+
     <update id="viewCount">
         update
         tbl_board
@@ -137,7 +136,7 @@
         where
         board_code = #{boardCode}
     </update>
-    <!-- 목록 -->
+
     <select id="select" resultMap="selectBoard">
         select
         *

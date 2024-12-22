@@ -2,12 +2,8 @@ package com.ohgiraffers.semiproject.mail.model.service;
 
 import com.ohgiraffers.semiproject.mail.model.dao.MailMapper;
 import com.ohgiraffers.semiproject.mail.model.dto.MailDTO;
-import com.ohgiraffers.semiproject.mail.model.dto.MailDTO2;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MailService {
@@ -51,6 +47,15 @@ public class MailService {
     public List<MailDTO> mailFolderArchived(String code) {
 
         return mailMapper.mailFolderArchived(code);
+    }
+
+    public void moveMails(List<Integer> mail, String folder, String code) {
+
+        if (mail == null || mail.isEmpty()) {
+            throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
+        }
+
+        mailMapper.moveMails(mail, folder, code);
     }
 }
 

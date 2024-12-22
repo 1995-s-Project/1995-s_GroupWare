@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 public class MailDTO {
 
-    private Integer emailCode; // 메일코드
+    private String emailCode; // 메일코드
     private String title; // 쪽지제목
     private String file; // 첨부파일
     private String content; // 내용
@@ -26,5 +26,6 @@ public class MailDTO {
     private JobDTO jobDTO;
     private DeptDTO deptDTO;
     private String folder;
+    private String getEmail;
 
 }

@@ -99,21 +99,15 @@
         </div>
         <table border="1" class="post-list">
           <colgroup>
-            <col style="width: 1%;">
-            <col style="width: 1%;">
-            <col style="width: 2%;">
-            <col style="width: 3%;">
-            <col style="width: 12%;">
-            <col style="width: 1%;">
+            <col style="width: 5%;">
+            <col>
+            <col>
+            <col>
           </colgroup>
           <thead>
           <tr>
             <th>
               <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAll(this)">
-            </th>
-            <th>
-              <input type="checkbox" id="selectAllStars" class="checkbox2" onclick="toggleStarSelectAll(this)">
-              <label for="selectAllStars" id="selectAllStarsLabel"></label>
             </th>
             <th>메일번호</th>
             <th>보낸사람</th>
@@ -125,12 +119,6 @@
           <tr th:each="mail : ${mailList}">
             <td>
               <input type="checkbox" class="select-item" name="selectedMail">
-            </td>
-            <td>
-              <label class="star-checkbox">
-                <input type="checkbox" class="star-check" id="star_{{mail.emailCode}}" name="starredMail" onchange="toggleStar(this)">
-                <i></i>
-              </label>
             </td>
             <td th:text="${mail.emailCode}"></td>
             <td th:text="${mail.senderId}"></td>
@@ -207,50 +195,42 @@
 </div>
 </body>
 <script>
-  // 모달 열기
   document.getElementById('messageModalBtn').addEventListener('click', function() {
     document.getElementById('messageModal').style.display = 'block';
   });
 
-  // 모달 닫기
   document.getElementById('closeModalBtn').addEventListener('click', function() {
     document.getElementById('messageModal').style.display = 'none';
   });
 
-  // 주소록 모달 열기
   document.getElementById('openModalBtn').addEventListener('click', function() {
     document.getElementById('addressBookModal').style.display = 'block';
   });
 
-  // 주소록 모달 닫기
   document.getElementById('closeModalBtn2').addEventListener('click', function() {
     document.getElementById('addressBookModal').style.display = 'none';
   });
 
   function submitSelections() {
-    updateRecipientField();  // 이름을 실시간으로 업데이트
+    updateRecipientField();
 
-    // 주소록 모달 닫기
     const addressBookModal = document.getElementById('addressBookModal');
     if (addressBookModal) {
       addressBookModal.style.display = 'none';
     }
 
-    // recipient_id 값이 비어있는지 확인 후 폼 제출 방지
     const recipientIdsField = document.getElementById('recipient_id');
-    const recipientNameField = document.getElementById('recipient_name');  // recipient_name 필드 추가 확인
+    const recipientNameField = document.getElementById('recipient_name');
 
     if (!recipientIdsField || !recipientIdsField.value || !recipientNameField || !recipientNameField.value) {
       alert("받는 사람을 선택해 주세요!");
-      return;  // 선택된 받는 사람이 없으면 실행을 중단
+      return;
     }
 
-    // 여기서 폼 제출 등의 후속 처리를 진행할 수 있습니다.
   }
 
-  // 직원 목록을 가져오기 위한 API 호출
   function fetchEmployees() {
-    // 부서별 목록을 담을 DOM 요소들
+
     const departments = {
       '경영부': document.getElementById('managementDept'),
       '애견담당부': document.getElementById('dogDept'),
@@ -287,20 +267,18 @@
             });
   }
 
-  // 직원 선택 시 처리
   function selectEmployee(employee) {
     const recipientField = document.getElementById('recipient');
     const recipientIdField = document.getElementById('recipient_id');
-    const recipientNameField = document.getElementById('recipient_name');  // recipient_name 필드 추가
+    const recipientNameField = document.getElementById('recipient_name');
 
     recipientField.value = employee.empName;
     recipientIdField.value = employee.empCode;
-    recipientNameField.value = employee.empName;  // 선택된 직원의 이름을 recipient_name에 설정
+    recipientNameField.value = employee.empName;
 
     document.getElementById('addressBookModal').style.display = 'none';
   }
 
-  // 직원 검색 필터
   function filterEmployees() {
     const searchInput = document.getElementById('searchInput2').value.toLowerCase();
     const employeeListItems = document.querySelectorAll('#addressBookContainer2 .employee-list li');
@@ -315,12 +293,10 @@
     });
   }
 
-  // 페이지 로드 시 직원 목록 가져오기
   window.onload = function() {
     fetchEmployees();
   };
 
-  // 전체 선택 체크박스 처리
   function toggleSelectAll(source) {
     const checkboxes = document.querySelectorAll('.select-item');
     checkboxes.forEach(function(checkbox) {
@@ -328,33 +304,24 @@
     });
   }
 
-  // 별표 선택 전체 처리
-  function toggleStarSelectAll(source) {
-    const checkboxes = document.querySelectorAll('.star-check');
-    checkboxes.forEach(function(checkbox) {
-      checkbox.checked = source.checked;
-    });
-  }
-
-  // 직원 목록을 가져오고 필터링하는 함수 호출
   function updateRecipientField() {
     const selectedEmployees = [];
     const selectedNames = [];
     const checkboxes = document.querySelectorAll('.employee-check:checked');
 
     checkboxes.forEach(cb => {
-      const employeeId = cb.getAttribute('data-emp-id');  // 사원의 사번을 가져옴
-      const employeeName = cb.getAttribute('data-emp-name');  // 사원의 이름을 가져옴
+      const employeeId = cb.getAttribute('data-emp-id');
+      const employeeName = cb.getAttribute('data-emp-name');
       selectedEmployees.push(employeeId);
-      selectedNames.push(employeeName);  // 이름도 함께 추가
+      selectedNames.push(employeeName);
     });
 
     const recipientIdField = document.getElementById('recipient_id');
-    const recipientNameField = document.getElementById('recipient_name'); // 이름을 담을 hidden 필드
+    const recipientNameField = document.getElementById('recipient_name');
 
     if (recipientIdField && recipientNameField) {
-      recipientIdField.value = selectedEmployees.join(',');  // 여러 명 선택 시 ,로 구분
-      recipientNameField.value = selectedNames.join(', ');  // 선택된 이름들을 ,로 구분하여 설정
+      recipientIdField.value = selectedEmployees.join(',');
+      recipientNameField.value = selectedNames.join(', ');
     }
   }
 </script>

@@ -2,7 +2,6 @@ package com.ohgiraffers.semiproject.employee.controller;
 
 import com.ohgiraffers.semiproject.board.model.dto.PageDTO;
 import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
-import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTO;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTOJOB;
 import com.ohgiraffers.semiproject.employee.model.service.EmployeeService;
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
@@ -13,13 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractAuditable_.createdDate;
 
 @Controller
 public class EmployeeController {
@@ -86,11 +81,11 @@ public class EmployeeController {
     @GetMapping("/employee/details/{empCode}")
     public String getEmployeeDetails(@PathVariable Integer empCode, Model model) {
 
-        // 상세페이지 사원코드
+
         EmployeeDTOJOB employee = employeeService.empSelect(empCode);
-        // 댓글 조회
+
         List<CommentDTO> comment = employeeService.comment(empCode);
-        // 로그인한 유저
+
         UserInfoResponse userInfo = userInfoService.getUserInfo();
 
         if (comment == null) {
@@ -117,7 +112,7 @@ public class EmployeeController {
         CommentDTO commentDTO = new CommentDTO();
 
         commentDTO.setEmpCode(empCode);
-        System.out.println("empCode = " + empCode);
+
         commentDTO.setText(text);
 
         commentDTO.setCommentEmpCode(code);
