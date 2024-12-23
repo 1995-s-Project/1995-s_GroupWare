@@ -13,4 +13,8 @@ public class HealthCheckDTO {
 
     private String healthcheckCode;
     private String healthcheckName;
+
+    public HealthCheckDTO(String healthcheckCode) {
+        this.healthcheckCode = healthcheckCode;
+    }
 }

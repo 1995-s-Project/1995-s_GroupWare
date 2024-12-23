@@ -1,5 +1,7 @@
 package com.ohgiraffers.semiproject.mypage.controller;
 
+import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
+import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
 import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
 import com.ohgiraffers.semiproject.employee.model.service.EmployeeService;
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
@@ -18,11 +20,13 @@ public class MyPageController {
     private final UserInfoService userInfoService;
     private final MyPageService myPageService;
     private final EmployeeService employeeService;
+    private final AnimalsService animalsService;
 
-    public MyPageController(UserInfoService userInfoService, MyPageService myPageService, EmployeeService employeeService){
+    public MyPageController(UserInfoService userInfoService, MyPageService myPageService, EmployeeService employeeService, AnimalsService animalsService){
         this.userInfoService = userInfoService;
         this.myPageService = myPageService;
         this.employeeService = employeeService;
+        this.animalsService = animalsService;
     }
 
     // 마이페이지 페이지로 이동
@@ -46,13 +50,13 @@ public class MyPageController {
         return "sidemenu/mypage/myComments";
     }
 
-    @GetMapping("/my-activity/mails")
-    public String myMails() {
-        return "sidemenu/mypage/myMails";
-    }
-
     @GetMapping("/my-activity/posts")
-    public String myPosts() {
+    public String myPosts(Model model) {
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String code = userInfo.getCode();
+        List<AnimalDTO> posts = animalsService.getUserPosts(code);
+
+        model.addAttribute("posts", posts);
         return "sidemenu/mypage/myPosts";
     }
 }

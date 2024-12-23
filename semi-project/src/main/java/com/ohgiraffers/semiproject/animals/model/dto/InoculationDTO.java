@@ -12,4 +12,8 @@ public class InoculationDTO {
     private String inoculationCode;
     private String inoculationName;
 
+    public InoculationDTO(String healthcheckCode) {
+        this.inoculationCode = healthcheckCode;
+    }
+
 }

@@ -1,9 +1,8 @@
 package com.ohgiraffers.semiproject.animals.model.service;
 
 import com.ohgiraffers.semiproject.animals.model.dao.AnimalsMapper;
-import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
-import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
-import com.ohgiraffers.semiproject.animals.model.dto.InventoryDTO;
+import com.ohgiraffers.semiproject.animals.model.dto.*;
+import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,8 +56,24 @@ public class AnimalsService {
     }
     // 동물등록
     @Transactional
-    public void newAnimal(AnimalDTO typeAndBreedAndEmpAndAnimalDTO) {
-        animalsMapper.newAnimal(typeAndBreedAndEmpAndAnimalDTO);
+    public void newAnimal(AnimalDTO animalDTO) {
+        // 동물 등록
+        animalsMapper.newAnimal(animalDTO);
+
+        // animalCode가 등록 과정에서 생성되었다면 이를 animalDTO에 설정
+        if (animalDTO.getAnimalCode() == null) {
+            throw new IllegalStateException("animalCode is not set after newAnimal insertion.");
+        }
+
+        // 건강검진 삽입
+        if (animalDTO.getHealthChecks() != null && !animalDTO.getHealthChecks().isEmpty()) {
+            animalsMapper.insertHealthChecks(animalDTO.getAnimalCode(), animalDTO.getHealthChecks());
+        }
+
+        // 접종 삽입
+        if (animalDTO.getInoculations() != null && !animalDTO.getInoculations().isEmpty()) {
+            animalsMapper.insertInoculations(animalDTO.getAnimalCode(), animalDTO.getInoculations());
+        }
     }
 
     // 삭제(체크박스 선택)
@@ -107,6 +122,11 @@ public class AnimalsService {
         animalsMapper.inventoryUpdate(params);
     }
 
+// -----------------------------------------마이페이지(게시글내역)-----------------------------------------
+    // 마이페이지 - 내 댓글 조회 메소드
+    public List<AnimalDTO> getUserPosts(String code) {
+        return animalsMapper.getUserPosts(code);
+    }
 
 
 }

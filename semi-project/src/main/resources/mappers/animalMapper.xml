@@ -162,14 +162,6 @@
         WHERE
         A.ANIMAL_CODE = #{animalCode}
     </select>
-<!-- 등록할 시 품종 option, 비동기처리를 위한 select 문 -->
-    <select id="findBreed" resultMap="BreedResultMap">
-        select
-            *
-        from
-            tbl_ani_breed
-    </select>
-
 
 <!-- 구조동물 등록 -->
     <insert id="newAnimal" parameterType="com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO">
@@ -200,7 +192,31 @@
         #{empDTO.empCode}
         )
     </insert>
-<!-- 동물등록번호 자동 부여 -->
+
+    <insert id="insertHealthChecks" parameterType="java.util.List">
+        INSERT INTO tbl_ani_hel_check (animal_code, healthcheck_code)
+        VALUES
+        <foreach collection="healthChecks" item="healthCheck" separator=",">
+            (#{animalCode}, #{healthCheck.healthcheckCode})
+        </foreach>
+    </insert>
+
+    <insert id="insertInoculations" parameterType="java.util.List">
+        INSERT INTO tbl_ani_ino_check (animal_code, inoculation_code)
+        VALUES
+        <foreach collection="inoculations" item="inoculation" separator=",">
+            (#{animalCode}, #{inoculation.inoculationCode})
+        </foreach>
+    </insert>
+
+<!-- 등록 - 품종 비동기처리 -->
+    <select id="findBreed" resultMap="BreedResultMap">
+        select
+        *
+        from
+        tbl_ani_breed
+    </select>
+<!-- 등록 - 동물등록번호 자동 부여 -->
     <select id="findLastAnimalCode">
         SELECT animal_code
         FROM tbl_animal
@@ -337,4 +353,14 @@
         SET item_number = #{itemNum}
         WHERE item_code = #{itemCode}
     </update>
+
+<!-- 마이페이지(게시물내역) -->
+    <select id="getUserPosts" resultMap="AllListResultMap">
+        select
+        *
+        from
+        tbl_animal
+        Where
+        emp_code = #{code}
+    </select>
 </mapper>

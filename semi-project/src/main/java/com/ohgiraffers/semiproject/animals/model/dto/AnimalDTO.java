@@ -3,6 +3,7 @@ package com.ohgiraffers.semiproject.animals.model.dto;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class AnimalDTO {
     private String animalCode; // 동물등록번호
     private int age; // 나이
     private String gender; // 성별
-    private List<HealthCheckDTO> healthChecks; // 건강검진리스트
-    private List<InoculationDTO> inoculations; // 접종리스트
+    private List<HealthCheckDTO> healthChecks   ;
+    private List<InoculationDTO> inoculations;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date rescueDate; // 구조날짜
     private String rescueLocation; // 구조위치
