@@ -51,7 +51,54 @@
     </div>
 </header>
 <div class="change-screen-employeeManagement">
-    <div id="change-screen-content">직원관리 페이지</div>
+    <div id="change-screen-content">
+        <div class="tab-header">
+            <div class="management-button">
+                <a href="/scheduleManagement" id="btn-1" class="tab-button active">⏰근태수정 요청관리⏰</a>
+            </div>
+            <div class="management-button">
+                <a href="/vacationManagement" id="btn-2" class="tab-button">🏖️연차 & 휴가 관리🏖️</a>
+            </div>
+        </div>
+        <div id="content-area" class="content-area">
+            <!-- 콘텐츠가 여기에 로드됩니다. -->
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 페이지가 로드될 때 기본적으로 근태수정 요청관리 페이지를 불러옵니다.
+        loadContent('/scheduleManagement');
+
+        document.getElementById('btn-1').addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 링크 동작 방지
+            setActiveButton(this);
+            window.location.href = '/scheduleManagement'; // 근태수정 요청관리 페이지로 이동
+        });
+
+        document.getElementById('btn-2').addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 링크 동작 방지
+            setActiveButton(this);
+            window.location.href = '/vacationManagement'; // 연차 & 휴가 관리 페이지로 이동
+        });
+    });
+
+    function loadContent(url) {
+        // 페이지를 새로 고침하여 URL로 이동
+        window.location.href = url;
+    }
+
+    function setActiveButton(selectedButton) {
+        // 모든 버튼에서 active 클래스 제거
+        const buttons = document.querySelectorAll('.tab-button');
+        buttons.forEach(button => {
+            button.classList.remove('active');
+        });
+        // 선택된 버튼에 active 클래스 추가
+        selectedButton.classList.add('active');
+    }
+</script>
+
 </body>
 </html>

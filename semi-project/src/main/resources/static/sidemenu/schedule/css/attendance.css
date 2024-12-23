@@ -167,7 +167,10 @@
 #modal-reason {
     margin-top: 10%; /* 내용과 제목 간격 */
     color: #555; /* 내용 색상 */
+    width: 400px;
+    height: 120px;
 }
+
 
 .attendance-request{
     width: 1300px;
@@ -467,3 +470,35 @@
 #delete-button:hover {
     background-color: #ff1a1a; /* 호버 시 배경색 변경 */
 }
+
+
+
+.opinion-section {
+    display: block; /* 의견 박스를 세로로 배치 */
+    margin-top: 20px; /* 상단 여백 */
+}
+
+.opinion-box {
+    border: 1px solid #ccc; /* 테두리 색상 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    padding: 10px; /* 안쪽 여백 */
+    background-color: #f9f9f9; /* 배경 색상 */
+    margin-top: 20px; /* 박스 간의 간격 */
+    height: 75px;
+}
+
+.opinion-box h3 {
+    margin: 0 0 10px; /* 제목과 내용 간의 여백 */
+}
+
+textarea {
+    width: 100%; /* 텍스트 영역의 너비를 100%로 설정 */
+    border: none; /* 기본 테두리 제거 */
+    resize: none; /* 크기 조절 비활성화 */
+    font-size: 14px; /* 글자 크기 */
+}
+
+textarea:focus {
+    outline: none; /* 포커스 시 아웃라인 제거 */
+}
+
