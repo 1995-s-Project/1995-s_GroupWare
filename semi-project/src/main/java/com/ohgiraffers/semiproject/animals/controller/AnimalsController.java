@@ -2,6 +2,8 @@ package com.ohgiraffers.semiproject.animals.controller;
 
 import com.ohgiraffers.semiproject.animals.model.dto.*;
 import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
+import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
+import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -9,17 +11,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class AnimalsController {
 
     private final AnimalsService animalsService;
+    private final UserInfoService userInfoService;
 
     @Autowired
-    public AnimalsController(AnimalsService animalsService){
+    public AnimalsController(AnimalsService animalsService, UserInfoService userInfoService){
         this.animalsService = animalsService;
+        this.userInfoService = userInfoService;
     }
 
 // -----------------------------------------구조동물 페이지-----------------------------------------
@@ -72,7 +76,11 @@ public class AnimalsController {
     public String addAnimal(Model model){
         String animalCode = animalsService.autoAnimalCode();
 
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+
         model.addAttribute("animalCode", animalCode);
+
+        model.addAttribute("userInfo", userInfo);
 
         return "sidemenu/animals/insert";
     }
@@ -84,25 +92,30 @@ public class AnimalsController {
 
     // 구조동물 등록
     @PostMapping("/sidemenu/animals/insert")
-    public String newAnimal(@ModelAttribute AnimalDTO typeAndBreedAndEmpAndAnimalDTO,
-                            @ModelAttribute TypeDTO typeDTO,
-                            @ModelAttribute AdoptDTO adoptDTO,
-                            @ModelAttribute BreedDTO breedDTO,
-                            @ModelAttribute EmpDTO empDTO){
+    public String newAnimal(@ModelAttribute AnimalDTO animalDTO,
+                            @RequestParam List<String> healthChecks, // 수동으로 받기
+                            @RequestParam List<String> inoculations){
 
-        AnimalDTO animalDTO = new AnimalDTO();
-        animalDTO.setAnimalImage(typeAndBreedAndEmpAndAnimalDTO.getAnimalImage());
-        animalDTO.setAnimalCode(typeAndBreedAndEmpAndAnimalDTO.getAnimalCode());
-        animalDTO.setAge(typeAndBreedAndEmpAndAnimalDTO.getAge());
-        animalDTO.setGender(typeAndBreedAndEmpAndAnimalDTO.getGender());
-        animalDTO.setRescueDate(typeAndBreedAndEmpAndAnimalDTO.getRescueDate());
-        animalDTO.setRescueLocation(typeAndBreedAndEmpAndAnimalDTO.getRescueLocation());
-        animalDTO.setAnimalStatus(typeAndBreedAndEmpAndAnimalDTO.getAnimalStatus());
-        animalDTO.setTypeDTO(typeDTO);
-        animalDTO.setBreedDTO(breedDTO);
+
+        // 사용자 정보 가져오기
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String empCode = userInfo.getCode();
+
+        // 담당자 설정
+        EmpDTO empDTO = new EmpDTO();
+        empDTO.setEmpCode(empCode);
         animalDTO.setEmpDTO(empDTO);
 
+        animalDTO.setHealthChecks(healthChecks.stream()
+                .map(code -> new HealthCheckDTO(code))
+                .collect(Collectors.toList()));
+        animalDTO.setInoculations(inoculations.stream()
+                .map(code -> new InoculationDTO(code))
+                .collect(Collectors.toList()));
+        System.out.println("animalDTO = " + animalDTO);
+        // 동물 등록 처리
         animalsService.newAnimal(animalDTO);
+
         return "redirect:/sidemenu/animals";
     }
 

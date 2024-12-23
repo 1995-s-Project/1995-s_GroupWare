@@ -1,9 +1,9 @@
 package com.ohgiraffers.semiproject.animals.model.dao;
 
-import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
-import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
-import com.ohgiraffers.semiproject.animals.model.dto.InventoryDTO;
+import com.ohgiraffers.semiproject.animals.model.dto.*;
+import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -25,7 +25,11 @@ public interface AnimalsMapper {
     AnimalDTO inoculationAnimal(String animalCode);
 
     // 동물등록
-    void newAnimal(AnimalDTO typeAndBreedAndEmpAndAnimalDTO);
+    void newAnimal(AnimalDTO animalDTO);
+    void insertHealthChecks(@Param("animalCode") String animalCode, @Param("healthChecks") List<HealthCheckDTO> healthChecks);
+    void insertInoculations(@Param("animalCode") String animalCode,
+                            @Param("inoculations") List<InoculationDTO> inoculations);
+
     // 동물등록 - 품종 비동기처리
     List<BreedDTO> findBreed();
     // 동물등록 - 동물등록번호 자동입력
@@ -53,4 +57,8 @@ public interface AnimalsMapper {
 
 
     void inventoryUpdate(Map<String, Object> params);
+
+
+// -----------------------------------------마이페이지(게시글내역)-----------------------------------------
+    List<AnimalDTO> getUserPosts(String code);
 }

@@ -55,37 +55,57 @@
 
         <div class="navigation">
             <nav>
-                <nav>
-                    <h1>MY PAGE</h1>
-                    <div class="dropdown">
-                        <div class="dropdown-title" onclick="toggleDropdown(this)">
-                            기본 설정
-                        </div>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">회원정보 수정</a></li>
-                            <li><a href="#">비밀번호 변경</a></li>
-                        </ul>
+                <h1>MY PAGE</h1>
+                <div class="dropdown">
+                    <div class="dropdown-title" onclick="toggleDropdown(this)">
+                        기본 설정
                     </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">회원정보 수정</a></li>
+                        <li><a href="#">비밀번호 변경</a></li>
+                    </ul>
+                </div>
 
-                    <div class="dropdown">
-                        <div class="dropdown-title" onclick="toggleDropdown(this)">
-                            내 활동
-                        </div>
+                <div class="dropdown">
+                    <div class="dropdown-title" onclick="toggleDropdown(this)">
+                        내 활동
+                    </div>
                         <ul class="dropdown-menu">
                             <li><a href="/my-activity/comments">댓글 내역</a></li>
-                            <li><a href="/my-activity/mails">메일 내역</a></li>
                             <li><a href="/my-activity/posts">게시글 내역</a></li>
                         </ul>
                     </div>
-
                 </nav>
         </div>
 
         <div class="content-container">
-            <h1>내용</h1>
+            <h2>내 게시글</h2>
+
+            <div>
+                <ul class="post-list">
+                    <div th:if="${#lists.isEmpty(posts)}">
+                        <p>게시글이 없습니다.</p>
+                    </div>
+
+                    <li th:each="post : ${posts}" class="post-item">
+                        <p class="post-date">
+                            <span th:text="${#dates.format(post.rescueDate, 'yyyy-MM-dd')}"></span>
+                        </p>
+
+                        <p class="post-link">
+                            <a th:href="@{/animals/detailAnimal/{animalCode}(animalCode=${post.animalCode})}">
+                                <span th:text="${post.animalCode}"></span>
+                            </a>
+                            번 구조동물을 등록하였습니다.
+                        </p>
+                    </li>
+                </ul>
+            </div>
         </div>
+
     </div>
-</div><!-- 이 스크립트는 모든 페이지에서 공통으로 포함 -->
+</div>
+
 <script>
     function toggleDropdown(element) {
         const dropdown = element.closest('.dropdown');
