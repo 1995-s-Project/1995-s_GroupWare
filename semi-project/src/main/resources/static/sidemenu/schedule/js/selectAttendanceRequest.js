@@ -68,7 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // li 클릭 시 모달 열기
                 li.addEventListener('click', () => {
                     document.getElementById('modal-reason').textContent = item.workModifyReason;
+                    // 내 의견 부분 삭제
+                    document.getElementById('admin-opinion').textContent = item.managerIdea || '의견이 없습니다.'; // 관리자 의견 불러오기
                     document.getElementById('attendance-modal').style.display = 'block';
+
+                    console.log('관리자의견', item.managerIdea);
                 });
 
                 itemList.appendChild(li); // ul에 li 추가
@@ -78,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('There was a problem with the fetch operation:', error);
         });
 
-    // 삭제 버튼 클릭 시 선택된 항목 삭제
+
+// 삭제 버튼 클릭 시 선택된 항목 삭제
     document.getElementById('delete-button').addEventListener('click', () => {
         const checkboxes = document.querySelectorAll('.item-checkbox:checked');
         const idsToDelete = Array.from(checkboxes).map(checkbox => checkbox.getAttribute('data-id'));

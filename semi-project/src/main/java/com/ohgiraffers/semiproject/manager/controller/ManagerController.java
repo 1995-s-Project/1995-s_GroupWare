@@ -29,4 +29,16 @@ public class ManagerController {
     public String approvalBox() {
         return "sidemenu/manager/approvalBox";
     }
+
+    // 근태수정 요청관리 페이지로 이동
+    @GetMapping("/scheduleManagement")
+    public String scheduleManagement(){
+       return "sidemenu/manager/scheduleManagement";
+    }
+
+    // 연차 & 휴가 관리 페이지로 이동
+    @GetMapping("/vacationManagement")
+    public String vacationManagement(){
+        return "sidemenu/manager/vacationManagement";
+    }
 }
