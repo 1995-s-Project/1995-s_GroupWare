@@ -94,7 +94,6 @@ ul li {
     background-color: #00532d;
 }
 
-
 .select-item {
     margin-left: 5px;
 }
@@ -407,4 +406,8 @@ textarea {
 .form-group2 {
     margin-top: 20px;
     margin-bottom: 15px;
+}
+
+.ul-change {
+    margin-top: 80px;
 }

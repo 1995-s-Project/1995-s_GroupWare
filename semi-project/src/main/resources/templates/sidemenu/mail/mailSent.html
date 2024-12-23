@@ -55,36 +55,35 @@
     <div class="form">
       <div class="navigation">
         <nav>
-          <ul>
+          <ul class="ul-change">
             <li style="font-size: 20px;">
               <a th:href="@{/sidemenu/mail}" style="text-decoration: none;">
                 <b>📥&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지함</b>
               </a>
-            </li><br><br><br>
-
+            </li>
+            <br><br><br>
             <li style="font-size: 20px;">
               <a th:href="@{/mail/sent}" style="text-decoration: none;">
                 <b>📤&nbsp;&nbsp;&nbsp;&nbsp;보낸쪽지함</b>
               </a>
-            </li><br><br><br>
-
+            </li>
+            <br><br><br>
             <li style="font-size: 20px;">
-              <a href="/mail/important" style="text-decoration: none;">
+              <a th:href="@{/mail/important}" style="text-decoration: none;">
                 <b>⭐&nbsp;&nbsp;&nbsp;&nbsp;중요쪽지함</b>
               </a>
-            </li><br><br><br>
-
+            </li>
+            <br><br><br>
             <li style="font-size: 20px;">
-              <a href="/mail/trash" style="text-decoration: none;">
+              <a th:href="@{/mail/trash}" style="text-decoration: none;">
                 <b>❌&nbsp;&nbsp;&nbsp;&nbsp;휴지통</b>
               </a>
-            </li><br><br><br>
-
+            </li>
+            <br><br><br>
             <li style="font-size: 20px;">
-              <a href="/mail/archived" style="text-decoration: none;">
+              <a th:href="@{/mail/archived}" style="text-decoration: none;">
                 <b>📦&nbsp;&nbsp;&nbsp;&nbsp;보관함</b>
               </a>
-              <br><br>
             </li>
           </ul>
           <button id="messageModalBtn" class="styled-button">🖍 쪽지 쓰기</button>
@@ -93,9 +92,9 @@
 
       <div class="form1">
         <div class="main-button">
-          <button class="main-button1">❌ 휴지통</button>
-          <button class="main-button2">⭐ 중요보관함</button>
-          <button class="main-button3">📦 받은쪽지보관함</button>
+          <button class="main-button1" id="moveToTrash" onclick="sentMoveMails('휴지통')">❌ 휴지통</button>
+          <button class="main-button2" id="moveToImportant" onclick="sentMoveMails('중요쪽지함')">⭐ 중요보관함</button>
+          <button class="main-button3" id="moveToReceived" onclick="sentMoveMails('보관함')">📦 받은쪽지보관함</button>
         </div>
         <table border="1" class="post-list">
           <colgroup>
@@ -116,9 +115,12 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="mail : ${mailList}">
+          <tr th:if="${mail.isEmpty}">
+            <td colspan="5" style="text-align: center;">쪽지가 없습니다</td>
+          </tr>
+          <tr th:each="mail : ${mail}">
             <td>
-              <input type="checkbox" class="select-item" name="selectedMail">
+              <input type="checkbox" class="select-item" name="selectedMail" th:value="${mail.emailCode}" onchange="handleEmailSelection()">
             </td>
             <td th:text="${mail.emailCode}"></td>
             <td th:text="${mail.senderId}"></td>
@@ -129,9 +131,11 @@
           </tr>
           </tbody>
         </table>
+
+        <!-- Modal: 쪽지 보내기 -->
         <div id="messageModal" class="modal">
           <div class="modal-content">
-            <form class=modal2-form id="messageForm" action="/sidemenu/mail/regist" method="post">
+            <form class="modal2-form" id="messageForm" action="/sidemenu/mail/regist" method="post">
               <span class="close-btn" id="closeModalBtn">&times;</span>
               <h2>쪽지 보내기</h2>
               <button id="openModalBtn" class="styled-button2"><b>🔎 찾기</b></button>
@@ -153,14 +157,17 @@
             </form>
           </div>
         </div>
+
+        <!-- Modal: 주소록 -->
         <div id="addressBookModal" class="modal2">
           <div class="modal-content2">
-            <span class="close-btn" id="closeModalBtn2">&times;</span>
+            <span class="close-btn2" id="closeModalBtn2">&times;</span>
             <h2>주소록</h2>
             <div class="search-bar">
               <input class="textbox2" type="text" id="searchInput2" placeholder="직원 검색..." oninput="filterEmployees()">
             </div>
             <div id="addressBookContainer2">
+              <input type="checkbox" id="selectAllManagementDept" onclick="toggleSelectAll(this, 'managementDept')"> 전체 선택
               <div class="department-group">
                 <h3>📂 경영부</h3>
                 <ul class="employee-list" id="managementDept"></ul>
@@ -211,26 +218,80 @@
     document.getElementById('addressBookModal').style.display = 'none';
   });
 
-  function submitSelections() {
-    updateRecipientField();
+  function sentMoveMails(targetFolder) {
+    console.log("이동할 폴더:", targetFolder);
+    const selectedMailIds = getSelectedMailIds();
 
-    const addressBookModal = document.getElementById('addressBookModal');
-    if (addressBookModal) {
-      addressBookModal.style.display = 'none';
-    }
-
-    const recipientIdsField = document.getElementById('recipient_id');
-    const recipientNameField = document.getElementById('recipient_name');
-
-    if (!recipientIdsField || !recipientIdsField.value || !recipientNameField || !recipientNameField.value) {
-      alert("받는 사람을 선택해 주세요!");
+    if (selectedMailIds.length === 0) {
+      alert("이동할 메일을 선택하세요.");
       return;
     }
 
+    fetch('/mail/sent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        emailCode: selectedMailIds.join(","),
+        folder: targetFolder
+      })
+    })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("메일 이동 실패");
+              }
+              return response.text();
+            })
+            .then(data => {
+              alert(data);
+              location.reload(); // 페이지 새로 고침하여 변경사항 반영
+            })
+            .catch(error => {
+              console.error("메일 이동 중 오류 발생:", error);
+            });
+  }
+
+  let selectedRecipients = [];
+
+  function selectEmployee(employee, checkbox) {
+    const recipientField = document.getElementById('recipient');
+    const recipientIdField = document.getElementById('recipient_id');
+    const recipientNameField = document.getElementById('recipient_name');
+
+    const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === employee.empCode);
+
+    if (checkbox.checked) {
+      if (recipientIndex === -1) {
+        selectedRecipients.push({
+          empCode: employee.empCode,
+          empName: employee.empName
+        });
+      }
+    } else {
+      if (recipientIndex !== -1) {
+        selectedRecipients.splice(recipientIndex, 1);
+      }
+    }
+
+    updateRecipientField();
+  }
+
+  function updateRecipientField() {
+    const recipientField = document.getElementById('recipient');
+    const recipientIdField = document.getElementById('recipient_id');
+    const recipientNameField = document.getElementById('recipient_name');
+
+    if (selectedRecipients.length > 0) {
+      recipientField.value = selectedRecipients.map(emp => emp.empName).join(', ');
+      recipientIdField.value = selectedRecipients.map(emp => emp.empCode).join(',');
+      recipientNameField.value = selectedRecipients.map(emp => emp.empName).join(',');
+    } else {
+      recipientField.value = '';
+      recipientIdField.value = '';
+      recipientNameField.value = '';
+    }
   }
 
   function fetchEmployees() {
-
     const departments = {
       '경영부': document.getElementById('managementDept'),
       '애견담당부': document.getElementById('dogDept'),
@@ -241,12 +302,7 @@
     };
 
     fetch('/api/employees')
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('네트워크 응답이 좋지 않습니다.');
-              }
-              return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
               data.forEach(employee => {
                 const empName = employee.empName || 'N/A';
@@ -255,28 +311,55 @@
 
                 if (departments[deptName]) {
                   const li = document.createElement('li');
-                  li.innerHTML = `${empName} (${jobName})`;
-                  li.setAttribute('data-name', empName);
-                  li.onclick = () => selectEmployee(employee);
+                  const checkbox = document.createElement('input');
+                  checkbox.type = "checkbox";
+                  checkbox.classList.add("select-item");
+                  checkbox.value = employee.empCode;
+                  checkbox.setAttribute('data-name', empName);
+                  checkbox.onclick = () => selectEmployee(employee, checkbox);
+
+                  const nameText = document.createTextNode(`${empName} (${jobName})`);
+
+                  li.appendChild(checkbox);
+                  li.appendChild(nameText);
+
+                  li.onclick = () => selectEmployee(employee, checkbox);
+
                   departments[deptName].appendChild(li);
                 }
               });
+
+              restoreSelectedEmployees();
             })
             .catch(error => {
               console.error('직원 목록을 가져오는 중 오류 발생:', error);
             });
   }
 
-  function selectEmployee(employee) {
-    const recipientField = document.getElementById('recipient');
-    const recipientIdField = document.getElementById('recipient_id');
+  function restoreSelectedEmployees() {
+    const checkboxes = document.querySelectorAll('.select-item');
+    checkboxes.forEach(checkbox => {
+      const empCode = checkbox.value;
+      const isSelected = selectedRecipients.some(emp => emp.empCode === empCode);
+      checkbox.checked = isSelected;
+    });
+  }
+
+  function submitSelections() {
+    updateRecipientField();
+
+    const recipientIdsField = document.getElementById('recipient_id');
     const recipientNameField = document.getElementById('recipient_name');
 
-    recipientField.value = employee.empName;
-    recipientIdField.value = employee.empCode;
-    recipientNameField.value = employee.empName;
+    if (!recipientIdsField || !recipientIdsField.value || !recipientNameField || !recipientNameField.value) {
+      alert("받는 사람을 선택해 주세요!");
+      return;
+    }
 
-    document.getElementById('addressBookModal').style.display = 'none';
+    const addressBookModal = document.getElementById('addressBookModal');
+    if (addressBookModal) {
+      addressBookModal.style.display = 'none';
+    }
   }
 
   function filterEmployees() {
@@ -293,36 +376,45 @@
     });
   }
 
+  function toggleSelectAll(source, isAddressBook = false) {
+    const checkboxes = isAddressBook
+            ? document.querySelectorAll('.employee-list .select-item')
+            : document.querySelectorAll('.post-list .select-item');
+
+    checkboxes.forEach(function(checkbox) {
+      checkbox.checked = source.checked;
+      const empCode = checkbox.value;
+      const empName = checkbox.getAttribute('data-name');
+
+      const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === empCode);
+
+      if (checkbox.checked) {
+        if (recipientIndex === -1) {
+          selectedRecipients.push({
+            empCode: empCode,
+            empName: empName
+          });
+        }
+      } else {
+        if (recipientIndex !== -1) {
+          selectedRecipients.splice(recipientIndex, 1);
+        }
+      }
+    });
+
+    updateRecipientField();
+  }
+
   window.onload = function() {
     fetchEmployees();
   };
 
-  function toggleSelectAll(source) {
-    const checkboxes = document.querySelectorAll('.select-item');
-    checkboxes.forEach(function(checkbox) {
-      checkbox.checked = source.checked;
+  function getSelectedMailIds() {
+    const selected = [];
+    document.querySelectorAll('input.select-item:checked').forEach(function (checkbox) {
+      selected.push(checkbox.value);
     });
-  }
-
-  function updateRecipientField() {
-    const selectedEmployees = [];
-    const selectedNames = [];
-    const checkboxes = document.querySelectorAll('.employee-check:checked');
-
-    checkboxes.forEach(cb => {
-      const employeeId = cb.getAttribute('data-emp-id');
-      const employeeName = cb.getAttribute('data-emp-name');
-      selectedEmployees.push(employeeId);
-      selectedNames.push(employeeName);
-    });
-
-    const recipientIdField = document.getElementById('recipient_id');
-    const recipientNameField = document.getElementById('recipient_name');
-
-    if (recipientIdField && recipientNameField) {
-      recipientIdField.value = selectedEmployees.join(',');
-      recipientNameField.value = selectedNames.join(', ');
-    }
+    return selected;
   }
 </script>
 </html>
