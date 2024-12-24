@@ -131,6 +131,7 @@ public class MailController {
         System.out.println("trash = " + trash);
 
         model.addAttribute("trash", trash);
+
         model.addAttribute("isEmpty", trash.isEmpty());
 
         return "sidemenu/mail/trash";
