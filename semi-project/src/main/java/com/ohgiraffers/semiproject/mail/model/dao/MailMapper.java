@@ -23,5 +23,9 @@ public interface MailMapper {
     List<MailDTO> mailFolderArchived(String code);
 
     void moveMails(@Param("mail") List<Integer> mail, @Param("folder") String folder, @Param("code") String code);
+
+    void deleteMails(@Param("mail") List<Integer> mail, @Param("code") String code);
+
+    void sentMoveMails(@Param("mail") List<Integer> mail, @Param("folder") String folder, @Param("code") String code);
 }
 
