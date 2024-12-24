@@ -40,9 +40,8 @@ function calculateYearsOfService(hireDate) {
     return yearsOfService;
 }
 
-// 랜덤 근태율 생성 함수
 function generateAttendanceRates() {
-    const lastYearAttendance = Math.floor(Math.random() * 26) + 75; // 75%에서 100% 사이의 랜덤 값
+    const lastYearAttendance = Math.floor(Math.random() * 21) + 80; // 80%에서 100% 사이의 랜덤 값
     return { lastYearAttendance }; // 작년 근태율만 반환
 }
 
@@ -153,8 +152,11 @@ document.getElementById('select-all').onclick = () => {
 // 근태율 필터링 기능
 document.getElementById('attendance-80').onclick = () => {
     const filteredData = allData.filter(item => {
+        const yearsOfService = calculateYearsOfService(item.hireDate); // 근속년수 계산
         const { lastYearAttendance } = generateAttendanceRates(); // 랜덤 근태율 생성
-        return lastYearAttendance >= 80; // 작년 근태 80% 이상
+
+        // 근속년수가 1년 이상이고 작년 근태율이 80% 이상인 경우만 필터링
+        return yearsOfService >= 1 && lastYearAttendance >= 80;
     });
     updateList(filteredData);
 };
