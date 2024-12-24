@@ -173,6 +173,7 @@
         AND comment_emp_code = #{commentEmpCode}
     </delete>
 
+<!-- 마이페이지 - 내 댓글 조회 메소드 -->
     <select id="getUserComment" resultMap="CommentResultMap">
         SELECT
         C.id,
@@ -191,4 +192,12 @@
         WHERE
         C.comment_emp_code = #{code}
     </select>
+
+<!-- 마이페이지 - 비밀번호 변경 -->
+    <update id="updatePasswordByCode">
+        UPDATE tbl_emp
+        SET emp_pass = #{encryptedPassword}
+        WHERE emp_code = #{code}
+    </update>
+
 </mapper>

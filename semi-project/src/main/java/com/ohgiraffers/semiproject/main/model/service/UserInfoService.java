@@ -23,8 +23,9 @@ public class UserInfoService {
             String name = loginUserDTO.getName(); // 이름 가져오기
             String department = loginUserDTO.getDeptCode(); // 부서명 가져오기
             String position = loginUserDTO.getJobCode(); // 직급 가져오기
+            String pass = loginUserDTO.getPass(); // 비밀번호 가져오기
 
-            return new UserInfoResponse(code, profilePictureUrl, name, department, position);
+            return new UserInfoResponse(code, profilePictureUrl, name, department, position, pass);
         }
         return null; // 또는 적절한 에러 처리
     }

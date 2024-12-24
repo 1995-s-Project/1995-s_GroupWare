@@ -61,8 +61,8 @@
                         기본 설정
                     </div>
                     <ul class="dropdown-menu">
-                        <li><a href="#">회원정보 수정</a></li>
-                        <li><a href="#">비밀번호 변경</a></li>
+                        <li><a href="/setting/info">회원정보 수정</a></li>
+                        <li><a href="/setting/password">비밀번호 변경</a></li>
                     </ul>
                 </div>
 
@@ -79,7 +79,7 @@
         </div>
 
         <div class="content-container">
-            <h2>내 게시글</h2>
+            <h2>게시글 내역</h2>
 
             <div>
                 <ul class="post-list">
@@ -107,38 +107,59 @@
 </div>
 
 <script>
-    function toggleDropdown(element) {
-        const dropdown = element.closest('.dropdown');
-        const dropdownTitle = dropdown.querySelector('.dropdown-title');
-        const isActive = dropdownTitle.classList.contains('active');
+    // 드롭다운 메뉴를 열고 닫는 함수
+    function toggleDropdown(titleElement) {
+        const dropdown = titleElement.closest('.dropdown');
+        const menu = dropdown.querySelector('.dropdown-menu');
 
-        // 드롭다운 메뉴 상태 토글
-        if (isActive) {
-            dropdownTitle.classList.remove('active');
-            dropdown.querySelector('.dropdown-menu').classList.remove('open');
-        } else {
-            dropdownTitle.classList.add('active');
-            dropdown.querySelector('.dropdown-menu').classList.add('open');
-        }
+        // 클릭한 메뉴만 열기
+        menu.classList.toggle('open');
 
-        // 드롭다운 상태를 로컬 스토리지에 저장
-        const dropdownStates = JSON.parse(localStorage.getItem('dropdownStates')) || {};
-        dropdownStates[dropdownTitle.textContent.trim()] = !isActive;
-        localStorage.setItem('dropdownStates', JSON.stringify(dropdownStates));
+        // 상태 저장
+        saveDropdownState();
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        const dropdownStates = JSON.parse(localStorage.getItem('dropdownStates')) || {};
+    // 페이지 이동 후, 활성화된 항목 유지
+    document.addEventListener('DOMContentLoaded', function () {
+        // 저장된 드롭다운 상태 복원
+        restoreDropdownState();
 
-        dropdowns.forEach(dropdown => {
-            const dropdownTitle = dropdown.querySelector('.dropdown-title').textContent.trim();
-            if (dropdownStates[dropdownTitle]) {
-                dropdown.querySelector('.dropdown-title').classList.add('active');
-                dropdown.querySelector('.dropdown-menu').classList.add('open');
+        // 페이지 URL에 맞는 메뉴 항목에 active 클래스 추가
+        const links = document.querySelectorAll('.dropdown-menu li a');
+        links.forEach(function(link) {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
             }
         });
     });
+
+    // 드롭다운의 열린 상태를 저장
+    function saveDropdownState() {
+        const openMenus = [];
+        const menus = document.querySelectorAll('.dropdown-menu');
+        menus.forEach(function(menu, index) {
+            if (menu.classList.contains('open')) {
+                openMenus.push(index);
+            }
+        });
+
+        // 로컬 스토리지에 열린 메뉴 인덱스 배열을 저장
+        localStorage.setItem('openMenus', JSON.stringify(openMenus));
+    }
+
+    // 저장된 드롭다운 상태를 복원
+    function restoreDropdownState() {
+        const openMenus = JSON.parse(localStorage.getItem('openMenus') || '[]');
+
+        const menus = document.querySelectorAll('.dropdown-menu');
+        openMenus.forEach(function(index) {
+            if (menus[index]) {
+                menus[index].classList.add('open');
+            }
+        });
+    }
 </script>
 </body>
 </html>

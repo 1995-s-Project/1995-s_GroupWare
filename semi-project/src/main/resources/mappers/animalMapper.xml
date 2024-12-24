@@ -312,15 +312,6 @@
         A.ANIMAL_CODE = #{animalCode}
     </select>
 
-    <update id="giveUp" parameterType="java.util.List">
-        UPDATE tbl_animal
-        SET animal_status = '파양/보호중'
-        WHERE animal_code IN
-        <foreach collection="codeList" item="code" open="(" separator="," close=")">
-            #{code}
-        </foreach>
-    </update>
-
     <!-- ********************************* 재고관리 페이지 ************************************* -->
     <resultMap id="stockResultMap" type="com.ohgiraffers.semiproject.animals.model.dto.InventoryDTO">
         <id property="itemCode" column="item_code"/>

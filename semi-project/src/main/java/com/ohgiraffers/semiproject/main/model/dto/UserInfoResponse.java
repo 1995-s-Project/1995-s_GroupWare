@@ -16,6 +16,6 @@ public class UserInfoResponse {
     private String name; // 사용자 이름
     private String department; // 부서명 추가
     private String position; // 직급 추가
-
+    private String pass; // 사용자 비밀번호
 }
 
