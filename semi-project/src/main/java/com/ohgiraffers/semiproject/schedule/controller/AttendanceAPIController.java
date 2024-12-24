@@ -37,7 +37,7 @@ public class AttendanceAPIController {
     }
 
     @GetMapping("/api/employees")
-    public ResponseEntity<List<EmployeeJoinListDTO>> employeeList(){
+    public ResponseEntity<List<EmployeeJoinListDTO>> employeeList() {
 
         List<EmployeeJoinListDTO> employeeList = employeeService.empAllSelect();
 

@@ -72,12 +72,15 @@ public class MailController {
     }
 
 
-    @GetMapping("api/employee")
+    @GetMapping("/mail/employees")
     public ResponseEntity<List<EmployeeJoinListDTO>> employee() {
 
-        List<EmployeeJoinListDTO> employeeList = employeeService.empAllSelect();
-        for (EmployeeJoinListDTO list : employeeList) {
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String code = userInfo.getCode();
 
+        List<EmployeeJoinListDTO> employeeList = employeeService.mailAllSelect(code);
+        for (EmployeeJoinListDTO list : employeeList) {
+            System.out.println("list = " + list);
         }
         return ResponseEntity.ok(employeeList);
     }
@@ -153,7 +156,7 @@ public class MailController {
 
     @PostMapping("/mail/move")
     @ResponseBody
-    public ResponseEntity<String> moveMails(@RequestBody MailDTO mailDTO) {
+    public ResponseEntity<String> moveMails(@RequestBody MailDTO mailDTO, Model model) {
         if (mailDTO.getEmailCode() == null || mailDTO.getEmailCode().isEmpty()) {
             return ResponseEntity.badRequest().body("메일 ID가 비어 있습니다.");
         }
@@ -207,7 +210,7 @@ public class MailController {
 
     @PostMapping("/mail/sent")
     @ResponseBody
-    public ResponseEntity<String> sentMoveMails(@RequestBody MailDTO mailDTO) {
+    public ResponseEntity<String> sentMoveMails(@RequestBody MailDTO mailDTO, Model model) {
         if (mailDTO.getEmailCode() == null || mailDTO.getEmailCode().isEmpty()) {
             return ResponseEntity.badRequest().body("메일 ID가 비어 있습니다.");
         }
@@ -218,6 +221,8 @@ public class MailController {
                 .map(Integer::valueOf)
                 .collect(Collectors.toList());
         mailService.sentMoveMails(mail, mailDTO.getFolder(), code);
+
+        model.addAttribute("loggedInUserCode", userInfo.getCode());
 
         return ResponseEntity.ok("메일 이동 성공");
     }

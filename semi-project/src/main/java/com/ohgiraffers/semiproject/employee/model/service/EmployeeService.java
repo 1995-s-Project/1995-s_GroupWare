@@ -73,4 +73,9 @@ public class EmployeeService {
     public List<CommentDTO> getUserComment(String code) {
         return employeeMapper.getUserComment(code);
     }
+
+    public List<EmployeeJoinListDTO> mailAllSelect(String code) {
+
+        return employeeMapper.mailAllSelect(code);
+    }
 }

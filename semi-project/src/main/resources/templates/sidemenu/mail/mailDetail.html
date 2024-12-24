@@ -92,9 +92,6 @@
       </div>
       <div class="form1">
         <div class="main-button">
-          <button class="main-button1">❌ 휴지통</button>
-          <button class="main-button2">⭐ 중요보관함</button>
-          <button class="main-button3">📦 받은쪽지보관함</button>
         </div>
         <div class="form-main">
           <h1 th:text="${mail.title}"></h1>
@@ -103,7 +100,6 @@
           <small th:text="'날짜 : ' + ${#dates.format(mail.sendDate, 'yyyy-MM-dd')}"></small>
         </div>
           <br>
-          <h2 class="h2">내용</h2>
           <div class="content-box" th:text="${mail.content}"></div>
         <div id="messageModal" class="modal">
           <div class="modal-content">

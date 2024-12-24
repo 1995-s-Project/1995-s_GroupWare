@@ -93,8 +93,6 @@
       <div class="form1">
         <div class="main-button">
           <button class="main-button1" id="moveToTrash" onclick="sentMoveMails('휴지통')">❌ 휴지통</button>
-          <button class="main-button2" id="moveToImportant" onclick="sentMoveMails('중요쪽지함')">⭐ 중요보관함</button>
-          <button class="main-button3" id="moveToReceived" onclick="sentMoveMails('보관함')">📦 받은쪽지보관함</button>
         </div>
         <table border="1" class="post-list">
           <colgroup>
@@ -291,6 +289,21 @@
     }
   }
 
+  let loggedInUserCode = "";
+
+  fetch('/api/loggedInUser')
+          .then(response => response.text())
+          .then(data => {
+            loggedInUserCode = data;  // 로그인한 유저 코드 저장
+            console.log("Logged In User Code: ", loggedInUserCode);  // 확인용 로그
+
+            // 직원 목록을 가져오고 로그인한 유저를 제외하는 작업
+            fetchEmployees();
+          })
+          .catch(error => {
+            console.error('로그인한 유저 정보를 가져오는 중 오류 발생:', error);
+          });
+
   function fetchEmployees() {
     const departments = {
       '경영부': document.getElementById('managementDept'),
@@ -305,27 +318,28 @@
             .then(response => response.json())
             .then(data => {
               data.forEach(employee => {
-                const empName = employee.empName || 'N/A';
-                const jobName = employee.jobDTO ? employee.jobDTO.jobName : 'N/A';
-                const deptName = employee.deptDTO ? employee.deptDTO.deptName : 'N/A';
+                // 로그인한 유저는 제외
+                if (employee.empCode !== loggedInUserCode) {
+                  const empName = employee.empName || 'N/A';
+                  const jobName = employee.jobDTO ? employee.jobDTO.jobName : 'N/A';
+                  const deptName = employee.deptDTO ? employee.deptDTO.deptName : 'N/A';
 
-                if (departments[deptName]) {
-                  const li = document.createElement('li');
-                  const checkbox = document.createElement('input');
-                  checkbox.type = "checkbox";
-                  checkbox.classList.add("select-item");
-                  checkbox.value = employee.empCode;
-                  checkbox.setAttribute('data-name', empName);
-                  checkbox.onclick = () => selectEmployee(employee, checkbox);
+                  if (departments[deptName]) {
+                    const li = document.createElement('li');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = "checkbox";
+                    checkbox.classList.add("select-item");
+                    checkbox.value = employee.empCode;
+                    checkbox.setAttribute('data-name', empName);
+                    checkbox.onclick = () => selectEmployee(employee, checkbox);
 
-                  const nameText = document.createTextNode(`${empName} (${jobName})`);
+                    const nameText = document.createTextNode(`${empName} (${jobName})`);
+                    li.appendChild(checkbox);
+                    li.appendChild(nameText);
+                    li.onclick = () => selectEmployee(employee, checkbox);
 
-                  li.appendChild(checkbox);
-                  li.appendChild(nameText);
-
-                  li.onclick = () => selectEmployee(employee, checkbox);
-
-                  departments[deptName].appendChild(li);
+                    departments[deptName].appendChild(li);
+                  }
                 }
               });
 
