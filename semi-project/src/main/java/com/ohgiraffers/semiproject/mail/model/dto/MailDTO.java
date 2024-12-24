@@ -27,5 +27,4 @@ public class MailDTO {
     private DeptDTO deptDTO;
     private String folder;
     private String getEmail;
-
 }

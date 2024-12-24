@@ -21,7 +21,6 @@ public class UserController {
 
     @PostMapping("/user/signup")
     public ModelAndView signup(@ModelAttribute SignupDTO signupDTO, ModelAndView mv) {
-        System.out.println(signupDTO);
 
         // 이미지 경로를 추가
         String imagePath = "img/profile/" + signupDTO.getImage(); // 예시로 사용자 이름을 파일명으로 사용

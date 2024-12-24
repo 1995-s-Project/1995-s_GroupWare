@@ -148,8 +148,23 @@
             tbl_emp a
         join tbl_job b on (a.job_code = b.job_code)
         join tbl_dept c on (a.dept_code = c.dept_code)
-
     </select>
+
+    <select id="mailAllSelect" resultMap="employeeJoinListMap">
+        select
+        a.emp_code,
+        a.emp_name,
+        b.job_name,
+        c.dept_name
+        from
+        tbl_emp a
+        join tbl_job b on (a.job_code = b.job_code)
+        join tbl_dept c on (a.dept_code = c.dept_code)
+        Where
+        emp_code != #{code}
+    </select>
+
+
 
     <delete id="commentDelete" parameterType="com.ohgiraffers.semiproject.employee.model.dto.CommentDTO">
         DELETE FROM tbl_comment
