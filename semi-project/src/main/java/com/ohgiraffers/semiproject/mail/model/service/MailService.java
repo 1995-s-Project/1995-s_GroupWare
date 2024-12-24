@@ -86,6 +86,8 @@ public class MailService {
 
         mailMapper.sentMoveMails(mail, folder, code);
     }
+
+
 }
 
 

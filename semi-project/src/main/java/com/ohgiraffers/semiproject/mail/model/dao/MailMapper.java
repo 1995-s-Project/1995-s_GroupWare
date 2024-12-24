@@ -27,5 +27,6 @@ public interface MailMapper {
     void deleteMails(@Param("mail") List<Integer> mail, @Param("code") String code);
 
     void sentMoveMails(@Param("mail") List<Integer> mail, @Param("folder") String folder, @Param("code") String code);
+
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ohgiraffers.semiproject.mail.model.dao.MailMapper">
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.ohgiraffers.semiproject.mail.model.dao.MailMapper">
 
         <resultMap id="mailSelect" type="com.ohgiraffers.semiproject.mail.model.dto.MailDTO">
             <id property="emailCode" column="email_code"/>
@@ -18,7 +18,6 @@
             <result property="recipientName" column="recipient_name"/>
             <result property="folder" column="folder"/>
             <result property="getEmail" column="get_email"/>
-
             <association property="employeeDTO" javaType="com.ohgiraffers.semiproject.mail.model.dto.EmployeeDTO">
                 <id property="empCode" column="emp_code"/>
                 <result property="empPass" column="emp_pass"/>
@@ -34,27 +33,25 @@
                 <result property="authority" column="authority"/>
                 <result property="profile_image" column="profile_image"/>
             </association>
-
             <association property="jobDTO" javaType="com.ohgiraffers.semiproject.mail.model.dto.JobDTO">
                 <id property="jobCode" column="job_code"/>
                 <result property="jobName" column="job_name"/>
             </association>
-
             <association property="deptDTO" javaType="com.ohgiraffers.semiproject.mail.model.dto.DeptDTO">
                 <id property="deptCode" column="dept_code"/>
                 <result property="deptName" column="dept_name"/>
             </association>
         </resultMap>
 
-    <!-- 받은메일 조회 -->
-    <select id="mailAllSelect" resultMap="mailSelect">
-        SELECT
-        *
-        FROM
-        TBL_EMAIL
-        WHERE
-        recipient_id = #{code} AND get_email = '받은쪽지함'
-    </select>
+        <!-- 받은메일 조회 -->
+        <select id="mailAllSelect" resultMap="mailSelect">
+            SELECT
+            *
+            FROM
+            TBL_EMAIL
+            WHERE
+            recipient_id = #{code} AND get_email = '받은쪽지함'
+        </select>
 
         <!-- 보낸메일 조회 -->
         <select id="mailSentSelect" resultMap="mailSelect">
@@ -67,86 +64,83 @@
         </select>
 
         <!-- 쪽지쓰기 -->
-    <insert id="registMail" parameterType="com.ohgiraffers.semiproject.mail.model.dto.MailDTO">
-        INSERT INTO tbl_email
-        (email_code, title, file, content, send_date, delete_date,
-        reception_type, reception_status, sender_id, recipient_id, recipient_name, folder, get_email)
-        VALUES
-        (#{emailCode}, #{title}, #{file}, #{content}, #{sendDate}, #{deleteDate},
-        #{receptionType}, #{receptionStatus}, #{senderId},
-        #{recipientId}, #{recipientName}, '보낸쪽지함', '받은쪽지함')
-    </insert>
+        <insert id="registMail" parameterType="com.ohgiraffers.semiproject.mail.model.dto.MailDTO">
+            INSERT INTO tbl_email
+            (email_code, title, file, content, send_date, delete_date,
+            reception_type, reception_status, sender_id, recipient_id, recipient_name, folder, get_email)
+            VALUES
+            (#{emailCode}, #{title}, #{file}, #{content}, #{sendDate}, #{deleteDate},
+            #{receptionType}, #{receptionStatus}, #{senderId},
+            #{recipientId}, #{recipientName}, '보낸쪽지함', '받은쪽지함')
+        </insert>
 
-    <!-- 메일상세보기 -->
-    <select id="mailDetail" resultMap="mailSelect">
-        SELECT
-        a.*,
-        b.emp_name,
-        c.dept_name,
-        d.job_name
-        FROM
-        tbl_email a
-        JOIN
-        tbl_emp b ON a.sender_id = b.emp_code
-        JOIN
-        tbl_dept c ON b.dept_code = c.dept_code
-        JOIN
-        tbl_job d ON b.job_code = d.job_code
-        WHERE
-        email_code = #{emailCode}
-    </select>
+        <!-- 메일상세보기 -->
+        <select id="mailDetail" resultMap="mailSelect">
+            SELECT
+            a.*,
+            b.emp_name,
+            c.dept_name,
+            d.job_name
+            FROM
+            tbl_email a
+            JOIN
+            tbl_emp b ON a.sender_id = b.emp_code
+            JOIN
+            tbl_dept c ON b.dept_code = c.dept_code
+            JOIN
+            tbl_job d ON b.job_code = d.job_code
+            WHERE
+            email_code = #{emailCode}
+        </select>
 
-    <select id="mailFolderArchived" resultMap="mailSelect">
-        SELECT
-        *
-        FROM
-        tbl_email
-        WHERE (recipient_id = #{code} OR sender_id = #{code})
-        AND folder = '보관함'
-    </select>
+        <select id="mailFolderArchived" resultMap="mailSelect">
+            SELECT
+            *
+            FROM
+            tbl_email
+            WHERE recipient_id = #{code} AND folder = '보관함'
+        </select>
 
-    <select id="mailFolderImportant" resultMap="mailSelect">
-        SELECT
-        *
-        FROM
-        tbl_email
-        WHERE (recipient_id = #{code} OR sender_id = #{code})
-        AND folder = '중요쪽지함'
-    </select>
+        <select id="mailFolderImportant" resultMap="mailSelect">
+            SELECT
+            *
+            FROM
+            tbl_email
+            WHERE recipient_id = #{code} AND folder = '중요쪽지함'
+        </select>
 
-    <select id="mailFolderTrash" resultMap="mailSelect">
-        SELECT *
-        FROM tbl_email
-        WHERE (recipient_id = #{code} OR sender_id = #{code})
-        AND folder = '휴지통'
-    </select>
+        <select id="mailFolderTrash" resultMap="mailSelect">
+            SELECT *
+            FROM tbl_email
+            WHERE recipient_id = #{code} AND folder = '휴지통'
+        </select>
 
-    <update id="moveMails" parameterType="map">
-        UPDATE tbl_email
-        SET folder = #{folder}, get_email = null
-        WHERE recipient_id = #{code}
-        AND email_code IN
-        <foreach collection="mail" item="mailCode" open="(" separator="," close=")">
-            #{mailCode}
-        </foreach>
-    </update>
+        <update id="moveMails" parameterType="map">
+            UPDATE tbl_email
+            SET folder = #{folder}, get_email = null
+            WHERE (recipient_id = #{code} OR sender_id = #{code})
+            AND email_code IN
+            <foreach collection="mail" item="mailCode" open="(" separator="," close=")">
+                #{mailCode}
+            </foreach>
+        </update>
 
-    <delete id="deleteMails" parameterType="map">
-        DELETE FROM tbl_email
-        WHERE email_code IN
-        <foreach item="item" collection="mail" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-        AND (recipient_id = #{code} OR sender_id = #{code})
-    </delete>
+        <delete id="deleteMails" parameterType="map">
+            DELETE FROM tbl_email
+            WHERE email_code IN
+            <foreach item="item" collection="mail" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            AND (recipient_id = #{code} OR sender_id = #{code})
+        </delete>
 
-    <update id="sentMoveMails" parameterType="map">
-        UPDATE tbl_email
-        SET folder = #{folder}, get_email = null
-        WHERE sender_id = #{code}
-        AND email_code IN
-        <foreach collection="mail" item="mailCode" open="(" separator="," close=")">
-            #{mailCode}
-        </foreach>
-    </update>
+        <update id="sentMoveMails" parameterType="map">
+            UPDATE tbl_email
+            SET folder = #{folder}, get_email = null
+            WHERE sender_id = #{code}
+            AND email_code IN
+            <foreach collection="mail" item="mailCode" open="(" separator="," close=")">
+                #{mailCode}
+            </foreach>
+        </update>
 </mapper>

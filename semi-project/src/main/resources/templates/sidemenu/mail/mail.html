@@ -250,7 +250,7 @@
                 console.error("메일 이동 중 오류 발생:", error);
             });
     }
-    
+
     let selectedRecipients = [];
 
     // 직원 선택 및 해제 처리
@@ -309,7 +309,7 @@
             '고객CS업무부': document.getElementById('customerDept')
         };
 
-        fetch('/api/employees')
+        fetch('/mail/employees')
             .then(response => response.json())
             .then(data => {
                 data.forEach(employee => {
@@ -378,7 +378,6 @@
         }
     }
 
-    // 직원 검색 함수
     function filterEmployees() {
         const searchInput = document.getElementById('searchInput2').value.toLowerCase();
         const employeeListItems = document.querySelectorAll('#addressBookContainer2 .employee-list li');
@@ -437,6 +436,5 @@
         });
         return selected;
     }
-
 </script>
 </html>
