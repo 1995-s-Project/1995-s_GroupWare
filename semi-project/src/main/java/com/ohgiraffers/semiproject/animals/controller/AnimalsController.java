@@ -167,20 +167,6 @@ public class AnimalsController {
         return "sidemenu/animals/adoptionDetailAnimal";
     }
 
-
-    // 파양으로 상태 수정
-    @GetMapping("/giveUp")
-    public String giveUp(@RequestParam String animalCode){
-
-        // 쉼표로 구분된 코드들을 배열로 변환
-        String[] animalCodes = animalCode.split(",");
-
-        // 입양 완료 상태로 업데이트
-        animalsService.giveUpComplete(animalCodes);
-
-        return "redirect:/sidemenu/adoptionComplete";
-    }
-
 // -----------------------------------------재고관리 페이지-----------------------------------------
     // 재고관리 페이지로 이동
     @GetMapping("/sidemenu/stock")

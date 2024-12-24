@@ -49,9 +49,6 @@ public interface AnimalsMapper {
     AnimalDTO adoptionHealthAnimal(String animalCode);
     AnimalDTO adoptionInoculationAnimal(String animalCode);
 
-    // 파양으로 상태 수정
-    void giveUp(List<String> codeList);
-
 // -----------------------------------------재고관리 페이지-----------------------------------------
     List<InventoryDTO> stock();
 

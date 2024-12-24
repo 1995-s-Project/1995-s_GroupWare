@@ -134,6 +134,12 @@ h2 {
     color: #333;
     text-decoration: none;
     font-size: 14px;
+    font-weight: normal; /* 기본 폰트 굵기 */
+}
+
+.dropdown-menu li a.active {
+    font-weight: bold !important; /* 활성화된 항목의 폰트 굵기 */
+    color: #007bff !important; /* 선택된 항목의 텍스트 색상 */
 }
 
 .dropdown-menu li a:hover {

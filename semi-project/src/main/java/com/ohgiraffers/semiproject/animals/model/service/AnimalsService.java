@@ -101,11 +101,6 @@ public class AnimalsService {
     public AnimalDTO adoptionHealthAnimal(String animalCode) {return animalsMapper.adoptionHealthAnimal(animalCode);}
     public AnimalDTO adoptionInoculationAnimal(String animalCode) {return animalsMapper.adoptionInoculationAnimal(animalCode);}
 
-    public void giveUpComplete(String[] animalCodes) {
-        List<String> codeList = Arrays.asList(animalCodes); // 배열을 리스트로 변환
-        animalsMapper.giveUp(codeList); // 여러 동물 코드 한번에 처리
-    }
-
 // -----------------------------------------재고관리 페이지-----------------------------------------
     // 재고관리 조회
     public List<InventoryDTO> stock() {

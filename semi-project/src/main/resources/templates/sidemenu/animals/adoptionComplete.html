@@ -54,9 +54,6 @@
     <div id="change-screen-content">
         <div class="animals">
             <div class="sendAdoption-delete">
-                <div class="sendAdoption">
-                    <a href="javascript:sendGiveUp();">파양</a>
-                </div>
                 <div class="delete">
                     <a href="javascript:boardDelete();">삭제</a>
                 </div>
@@ -196,44 +193,6 @@
                 input1.setAttribute("value", arr);
                 form.appendChild(input1);
                 console.log(form);
-                document.body.appendChild(form);
-                form.submit();
-            }
-        }
-    }
-    // 파양
-    function sendGiveUp(){
-        //체크박스 체크된 항목
-        const query = 'input[name="chk"]:checked'
-        const selectedElements = document.querySelectorAll(query)
-        //체크박스 체크된 항목의 개수
-        const selectedElementsCnt = selectedElements.length;
-
-        if(selectedElementsCnt == 0){
-            alert("항목을 선택해주세요.");
-            return false;
-        }
-        else{
-            if (confirm("파양으로 상태를 변경하시겠습니까?")) {
-                //배열생성
-                const arr = new Array(selectedElementsCnt);
-
-                document.querySelectorAll('input[name="chk"]:checked').forEach(function(v, i) {
-                    arr[i] = v.value;
-                });
-
-                const form = document.createElement('form');
-                form.setAttribute('method', 'get');
-                form.setAttribute('action', '/giveUp');
-
-                // 선택된 동물 등록번호들을 hidden input으로 추가
-                const input = document.createElement('input');
-                input.setAttribute("type", "hidden");
-                input.setAttribute("name", "animalCode");
-                input.setAttribute("value", arr.join(',')); // 배열을 콤마로 구분된 문자열로 변환
-                form.appendChild(input);
-
-                // form을 body에 추가하고 submit
                 document.body.appendChild(form);
                 form.submit();
             }
