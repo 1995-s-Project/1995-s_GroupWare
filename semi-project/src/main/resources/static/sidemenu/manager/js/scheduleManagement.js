@@ -9,6 +9,38 @@ document.addEventListener("DOMContentLoaded", function() {
     const modifyTimeInput = document.getElementById('modifyTime');
     const division = document.getElementById("division");
 
+    // 버튼 클릭 이벤트 추가
+    function initializePage() {
+        const buttons = document.querySelectorAll('.tab-button');
+
+        // 모든 버튼의 active 클래스 제거
+        buttons.forEach(button => {
+            button.classList.remove('active');
+        });
+
+        // 기본적으로 활성화할 버튼을 지정
+        const defaultButton = document.querySelector('.tab-button.default');
+        if (defaultButton) {
+            defaultButton.classList.add('active'); // 기본 버튼에 active 클래스 추가
+        }
+
+        // 이벤트 리스너 등록
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 모든 버튼의 active 클래스 제거
+                buttons.forEach(btn => btn.classList.remove('active'));
+                // 클릭한 버튼에 active 클래스 추가
+                this.classList.add('active');
+            });
+        });
+    }
+
+    // 페이지가 로드될 때 초기화
+    initializePage();
+
+
+
+
     // 서버에서 데이터 가져오기
     fetch('/attendanceManagement') // API 엔드포인트를 실제 URL로 변경하세요.
         .then(response => {
@@ -124,6 +156,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+
+
 // 필터링 이벤트 리스너 추가
 document.getElementById('modify-type').addEventListener('change', filterAttendance);
 document.getElementById('status-filter').addEventListener('change', filterAttendance);
@@ -196,4 +230,5 @@ function setValue(value) {
     statusValueInput.value = value;
     console.log("설정된 값:", value); // 디버깅을 위한 로그
 }
+
 
