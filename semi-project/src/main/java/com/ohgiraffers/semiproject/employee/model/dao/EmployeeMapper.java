@@ -30,13 +30,12 @@ public interface EmployeeMapper {
 
     void commentDelete(CommentDTO commentDTO);
 
-    // 마이페이지 - 내 댓글 조회 메소드
-    List<CommentDTO> getUserComment(String code);
-
-
-    // 마이페이지 - 비밀번호 변경
-    int updatePasswordByCode(String encryptedPassword, String code);
-
     List<EmployeeJoinListDTO> mailAllSelect(String code);
 
+    // 마이페이지 - 내 댓글 조회 메소드
+    List<CommentDTO> getUserComment(String code);
+    // 마이페이지 - 비밀번호 변경
+    int updatePasswordByCode(String encryptedPassword, String code);
+    // 마이페이지 - 회원정보 수정
+    EmployeeJoinListDTO empInfoSelect(String empCode);
 }

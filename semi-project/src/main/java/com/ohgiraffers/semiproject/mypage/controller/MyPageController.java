@@ -3,6 +3,8 @@ package com.ohgiraffers.semiproject.mypage.controller;
 import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
 import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
 import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTOJOB;
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO;
 import com.ohgiraffers.semiproject.employee.model.service.EmployeeService;
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
 import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
@@ -32,17 +34,19 @@ public class MyPageController {
         this.animalsService = animalsService;
     }
 
-    // 마이페이지 페이지로 이동
+    // 마이페이지 페이지로 이동 및 회원정보 수정
     @GetMapping("/sidemenu/mypage")
-    public String mypage() {
+    public String mypage(Model model) {
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String empCode = userInfo.getCode();
+
+        EmployeeJoinListDTO info = employeeService.empInfoSelect(empCode);
+        System.out.println("info = " + info);
+        model.addAttribute("info", info);
+
         return "sidemenu/mypage/mypage";
     }
 
-    // 마이페이지 - 회원정보 수정
-    @GetMapping("/setting/info")
-    public String settingInfo(){
-        return "sidemenu/mypage/settingInfo";
-    }
     // 마이페이지 - 비밀번호 변경
     @GetMapping("/setting/password")
     public String settingPassWord(){

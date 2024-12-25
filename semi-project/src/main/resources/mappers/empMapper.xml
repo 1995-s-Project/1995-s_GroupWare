@@ -192,12 +192,23 @@
         WHERE
         C.comment_emp_code = #{code}
     </select>
-
 <!-- 마이페이지 - 비밀번호 변경 -->
     <update id="updatePasswordByCode">
         UPDATE tbl_emp
         SET emp_pass = #{encryptedPassword}
         WHERE emp_code = #{code}
     </update>
-
+<!-- 마이페이지 - 회원정보 수정 -->
+    <select id="empInfoSelect" resultMap="employeeJoinListMap">
+        select
+        a.*,
+        b.job_name,
+        c.dept_name
+        from
+        tbl_emp a
+        join tbl_job b on (a.job_code = b.job_code)
+        join tbl_dept c on (a.dept_code = c.dept_code)
+        where
+        a.emp_code = #{empCode}
+    </select>
 </mapper>

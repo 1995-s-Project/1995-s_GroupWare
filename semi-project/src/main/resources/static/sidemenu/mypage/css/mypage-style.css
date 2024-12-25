@@ -10,7 +10,7 @@
 
 #change-screen-content {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch; /* 자식 요소들이 같은 높이를 가지도록 설정 */
     width: 100%;
 }
 
@@ -25,28 +25,45 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 50px;  /* 여백 추가 */
+    padding-top: 50px;
 }
 
 h1 {
     position: sticky;
-    top: 0;  /* 상단에 고정 */
+    top: 0;
     background-color: white;
     padding: 10px;
     font-size: 40px;
     color: #333;
-    width: 90%;  /* 전체 너비를 차지하도록 */
+    width: 90%;
     text-align: center;
-    z-index: 100;  /* 다른 요소 위에 위치하도록 */
+    z-index: 100;
 }
 
 .content-container {
     width: 1500px;
-    height: 750px;
+    height: 710px; /* 고정된 높이 */
     border-radius: 10px;
     background: white;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     margin: 23px 23px 15px 30px;
+    padding: 20px;
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤바가 생기도록 설정 */
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.main-line {
+    border: 0; /* 기본 테두리 제거 */
+    height: 1px; /* 선의 두께 */
+    background-color: #ccc; /* 선의 색상 */
+    margin-top: 10px; /* 상단 간격 추가 */
+    margin-bottom: 30px; /* 하단 간격 추가 */
 }
 
 /* 기본 스타일 */
@@ -113,4 +130,32 @@ h1 {
 
 .dropdown-menu.open li a:hover {
     background-color: #e0e0e0;
+}
+
+.info-table, .dept-job-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.info-table th, .dept-job-table th {
+    width: 120px;
+    background-color: #f7f7f7;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    color: #555;
+}
+
+.info-table td, .dept-job-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    color: #555;
+}
+
+.info-table td.image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
 }
