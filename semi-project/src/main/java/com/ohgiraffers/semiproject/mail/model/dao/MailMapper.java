@@ -10,8 +10,6 @@ import java.util.List;
 public interface MailMapper {
     List<MailDTO> mailAllSelect(String code);
 
-    void registMail(MailDTO mailDTO);
-
     MailDTO mailDetail(Integer emailCode);
 
     List<MailDTO> mailSentSelect(String code);
@@ -22,11 +20,16 @@ public interface MailMapper {
 
     List<MailDTO> mailFolderArchived(String code);
 
-    void moveMails(@Param("mail") List<Integer> mail, @Param("folder") String folder, @Param("code") String code);
+    void moveMails(@Param("mail") List<Integer> mail, @Param("recipientFolder") String recipientFolder, @Param("code") String code);
 
-    void deleteMails(@Param("mail") List<Integer> mail, @Param("code") String code);
+    void sentMoveMails(@Param("mail") List<Integer> mail, @Param("senderFolder") String senderFolder, @Param("code") String code);
 
-    void sentMoveMails(@Param("mail") List<Integer> mail, @Param("folder") String folder, @Param("code") String code);
+    void inboxRegistMail(MailDTO mailDTO);
 
+    void sentRegistMail(MailDTO mailDTO);
+
+    void inboxDeleteMails(@Param("mail") List<Integer> mail, @Param("code") String code);
+
+    void sentDeleteMails(@Param("mail") List<Integer> mail, @Param("code") String code);
 }
 
