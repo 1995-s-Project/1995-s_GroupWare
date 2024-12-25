@@ -29,9 +29,15 @@
 }
 
 h1 {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 10px;
     font-size: 40px;
-    color: #333; /* 텍스트 색상 추가 */
-    text-align: center; /* 중앙 정렬 추가 */
+    color: #333;
+    width: 90%;
+    text-align: center;
+    z-index: 100;
 }
 
 .content-container {
@@ -45,11 +51,11 @@ h1 {
     overflow-y: auto; /* 내용이 넘칠 경우 스크롤바가 생기도록 설정 */
 }
 
-h2 {
-    font-size: 24px;
+h3 {
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 15px;
-    color: #333;
+    color: #007bff;
 }
 
 /* 기본 스타일 */
@@ -98,6 +104,12 @@ h2 {
     color: #333;
     text-decoration: none;
     font-size: 14px;
+    font-weight: normal; /* 기본 폰트 굵기 */
+}
+
+.dropdown-menu li a.active {
+    font-weight: bold !important; /* 활성화된 항목의 폰트 굵기 */
+    color: #007bff !important; /* 선택된 항목의 텍스트 색상 */
 }
 
 .dropdown-menu li a:hover {
@@ -192,7 +204,7 @@ form.password-change-form {
     height: 1px; /* 선의 두께 */
     background-color: #ccc; /* 선의 색상 */
     margin-top: 10px; /* 상단 간격 추가 */
-    margin-bottom: 10px; /* 하단 간격 추가 */
+    margin-bottom: 30px; /* 하단 간격 추가 */
 }
 
 #password-message,

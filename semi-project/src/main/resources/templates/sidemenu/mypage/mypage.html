@@ -61,7 +61,7 @@
                         기본 설정
                     </div>
                     <ul class="dropdown-menu">
-                        <li><a href="/setting/info">회원정보 수정</a></li>
+                        <li><a href="/sidemenu/mypage">회원정보 수정</a></li>
                         <li><a href="/setting/password">비밀번호 변경</a></li>
                     </ul>
                 </div>
@@ -79,7 +79,57 @@
         </div>
 
         <div class="content-container">
-            <h1>내용</h1>
+            <h3>기본 설정 > 회원정보 수정</h3>
+            <hr class="main-line">
+            <h3>기본정보</h3>
+            <form>
+                <table class="info-table">
+                    <tr>
+                        <th>프로필 사진</th>
+                        <td class="image">
+                            <img th:src="${info.profile_image == null || info.profile_image.isEmpty() ? '/img/default.png' : (info.profile_image.startsWith('img/profile/') ? '/' + info.profile_image : '/img/profile/' + info.profile_image)}"
+                                 alt="profile Image" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td th:text="${info.empName}"></td>
+                    </tr>
+                    <tr>
+                        <th>사번</th>
+                        <td th:text="${info.empCode}"></td>
+                    </tr>
+                    <tr>
+                        <th>입사일</th>
+                        <td th:text="${#dates.format(info.hireDate, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <th>주소</th>
+                        <td th:text="${info.empAddress}"></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td th:text="${info.empEmail}"></td>
+                    </tr>
+                    <tr>
+                        <th>휴대전화번호</th>
+                        <td th:text="${info.empPhone}"></td>
+                    </tr>
+                </table>
+
+                <h3>부서정보</h3>
+
+                <table class="dept-job-table">
+                    <tr>
+                        <th>부서</th>
+                        <td th:text="${info.deptDTO.deptName}"></td>
+                    </tr>
+                    <tr>
+                        <th>직급</th>
+                        <td th:text="${info.jobDTO.jobName}"></td>
+                    </tr>
+                </table>
+            </form>
         </div>
 
     </div>

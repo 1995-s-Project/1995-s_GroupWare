@@ -70,12 +70,9 @@ public class EmployeeService {
     }
 
     // 마이페이지 - 내 댓글 조회 메소드
-    public List<CommentDTO> getUserComment(String code) {
-        return employeeMapper.getUserComment(code);
-    }
-
-    public List<EmployeeJoinListDTO> mailAllSelect(String code) {
-
-        return employeeMapper.mailAllSelect(code);
-    }
+    public List<CommentDTO> getUserComment(String code) {return employeeMapper.getUserComment(code);}
+    // 마이페이지 - 비밀번호 변경
+    public List<EmployeeJoinListDTO> mailAllSelect(String code) {return employeeMapper.mailAllSelect(code);}
+    // 마이페이지 - 회원정보 수정
+    public EmployeeJoinListDTO empInfoSelect(String empCode) {return employeeMapper.empInfoSelect(empCode);}
 }
