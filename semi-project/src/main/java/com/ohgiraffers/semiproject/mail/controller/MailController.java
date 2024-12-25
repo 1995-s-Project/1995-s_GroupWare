@@ -103,7 +103,8 @@ public class MailController {
         mailDTO.setSenderId(code);
 
         // 각 수신자에 대해 메일 등록 (개별 메일 등록은 서비스에서 처리됨)
-        mailService.registMail(mailDTO, recipientIds, recipientNames); // 메일 등록
+        mailService.inboxRegistMail(mailDTO, recipientIds, recipientNames); // 메일 등록
+        mailService.sentRegistMail(mailDTO, recipientIds, recipientNames);
 
         return "redirect:/sidemenu/mail";  // 메일 목록 화면으로 리다이렉트
     }
@@ -156,7 +157,7 @@ public class MailController {
 
     @PostMapping("/mail/move")
     @ResponseBody
-    public ResponseEntity<String> moveMails(@RequestBody MailDTO mailDTO, Model model) {
+    public ResponseEntity<String> moveMails(@RequestBody MailDTO mailDTO) {
         if (mailDTO.getEmailCode() == null || mailDTO.getEmailCode().isEmpty()) {
             return ResponseEntity.badRequest().body("메일 ID가 비어 있습니다.");
         }
@@ -172,7 +173,26 @@ public class MailController {
 
                 .collect(Collectors.toList());
 
-        mailService.moveMails(mail, mailDTO.getFolder(), code);
+        mailService.moveMails(mail, mailDTO.getRecipientFolder(), code);
+
+        return ResponseEntity.ok("메일 이동 성공");
+    }
+
+    @PostMapping("/mail/sent")
+    @ResponseBody
+    public ResponseEntity<String> sentMoveMails(@RequestBody MailDTO mailDTO, Model model) {
+        if (mailDTO.getEmailCode() == null || mailDTO.getEmailCode().isEmpty()) {
+            return ResponseEntity.badRequest().body("메일 ID가 비어 있습니다.");
+        }
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String code = userInfo.getCode();
+        String[] emailCodes = mailDTO.getEmailCode().split(",");
+        List<Integer> mail = Arrays.stream(emailCodes)
+                .map(Integer::valueOf)
+                .collect(Collectors.toList());
+        mailService.sentMoveMails(mail, mailDTO.getSenderFolder(), code);
+
+        model.addAttribute("loggedInUserCode", userInfo.getCode());
 
         return ResponseEntity.ok("메일 이동 성공");
     }
@@ -196,7 +216,8 @@ public class MailController {
                     .map(Integer::valueOf)  // String -> Integer 변환
                     .collect(Collectors.toList());
 
-            mailService.deleteMails(mail, recipientId);
+            mailService.inboxDeleteMails(mail, recipientId);
+            mailService.sentDeleteMails(mail, recipientId);
 
             List<MailDTO> updatedTrash = mailService.mailFolderTrash(recipientId);
 
@@ -207,24 +228,4 @@ public class MailController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
-    @PostMapping("/mail/sent")
-    @ResponseBody
-    public ResponseEntity<String> sentMoveMails(@RequestBody MailDTO mailDTO, Model model) {
-        if (mailDTO.getEmailCode() == null || mailDTO.getEmailCode().isEmpty()) {
-            return ResponseEntity.badRequest().body("메일 ID가 비어 있습니다.");
-        }
-        UserInfoResponse userInfo = userInfoService.getUserInfo();
-        String code = userInfo.getCode();
-        String[] emailCodes = mailDTO.getEmailCode().split(",");
-        List<Integer> mail = Arrays.stream(emailCodes)
-                .map(Integer::valueOf)
-                .collect(Collectors.toList());
-        mailService.sentMoveMails(mail, mailDTO.getFolder(), code);
-
-        model.addAttribute("loggedInUserCode", userInfo.getCode());
-
-        return ResponseEntity.ok("메일 이동 성공");
-    }
-
 }

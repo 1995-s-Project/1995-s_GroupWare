@@ -20,15 +20,6 @@ public class MailService {
         return mailMapper.mailAllSelect(code);
     }
 
-    @Transactional
-    public void registMail(MailDTO mailDTO, List<String> recipientId, List<String> recipientName) {
-        for (int i = 0; i < recipientId.size(); i++) {
-            mailDTO.setRecipientId(recipientId.get(i));  // 수신자 ID
-            mailDTO.setRecipientName(recipientName.get(i));  // 수신자 이름
-            mailMapper.registMail(mailDTO); // 메일을 개별적으로 저장
-        }
-    }
-
     public MailDTO mailDetail(Integer emailCode) {
 
         return mailMapper.mailDetail(emailCode);
@@ -55,17 +46,46 @@ public class MailService {
     }
 
     @Transactional
-    public void moveMails(List<Integer> mail, String folder, String code) {
+    public void moveMails(List<Integer> mail, String recipientFolder, String code) {
 
         if (mail == null || mail.isEmpty()) {
             throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
         }
 
-        mailMapper.moveMails(mail, folder, code);
+        mailMapper.moveMails(mail, recipientFolder, code);
     }
 
     @Transactional
-    public void deleteMails(List<Integer> mailIds, String userCode) {
+    public void sentMoveMails(List<Integer> mail, String senderFolder, String code) {
+
+        if (mail == null || mail.isEmpty()) {
+            throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
+        }
+
+        mailMapper.sentMoveMails(mail, senderFolder, code);
+    }
+
+    @Transactional
+    public void inboxRegistMail(MailDTO mailDTO, List<String> recipientId, List<String> recipientName) {
+        for (int i = 0; i < recipientId.size(); i++) {
+            mailDTO.setRecipientId(recipientId.get(i));  // 수신자 ID
+            mailDTO.setRecipientName(recipientName.get(i));  // 수신자 이름
+            mailMapper.inboxRegistMail(mailDTO); // 메일을 개별적으로 저장
+        }
+    }
+
+    @Transactional
+    public void sentRegistMail(MailDTO mailDTO, List<String> recipientId, List<String> recipientName) {
+        for (int i = 0; i < recipientId.size(); i++) {
+            mailDTO.setRecipientId(recipientId.get(i));  // 수신자 ID
+            mailDTO.setRecipientName(recipientName.get(i));  // 수신자 이름
+            mailMapper.sentRegistMail(mailDTO); // 메일을 개별적으로 저장
+        }
+    }
+
+    @Transactional
+    public void inboxDeleteMails(List<Integer> mailIds, String userCode) {
+
         if (mailIds == null || mailIds.isEmpty()) {
             throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
         }
@@ -74,20 +94,23 @@ public class MailService {
             throw new IllegalArgumentException("사용자 코드가 유효하지 않습니다.");
         }
 
-        // 삭제 쿼리 호출
-        mailMapper.deleteMails(mailIds, userCode);
-    }
-    @Transactional
-    public void sentMoveMails(List<Integer> mail, String folder, String code) {
+        mailMapper.inboxDeleteMails(mailIds, userCode);
 
-        if (mail == null || mail.isEmpty()) {
+    }
+
+    @Transactional
+    public void sentDeleteMails(List<Integer> mailIds, String userCode) {
+
+        if (mailIds == null || mailIds.isEmpty()) {
             throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
         }
 
-        mailMapper.sentMoveMails(mail, folder, code);
+        if (userCode == null || userCode.isEmpty()) {
+            throw new IllegalArgumentException("사용자 코드가 유효하지 않습니다.");
+        }
+
+        mailMapper.sentDeleteMails(mailIds, userCode);
     }
-
-
 }
 
 
