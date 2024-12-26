@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const todoInput = document.getElementById('todo-input');
     const todoList = document.getElementById('todo-list');
     const writeDateInput = document.getElementById('write-date'); // 숨겨진 입력 필드
+    const todoForm = document.getElementById('todo-form'); // 폼 요소 추가
     let selectedDate = null; // 선택된 날짜를 저장할 변수
     let todoDates = new Set(); // To-Do가 있는 날짜를 저장할 Set
 
@@ -167,6 +168,9 @@ document.addEventListener('DOMContentLoaded', function() {
         locale: 'ko',
         dateClick: function(info) {
             selectedDate = info.dateStr; // 클릭한 날짜 저장
+
+            console.log(selectedDate)
+
             writeDateInput.value = selectedDate; // 숨겨진 입력 필드에 날짜 설정
             todoHeader.textContent = `${selectedDate} To-Do List`;
             todoInput.value = '';
@@ -180,6 +184,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     calendar.render();
+
+    // 폼 제출 시 입력값 확인
+    todoForm.addEventListener('submit', function(event) {
+        if (!todoInput.value.trim()) { // 입력값이 비어있거나 공백일 경우
+            alert('할 일을 입력해주세요.'); // 알림창 띄우기
+            event.preventDefault(); // 폼 제출 방지
+        }
+    });
 
     // To-Do 리스트를 가져오는 함수
     async function fetchTodoList() {
