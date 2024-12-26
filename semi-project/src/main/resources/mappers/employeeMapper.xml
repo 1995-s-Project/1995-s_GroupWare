@@ -38,109 +38,129 @@
             <result property="profile_image" column="profile_image"/>
         </association>
     </resultMap>
-
+    <!-- 게시판 전체조회 -->
     <select id="selectAll" resultMap="selectJoinBoard">
-        SELECT a.*,
-               b.emp_name
-        FROM tbl_board a
-        JOIN tbl_emp b ON a.emp_code = b.emp_code
-        WHERE announce_ok = 'Y'
-        ORDER BY board_code DESC
-        LIMIT #{offset}, #{size}
+        SELECT
+            a.*,
+            b.emp_name
+        FROM
+            tbl_board a
+        JOIN
+            tbl_emp b
+        ON
+            a.emp_code = b.emp_code
+        WHERE
+            announce_ok = 'Y'
+        ORDER BY
+            board_code DESC
+        LIMIT
+            #{offset}, #{size}
     </select>
-
+    <!-- 게시판검색 -->
     <select id="search" resultMap="selectJoinBoard">
-        SELECT a.*,
-               b.emp_name
-        FROM tbl_board a
-        JOIN tbl_emp b ON a.emp_code = b.emp_code
-        WHERE announce_ok = 'Y'
+        SELECT
+            a.*,
+            b.emp_name
+        FROM
+            tbl_board a
+        JOIN
+            tbl_emp b
+        ON
+            a.emp_code = b.emp_code
+        WHERE
+            announce_ok = 'Y'
+    <if test="query != null and query != ''">
+        AND
+            board_title LIKE CONCAT('%', #{query}, '%')
+    </if>
+        LIMIT
+            #{offset}, #{size}
+    </select>
+    <!-- 게시판페이지 행 -->
+    <select id="countAll" resultType="long">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_board
+        WHERE
+            announce_ok = 'Y'
+    </select>
+    <!-- 검색창 페이지행 -->
+    <select id="countSearch" resultType="long">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_board
+    <where>
+            announce_ok = 'Y'
         <if test="query != null and query != ''">
             AND board_title LIKE CONCAT('%', #{query}, '%')
         </if>
-        LIMIT #{offset}, #{size}
+    </where>
     </select>
-
-    <select id="countAll" resultType="long">
-        SELECT COUNT(*)
-        FROM tbl_board
-        WHERE announce_ok = 'Y'
-    </select>
-
-    <select id="countSearch" resultType="long">
-        SELECT COUNT(*)
-        FROM tbl_board
-        <where>
-            announce_ok = 'Y'
-            <if test="query != null and query != ''">
-                AND board_title LIKE CONCAT('%', #{query}, '%')
-            </if>
-        </where>
-    </select>
-
+    <!-- 게시판 작성 -->
     <insert id="boardRegist" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
         insert into tbl_board
-        (
-        board_code,
-        announce_ok,
-        board_date,
-        view_cnt,
-        board_title,
-        board_contents,
-        emp_code
-        )
+            (
+            board_code,
+            announce_ok,
+            board_date,
+            view_cnt,
+            board_title,
+            board_contents,
+            emp_code
+            )
         values
-        (
-        #{boardCode},
-        'Y',
-        #{boardDate},
-        #{viewCnt},
-        #{boardTitle},
-        #{boardContents},
-        #{empCode}
-        )
+            (
+            #{boardCode},
+            'Y',
+            #{boardDate},
+            #{viewCnt},
+            #{boardTitle},
+            #{boardContents},
+            #{empCode}
+            )
     </insert>
 
     <select id="title" resultMap="selectBoard">
         select
-        *
+            *
         from
-        tbl_board
+            tbl_board
         where
-        board_code = #{boardCode}
+            board_code = #{boardCode}
     </select>
 
     <delete id="delete" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
-        delete
-        from
-        tbl_board
+        delete from
+            tbl_board
         where
-        board_code = #{boardCode}
+            board_code = #{boardCode}
     </delete>
 
     <update id="update" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
         update
-        tbl_board
+            tbl_board
         set
-        board_title = #{boardTitle},
-        board_contents = #{boardContents}
+            board_title = #{boardTitle},
+            board_contents = #{boardContents}
         where
-        board_code = #{boardCode}
+            board_code = #{boardCode}
     </update>
 
     <update id="viewCount">
         update
-        tbl_board
+            tbl_board
         set
-        view_cnt = view_cnt + 1
+            view_cnt = view_cnt + 1
         where
-        board_code = #{boardCode}
+            board_code = #{boardCode}
     </update>
 
     <select id="select" resultMap="selectBoard">
         select
-        *
+            *
         from
-        tbl_board
+            tbl_board
     </select>
 </mapper>

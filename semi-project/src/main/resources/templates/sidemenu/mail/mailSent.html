@@ -107,7 +107,7 @@
               <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAll(this)">
             </th>
             <th>메일번호</th>
-            <th>보낸사람</th>
+            <th>받는사람</th>
             <th>제목</th>
             <th>날짜</th>
           </tr>
@@ -121,7 +121,7 @@
               <input type="checkbox" class="select-item" name="selectedMail" th:value="${mail.emailCode}" onchange="handleEmailSelection()">
             </td>
             <td th:text="${mail.emailCode}"></td>
-            <td th:text="${mail.senderId}"></td>
+            <td th:text="${mail.recipientName}"></td>
             <td>
               <a th:href="@{/mail/details/{emailCode}(emailCode=${mail.emailCode})}" th:class="styled-link" th:text="${mail.title}"></a>
             </td>
@@ -129,7 +129,28 @@
           </tr>
           </tbody>
         </table>
-
+        <form action="/mail/sent" method="get">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item" th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/mail/sent(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}"
+                   th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">Previous</a>
+              </li>
+              <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
+                  th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
+                <a class="page-link"
+                   th:href="@{/mail/sent(page=${pageNum}, size=${pageInfo.pageSize})}"
+                   th:text="${pageNum + 1}"></a>
+              </li>
+              <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/mail/sent(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}"
+                   th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </form>
         <!-- Modal: 쪽지 보내기 -->
         <div id="messageModal" class="modal">
           <div class="modal-content">
@@ -152,6 +173,7 @@
               <button type="submit" id="sendMessageBtn" class="submit">보내기</button>
               <input type="hidden" id="recipient_id" name="recipientId">
               <input type="hidden" id="recipient_name" name="recipientName">
+              <input type="hidden" id="senderId" name="senderId" value="${userInfo.code}">
             </form>
           </div>
         </div>
@@ -230,7 +252,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         emailCode: selectedMailIds.join(","),
-        folder: targetFolder
+        senderFolder: targetFolder
       })
     })
             .then(response => {
@@ -250,14 +272,17 @@
 
   let selectedRecipients = [];
 
+  // 직원 선택 및 해제 처리
   function selectEmployee(employee, checkbox) {
     const recipientField = document.getElementById('recipient');
     const recipientIdField = document.getElementById('recipient_id');
     const recipientNameField = document.getElementById('recipient_name');
 
+    // 직원 정보가 이미 선택되었는지 확인
     const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === employee.empCode);
 
     if (checkbox.checked) {
+      // 체크박스가 선택되면, 수신자 리스트에 추가
       if (recipientIndex === -1) {
         selectedRecipients.push({
           empCode: employee.empCode,
@@ -265,19 +290,23 @@
         });
       }
     } else {
+      // 체크박스가 해제되면, 수신자 리스트에서 제거
       if (recipientIndex !== -1) {
         selectedRecipients.splice(recipientIndex, 1);
       }
     }
 
+    // 선택된 직원들 갱신
     updateRecipientField();
   }
 
+  // 선택된 직원들을 갱신
   function updateRecipientField() {
     const recipientField = document.getElementById('recipient');
     const recipientIdField = document.getElementById('recipient_id');
     const recipientNameField = document.getElementById('recipient_name');
 
+    // 선택된 직원들이 있을 때만 처리
     if (selectedRecipients.length > 0) {
       recipientField.value = selectedRecipients.map(emp => emp.empName).join(', ');
       recipientIdField.value = selectedRecipients.map(emp => emp.empCode).join(',');
@@ -289,21 +318,6 @@
     }
   }
 
-  let loggedInUserCode = "";
-
-  fetch('/api/loggedInUser')
-          .then(response => response.text())
-          .then(data => {
-            loggedInUserCode = data;  // 로그인한 유저 코드 저장
-            console.log("Logged In User Code: ", loggedInUserCode);  // 확인용 로그
-
-            // 직원 목록을 가져오고 로그인한 유저를 제외하는 작업
-            fetchEmployees();
-          })
-          .catch(error => {
-            console.error('로그인한 유저 정보를 가져오는 중 오류 발생:', error);
-          });
-
   function fetchEmployees() {
     const departments = {
       '경영부': document.getElementById('managementDept'),
@@ -314,35 +328,38 @@
       '고객CS업무부': document.getElementById('customerDept')
     };
 
-    fetch('/api/employees')
+    fetch('/mail/employees')
             .then(response => response.json())
             .then(data => {
               data.forEach(employee => {
-                // 로그인한 유저는 제외
-                if (employee.empCode !== loggedInUserCode) {
-                  const empName = employee.empName || 'N/A';
-                  const jobName = employee.jobDTO ? employee.jobDTO.jobName : 'N/A';
-                  const deptName = employee.deptDTO ? employee.deptDTO.deptName : 'N/A';
+                const empName = employee.empName || 'N/A';
+                const jobName = employee.jobDTO ? employee.jobDTO.jobName : 'N/A';
+                const deptName = employee.deptDTO ? employee.deptDTO.deptName : 'N/A';
 
-                  if (departments[deptName]) {
-                    const li = document.createElement('li');
-                    const checkbox = document.createElement('input');
-                    checkbox.type = "checkbox";
-                    checkbox.classList.add("select-item");
-                    checkbox.value = employee.empCode;
-                    checkbox.setAttribute('data-name', empName);
-                    checkbox.onclick = () => selectEmployee(employee, checkbox);
+                if (departments[deptName]) {
+                  const li = document.createElement('li');
+                  // 체크박스를 동적으로 생성하여 li에 추가
+                  const checkbox = document.createElement('input');
+                  checkbox.type = "checkbox";
+                  checkbox.classList.add("select-item");
+                  checkbox.value = employee.empCode;
+                  checkbox.setAttribute('data-name', empName);
+                  checkbox.onclick = () => selectEmployee(employee, checkbox); // 클릭시 직원 선택 처리
 
-                    const nameText = document.createTextNode(`${empName} (${jobName})`);
-                    li.appendChild(checkbox);
-                    li.appendChild(nameText);
-                    li.onclick = () => selectEmployee(employee, checkbox);
+                  // 직원 이름과 직급을 li에 추가
+                  const nameText = document.createTextNode(`${empName} (${jobName})`);
 
-                    departments[deptName].appendChild(li);
-                  }
+                  // 체크박스를 먼저 추가하고, 그 다음 텍스트를 추가합니다.
+                  li.appendChild(checkbox);  // 체크박스를 먼저 추가
+                  li.appendChild(nameText);  // 그 후 텍스트 추가
+
+                  li.onclick = () => selectEmployee(employee, checkbox);  // 클릭시 직원 선택 처리
+
+                  departments[deptName].appendChild(li);
                 }
               });
 
+              // 선택된 직원들을 표시
               restoreSelectedEmployees();
             })
             .catch(error => {
@@ -350,26 +367,30 @@
             });
   }
 
+  // 선택된 직원들을 갱신
   function restoreSelectedEmployees() {
     const checkboxes = document.querySelectorAll('.select-item');
     checkboxes.forEach(checkbox => {
       const empCode = checkbox.value;
+      // 선택된 직원의 체크박스를 체크 상태로 유지
       const isSelected = selectedRecipients.some(emp => emp.empCode === empCode);
       checkbox.checked = isSelected;
     });
   }
 
   function submitSelections() {
-    updateRecipientField();
+    updateRecipientField();  // 선택된 직원들 갱신
 
     const recipientIdsField = document.getElementById('recipient_id');
     const recipientNameField = document.getElementById('recipient_name');
 
+    // 선택된 직원이 없으면 경고 메시지 표시
     if (!recipientIdsField || !recipientIdsField.value || !recipientNameField || !recipientNameField.value) {
       alert("받는 사람을 선택해 주세요!");
       return;
     }
 
+    // 선택된 직원이 있으면, 추가 작업
     const addressBookModal = document.getElementById('addressBookModal');
     if (addressBookModal) {
       addressBookModal.style.display = 'none';
@@ -392,8 +413,8 @@
 
   function toggleSelectAll(source, isAddressBook = false) {
     const checkboxes = isAddressBook
-            ? document.querySelectorAll('.employee-list .select-item')
-            : document.querySelectorAll('.post-list .select-item');
+            ? document.querySelectorAll('.employee-list .select-item') // 주소록에서의 선택
+            : document.querySelectorAll('.post-list .select-item');  // 메일 목록에서의 선택
 
     checkboxes.forEach(function(checkbox) {
       checkbox.checked = source.checked;
@@ -403,6 +424,7 @@
       const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === empCode);
 
       if (checkbox.checked) {
+        // 체크박스가 선택되면 수신자 리스트에 추가
         if (recipientIndex === -1) {
           selectedRecipients.push({
             empCode: empCode,
@@ -410,16 +432,22 @@
           });
         }
       } else {
+        // 체크박스가 해제되면 수신자 리스트에서 제거
         if (recipientIndex !== -1) {
           selectedRecipients.splice(recipientIndex, 1);
         }
       }
     });
 
+    // 선택된 직원들 갱신
     updateRecipientField();
   }
 
   window.onload = function() {
+    // 서버에서 가져온 사용자 이름을 senderName 필드에 설정
+    const senderId = '현재 로그인한 사 용자 코드'; // 실제로 서버에서 받아온 값을 사용
+    document.getElementById('senderId').value = senderId;
+
     fetchEmployees();
   };
 
