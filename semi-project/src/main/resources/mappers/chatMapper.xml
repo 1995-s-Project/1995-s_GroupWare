@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.semiproject.messenger.model.dao.ChatMapper">
+    <resultMap id="chatResultMap" type="com.ohgiraffers.semiproject.messenger.model.dto.ChatDTO">
+        <id property="id" column="id"/>
+        <result property="senderCode" column="sender_code"/>
+        <result property="receiverCode" column="receiver_code"/>
+        <result property="message" column="message"/>
+        <result property="timestamp" column="timestamp"/>
+
+    </resultMap>
+
+    <insert id="save">
+        insert into chats
+        (sender_code, receiver_code, message, timestamp)
+        values
+        (#{senderCode}, #{chat.receiverCode}, #{chat.message}, #{chat.timestamp} )
+    </insert>
+
+
+    <select id="findChatHistory" resultMap="chatResultMap">
+        SELECT id, sender_code AS senderCode, receiver_code AS receiverCode, message, timestamp
+        FROM chats
+        WHERE (sender_code = #{senderCode} AND receiver_code = #{receiverCode})
+        OR (sender_code = #{receiverCode} AND receiver_code = #{senderCode})
+        ORDER BY timestamp ASC
+    </select>
+
+</mapper>
