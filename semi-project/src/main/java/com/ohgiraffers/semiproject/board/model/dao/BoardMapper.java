@@ -4,6 +4,8 @@ import com.ohgiraffers.semiproject.board.model.dto.BoardDTO;
 import com.ohgiraffers.semiproject.board.model.dto.BoardEmpDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -30,5 +32,4 @@ public interface BoardMapper {
     void viewCount(Integer boardCode);
 
     List<BoardDTO> select();
-
 }

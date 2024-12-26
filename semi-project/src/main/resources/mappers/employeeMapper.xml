@@ -139,8 +139,10 @@
 
     <select id="select" resultMap="selectBoard">
         select
-        *
+            *
         from
-        tbl_board
+            tbl_board
+        order by
+            board_code desc
     </select>
 </mapper>

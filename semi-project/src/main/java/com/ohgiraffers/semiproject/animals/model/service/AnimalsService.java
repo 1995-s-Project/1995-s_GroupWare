@@ -123,5 +123,8 @@ public class AnimalsService {
         return animalsMapper.getUserPosts(code);
     }
 
-
+    //품종 수 차트js 에 적용하기 위해 데이터 가져오기
+    public List<AnimalDTO> getBreed() {
+        return animalsMapper.getBreed();
+    }
 }
