@@ -36,6 +36,16 @@ public class MyPageService {
     }
 
 
+    public boolean changeProfileImage(String fileName, String empCode) {
 
+        int updateProfile = employeeMapper.changeProfileImage(fileName, empCode);
 
+        return updateProfile > 0;
+    }
+
+    public boolean deleteProfileImage(String empCode) {
+        int deleteProfile = employeeMapper.deleteProfileImage(empCode);
+
+        return deleteProfile > 0;
+    }
 }

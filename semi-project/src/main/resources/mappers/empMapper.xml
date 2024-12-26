@@ -211,4 +211,16 @@
         where
         a.emp_code = #{empCode}
     </select>
+<!-- 마이페이지 - 회원정보 이미지 수정 -->
+    <update id="changeProfileImage">
+        UPDATE tbl_emp
+        SET profile_image = #{fileName}
+        WHERE emp_code = #{empCode}
+    </update>
+
+    <delete id="deleteProfileImage">
+        UPDATE tbl_emp
+        SET profile_image = null
+        WHERE emp_code = #{empCode}
+    </delete>
 </mapper>
