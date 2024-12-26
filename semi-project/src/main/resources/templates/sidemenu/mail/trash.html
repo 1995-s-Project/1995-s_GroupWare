@@ -104,7 +104,7 @@
                     <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAll1(this)">
+                            <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAll(this)">
                         </th>
                         <th>메일번호</th>
                         <th>보낸사람</th>
@@ -129,6 +129,28 @@
                     </tr>
                     </tbody>
                 </table>
+                <form action="/mail/trash" method="get">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/mail/trash(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}"
+                                   th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
+                                th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
+                                <a class="page-link"
+                                   th:href="@{/mail/trash(page=${pageNum}, size=${pageInfo.pageSize})}"
+                                   th:text="${pageNum + 1}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/mail/trash(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}"
+                                   th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </form>
                 <div id="messageModal" class="modal">
                     <div class="modal-content">
                         <form class=modal2-form id="messageForm" action="/sidemenu/mail/regist" method="post">
@@ -212,38 +234,6 @@
         document.getElementById('addressBookModal').style.display = 'none';
     });
 
-    function toggleSelectAll(source, isAddressBook = false) {
-        const checkboxes = isAddressBook
-            ? document.querySelectorAll('.employee-list .select-item') // 주소록에서의 선택
-            : document.querySelectorAll('.post-list .select-item');  // 메일 목록에서의 선택
-
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = source.checked;
-            const empCode = checkbox.value;
-            const empName = checkbox.getAttribute('data-name');
-
-            const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === empCode);
-
-            if (checkbox.checked) {
-                // 체크박스가 선택되면 수신자 리스트에 추가
-                if (recipientIndex === -1) {
-                    selectedRecipients.push({
-                        empCode: empCode,
-                        empName: empName
-                    });
-                }
-            } else {
-                // 체크박스가 해제되면 수신자 리스트에서 제거
-                if (recipientIndex !== -1) {
-                    selectedRecipients.splice(recipientIndex, 1);
-                }
-            }
-        });
-
-        // 선택된 직원들 갱신
-        updateRecipientField();
-    }
-
     let selectedRecipients = [];
 
     // 직원 선택 및 해제 처리
@@ -251,27 +241,22 @@
         const recipientField = document.getElementById('recipient');
         const recipientIdField = document.getElementById('recipient_id');
         const recipientNameField = document.getElementById('recipient_name');
-
-        // 직원 정보가 이미 선택되었는지 확인
-        const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === employee.empCode);
-
         if (checkbox.checked) {
-            // 체크박스가 선택되면, 수신자 리스트에 추가
-            if (recipientIndex === -1) {
-                selectedRecipients.push({
-                    empCode: employee.empCode,
-                    empName: employee.empName
-                });
-            }
+            selectedRecipients.push(employee);
+            recipientField.value = employee.name;
+            recipientIdField.value = employee.id;
+            recipientNameField.value = employee.name;
         } else {
-            // 체크박스가 해제되면, 수신자 리스트에서 제거
-            if (recipientIndex !== -1) {
-                selectedRecipients.splice(recipientIndex, 1);
+            const index = selectedRecipients.findIndex(item => item.id === employee.id);
+            if (index !== -1) {
+                selectedRecipients.splice(index, 1);
+            }
+            if (selectedRecipients.length === 0) {
+                recipientField.value = '';
+                recipientIdField.value = '';
+                recipientNameField.value = '';
             }
         }
-
-        // 선택된 직원들 갱신
-        updateRecipientField();
     }
 
     // 선택된 직원들을 갱신
@@ -302,7 +287,7 @@
             '고객CS업무부': document.getElementById('customerDept')
         };
 
-        fetch('/api/employees')
+        fetch('/mail/employees')
             .then(response => response.json())
             .then(data => {
                 data.forEach(employee => {
@@ -371,7 +356,6 @@
         }
     }
 
-    // 직원 검색 함수
     function filterEmployees() {
         const searchInput = document.getElementById('searchInput2').value.toLowerCase();
         const employeeListItems = document.querySelectorAll('#addressBookContainer2 .employee-list li');
@@ -390,45 +374,38 @@
         fetchEmployees();
     };
 
+    function toggleSelectAll(source, isAddressBook = false) {
+        const checkboxes = isAddressBook
+            ? document.querySelectorAll('.employee-list .select-item') // 주소록에서의 선택
+            : document.querySelectorAll('.post-list .select-item');  // 메일 목록에서의 선택
 
-    function getSelectedMailIds() {
-        const selected = [];
-        document.querySelectorAll('input.select-item:checked').forEach(function (checkbox) {
-            selected.push(checkbox.value);
-        });
-        return selected;
-    }
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = source.checked;
+            const empCode = checkbox.value;
+            const empName = checkbox.getAttribute('data-name');
 
-    function moveMails(targetFolder) {
-        const selectedMailIds = getSelectedMailIds();
+            const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === empCode);
 
-        if (selectedMailIds.length === 0) {
-            alert("이동할 메일을 선택하세요.");
-            return;
-        }
-
-        fetch('/mail/move', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                emailCode: selectedMailIds.join(","),
-                folder: targetFolder
-            })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("메일 이동 실패");
+            if (checkbox.checked) {
+                // 체크박스가 선택되면 수신자 리스트에 추가
+                if (recipientIndex === -1) {
+                    selectedRecipients.push({
+                        empCode: empCode,
+                        empName: empName
+                    });
                 }
-                return response.text();
-            })
-            .then(data => {
-                alert(data);
-                location.reload();
-            })
-            .catch(error => {
-                console.error("메일 이동 중 오류 발생:", error);
-            });
+            } else {
+                // 체크박스가 해제되면 수신자 리스트에서 제거
+                if (recipientIndex !== -1) {
+                    selectedRecipients.splice(recipientIndex, 1);
+                }
+            }
+        });
+
+        // 선택된 직원들 갱신
+        updateRecipientField();
     }
+
 
     function deleteMails() {
         const selectedMails = [];
@@ -486,14 +463,6 @@
         selectAllCheckbox.indeterminate = (checkedCheckboxes > 0 && checkedCheckboxes < totalCheckboxes);
     }
 
-    function toggleSelectAll1(selectAllCheckbox) {
-        // 전체 선택 체크박스가 선택되었으면 모든 체크박스를 선택, 아니면 해제
-        const checkboxes = document.querySelectorAll('.select-item');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = selectAllCheckbox.checked;
-        });
-    }
-
     function updateTrashList(trashList) {
         const trashTable = document.querySelector('.post-list tbody');  // 휴지통 테이블의 tbody를 조회
         trashTable.innerHTML = '';  // 기존 테이블을 비운 후
@@ -503,13 +472,19 @@
         } else {
             trashList.forEach(mail => {
                 const row = document.createElement('tr');
+
+                // 날짜 포맷을 명시적으로 설정
+                const sendDate = new Date(mail.sendDate);
+                const formattedDate = sendDate instanceof Date && !isNaN(sendDate) ? sendDate.toLocaleDateString('en-GB') : 'Invalid Date';
+
                 row.innerHTML = `
                 <td><input type="checkbox" class="select-item" value="${mail.emailCode}" onchange="handleEmailSelection()"></td>
                 <td>${mail.emailCode}</td>  <!-- 이메일 코드 -->
                 <td>${mail.senderId}</td>  <!-- 발신자 ID -->
                 <td><a href="/mail/details/${mail.emailCode}" class="styled-link">${mail.title}</a></td>  <!-- 메일 제목 (링크) -->
-                <td>${new Date(mail.sendDate).toLocaleDateString()}</td>  <!-- 보내는 날짜 포맷 -->
+                <td>${formattedDate}</td>  <!-- 보내는 날짜 포맷 -->
             `;
+
                 trashTable.appendChild(row);
             });
         }

@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>메신저(채팅)</title>
-    <link rel="stylesheet" href="/main/css/main-style.css"> <!-- 메인 스타일 연결 -->
-    <script src="/main/js/main.js"></script> <!-- 메인 자바스크립트 연결 -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_arrow_down" />
-    <link rel="stylesheet" href="/sidemenu/messenger/css/messenger-style.css">
+    <link rel="stylesheet" href="/main/css/main-style.css">
+    <link rel="stylesheet" href="/sidemenu/messenger/css/messenger.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/sidemenu/messenger/js/messenger.js"></script>
 </head>
-<body>
+<body onload="connect()">
 <header>
     <div class="side-menu-bar">
         <ul>
@@ -52,6 +53,18 @@
 </header>
 <div class="change-screen-messenger">
     <div id="change-screen-content">메신저 페이지</div>
+    <div class="chat-container">
+        <div class="users">
+            <h3>사용자 목록</h3>
+            <ul id="userList"></ul>
+        </div>
+        <div class="chat-box">
+            <h3 id="chatWith">채팅 상대: 없음</h3>
+            <div id="chatHistory" class="chat-history"></div>
+            <input type="text" id="messageInput" placeholder="메시지를 입력하세요..." />
+            <button onclick="sendMessage()">전송</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

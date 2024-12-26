@@ -81,14 +81,35 @@
         <div class="content-container">
             <h3>기본 설정 > 회원정보 수정</h3>
             <hr class="main-line">
-            <h3>기본정보</h3>
-            <form>
+            <div class="table_container">
+                <h3>기본정보</h3>
+
                 <table class="info-table">
                     <tr>
                         <th>프로필 사진</th>
                         <td class="image">
-                            <img th:src="${info.profile_image == null || info.profile_image.isEmpty() ? '/img/default.png' : (info.profile_image.startsWith('img/profile/') ? '/' + info.profile_image : '/img/profile/' + info.profile_image)}"
-                                 alt="profile Image" />
+                            <div class="image-container">
+
+                                <img th:src="${info.profile_image == null || info.profile_image.isEmpty() ? '/img/profile/default.jpg' : (info.profile_image.startsWith('img/profile/') ? '/' + info.profile_image : '/img/profile/' + info.profile_image)}"
+                                     alt="profile Image" id="profile_image"/>
+                                <div class="image-info-actions">
+                                    <form action="/updateProfileImage" method="post">
+                                        <div class="image-info-actions">
+                                            <p>* 프로필 사진을 등록해주세요.</p>
+                                            <p>* 이미지 파일 최대 크기 2MB 미만</p>
+
+                                            <input class="file-input" type="file" id="fileInput" name="profile_image" accept="image/*" onchange="updateFileName(event)">
+                                            <input class="file-input" type="hidden" id="fileName" name="fileName" />
+                                        </div>
+
+                                        <div class="image-actions">
+                                            <input type="submit" class="btn btn-register" value="수정">
+                                            <a href="/deleteProfileImage" class="btn btn-cancel">삭제</a>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -104,38 +125,55 @@
                         <td th:text="${#dates.format(info.hireDate, 'yyyy-MM-dd')}"></td>
                     </tr>
                     <tr>
-                        <th>주소</th>
-                        <td th:text="${info.empAddress}"></td>
+                        <th>이메일</th>
+                        <td>
+                            <span th:text="${info.empEmail}"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <th>이메일</th>
-                        <td th:text="${info.empEmail}"></td>
+                        <th>주소</th>
+                        <td>
+                            <span th:text="${info.empAddress}"></span>
+                            <a href="#" class="btn btn-change">주소변경</a>
+                        </td>
                     </tr>
                     <tr>
                         <th>휴대전화번호</th>
-                        <td th:text="${info.empPhone}"></td>
+                        <td>
+                            <span th:text="${info.empPhone}"></span>
+                            <a href="#" class="btn btn-change">전화번호변경</a>
+                        </td>
                     </tr>
                 </table>
 
-                <h3>부서정보</h3>
+                    <h3>부서정보</h3>
 
-                <table class="dept-job-table">
-                    <tr>
-                        <th>부서</th>
-                        <td th:text="${info.deptDTO.deptName}"></td>
-                    </tr>
-                    <tr>
-                        <th>직급</th>
-                        <td th:text="${info.jobDTO.jobName}"></td>
-                    </tr>
-                </table>
-            </form>
+                    <table class="dept-job-table">
+                        <tr>
+                            <th>부서</th>
+                            <td th:text="${info.deptDTO.deptName}"></td>
+                        </tr>
+                        <tr>
+                            <th>직급</th>
+                            <td th:text="${info.jobDTO.jobName}"></td>
+                        </tr>
+                    </table>
+
+            </div>
         </div>
-
     </div>
 </div>
 
 <script>
+
+
+    // 파일이름 보내기
+    function updateFileName(event) {
+        const fileInput = event.target;  // file input 요소
+        const fileName = fileInput.files[0] ? fileInput.files[0].name : '';  // 선택된 파일 이름
+        document.getElementById('fileName').value = fileName;  // hidden 필드에 파일 이름 설정
+    }
+
     // 드롭다운 메뉴를 열고 닫는 함수
     function toggleDropdown(titleElement) {
         const dropdown = titleElement.closest('.dropdown');
@@ -155,7 +193,7 @@
 
         // 페이지 URL에 맞는 메뉴 항목에 active 클래스 추가
         const links = document.querySelectorAll('.dropdown-menu li a');
-        links.forEach(function(link) {
+        links.forEach(function (link) {
             if (link.href === window.location.href) {
                 link.classList.add('active');
             } else {
@@ -168,7 +206,7 @@
     function saveDropdownState() {
         const openMenus = [];
         const menus = document.querySelectorAll('.dropdown-menu');
-        menus.forEach(function(menu, index) {
+        menus.forEach(function (menu, index) {
             if (menu.classList.contains('open')) {
                 openMenus.push(index);
             }
@@ -183,12 +221,18 @@
         const openMenus = JSON.parse(localStorage.getItem('openMenus') || '[]');
 
         const menus = document.querySelectorAll('.dropdown-menu');
-        openMenus.forEach(function(index) {
+        openMenus.forEach(function (index) {
             if (menus[index]) {
                 menus[index].classList.add('open');
             }
         });
     }
 </script>
+
+<!--<script th:if="${alertMessage}" th:inline="javascript">-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+<!--        alert([[${alertMessage}]]);-->
+<!--    });-->
+<!--</script>-->
 </body>
 </html>

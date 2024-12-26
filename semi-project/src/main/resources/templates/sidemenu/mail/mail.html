@@ -123,7 +123,7 @@
                             <input type="checkbox" class="select-item" name="selectedMail" th:value="${mail.emailCode}" onchange="handleEmailSelection()">
                         </td>
                         <td th:text="${mail.emailCode}"></td>
-                        <td th:text="${mail.senderId}"></td>
+                        <td th:text="${mail.senderName}"></td>
                         <td>
                             <a th:href="@{/mail/details/{emailCode}(emailCode=${mail.emailCode})}" th:class="styled-link" th:text="${mail.title}"></a>
                         </td>
@@ -131,6 +131,28 @@
                     </tr>
                     </tbody>
                 </table>
+                <form action="/sidemenu/mail" method="get">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/sidemenu/mail(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}"
+                                   th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
+                                th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
+                                <a class="page-link"
+                                   th:href="@{/sidemenu/mail(page=${pageNum}, size=${pageInfo.pageSize})}"
+                                   th:text="${pageNum + 1}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/sidemenu/mail(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}"
+                                   th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </form>
                 <div id="messageModal" class="modal">
                     <div class="modal-content">
                         <form class=modal2-form id="messageForm" action="/sidemenu/mail/regist" method="post">
@@ -152,6 +174,7 @@
                             <button type="submit" id="sendMessageBtn" class="submit">보내기</button>
                             <input type="hidden" id="recipient_id" name="recipientId">
                             <input type="hidden" id="recipient_name" name="recipientName">
+                            <input  type="hidden" id="senderId" name="senderId" value="${userInfo.code}">
                         </form>
                     </div>
                 </div>
@@ -159,7 +182,7 @@
                     <div class="modal-content2">
                         <span class="close-btn2" id="closeModalBtn2">&times;</span>
                         <h2>주소록</h2>
-                        <div class="search-bar">
+                         <div class="search-bar">
                             <input class="textbox2" type="text" id="searchInput2" placeholder="직원 검색..." oninput="filterEmployees()">
                         </div>
                         <div id="addressBookContainer2">
@@ -233,7 +256,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 emailCode: selectedMailIds.join(","),
-                folder: targetFolder
+                recipientFolder: targetFolder
             })
         })
             .then(response => {
@@ -425,9 +448,12 @@
     }
 
     window.onload = function() {
+        // 서버에서 가져온 사용자 이름을 senderName 필드에 설정
+        const senderId = '현재 로그인한 사 용자 코드'; // 실제로 서버에서 받아온 값을 사용
+        document.getElementById('senderId').value = senderId;
+
         fetchEmployees();
     };
-
 
     function getSelectedMailIds() {
         const selected = [];

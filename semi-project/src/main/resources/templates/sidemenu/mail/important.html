@@ -130,6 +130,29 @@
                     </tr>
                     </tbody>
                 </table>
+                <form action="/mail/important" method="get">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <!-- Previous Button -->
+                            <li class="page-item" th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/mail/important(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}"
+                                   th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
+                                th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
+                                <a class="page-link"
+                                   th:href="@{/mail/important(page=${pageNum}, size=${pageInfo.pageSize})}"
+                                   th:text="${pageNum + 1}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/mail/important(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}"
+                                   th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </form>
                 <div id="messageModal" class="modal">
                     <div class="modal-content">
                         <form class=modal2-form id="messageForm" action="/sidemenu/mail/regist" method="post">

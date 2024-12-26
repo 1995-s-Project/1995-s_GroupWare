@@ -15,9 +15,9 @@ public class MailService {
         this.mailMapper = mailMapper;
     }
 
-    public List<MailDTO> mailAllSelect(String code) {
-
-        return mailMapper.mailAllSelect(code);
+    public List<MailDTO> mailAllSelect(String code, int offset, int size) {
+        System.out.println("Service - Mail List Request: Code=" + code + ", Offset=" + offset + ", Size=" + size);
+        return mailMapper.mailAllSelect(code, offset, size);
     }
 
     public MailDTO mailDetail(Integer emailCode) {
@@ -25,24 +25,24 @@ public class MailService {
         return mailMapper.mailDetail(emailCode);
     }
 
-    public List<MailDTO> mailSentSelect(String code) {
+    public List<MailDTO> mailSentSelect(String code, int offset, int size) {
 
-        return mailMapper.mailSentSelect(code);
+        return mailMapper.mailSentSelect(code, offset, size);
     }
 
-    public List<MailDTO> mailFolderImportant(String code) {
+    public List<MailDTO> mailFolderImportant(String code, int offset, int size) {
 
-        return mailMapper.mailFolderImportant(code);
+        return mailMapper.mailFolderImportant(code, offset, size);
     }
 
-    public List<MailDTO> mailFolderTrash(String code) {
+    public List<MailDTO> mailFolderTrash(String code, int offset, int size) {
 
-        return mailMapper.mailFolderTrash(code);
+        return mailMapper.mailFolderTrash(code, offset, size);
     }
 
-    public List<MailDTO> mailFolderArchived(String code) {
+    public List<MailDTO> mailFolderArchived(String code, int offset, int size) {
 
-        return mailMapper.mailFolderArchived(code);
+        return mailMapper.mailFolderArchived(code, offset, size);
     }
 
     @Transactional
@@ -67,19 +67,26 @@ public class MailService {
 
     @Transactional
     public void inboxRegistMail(MailDTO mailDTO, List<String> recipientId, List<String> recipientName) {
+
         for (int i = 0; i < recipientId.size(); i++) {
-            mailDTO.setRecipientId(recipientId.get(i));  // 수신자 ID
-            mailDTO.setRecipientName(recipientName.get(i));  // 수신자 이름
-            mailMapper.inboxRegistMail(mailDTO); // 메일을 개별적으로 저장
+            mailDTO.setRecipientId(recipientId.get(i));
+
+            mailDTO.setRecipientName(recipientName.get(i));
+
+            mailMapper.inboxRegistMail(mailDTO);
         }
     }
 
     @Transactional
     public void sentRegistMail(MailDTO mailDTO, List<String> recipientId, List<String> recipientName) {
+
         for (int i = 0; i < recipientId.size(); i++) {
-            mailDTO.setRecipientId(recipientId.get(i));  // 수신자 ID
-            mailDTO.setRecipientName(recipientName.get(i));  // 수신자 이름
-            mailMapper.sentRegistMail(mailDTO); // 메일을 개별적으로 저장
+
+            mailDTO.setRecipientId(recipientId.get(i));
+
+            mailDTO.setRecipientName(recipientName.get(i));
+
+            mailMapper.sentRegistMail(mailDTO);
         }
     }
 
@@ -110,6 +117,29 @@ public class MailService {
         }
 
         mailMapper.sentDeleteMails(mailIds, userCode);
+    }
+
+    public long inboxTotalProducts(String code) {
+        System.out.println("Service - Inbox Total Products Request: Code=" + code);
+        long result = mailMapper.inboxTotalProducts(code);
+        System.out.println("Total Products: " + result);  // 쿼리 결과 출력
+        return result;
+    }
+
+    public long sentTotalProducts(String code) {
+        return mailMapper.sentTotalProducts(code);
+    }
+
+    public long trashTotalProducts() {
+        return mailMapper.trashTotalProducts();
+    }
+
+    public long importantTotalProducts() {
+        return mailMapper.importantTotalProducts();
+    }
+
+    public long archivedTotalProducts() {
+        return mailMapper.trashTotalProducts();
     }
 }
 

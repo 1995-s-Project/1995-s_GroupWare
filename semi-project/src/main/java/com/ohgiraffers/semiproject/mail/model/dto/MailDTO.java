@@ -13,18 +13,16 @@ public class MailDTO {
 
     private String emailCode;
     private String title;
-    private String file;
     private String content;
     private Date sendDate;
     private Date deleteDate;
-    private String receptionType;
-    private String receptionStatus;
-    private String senderId;
     private String recipientId;
     private String recipientName;
+    private String recipientFolder;
+    private String senderId;
+    private String senderName;
+    private String senderFolder;
     private EmployeeDTO employeeDTO;
     private JobDTO jobDTO;
     private DeptDTO deptDTO;
-    private String recipientFolder;
-    private String senderFolder;
 }
