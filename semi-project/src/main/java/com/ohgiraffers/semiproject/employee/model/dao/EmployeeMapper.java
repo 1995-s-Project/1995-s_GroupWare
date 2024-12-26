@@ -38,4 +38,8 @@ public interface EmployeeMapper {
     int updatePasswordByCode(String encryptedPassword, String code);
     // 마이페이지 - 회원정보 수정
     EmployeeJoinListDTO empInfoSelect(String empCode);
+    // 마이페이지 - 회원정보 이미지 수정
+    int changeProfileImage(String fileName, String empCode);
+    // 마이페이지 - 회원정보 이미지 삭제
+    int deleteProfileImage(String empCode);
 }

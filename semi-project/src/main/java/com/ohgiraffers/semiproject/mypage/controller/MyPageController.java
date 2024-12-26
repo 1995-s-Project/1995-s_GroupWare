@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,10 +43,33 @@ public class MyPageController {
         String empCode = userInfo.getCode();
 
         EmployeeJoinListDTO info = employeeService.empInfoSelect(empCode);
-        System.out.println("info = " + info);
+
         model.addAttribute("info", info);
 
         return "sidemenu/mypage/mypage";
+    }
+
+    @PostMapping("/updateProfileImage")
+    public String updateProfileImage(@RequestParam("fileName") String fileName, RedirectAttributes redirectAttributes){
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String empCode = userInfo.getCode();
+
+        boolean updateProfile = myPageService.changeProfileImage(fileName, empCode);
+
+        redirectAttributes.addFlashAttribute("alertMessage", updateProfile ? "프로필 사진이 성공적으로 수정되었습니다." : "프로필 사진 수정에 실패했습니다. 다시 시도해주세요.");
+
+        return "redirect:/sidemenu/mypage";
+    }
+
+    @GetMapping("deleteProfileImage")
+    public String deleteProfileImage(RedirectAttributes redirectAttributes){
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String empCode = userInfo.getCode();
+
+        boolean deleteProfile = myPageService.deleteProfileImage(empCode);
+        redirectAttributes.addFlashAttribute("deleteProfile", deleteProfile);
+
+        return "redirect:/sidemenu/mypage";
     }
 
     // 마이페이지 - 비밀번호 변경
