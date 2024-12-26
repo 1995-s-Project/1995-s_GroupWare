@@ -64,8 +64,8 @@ function updateCounts(data) {
     document.getElementById('attendance-request-count').textContent = scheduleCount; // 근태 요청 갯수
     document.getElementById('annual-leave-count').textContent = annualPaymentCount; // 연차 결재 갯수
     document.getElementById('vacation-count').textContent = vacationPaymentCount; // 휴가 결재 갯수
-    document.getElementById('event-count').textContent = 0; // 경조사 결재 (예시로 0으로 설정)
-    document.getElementById('extension-count').textContent = 0; // 연장 결재 (예시로 0으로 설정)
+    document.getElementById('event-count').textContent = cacPaymentCount; // 경조사 결재 (예시로 0으로 설정)
+    document.getElementById('extension-count').textContent = overTimeCount; // 연장 결재 (예시로 0으로 설정)
     document.getElementById('retirement-count').textContent = retirementCount; // 퇴직원 결재 갯수
 }
 
