@@ -4,6 +4,7 @@ import com.ohgiraffers.semiproject.employee.model.dao.EmployeeMapper;
 import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTOJOB;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO;
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeScheduleInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,4 +76,9 @@ public class EmployeeService {
     public List<EmployeeJoinListDTO> mailAllSelect(String code) {return employeeMapper.mailAllSelect(code);}
     // 마이페이지 - 회원정보 수정
     public EmployeeJoinListDTO empInfoSelect(String empCode) {return employeeMapper.empInfoSelect(empCode);}
+
+    // 직원별 사번코드, 부서명, 직급명, 당일 출근시간, 퇴근시간 조회해오기
+    public List<EmployeeScheduleInfoDTO> getEmployeeList() {
+        return  employeeMapper.getEmployeeList();
+    }
 }

@@ -162,5 +162,7 @@
             *
         from
             tbl_board
+        order by
+            board_code desc
     </select>
 </mapper>

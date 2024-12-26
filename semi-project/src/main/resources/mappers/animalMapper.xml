@@ -354,4 +354,20 @@
         Where
         emp_code = #{code}
     </select>
+
+    <!-- 보유중인 품종수 가져오기 -->
+    <select id="getBreed" resultMap="AllListResultMap">
+        SELECT
+        *
+        FROM
+        TBL_ANIMAL A
+        JOIN
+        TBL_EMP E ON A.EMP_CODE = E.EMP_CODE
+        JOIN
+        TBL_ANI_BREED B ON A.BREED_CODE = B.BREED_CODE
+        JOIN
+        TBL_ANI_TYPE T ON A.TYPE_CODE = T.TYPE_CODE
+        WHERE
+        A.animal_status IN ('공고중', '보호중', '파양/보호중')
+    </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.ohgiraffers.semiproject.employee.model.dao;
 import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeDTOJOB;
 import com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO;
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeScheduleInfoDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -38,6 +39,9 @@ public interface EmployeeMapper {
     int updatePasswordByCode(String encryptedPassword, String code);
     // 마이페이지 - 회원정보 수정
     EmployeeJoinListDTO empInfoSelect(String empCode);
+
+    // 직원별 사번코드, 부서명, 직급명, 당일 출근시간, 퇴근시간 조회해오기
+    List<EmployeeScheduleInfoDTO> getEmployeeList();
     // 마이페이지 - 회원정보 이미지 수정
     int changeProfileImage(String fileName, String empCode);
     // 마이페이지 - 회원정보 이미지 삭제
