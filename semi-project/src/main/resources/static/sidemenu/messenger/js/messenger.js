@@ -44,6 +44,12 @@ function connect() {
 // 페이지 로드 시 사용자 목록 로드
 window.onload = function() {
     loadUsers(); // 페이지 로드 시 사용자 목록 로드
+    document.getElementById('messageInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 엔터 동작 방지
+            sendMessage(); // 메시지 전송 함수 호출
+        }
+    });
 };
 
 // 사용자 목록 로드
@@ -96,13 +102,10 @@ function displayUsers(users) {
 
         // 출근 및 퇴근 시간 확인
         if (user.scheduleDTO.workEndTime) {
-            // 퇴근 시간이 있는 경우
             statusIndicator.innerHTML = `<span class="red-circle"></span> 퇴근`; // 빨간색 동그라미
         } else if (user.scheduleDTO.workStartTime && user.scheduleDTO.workStartTime.startsWith(today)) {
-            // 출근 시간이 오늘인 경우
             statusIndicator.innerHTML = `<span class="green-circle"></span> 업무중`;
         } else {
-            // 출근 전 상태
             statusIndicator.innerHTML = `<span class="gray-circle"></span> 출근 전`; // 출근 전 상태
         }
 
@@ -120,7 +123,6 @@ function displayUsers(users) {
     });
 }
 
-
 // 필터링 및 검색 기능
 function filterUsers() {
     var department = document.getElementById('departmentFilter').value;
@@ -137,18 +139,7 @@ function filterUsers() {
     displayUsers(filteredUsers);
 }
 
-// 실시간 필터링을 위한 이벤트 리스너 추가
-document.getElementById('nameSearch').addEventListener('input', filterUsers);
-document.getElementById('departmentFilter').addEventListener('change', filterUsers);
-document.getElementById('positionFilter').addEventListener('change', filterUsers);
-
-// 페이지 로드 시 사용자 목록 로드
-window.onload = function() {
-    loadUsers(); // 페이지 로드 시 사용자 목록 로드
-};
-
-
-// 사용자 선택 시 처리
+// 사용자 선택 시 처리 여기 수정좀 더해야됨
 function selectUser(empCode) {
     console.log('Before selecting user, currentUser:', currentUser); // currentUser 값 확인
     selectedUser = empCode; // 선택된 사용자의 사원 코드 저장
@@ -201,7 +192,6 @@ function sendMessage() {
         console.error("Message or selected user is missing");
     }
 }
-
 // 채팅 히스토리 로드
 function loadChatHistory() {
     var chatHistory = document.getElementById('chatHistory');
@@ -216,6 +206,29 @@ function loadChatHistory() {
             });
     }
 }
+
+
+// 페이지 로드 시 실행되는 기존 코드에 추가
+window.onload = function () {
+    loadUsers();
+
+    const messageInput = document.getElementById('messageInput');
+    messageInput.addEventListener('keydown', function (event) {
+        // Enter 키를 누를 경우 sendMessage 함수 호출
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 동작 방지 (폼 제출 방지)
+            sendMessage();
+        }
+    });
+};
+//엔터키
+function checkEnter(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+
 
 // 메시지 표시
 function displayMessage(chat) {
