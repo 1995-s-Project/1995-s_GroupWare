@@ -410,42 +410,58 @@
     function deleteMails() {
         const selectedMails = [];
 
-        // 선택된 체크박스의 ID 값을 selectedMails 배열에 추가
+        // 선택된 체크박스의 ID 값을 배열에 추가
         const checkboxes = document.querySelectorAll('input[name="selectedMail"]:checked');
-        checkboxes.forEach(function(checkbox) {
+        checkboxes.forEach(function (checkbox) {
             if (checkbox.value) {
-                selectedMails.push(checkbox.value);  // checkbox.value가 비어있지 않으면 배열에 추가
+                selectedMails.push(checkbox.value);
             }
         });
 
+        // 선택된 메일이 없는 경우 경고 표시
         if (selectedMails.length === 0) {
             alert("삭제할 메일을 선택하세요.");
             return;
         }
 
-        // MailDTO 객체 생성
         const mailDTO = {
-            emailCode: selectedMails.join(',')  // 쉼표로 구분된 메일 ID
+            emailCode: selectedMails.join(',')
         };
 
-        // fetch API를 사용하여 JSON 형식으로 데이터 전송
+        // 삭제 요청
         fetch('/mail/delete', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'  // JSON 데이터 전송을 명시
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(mailDTO)  // JavaScript 객체를 JSON 문자열로 변환
+            body: JSON.stringify(mailDTO)
         })
-            .then(response => response.json())  // 응답으로 받은 갱신된 휴지통 목록을 JSON 형식으로 파싱
+            .then(response => response.json())
             .then(updatedTrash => {
-                alert("메일 삭제 성공");  // 서버에서 받은 응답 메시지
-                updateTrashList(updatedTrash);  // 휴지통 목록 갱신 함수 호출
+                alert("메일 삭제 성공");
+
+                // 삭제된 메일 행 제거
+                checkboxes.forEach(checkbox => {
+                    const row = checkbox.closest('tr');
+                    if (row) {
+                        row.remove(); // DOM에서 삭제
+                    }
+                });
+
+                // 전체 선택 상태 초기화
+                const selectAllCheckbox = document.getElementById('selectAll');
+                if (selectAllCheckbox) {
+                    selectAllCheckbox.checked = false;
+                    selectAllCheckbox.indeterminate = false;
+                }
+
+                // 페이지 새로고침
+                location.reload(); // 페이지 새로고침
             })
             .catch(error => {
-                alert(error.message); // 에러 발생 시 메시지 출력
+                alert("메일 삭제 중 오류 발생: " + error.message);
             });
     }
-
 
     // 개별 체크박스를 클릭하면 전체 선택 체크박스를 업데이트하는 함수
     function handleEmailSelection() {
@@ -464,29 +480,38 @@
     }
 
     function updateTrashList(trashList) {
-        const trashTable = document.querySelector('.post-list tbody');  // 휴지통 테이블의 tbody를 조회
-        trashTable.innerHTML = '';  // 기존 테이블을 비운 후
+        const trashTable = document.querySelector('.post-list tbody');
+        const fragment = document.createDocumentFragment(); // 변경된 부분
 
+        // 휴지통이 비어 있을 경우 메시지 표시
         if (trashList.length === 0) {
             trashTable.innerHTML = '<tr><td colspan="5">휴지통이 비어 있습니다.</td></tr>';
         } else {
             trashList.forEach(mail => {
                 const row = document.createElement('tr');
-
-                // 날짜 포맷을 명시적으로 설정
                 const sendDate = new Date(mail.sendDate);
-                const formattedDate = sendDate instanceof Date && !isNaN(sendDate) ? sendDate.toLocaleDateString('en-GB') : 'Invalid Date';
+                const formattedDate = sendDate instanceof Date && !isNaN(sendDate)
+                    ? sendDate.toLocaleDateString('en-GB') : 'Invalid Date';
 
                 row.innerHTML = `
-                <td><input type="checkbox" class="select-item" value="${mail.emailCode}" onchange="handleEmailSelection()"></td>
-                <td>${mail.emailCode}</td>  <!-- 이메일 코드 -->
-                <td>${mail.senderId}</td>  <!-- 발신자 ID -->
-                <td><a href="/mail/details/${mail.emailCode}" class="styled-link">${mail.title}</a></td>  <!-- 메일 제목 (링크) -->
-                <td>${formattedDate}</td>  <!-- 보내는 날짜 포맷 -->
-            `;
-
-                trashTable.appendChild(row);
+            <td><input type="checkbox" name="selectedMail" class="select-item" value="${mail.emailCode}" onchange="handleEmailSelection()"></td>
+            <td>${mail.emailCode}</td>
+            <td>${mail.senderId}</td>
+            <td><a href="/mail/details/${mail.emailCode}" class="styled-link">${mail.title}</a></td>
+            <td>${formattedDate}</td>
+        `;
+                fragment.appendChild(row); // 문서 조각에 추가
             });
+
+            trashTable.innerHTML = ''; // 기존 내용 삭제 후
+            trashTable.appendChild(fragment); // 한 번에 추가
+        }
+
+        // 전체 선택 상태 초기화
+        const selectAllCheckbox = document.getElementById('selectAll');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.checked = false;
+            selectAllCheckbox.indeterminate = false;
         }
     }
 </script>

@@ -12,11 +12,12 @@ public class MailService {
     private final MailMapper mailMapper;
 
     public MailService(MailMapper mailMapper) {
+
         this.mailMapper = mailMapper;
     }
 
     public List<MailDTO> mailAllSelect(String code, int offset, int size) {
-        System.out.println("Service - Mail List Request: Code=" + code + ", Offset=" + offset + ", Size=" + size);
+
         return mailMapper.mailAllSelect(code, offset, size);
     }
 
@@ -119,10 +120,30 @@ public class MailService {
         mailMapper.sentDeleteMails(mailIds, userCode);
     }
 
+    @Transactional
+    public void importantMails(List<Integer> mail, String recipientFolder, String code) {
+
+        if (mail == null || mail.isEmpty()) {
+            throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
+        }
+
+        mailMapper.importantMails(mail, recipientFolder, code);
+    }
+
+    @Transactional
+    public void archivedMails(List<Integer> mail, String recipientFolder, String code) {
+
+        if (mail == null || mail.isEmpty()) {
+            throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
+        }
+
+        mailMapper.archivedMails(mail, recipientFolder, code);
+    }
+
     public long inboxTotalProducts(String code) {
-        System.out.println("Service - Inbox Total Products Request: Code=" + code);
+
         long result = mailMapper.inboxTotalProducts(code);
-        System.out.println("Total Products: " + result);  // 쿼리 결과 출력
+
         return result;
     }
 
@@ -130,17 +151,18 @@ public class MailService {
         return mailMapper.sentTotalProducts(code);
     }
 
-    public long trashTotalProducts() {
-        return mailMapper.trashTotalProducts();
+    public long trashTotalProducts(String code) {
+        return mailMapper.trashTotalProducts(code);
     }
 
-    public long importantTotalProducts() {
-        return mailMapper.importantTotalProducts();
+    public long importantTotalProducts(String code) {
+        return mailMapper.importantTotalProducts(code);
     }
 
-    public long archivedTotalProducts() {
-        return mailMapper.trashTotalProducts();
+    public long archivedTotalProducts(String code) {
+        return mailMapper.archivedTotalProducts(code);
     }
+
 }
 
 
