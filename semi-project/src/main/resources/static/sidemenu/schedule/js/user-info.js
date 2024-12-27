@@ -1,4 +1,3 @@
-// 사용자 정보를 가져오는 함수
 async function fetchUserInfo() {
     try {
         // API 요청
@@ -14,9 +13,19 @@ async function fetchUserInfo() {
 
         console.log(userInfo);
 
-        // HTML 요소에 데이터 삽입
-        // profilePictureUrl 앞에 슬래시 추가
-        document.getElementById('profile').src = '/' + userInfo.profilePictureUrl;
+        // 프로필 사진 URL 처리
+        const basePath = '/img/profile/'; // 기본 경로 설정
+        let profilePictureUrl = userInfo.profilePictureUrl;
+
+        // 프로필 사진 URL이 기본 경로로 시작하지 않는 경우 기본 경로를 붙임
+        if (!profilePictureUrl.startsWith(basePath)) {
+            profilePictureUrl = basePath + profilePictureUrl;
+        }
+
+        // 프로필 이미지 설정
+        document.getElementById('profile').src = profilePictureUrl;
+
+        // 사용자 이름 설정
         document.getElementById('user-name').textContent = userInfo.name || '이름 없음';
 
         // 부서 코드와 부서명을 매핑하는 객체
@@ -54,6 +63,7 @@ async function fetchUserInfo() {
         console.error('Error fetching user info:', error);
     }
 }
+
 
 let checkInTime = null;
 let timerInterval = null;

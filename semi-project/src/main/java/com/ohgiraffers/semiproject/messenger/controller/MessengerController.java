@@ -25,7 +25,6 @@ public class MessengerController {
     @ResponseBody
     public List<MessengerDTO> getAllEmployees() {
         List<MessengerDTO> test = service.findEmployees();
-        System.out.println("test = " + test);
         return test;
     }
 

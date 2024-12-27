@@ -39,7 +39,9 @@ public class ChatController {
     // 채팅 기록 조회
     @GetMapping("/history/{senderCode}/{receiverCode}")
     public ResponseEntity<List<ChatDTO>> getChatHistory(@PathVariable String senderCode, @PathVariable String receiverCode) {
+
         List<ChatDTO> chatHistory = service.getChatHistory(senderCode, receiverCode);
+
         return ResponseEntity.ok(chatHistory); // 채팅 기록 반환
     }
 
@@ -57,9 +59,6 @@ public class ChatController {
 
         // 메시지 타임스탬프 추가
         chat.setTimestamp(new Timestamp(System.currentTimeMillis()));
-
-        // 메시지 로그 출력
-        System.out.println("chat = " + chat);
 
         // 메시지 저장
         service.insertChat(chat, senderCode);
