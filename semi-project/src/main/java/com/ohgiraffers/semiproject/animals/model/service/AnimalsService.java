@@ -51,7 +51,7 @@ public class AnimalsService {
             int nextNumber = lastNumber + 1;  // 1을 더함
             return "A" + String.format("%03d", nextNumber);  // 'A'와 3자리 숫자로 반환
         } else {
-            return "A0010";  // 첫 번째 동물 코드
+            return "A001";  // 첫 번째 동물 코드
         }
     }
     // 동물등록
@@ -121,5 +121,10 @@ public class AnimalsService {
     //품종 수 차트js 에 적용하기 위해 데이터 가져오기
     public List<AnimalDTO> getBreed() {
         return animalsMapper.getBreed();
+    }
+
+    // 입양등록 - 동물등록번호 비동기 처리
+    public List<AnimalDTO> findAnimalCodes() {
+        return animalsMapper.findAnimalCodes();
     }
 }

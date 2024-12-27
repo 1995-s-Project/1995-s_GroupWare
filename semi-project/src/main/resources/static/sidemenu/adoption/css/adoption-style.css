@@ -172,10 +172,10 @@
 
 .modal-content {
     position: relative;
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 20px;
     background: #fff;
-    width: 25%; /* 가로 길이 조정 (기존 50% -> 40%) */
+    width: 25%;
     border-radius: 5px;
 }
 

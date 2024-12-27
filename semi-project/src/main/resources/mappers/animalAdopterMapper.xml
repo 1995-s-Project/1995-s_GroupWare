@@ -105,6 +105,44 @@
         WHERE adopt_no = #{adoptNo}
     </update>
 
+    <!-- 입양자번호 등록 시 자동부여 -->
+    <select id="findAdoptNo">
+        SELECT adopt_no
+        FROM tbl_ani_adopt
+        ORDER BY adopt_no DESC
+        LIMIT 1
+    </select>
+    <!-- 입양자 등록 -->
+    <insert id="insertAdoption" parameterType="com.ohgiraffers.semiproject.adoption.model.dto.AdoptionDTO">
+        INSERT INTO tbl_ani_adopt
+        (
+        adopt_no,
+        adopt_name,
+        adopt_email,
+        adopt_phone,
+        adopt_age,
+        adopt_gender,
+        adopt_start_date,
+        adopt_status,
+        animal_code,
+        emp_code
+        )
+        VALUES
+        (
+        #{adoptNo},
+        #{adoptName},
+        #{adoptEmail},
+        #{adoptPhone},
+        #{adoptAge},
+        #{adoptGender},
+        #{adoptStartDate},
+        '입양진행중',
+        #{animalDTO.animalCode},
+        #{empDTO.empCode}
+        )
+
+    </insert>
+
 <!-- comment. ************************* 입양완료 Tab ************************* -->
     <!-- 완료 상세페이지 -->
     <select id="completedAdopterDetail" resultMap="AdopterListResultMap">

@@ -56,4 +56,7 @@ public interface AnimalsMapper {
 
     //품종 수 차트js 에 적용하기 위해 데이터 가져오기
     List<AnimalDTO> getBreed();
+
+    // 입양등록 - 동물등록번호 비동기 처리
+    List<AnimalDTO> findAnimalCodes();
 }
