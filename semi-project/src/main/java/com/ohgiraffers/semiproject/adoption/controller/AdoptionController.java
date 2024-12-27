@@ -69,8 +69,6 @@ public class AdoptionController {
     @PostMapping("/adoption/insert")
     public String insertAdoption(@ModelAttribute AdoptionDTO adoptionDTO){
 
-//        adoptionService.insertAdoption(adoptionDTO);
-
         return "sidemenu/adoption/adoption";
     }
 
