@@ -1,5 +1,6 @@
 package com.ohgiraffers.semiproject.messenger.model.dto;
 
+import com.ohgiraffers.semiproject.employee.model.dto.EmployeeJoinListDTO;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -20,4 +21,6 @@ public class ChatDTO {
     private String message; // 메시지 내용
 
     private Timestamp timestamp;
+
+    private EmployeeJoinListDTO employeeJoinListDTO;
 }
