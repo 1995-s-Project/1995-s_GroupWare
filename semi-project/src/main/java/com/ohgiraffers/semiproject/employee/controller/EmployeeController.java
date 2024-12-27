@@ -26,6 +26,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
         this.userInfoService = userInfoService;
     }
+
     // 직원 전체 조회
     @GetMapping("sidemenu/employee")
     public String empAll(Model model, @RequestParam(defaultValue = "0") int page,
@@ -48,6 +49,7 @@ public class EmployeeController {
         return "sidemenu/employee/employee";
     }
 
+    // 직원 검색 조회
     @GetMapping("/sidemenu/employee/search")
     public String empSearch(@RequestParam String query, Model model,
                             @RequestParam(defaultValue = "0") int page,
@@ -78,6 +80,7 @@ public class EmployeeController {
         return "sidemenu/employee/search";
     }
 
+    // 직원 상세페이지
     @GetMapping("/employee/details/{empCode}")
     public String getEmployeeDetails(@PathVariable String empCode, Model model) {
 
@@ -103,6 +106,7 @@ public class EmployeeController {
         return "sidemenu/employee/empdetail";
     }
 
+    // 상세페이지에서 댓글쓰기
     @PostMapping("/comments/add")
     public String addComment(@RequestParam String empCode, @RequestParam String text) {
         UserInfoResponse userInfo = userInfoService.getUserInfo();
@@ -126,6 +130,7 @@ public class EmployeeController {
         return "redirect:/employee/details/" + empCode;
     }
 
+    // 댓글삭제
     @GetMapping("/sidemenu/employee/{empCode}/comment/{id}/delete")
     public String commentDelete(@PathVariable String empCode, @PathVariable Integer id) {
 
@@ -146,6 +151,7 @@ public class EmployeeController {
         return "redirect:/employee/details/" + empCode;
     }
 
+    // 메인으로 돌아가기
     @GetMapping("/sidemenu/employee/employee")
     public void employee() {
     }

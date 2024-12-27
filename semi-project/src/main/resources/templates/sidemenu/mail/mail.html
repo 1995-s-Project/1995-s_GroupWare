@@ -106,7 +106,7 @@
                     <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAll(this)">
+                            <input type="checkbox" id="selectAllMail" onclick="toggleSelectAllMail(this)">
                         </th>
                         <th>메일번호</th>
                         <th>보낸사람</th>
@@ -405,9 +405,6 @@
         }
     }
 
-    // 검색된 직원 항목 저장
-    let filteredItems = [];
-
     // 검색 필터링 함수
     function filterEmployees() {
         const searchInput = document.getElementById('searchInput2').value.toLowerCase();
@@ -431,9 +428,7 @@
     selectAllCheckbox.addEventListener('change', function () {
         const isChecked = selectAllCheckbox.checked;
 
-        // 검색된 항목들만 선택하도록 필터링된 항목을 대상으로 처리
-        const filteredItems = document.querySelectorAll('#addressBookContainer2 .employee-list li');
-
+        // 검색된 항목들만 선택하도록 filteredItems를 대상으로 처리
         filteredItems.forEach(item => {
             const checkbox = item.querySelector('.select-item');
             checkbox.checked = isChecked; // 체크박스 상태 변경
@@ -453,13 +448,51 @@
         updateRecipientField(); // 선택된 직원들 갱신
     });
 
+    // 전체 선택/해제 처리 함수 (필터링된 항목만 포함)
     function toggleSelectAll(source, isAddressBook = false) {
         const checkboxes = isAddressBook
             ? document.querySelectorAll('.employee-list .select-item') // 주소록에서의 선택
             : document.querySelectorAll('.post-list .select-item');  // 메일 목록에서의 선택
 
+        // 검색된 항목만 필터링 (display: none이 아닌 항목들)
+        const visibleCheckboxes = Array.from(checkboxes).filter(checkbox => {
+            const row = checkbox.closest('li');
+            return row && window.getComputedStyle(row).display !== 'none'; // display: none이 아닌 항목만 필터링
+        });
+
+        // 전체 선택/해제
+        visibleCheckboxes.forEach(function(checkbox) {
+            checkbox.checked = source.checked; // 전체 선택/해제
+
+            const empCode = checkbox.value;
+            const empName = checkbox.getAttribute('data-name');
+
+            const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === empCode);
+
+            if (checkbox.checked) {
+                // 체크박스가 선택되면 수신자 리스트에 추가
+                if (recipientIndex === -1) {
+                    selectedRecipients.push({ empCode, empName });
+                }
+            } else {
+                // 체크박스가 해제되면 수신자 리스트에서 제거
+                if (recipientIndex !== -1) {
+                    selectedRecipients.splice(recipientIndex, 1);
+                }
+            }
+        });
+
+        // 선택된 직원들 갱신
+        updateRecipientField();
+    }
+
+    // 메일 목록 전체 선택/해제 함수
+    function toggleSelectAllMail(source) {
+        const checkboxes = document.querySelectorAll('.post-list .select-item'); // 메일 목록에서의 체크박스들
+
         checkboxes.forEach(function(checkbox) {
-            checkbox.checked = source.checked;
+            checkbox.checked = source.checked; // 전체 선택/해제
+
             const empCode = checkbox.value;
             const empName = checkbox.getAttribute('data-name');
 

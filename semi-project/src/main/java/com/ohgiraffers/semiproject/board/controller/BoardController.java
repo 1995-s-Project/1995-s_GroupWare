@@ -41,6 +41,7 @@ public class BoardController {
 
         return "sidemenu/board/board";
     }
+
     //  검색기능
     @GetMapping("sidemenu/board/search")
     public String search(@RequestParam String query,
@@ -76,6 +77,7 @@ public class BoardController {
     //  글쓰기로가기
     @GetMapping("/sidemenu/board/regist")
     public void boardRegist(){}
+
     //  글쓰기
     @PostMapping("/sidemenu/board/regist")
     public String regist(@ModelAttribute BoardDTO board){
@@ -88,6 +90,7 @@ public class BoardController {
 
         return "redirect:/sidemenu/board";
     }
+
     //  게시판 상세조회
     @GetMapping("/sidemenu/board/{boardCode}")
     public String title(@PathVariable Integer boardCode, Model model) {
@@ -100,6 +103,7 @@ public class BoardController {
 
         return "sidemenu/board/title";
     }
+
     //  게시글 삭제
     @GetMapping("/sidemenu/board/{boardCode}/delete")
     public String delete(@PathVariable Integer boardCode) {
@@ -108,6 +112,7 @@ public class BoardController {
 
         return "redirect:/sidemenu/board";
     }
+
     //  수정창으로가기
     @GetMapping("/sidemenu/board/{boardCode}/update")
     public String update(@PathVariable Integer boardCode, Model model){
@@ -118,6 +123,7 @@ public class BoardController {
 
         return "sidemenu/board/update";
     }
+
     //  게시판 수정
     @PostMapping("/sidemenu/board/update")
     public String boardUpdate(@ModelAttribute BoardDTO boardDTO) {
@@ -126,6 +132,7 @@ public class BoardController {
 
         return "redirect:/sidemenu/board";
     }
+
     //  메인으로 가기
     @GetMapping("/sidemenu/board/board")
     public void inventory() {}
