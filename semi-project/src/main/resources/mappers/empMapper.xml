@@ -275,10 +275,25 @@
         SET profile_image = #{fileName}
         WHERE emp_code = #{empCode}
     </update>
-
+<!-- 마이페이지 - 회원정보 이미지 삭제 -->
     <delete id="deleteProfileImage">
         UPDATE tbl_emp
         SET profile_image = null
         WHERE emp_code = #{empCode}
     </delete>
+
+<!-- 회원정보수정 - 주소 수정 -->
+    <update id="changeAddress">
+        UPDATE tbl_emp
+        SET emp_address = #{newAddress}
+        WHERE emp_code = #{empCode}
+    </update>
+
+<!-- 회원정보수정 - 휴대전화번호 수정 -->
+    <update id="changePhone">
+        UPDATE tbl_emp
+        SET emp_phone = #{newPhone}
+        WHERE emp_code = #{empCode}
+    </update>
+
 </mapper>

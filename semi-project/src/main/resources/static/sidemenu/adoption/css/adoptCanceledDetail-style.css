@@ -162,3 +162,13 @@ section h2 {
         max-width: 100%;
     }
 }
+
+.animal-card img {
+    cursor: pointer;  /* 마우스 커서를 포인터로 변경하여 클릭 가능하다는 느낌을 줌 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* 부드러운 애니메이션 효과 추가 */
+}
+
+.animal-card img:hover {
+    transform: scale(1.05);  /* 이미지를 약간 확대하여 클릭할 수 있다는 느낌을 줌 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);  /* 마우스를 올렸을 때 그림자 효과 추가 */
+}

@@ -56,7 +56,7 @@
         <div class="container">
             <!-- 입양 정보 섹션 -->
             <section class="adoption-section">
-                <h2>입양 정보</h2>
+                <h2>입양자 정보</h2>
                 <div class="adoption-card">
                 <div class="btn-adoptCompleted">
                     <h1><span th:text="${adoptingDetail.adoptStatus}"></span></h1>
@@ -67,7 +67,7 @@
                     <p><strong>나이 : </strong> <span th:text="${adoptingDetail.adoptAge}"></span></p>
                     <p><strong>성별 : </strong> <span th:text="${adoptingDetail.adoptGender}"></span></p>
                     <p><strong>핸드폰 번호 : </strong> <span th:text="${adoptingDetail.adoptPhone}"></span></p>
-                    <p><strong>이메일 : </strong> <span th:text="${adoptingDetail.adoptPhone}"></span></p>
+                    <p><strong>이메일 : </strong> <span th:text="${adoptingDetail.adoptEmail}"></span></p>
                     <p><strong>입양시작날짜 : </strong> <span th:text="${adoptingDetail.adoptStartDate}"></span></p>
                     <p><strong>입양완료날짜 : </strong> <span th:text="${adoptingDetail.adoptEndDate}"></span></p>
                 </div>
@@ -78,7 +78,7 @@
                 <section class="animal-section">
                     <h2>동물 정보</h2>
                     <div class="animal-card">
-                        <img th:src="@{${'/img/animals/' + adoptingDetail.animalDTO.animalImage}}" alt="Animal Image" />
+                        <img th:src="@{${'/img/animals/' + adoptingDetail.animalDTO.animalImage}}" alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${adoptingDetail.animalDTO.animalCode})}'|"/>
                         <div class="animal-details">
                             <p><strong>동물등록번호 : </strong> <span th:text="${adoptingDetail.animalDTO.animalCode}"></span></p>
                             <p><strong>구조 된 날짜 : </strong> <span th:text="${#dates.format(adoptingDetail.animalDTO.rescueDate, 'yyyy-MM-dd')}"></span></p>

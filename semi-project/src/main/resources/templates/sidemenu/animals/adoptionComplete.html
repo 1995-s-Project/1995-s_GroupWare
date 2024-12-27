@@ -92,7 +92,7 @@
                             <img th:src="@{${adopt.animalImage != null and adopt.animalImage != '' ? '/img/animals/' + adopt.animalImage : '/img/animals/defaultAnimal.jpg'}}"
                                  alt="Animal Image" width="45px" height="45px"/>
                         </td>
-                        <td th:text="${adopt.animalCode}" th:attr="onclick=|location.href='@{/adoptionComplete/detailAnimal/{animalCode}(animalCode=${adopt.animalCode})}'|" class="animal-code-cell"></td>
+                        <td th:text="${adopt.animalCode}" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${adopt.animalCode})}'|" class="animal-code-cell"></td>
                         <td th:text="${adopt.typeDTO.typeName}"></td>
                         <td th:text="${adopt.breedDTO.breedName}"></td>
                         <td th:text="${adopt.gender}"></td>

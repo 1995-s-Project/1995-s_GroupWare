@@ -10,10 +10,12 @@ import java.util.List;
 @Service
 public class ChatService {
 
+    private final ChatMapper mapper;
+
     @Autowired
-    private ChatMapper mapper;
-
-
+    public ChatService(ChatMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public List<ChatDTO> getChatHistory(String senderCode, String receiverCode) {
         return mapper.findChatHistory(senderCode, receiverCode); // DB에서 사용자 간 채팅 기록 조회
