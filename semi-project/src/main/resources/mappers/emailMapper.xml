@@ -135,44 +135,43 @@
             AND
                 recipient_folder = '중요쪽지함'
         </select>
-        <select id="mailFolderTrash" resultMap="mailSelect">
-            SELECT *
-            FROM (
-            SELECT
-                *
-            FROM
-                tbl_email
-            WHERE
-                recipient_id = #{code}
-            AND
-                recipient_folder = '휴지통'
 
-            UNION ALL
+    <select id="mailFolderTrash" resultMap="mailSelect">
+        SELECT *
+        FROM (
+        SELECT *
+        FROM tbl_email
+        WHERE recipient_id = #{code}
+        AND recipient_folder = '휴지통'
 
-            SELECT
-                *
-            FROM
-                tbl_email
-            WHERE
-                sender_id = #{code}
-            AND
-                sender_folder = '휴지통'
-            )
-            AS combined_results
-            LIMIT
-                #{offset}, #{size}
-        </select>
+        UNION ALL
+
+        SELECT *
+        FROM tbl_email
+        WHERE sender_id = #{code}
+        AND sender_folder = '휴지통'
+        )
+        AS combined_results
+        LIMIT #{offset}, #{size}  <!-- 페이징을 위한 LIMIT 처리 -->
+    </select>
+
     <!-- 휴지통 메일 총 개수 -->
-        <select id="trashTotalProducts" resultType="long">
-            SELECT
-                COUNT(*)
-            FROM
-                tbl_email
-            WHERE
-                (recipient_id = #{code} AND recipient_folder = '휴지통')
-            OR
-                (sender_id = #{code} AND sender_folder = '휴지통')
-        </select>
+    <select id="trashTotalProducts" resultType="long">
+        SELECT COUNT(*)
+        FROM (
+        SELECT *
+        FROM tbl_email
+        WHERE recipient_id = #{code}
+        AND recipient_folder = '휴지통'
+
+        UNION ALL
+
+        SELECT *
+        FROM tbl_email
+        WHERE sender_id = #{code}
+        AND sender_folder = '휴지통'
+        ) AS combined_results;
+    </select>
         <!-- 메일상세보기 -->
         <select id="mailDetail" resultMap="mailSelect">
             SELECT
@@ -238,6 +237,38 @@
                 sender_id = #{code}
             AND
                 sender_folder = '보낸쪽지함'
+            AND
+                email_code IN
+            <foreach collection="mail" item="mailCode" open="(" separator="," close=")">
+                #{mailCode}
+            </foreach>
+        </update>
+        <!-- 중요 쪽지함에서 이동 -->
+        <update id="importantMails" parameterType="map">
+            UPDATE
+                tbl_email
+            SET
+                recipient_folder = #{recipientFolder}
+            WHERE
+                recipient_id = #{code}
+            AND
+                recipient_folder = '중요쪽지함'
+            AND
+            email_code IN
+            <foreach collection="mail" item="mailCode" open="(" separator="," close=")">
+                #{mailCode}
+            </foreach>
+        </update>
+        <!-- 보관함에서 이동 -->
+        <update id="archivedMails" parameterType="map">
+            UPDATE
+                tbl_email
+            SET
+                recipient_folder = #{recipientFolder}
+            WHERE
+                recipient_id = #{code}
+            AND
+                recipient_folder = '보관함'
             AND
                 email_code IN
             <foreach collection="mail" item="mailCode" open="(" separator="," close=")">

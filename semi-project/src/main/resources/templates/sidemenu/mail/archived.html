@@ -92,8 +92,8 @@
 
             <div class="form1">
                 <div class="main-button">
-                    <button class="main-button1" id="moveToTrash" onclick="moveMails('휴지통')">❌ 휴지통</button>
-                    <button class="main-button2" id="moveToImportant" onclick="moveMails('중요쪽지함')">⭐ 중요보관함</button>
+                    <button class="main-button1" id="moveToTrash" onclick="archivedMails('휴지통')">❌ 휴지통</button>
+                    <button class="main-button2" id="moveToImportant" onclick="archivedMails('중요쪽지함')">⭐ 중요보관함</button>
                 </div>
                 <table border="1" class="post-list">
                     <colgroup>
@@ -241,7 +241,7 @@
         document.getElementById('addressBookModal').style.display = 'none';
     });
 
-    function moveMails(targetFolder) {
+    function archivedMails(targetFolder) {
         const selectedMailIds = getSelectedMailIds();
 
         if (selectedMailIds.length === 0) {
@@ -249,12 +249,12 @@
             return;
         }
 
-        fetch('/mail/move', {
+        fetch('/mail/archived', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                emailCode: selectedMailIds.join(","),
-                folder: targetFolder
+            emailCode: selectedMailIds.join(","),
+            recipientFolder: targetFolder
             })
         })
             .then(response => {

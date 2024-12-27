@@ -24,6 +24,10 @@ public interface MailMapper {
 
     void sentMoveMails(@Param("mail") List<Integer> mail, @Param("senderFolder") String recipientFolder, @Param("code") String code);
 
+    void importantMails(@Param("mail") List<Integer> mail, @Param("recipientFolder") String recipientFolder, @Param("code") String code);
+
+    void archivedMails(@Param("mail") List<Integer> mail, @Param("recipientFolder") String recipientFolder, @Param("code") String code);
+
     void inboxRegistMail(MailDTO mailDTO);
 
     void sentRegistMail(MailDTO mailDTO);
@@ -36,8 +40,10 @@ public interface MailMapper {
 
     long sentTotalProducts(@Param("code") String code);
 
-    long trashTotalProducts();
+    long trashTotalProducts(@Param("code") String code);
 
-    long importantTotalProducts();
+    long importantTotalProducts(@Param("code") String code);
+
+    long archivedTotalProducts(@Param("code") String code);
 }
 
