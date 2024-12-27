@@ -242,14 +242,10 @@ hr {
     font-family: 'Arial', sans-serif;
     font-size: 14px;
     text-decoration: none; /* 밑줄 제거 */
-    color: white; /* 글자색 */
-    transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
-}
-
-.insert a, .delete a, .updateAdoption a {
     background-color: #fdfffd; /* 추가 버튼 배경색 */
     border: 1px solid #000;
     color :#000;
+    transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
 }
 
 .updateAdoption a:hover {

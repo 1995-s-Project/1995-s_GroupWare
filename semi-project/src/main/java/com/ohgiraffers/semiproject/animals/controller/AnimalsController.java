@@ -151,22 +151,6 @@ public class AnimalsController {
         return "sidemenu/animals/adoptionComplete";
     }
 
-    // 구조동물 상세페이지
-    @GetMapping("/adoptionComplete/detailAnimal/{animalCode}")
-    public String adoptionCompleteDetailAnimal(@PathVariable String animalCode,Model model){
-
-        AnimalDTO detail = animalsService.adoptionDetailAnimal(animalCode);
-        model.addAttribute("detail", detail);
-
-        AnimalDTO health = animalsService.adoptionHealthAnimal(animalCode);
-        model.addAttribute("health", health);
-
-        AnimalDTO inoculate = animalsService.adoptionInoculationAnimal(animalCode);
-        model.addAttribute("inoculate", inoculate);
-
-        return "sidemenu/animals/adoptionDetailAnimal";
-    }
-
 // -----------------------------------------재고관리 페이지-----------------------------------------
     // 재고관리 페이지로 이동
     @GetMapping("/sidemenu/stock")

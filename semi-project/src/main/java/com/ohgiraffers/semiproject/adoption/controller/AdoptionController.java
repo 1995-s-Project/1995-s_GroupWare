@@ -5,9 +5,7 @@ import com.ohgiraffers.semiproject.adoption.model.service.AdoptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,7 @@ public class AdoptionController {
     }
 
 /* comment.--------------------------------- 입양진행중 Tab --------------------------------- */
+
     // 입양 페이지로 이동
     @GetMapping("/sidemenu/adoption")
     public String adoptionList(Model model){
@@ -64,6 +63,15 @@ public class AdoptionController {
         adoptionService.updateByCompleted(adoptNo);
 
         return "redirect:/sidemenu/adoption?tab=completed";
+    }
+
+    // 입양 등록
+    @PostMapping("/adoption/insert")
+    public String insertAdoption(@ModelAttribute AdoptionDTO adoptionDTO){
+
+//        adoptionService.insertAdoption(adoptionDTO);
+
+        return "sidemenu/adoption/adoption";
     }
 
 /* comment.--------------------------------- 입양완료 Tab --------------------------------- */

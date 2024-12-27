@@ -58,9 +58,13 @@
             <button class="tab-button" data-tab="completed">입양완료</button>
             <button class="tab-button" data-tab="canceled">입양취소</button>
         </div>
-
-        <div class="count">
-            전체 <span></span> 건
+        <div class="count-insert-group">
+            <div class="count">
+                전체 <span></span> 건
+            </div>
+            <div class="insert">
+                <a href="#" id="openModalBtn">등록</a>
+            </div>
         </div>
         <span id="in-progress-count" th:text="${adoptingList.size()}" style="display: none;"></span>
         <span id="completed-count" th:text="${adoptCompletedList.size()}" style="display: none;"></span>
@@ -127,10 +131,82 @@
                 </div>
             </div>
         </div>
+
+        <!-- 등록 모달창 -->
+        <div id="insertModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <form class="modal-form" id="insertForm" action="/adoption/insert" method="post">
+                    <span class="close-btn" id="closeBtn">&times;</span>
+                    <h2>입양자 등록</h2>
+                    <div class="form-group">
+                        <label for="adoptName">이름</label>
+                        <input type="text" id="adoptName" name="adoptName" placeholder="이름을 입력하세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adoptPhone">핸드폰번호</label>
+                        <input type="text" id="adoptPhone" name="adoptPhone" placeholder="핸드폰 번호를 입력하세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adoptAge">나이</label>
+                        <input class="adoptAge" type="text" id="adoptAge" name="adoptAge" placeholder="나이를 입력하세요" required>
+                    </div>
+                    <div class="form-group gender-group">
+                        <label>성별 :</label>
+                        <label><input type="radio" name="adoptGender" value="M" required> M</label>
+                        <label><input type="radio" name="adoptGender" value="F"> F</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="adoptStartDate">입양시작날짜</label>
+                        <input type="date" id="adoptStartDate" name="adoptStartDate" required>
+                    </div>
+                    <button type="submit" id="insert-Btn">보내기</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>
 
 <script>
+    <!-- 모달창 -->
+    // 오늘 날짜로 설정
+    document.addEventListener('DOMContentLoaded', () => {
+        const adoptStartDateInput = document.getElementById('adoptStartDate');
+        const today = new Date();
+
+        // yyyy-mm-dd 형식으로 변환
+        const formattedDate = today.toISOString().split('T')[0];
+        adoptStartDateInput.value = formattedDate; // 기본값 설정
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // 모달창 열기 버튼 이벤트
+        const openModalBtn = document.getElementById('openModalBtn');
+        const modal = document.getElementById('insertModal');
+        const closeModalBtn = document.getElementById('closeBtn');
+
+        console.log(openModalBtn, modal, closeModalBtn); // 각 요소가 null인지 확인
+
+        if (openModalBtn && modal && closeModalBtn) {
+            openModalBtn.addEventListener('click', (event) => {
+                event.preventDefault(); // 기본 동작 막기 (페이지 이동 방지)
+                modal.style.display = 'block'; // 모달 열기
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.style.display = 'none'; // 모달 닫기
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none'; // 모달 닫기
+                }
+            });
+        } else {
+            console.error("모든 요소가 정상적으로 로드되지 않았습니다.");
+        }
+    });
+
     function confirmCancel() {
         const userConfirmed = confirm("취소하시겠습니까?");
         if (!userConfirmed) {

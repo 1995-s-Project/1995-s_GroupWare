@@ -36,6 +36,7 @@ public class MyPageService {
     }
 
 
+    // 회원정보수정 - 프로필이미지 수정
     public boolean changeProfileImage(String fileName, String empCode) {
 
         int updateProfile = employeeMapper.changeProfileImage(fileName, empCode);
@@ -43,9 +44,20 @@ public class MyPageService {
         return updateProfile > 0;
     }
 
+    // 회원정보수정 - 프로필이미지 삭제
     public boolean deleteProfileImage(String empCode) {
         int deleteProfile = employeeMapper.deleteProfileImage(empCode);
 
         return deleteProfile > 0;
+    }
+
+    // 회원정보수정 - 주소 수정
+    public void changeAddress(String newAddress, String empCode) {
+        employeeMapper.changeAddress(newAddress, empCode);
+    }
+
+    // 회원정보수정 - 휴대전화번호 수정
+    public void changePhone(String newPhone, String empCode) {
+        employeeMapper.changePhone(newPhone, empCode);
     }
 }

@@ -49,6 +49,7 @@ public class MyPageController {
         return "sidemenu/mypage/mypage";
     }
 
+    // 회원정보수정 - 프로필이미지 수정
     @PostMapping("/updateProfileImage")
     public String updateProfileImage(@RequestParam("fileName") String fileName, RedirectAttributes redirectAttributes){
         UserInfoResponse userInfo = userInfoService.getUserInfo();
@@ -61,6 +62,7 @@ public class MyPageController {
         return "redirect:/sidemenu/mypage";
     }
 
+    // 회원정보수정 - 프로필이미지 삭제
     @GetMapping("deleteProfileImage")
     public String deleteProfileImage(RedirectAttributes redirectAttributes){
         UserInfoResponse userInfo = userInfoService.getUserInfo();
@@ -69,6 +71,30 @@ public class MyPageController {
         boolean deleteProfile = myPageService.deleteProfileImage(empCode);
         redirectAttributes.addFlashAttribute("deleteProfile", deleteProfile);
 
+        return "redirect:/sidemenu/mypage";
+    }
+
+    // 회원정보수정 - 주소 수정
+    @PostMapping("/updateAddress")
+    public String updateAddress(@RequestBody Map<String, String> request) {
+        String newAddress = request.get("empAddress");
+
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String empCode = userInfo.getCode();
+
+        myPageService.changeAddress(newAddress, empCode);
+        return "redirect:/sidemenu/mypage";
+    }
+
+    // 회원정보수정 - 휴대전화번호 수정
+    @PostMapping("/updatePhoneNumber")
+    public String updatePhoneNumber(@RequestBody Map<String, String> request) {
+        String newPhone = request.get("newPhoneNumber");
+
+        UserInfoResponse userInfo = userInfoService.getUserInfo();
+        String empCode = userInfo.getCode();
+
+        myPageService.changePhone(newPhone, empCode);
         return "redirect:/sidemenu/mypage";
     }
 
@@ -98,7 +124,7 @@ public class MyPageController {
             model.addAttribute("message", "비밀번호 변경에 실패했습니다.");
         }
 
-        return "sidemenu/mypage/settingPass";
+        return "/home";
     }
 
     @PostMapping("/check-password")

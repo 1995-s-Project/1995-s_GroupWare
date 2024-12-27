@@ -96,11 +96,6 @@ public class AnimalsService {
         return animalsMapper.getTotalAdoptAnimalCount();
     }
 
-    // 입양완료동물 상세페이지
-    public AnimalDTO adoptionDetailAnimal(String animalCode) {return animalsMapper.adoptionDetailAnimal(animalCode);}
-    public AnimalDTO adoptionHealthAnimal(String animalCode) {return animalsMapper.adoptionHealthAnimal(animalCode);}
-    public AnimalDTO adoptionInoculationAnimal(String animalCode) {return animalsMapper.adoptionInoculationAnimal(animalCode);}
-
 // -----------------------------------------재고관리 페이지-----------------------------------------
     // 재고관리 조회
     public List<InventoryDTO> stock() {

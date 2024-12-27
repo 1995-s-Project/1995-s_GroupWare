@@ -46,4 +46,8 @@ public interface EmployeeMapper {
     int changeProfileImage(String fileName, String empCode);
     // 마이페이지 - 회원정보 이미지 삭제
     int deleteProfileImage(String empCode);
+    // 회원정보수정 - 주소 수정
+    void changeAddress(String newAddress, String empCode);
+    // 회원정보수정 - 휴대전화번호 수정
+    void changePhone(String newPhone, String empCode);
 }

@@ -44,11 +44,6 @@ public interface AnimalsMapper {
     // 입양완료동물 전체조회 - 페이징처리
     int getTotalAdoptAnimalCount();
 
-    // 입양완료 상세페이지
-    AnimalDTO adoptionDetailAnimal(String animalCode);
-    AnimalDTO adoptionHealthAnimal(String animalCode);
-    AnimalDTO adoptionInoculationAnimal(String animalCode);
-
 // -----------------------------------------재고관리 페이지-----------------------------------------
     List<InventoryDTO> stock();
 

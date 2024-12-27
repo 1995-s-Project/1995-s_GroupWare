@@ -49,7 +49,6 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 한 줄에 4개의 카드 */
     gap: 20px; /* 카드 간 간격 */
-    margin-top: 20px;
 }
 
 .card {
@@ -119,4 +118,144 @@
 
 .delete-adopter:hover {
     background-color: #bc1616;
+}
+
+.count-insert-group {
+    display: flex;                 /* 수평 배치 */
+    align-items: center;           /* 세로 가운데 정렬 */
+    width: 100%;  /* 부모 요소의 전체 너비를 사용 */
+}
+
+.count {
+    padding-left: 20px;
+    margin-right: auto;            /* 'count'는 왼쪽에 고정 */
+}
+
+.count span {
+    color: #00813e;
+    font-weight: 500;
+}
+
+.insert {
+    padding-right: 50px;
+}
+
+.insert a {
+    display: inline-block; /* 버튼처럼 보이게 */
+    padding: 6px 12px; /* 내부 여백 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    text-decoration: none; /* 밑줄 제거 */
+    background-color: #fdfffd; /* 추가 버튼 배경색 */
+    border: 1px solid #000;
+    color :#000;
+    transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+}
+
+.insert a:hover{
+    background-color: #4CAF50; /* 추가 버튼 호버 시 색상 */
+    border: 1px solid #000;
+}
+
+/* 모달창 배경 */
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    margin: 10% auto;
+    padding: 20px;
+    background: #fff;
+    width: 25%; /* 가로 길이 조정 (기존 50% -> 40%) */
+    border-radius: 5px;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+/* 입력 폼 */
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.modal-form label {
+    font-weight: bold;
+    color: #333;
+}
+
+.modal-form input[type="text"],
+.modal-form input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-form .form-group.gender-group {
+    flex-direction: row; /* 성별 라디오 버튼을 가로로 정렬 */
+    align-items: center;
+    gap: 10px; /* 버튼 간격 */
+}
+
+.modal-form .form-group.gender-group label {
+    margin-right: 10px; /* 라벨 오른쪽 여백 */
+}
+
+.modal-form button {
+    background-color: #4CAF50; /* 버튼 색상 */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-form button:hover {
+    background-color: #45a049;
+}
+
+/* 애니메이션 */
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
