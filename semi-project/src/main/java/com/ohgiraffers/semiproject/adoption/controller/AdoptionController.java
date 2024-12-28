@@ -2,21 +2,33 @@ package com.ohgiraffers.semiproject.adoption.controller;
 
 import com.ohgiraffers.semiproject.adoption.model.dto.AdoptionDTO;
 import com.ohgiraffers.semiproject.adoption.model.service.AdoptionService;
+import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
+import com.ohgiraffers.semiproject.animals.model.dto.BreedDTO;
+import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
+import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
+import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AdoptionController {
 
     private final AdoptionService adoptionService;
+    private final AnimalsService animalsService;
+    private final UserInfoService userInfoService;
 
     @Autowired
-    public AdoptionController(AdoptionService adoptionService){
+    public AdoptionController(AdoptionService adoptionService, AnimalsService animalsService, UserInfoService userInfoService){
         this.adoptionService = adoptionService;
+        this.animalsService = animalsService;
+        this.userInfoService = userInfoService;
     }
 
 /* comment.--------------------------------- 입양진행중 Tab --------------------------------- */
@@ -24,6 +36,10 @@ public class AdoptionController {
     // 입양 페이지로 이동
     @GetMapping("/sidemenu/adoption")
     public String adoptionList(Model model){
+
+        UserInfoResponse userInfo =  userInfoService.getUserInfo();
+        String code = userInfo.getCode();
+        model.addAttribute("code", code);
 
         List<AdoptionDTO> adoptingList = adoptionService.adoptingList();
         model.addAttribute("adoptingList", adoptingList);
@@ -33,6 +49,9 @@ public class AdoptionController {
 
         List<AdoptionDTO> adoptCanceledList = adoptionService.adoptCanceledList();
         model.addAttribute("adoptCanceledList", adoptCanceledList);
+
+        String adoptNo = adoptionService.addAdoptNo();
+        model.addAttribute("adoptNo", adoptNo);
 
         return "sidemenu/adoption/adoption";
     }
@@ -65,11 +84,23 @@ public class AdoptionController {
         return "redirect:/sidemenu/adoption?tab=completed";
     }
 
+    // 입양등록 - 동물등록번호 비동기 처리
+    @GetMapping(value = "/adoption/animalsCode", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public List<AnimalDTO> findAnimalsCodeList(){
+        return animalsService.findAnimalCodes();
+    }
     // 입양 등록
     @PostMapping("/adoption/insert")
-    public String insertAdoption(@ModelAttribute AdoptionDTO adoptionDTO){
+    public ResponseEntity<String> insertAdoption(@ModelAttribute AdoptionDTO adoptionDTO){
 
-        return "sidemenu/adoption/adoption";
+        if (adoptionDTO.getAdoptStatus() == null) {
+            adoptionDTO.setAdoptStatus("입양진행중");  // 기본값 설정
+        }
+
+        adoptionService.insertAdoption(adoptionDTO);
+
+        return ResponseEntity.ok("등록 성공");
     }
 
 /* comment.--------------------------------- 입양완료 Tab --------------------------------- */

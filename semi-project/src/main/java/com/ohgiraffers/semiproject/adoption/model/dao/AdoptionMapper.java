@@ -23,6 +23,10 @@ public interface AdoptionMapper {
     // 진행중 상세페이지에서 입양완료로 상태 업데이트
     void updateByCompleted(String adoptNo);
 
+    // 입양자번호 등록 시 자동부여
+    String findAdoptNo();
+    // 입양자 등록
+    void insertAdoption(AdoptionDTO adoptionDTO);
 
 /* comment.------------------------ 입양완료 Tab ------------------------ */
     // 완료 상세페이지
@@ -33,5 +37,7 @@ public interface AdoptionMapper {
 /* comment.------------------------ 입양취소 Tab ------------------------ */
     // 취소 상세페이지
     AdoptionDTO canceledAdopterDetail(String adoptNo);
+
+
 
 }
