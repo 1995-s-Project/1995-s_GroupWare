@@ -73,8 +73,10 @@ public class EmployeeService {
     // 마이페이지 - 내 댓글 조회 메소드
     public List<CommentDTO> getUserComment(String code) {return employeeMapper.getUserComment(code);}
     // 마이페이지 - 비밀번호 변경
+    @Transactional
     public List<EmployeeJoinListDTO> mailAllSelect(String code) {return employeeMapper.mailAllSelect(code);}
     // 마이페이지 - 회원정보 수정
+    @Transactional
     public EmployeeJoinListDTO empInfoSelect(String empCode) {return employeeMapper.empInfoSelect(empCode);}
 
     // 직원별 사번코드, 부서명, 직급명, 당일 출근시간, 퇴근시간 조회해오기
