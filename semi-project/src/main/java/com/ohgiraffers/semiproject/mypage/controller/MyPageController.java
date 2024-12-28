@@ -37,7 +37,7 @@ public class MyPageController {
     }
 
     // 마이페이지 페이지로 이동 및 회원정보 수정
-    @GetMapping("/sidemenu/mypage")
+    @GetMapping("/mypage")
     public String mypage(Model model) {
         UserInfoResponse userInfo = userInfoService.getUserInfo();
         String empCode = userInfo.getCode();
@@ -59,7 +59,7 @@ public class MyPageController {
 
         redirectAttributes.addFlashAttribute("alertMessage", updateProfile ? "프로필 사진이 성공적으로 수정되었습니다." : "프로필 사진 수정에 실패했습니다. 다시 시도해주세요.");
 
-        return "redirect:/sidemenu/mypage";
+        return "redirect:/mypage";
     }
 
     // 회원정보수정 - 프로필이미지 삭제
@@ -71,7 +71,7 @@ public class MyPageController {
         boolean deleteProfile = myPageService.deleteProfileImage(empCode);
         redirectAttributes.addFlashAttribute("deleteProfile", deleteProfile);
 
-        return "redirect:/sidemenu/mypage";
+        return "redirect:/mypage";
     }
 
     // 회원정보수정 - 주소 수정
@@ -83,7 +83,7 @@ public class MyPageController {
         String empCode = userInfo.getCode();
 
         myPageService.changeAddress(newAddress, empCode);
-        return "redirect:/sidemenu/mypage";
+        return "redirect:/mypage";
     }
 
     // 회원정보수정 - 휴대전화번호 수정
@@ -95,7 +95,7 @@ public class MyPageController {
         String empCode = userInfo.getCode();
 
         myPageService.changePhone(newPhone, empCode);
-        return "redirect:/sidemenu/mypage";
+        return "redirect:/mypage";
     }
 
     // 마이페이지 - 비밀번호 변경

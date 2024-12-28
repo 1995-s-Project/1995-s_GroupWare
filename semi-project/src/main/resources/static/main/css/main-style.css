@@ -46,19 +46,86 @@ header {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 }
 
+.current-user {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    width: 300px;
+    height: 60px;
+    margin-left: 55px;
+    padding: 5px; /* 여백 추가 */
+    border-radius: 8px; /* 모서리 둥글게 */
+}
+
+#unique-user-profile-picture {
+    margin-right: 10px; /* 이미지와 텍스트 간격 */
+}
+
+#unique-user-info {
+    display: flex;
+    flex-direction: column; /* 부서명은 세로 방향으로 정렬 */
+    justify-content: center; /* 수직 가운데 정렬 */
+}
+
+.name-position {
+    display: flex; /* 이름과 직급을 가로로 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-left: 10px;
+}
+
+.user-info-box {
+    text-align: center; /* 텍스트 가운데 정렬 */
+    font-size: 14px; /* 글자 크기 조정 */
+    color: #333; /* 글자 색상 */
+    margin-right: 5px; /* 이름과 직급 간격 */
+}
+
+/* 부서명, 이름, 직급에 대한 추가 스타일 */
+#unique-user-department {
+    font-weight: bold; /* 부서명 강조 */
+    margin-left: 10px;
+}
+
+#unique-user-name-display {
+    font-size: 16px; /* 이름 크기 조정 */
+    font-weight: 600; /* 이름 강조 */
+}
+
+#unique-user-position {
+    font-size: 16px; /* 이름 크기 조정 */
+    font-weight: 600; /* 이름 강조 */
+}
+
 .side-menu-bar ul {
     list-style-type: none;
     padding: 0;
-    margin-left: 30px;
     display: flex;
     align-items: center; /* 리스트 항목을 수직 중앙 정렬 */
 }
 
+.logout-button-unique {
+    background-color: #ffffff; /* 버튼 배경색 */
+    color: #ff4141; /* 글자색 */
+    border: 1px solid #ff4141;
+    border-radius: 5px; /* 모서리 둥글게 */
+    padding: 8px 16px; /* 패딩을 줄임 */
+    font-size: 14px; /* 글자 크기를 줄임 */
+    cursor: pointer; /* 커서 모양 변경 */
+    transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+    margin-left: 15px;
+}
+
+.logout-button-unique:hover {
+    background-color: #ff1a1a; /* 마우스 오버 시 배경색 변화 */
+    color: white;
+}
+
 .side-menu-bar ul li {
-    margin-right: 40px;
     font-size: 17px;
     display: flex; /* li 요소를 flex로 설정하여 내부 요소를 중앙 정렬 */
     align-items: center; /* li 내부의 요소를 수직 중앙 정렬 */
+    justify-content: center;
+    text-align: center;
+    width: 128px;
 }
 
 .side-menu-bar {
@@ -123,7 +190,6 @@ header {
 .admin-menu-wrapper {
     padding: 7px; /* 클릭 가능한 영역을 넓히기 위한 패딩 */
     cursor: pointer; /* 마우스 커서를 포인터로 변경 */
-    width: 150px;
     height: 48px;
     top: 50%;
     left: 50%;
@@ -141,18 +207,17 @@ header {
     flex-direction: row; /* 가로 방향으로 정렬 */
     position: absolute; /* 절대 위치 설정 */
     background-color: white; /* 배경색 */
-    width: auto; /* 너비 자동 조정 */
+    width: 500px; /* 너비 자동 조정 */
     height: auto; /* 높이 자동 조정 */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
     z-index: 10; /* 다른 요소 위에 표시되도록 높임 */
     margin-top: 0; /* 상단 여백을 0으로 설정 */
-    left: calc(50% - 270px); /* 부모 요소의 50% 위치에서 130px 왼쪽으로 이동 */
     top: calc(100% - 8px); /* 부모 요소의 아래쪽에 위치 */
     visibility: hidden; /* 기본적으로 숨김 */
     opacity: 0; /* 투명도 0으로 설정 */
     transition: visibility 0s linear 0.5s, opacity 0.5s ease; /* 부드러운 전환 효과 */
     border-radius: 5px;
-    padding: 0; /* 상하 여백 제거, 좌우 여백은 항목에 추가 */
+    padding-left: 15px; /* 상하 여백 제거, 좌우 여백은 항목에 추가 */
 }
 
 /* 마우스를 올렸을 때 서브 메뉴 보이기 */

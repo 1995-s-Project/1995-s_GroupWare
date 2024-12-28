@@ -7,25 +7,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ManagerController {
 
     // 관리자전용 페이지로 이동
-    @GetMapping("/sidemenu/manager")
+    @GetMapping("/manager")
     public String manager() {
         return "sidemenu/manager/manager";
     }
 
     // 사원등록 페이지로 이동
-    @GetMapping("sidemenu/employeeRegister")
+    @GetMapping("/employeeRegister")
     public String employeeRegister() {
         return "sidemenu/manager/employeeRegister";
     }
 
     // 직원관리 페이지로 이동
-    @GetMapping("sidemenu/employeeManagement")
+    @GetMapping("/employeeManagement")
     public String employeeManagement() {
         return "sidemenu/manager/employeeManagement";
     }
 
     // 결재함 페이지로 이동
-    @GetMapping("sidemenu/approvalBox")
+    @GetMapping("/approvalBox")
     public String approvalBox() {
         return "sidemenu/manager/approvalBox";
     }

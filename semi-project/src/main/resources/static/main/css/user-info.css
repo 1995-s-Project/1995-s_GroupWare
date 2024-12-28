@@ -88,7 +88,9 @@
     height: 220px;
     margin-top: 8%;
     position: relative; /* 상대 위치 설정 */
-    left: 2%;
+    left: 5px;
+    bottom: 6px;
+    border: 1px solid pink;
 }
 
 /* 시간 표시 스타일 */

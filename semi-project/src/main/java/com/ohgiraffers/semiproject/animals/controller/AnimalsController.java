@@ -28,7 +28,7 @@ public class AnimalsController {
 
 // -----------------------------------------구조동물 페이지-----------------------------------------
     // 구조 동물 페이지
-    @GetMapping("/sidemenu/animals")
+    @GetMapping("/animals")
     public String animals(@RequestParam(defaultValue = "1") int page,
                           @RequestParam(defaultValue = "8") int limit,
                           @RequestParam(required = false) String animalCode,
@@ -116,7 +116,7 @@ public class AnimalsController {
         // 동물 등록 처리
         animalsService.newAnimal(animalDTO);
 
-        return "redirect:/sidemenu/animals";
+        return "redirect:/animals";
     }
 
 
@@ -130,7 +130,7 @@ public class AnimalsController {
             System.out.println("id = " + id);
         }
 
-        return "redirect:/sidemenu/animals";
+        return "redirect:/animals";
     }
 
 // -----------------------------------------입양완료 페이지-----------------------------------------
@@ -153,7 +153,7 @@ public class AnimalsController {
 
 // -----------------------------------------재고관리 페이지-----------------------------------------
     // 재고관리 페이지로 이동
-    @GetMapping("/sidemenu/stock")
+    @GetMapping("/stock")
     public String stock(Model model){
 
         List<InventoryDTO> inventoryList = animalsService.stock();
@@ -173,7 +173,7 @@ public class AnimalsController {
         // 쿼리 파라미터로 updateSuccess 값을 전달
         redirectAttributes.addAttribute("updateSuccess", true);
 
-        return "redirect:/sidemenu/stock";
+        return "redirect:/stock";
     }
 
 

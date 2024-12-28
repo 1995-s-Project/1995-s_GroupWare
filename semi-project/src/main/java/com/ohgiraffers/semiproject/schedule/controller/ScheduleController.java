@@ -28,7 +28,7 @@ public class ScheduleController {
     }
 
     // 근태관리 페이지 이동
-    @GetMapping("/sidemenu/schedule")
+    @GetMapping("/schedule")
     public String schedule() {
         return "sidemenu/schedule/schedule";
     }

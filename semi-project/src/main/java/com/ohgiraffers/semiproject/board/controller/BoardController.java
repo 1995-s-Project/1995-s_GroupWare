@@ -20,7 +20,7 @@ public class BoardController {
     }
 
     //  게시판 전체 조회 및 페이징처리
-    @GetMapping("/sidemenu/board")
+    @GetMapping("/board")
     public String board(Model model,
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "15") int size) {
@@ -88,7 +88,7 @@ public class BoardController {
 
         boardService.boardRegist(board);
 
-        return "redirect:/sidemenu/board";
+        return "redirect:/board";
     }
 
     //  게시판 상세조회
@@ -110,7 +110,7 @@ public class BoardController {
 
         boardService.delete(boardCode);
 
-        return "redirect:/sidemenu/board";
+        return "redirect:/board";
     }
 
     //  수정창으로가기
@@ -130,7 +130,7 @@ public class BoardController {
 
         boardService.update(boardDTO);
 
-        return "redirect:/sidemenu/board";
+        return "redirect:/board";
     }
 
     //  메인으로 가기
