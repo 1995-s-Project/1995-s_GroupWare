@@ -12,42 +12,48 @@
 <header>
     <div class="side-menu-bar">
         <ul>
-            <li><a href="/main">🐶PetHarmony🐶</a></li>
-            <li><a href="http://localhost:9595/sidemenu/schedule">근태관리</a></li>
-            <li><a href="http://localhost:9595/sidemenu/messenger">메신저(채팅)</a></li>
-            <li><a href="http://localhost:9595/sidemenu/mail">이메일</a></li>
-            <li><a href="http://localhost:9595/sidemenu/adoption">입양</a></li>
-            <li class="animal-menu">
-                <div class="menu-wrapper">
-                    <a href="http://localhost:9595/sidemenu/animals">동물
-                        <span class="material-symbols-outlined">keyboard_arrow_down</span>
-                    </a>
-                </div>
-                <ul class="sub-menu">
-                    <li><a href="http://localhost:9595/sidemenu/animals">구조동물</a></li>
-                    <li><a href="http://localhost:9595/sidemenu/adoptionComplete">입양완료</a></li>
-                    <li><a href="http://localhost:9595/sidemenu/stock">재고관리</a></li>
-                </ul>
+            <li>
+                <a href="/main">
+                    <img src="/img/icon/logo.png" alt="PetHarmony Logo" style="width: 120px; height: auto; padding-top: 10px; padding-left: 40px;">
+                </a>
             </li>
-            <li><a href="http://localhost:9595/sidemenu/facilities">시설관리</a></li>
-            <li><a href="http://localhost:9595/sidemenu/board">전사게시판</a></li>
-            <li><a href="http://localhost:9595/sidemenu/employee">직원정보</a></li>
-            <li><a href="http://localhost:9595/sidemenu/mypage">마이페이지</a></li>
-            <li><a href="http://localhost:9595/sidemenu/approval">결재</a></li>
+            <li><a href="http://localhost:9595/schedule">근태관리</a></li>
+            <li><a href="http://localhost:9595/messenger">메신저(채팅)</a></li>
+            <li><a href="http://localhost:9595/mail">쪽지</a></li> <!-- 이메일을 쪽지로 변경 -->
+            <li><a href="http://localhost:9595/adoption">입양관리</a></li>
+            <li><a href="http://localhost:9595/animals">구조동물</a></li> <!-- 서브메뉴를 상위 메뉴로 이동 -->
+            <li><a href="http://localhost:9595/stock">재고관리</a></li>
+            <li><a href="http://localhost:9595/board">전사게시판</a></li>
+            <li><a href="http://localhost:9595/mypage">마이페이지</a></li>
+            <li><a href="http://localhost:9595/employee">직원정보</a></li>
+            <li><a href="http://localhost:9595/approval">결재요청</a></li>
             <li class="admin-menu">
                 <div class="admin-menu-wrapper">
-                    <a href="http://localhost:9595/sidemenu/manager">관리자전용
+                    <a href="http://localhost:9595/manager">관리자전용
                         <span class="material-symbols-outlined">keyboard_arrow_down</span>
                     </a>
                 </div>
                 <ul class="sub-menu">
-                    <li><a href="http://localhost:9595/sidemenu/manager">관리자페이지</a></li>
-                    <li><a href="http://localhost:9595/sidemenu/employeeRegister">사원등록</a></li>
-                    <li><a href="http://localhost:9595/sidemenu/employeeManagement">직원관리</a></li>
-                    <li><a href="http://localhost:9595/sidemenu/approvalBox">결재함</a></li>
+                    <li><a href="http://localhost:9595/manager">관리자페이지</a></li>
+                    <li><a href="http://localhost:9595/employeeRegister">사원등록</a></li>
+                    <li><a href="http://localhost:9595/employeeManagement">직원관리</a></li>
+                    <li><a href="http://localhost:9595/approvalBox">결재함</a></li>
                 </ul>
             </li>
         </ul>
+        <div class="current-user">
+            <img id="unique-user-profile-picture" src="" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%;">
+            <div id="unique-user-info">
+                <div id="unique-user-department" class="user-info-box"></div>
+                <div class="name-position">
+                    <div id="unique-user-name-display" class="user-info-box"></div>
+                    <div id="unique-user-position" class="user-info-box"></div>
+                </div>
+            </div>
+            <form id="logout-form-unique" action="/logout" method="post" onsubmit="return confirmLogoutUnique();">
+                <button id="logout-button-unique" class="logout-button-unique" type="button" onclick="confirmLogoutUnique()">로그아웃</button> <!-- 로그아웃 버튼 -->
+            </form>
+        </div>
     </div>
 </header>
 <div class="change-screen-myComments">

@@ -29,7 +29,7 @@ public class MailController {
         this.userInfoService = userInfoService;
     }
 
-    @GetMapping("/sidemenu/mail")
+    @GetMapping("/mail")
     public String mailAllSelect(Model model,
                                 @RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "15") int size) {
@@ -138,7 +138,7 @@ public class MailController {
 
         mailService.sentRegistMail(mailDTO, recipientIds, recipientNames);
 
-        return "redirect:/sidemenu/mail";
+        return "redirect:/mail";
     }
 
     @GetMapping("/mail/important")

@@ -34,7 +34,7 @@ public class AdoptionController {
 /* comment.--------------------------------- 입양진행중 Tab --------------------------------- */
 
     // 입양 페이지로 이동
-    @GetMapping("/sidemenu/adoption")
+    @GetMapping("/adoption")
     public String adoptionList(Model model){
 
         UserInfoResponse userInfo =  userInfoService.getUserInfo();

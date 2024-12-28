@@ -19,6 +19,7 @@
     border-radius: 5px; /* 모서리 둥글게 (선택 사항) */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
     text-align: center;
+    border: 1px solid pink;
 }
 
 .main-form3 {
@@ -50,6 +51,7 @@
     height: 280px;
     border-radius: 10px;
     box-shadow: 0 5px 5px 4px rgba(0, 0, 0, 0.1); /* 그림자 아래로 연하게 조정 */
+    border: 1px solid pink;
 }
 
 .adapt-sub-box h1 {

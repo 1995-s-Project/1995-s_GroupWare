@@ -35,7 +35,7 @@ public class ApprovalController {
     private ScheduleService scheduleService;
 
     // 결재 페이지로 이동
-    @GetMapping("/sidemenu/approval")
+    @GetMapping("/approval")
     public String approval() {
         return "sidemenu/approval/approval";
     }

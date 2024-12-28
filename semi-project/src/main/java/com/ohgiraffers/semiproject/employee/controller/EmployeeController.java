@@ -28,7 +28,7 @@ public class EmployeeController {
     }
 
     // 직원 전체 조회
-    @GetMapping("sidemenu/employee")
+    @GetMapping("/employee")
     public String empAll(Model model, @RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "15") int size) {
 

@@ -15,7 +15,7 @@ public class MessengerController {
     @Autowired
     private MessengerService service;
 
-    @GetMapping("/sidemenu/messenger")
+    @GetMapping("/messenger")
     public String showMessenger() {
 
         return "sidemenu/messenger/messenger";
