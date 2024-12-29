@@ -21,7 +21,7 @@ public interface BoardMapper {
 
     long countSearch(String query);
 
-    void boardRegist(BoardDTO board);
+    void boardRegist(BoardEmpDTO board);
 
     void delete(Integer boardCode);
 

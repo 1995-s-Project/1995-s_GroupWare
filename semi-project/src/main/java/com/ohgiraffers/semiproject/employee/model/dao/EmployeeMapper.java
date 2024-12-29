@@ -52,4 +52,5 @@ public interface EmployeeMapper {
     void changePhone(String newPhone, String empCode);
     // 직원 사번코드 가져오기
     List<EmployeeScheduleInfoDTO> getEmployeeCode();
+
 }

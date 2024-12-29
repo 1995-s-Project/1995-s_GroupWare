@@ -61,7 +61,7 @@
     <div class="employee">
       <div class="title-search">
         <div class="container">
-          <form action="sidemenu/employee/search" method="get" th:action="@{/sidemenu/employee/search}" style="display: flex; float: right;">
+          <form th:action="@{/employee/search}" method="get" style="display: flex; float: right;">
             <input class="search" type="text" name="query" placeholder="이름을 입력하세요..." required>
             <button type="submit" class="styled-button">🔎 검색</button>
           </form>

@@ -356,6 +356,6 @@ public class MailController {
         return ResponseEntity.ok("메일 이동 성공");
     }
 
-    @GetMapping("/sidemenu/mail/mail")
+    @GetMapping("/mail/mail")
     public void mail(){}
 }

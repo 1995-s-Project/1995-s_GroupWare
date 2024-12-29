@@ -112,13 +112,13 @@
                         <br>
                         <small th:text="'날짜 : ' + ${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></small>
                         <small style="margin-left: auto">
-                            <a th:href="@{/sidemenu/employee/{empCode}/comment/{id}/delete(empCode=${emp.empCode}, id=${comment.id})}" class="delete">📃 삭제</a>
+                            <a th:href="@{/employee/{empCode}/comment/{id}/delete(empCode=${emp.empCode}, id=${comment.id})}" class="delete">📃 삭제</a>
                         </small>
                     </div>
                 </div>
             </div>
             <div align="center" class="view-footer">
-                <a class="view-page" th:href="@{/sidemenu/employee}">목록</a>
+                <a class="view-page" th:href="@{/employee}">목록</a>
             </div>
         </div>
     </div>

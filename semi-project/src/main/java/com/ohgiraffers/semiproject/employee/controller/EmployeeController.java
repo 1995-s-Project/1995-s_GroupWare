@@ -50,7 +50,7 @@ public class EmployeeController {
     }
 
     // 직원 검색 조회
-    @GetMapping("/sidemenu/employee/search")
+    @GetMapping("/employee/search")
     public String empSearch(@RequestParam String query, Model model,
                             @RequestParam(defaultValue = "0") int page,
                             @RequestParam(defaultValue = "15") int size) {
@@ -131,7 +131,7 @@ public class EmployeeController {
     }
 
     // 댓글삭제
-    @GetMapping("/sidemenu/employee/{empCode}/comment/{id}/delete")
+    @GetMapping("/employee/{empCode}/comment/{id}/delete")
     public String commentDelete(@PathVariable String empCode, @PathVariable Integer id) {
 
         UserInfoResponse userInfo = userInfoService.getUserInfo();
@@ -152,7 +152,7 @@ public class EmployeeController {
     }
 
     // 메인으로 돌아가기
-    @GetMapping("/sidemenu/employee/employee")
+    @GetMapping("/employee/employee")
     public void employee() {
     }
 }

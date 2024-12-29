@@ -61,7 +61,7 @@
         <div class="employee">
             <div class="title-search">
                 <div class="container">
-                    <form action="sidemenu/board/search" method="get" th:action="@{/sidemenu/employee/search}">
+                    <form th:action="@{/employee/search}" method="get" >
                         <input class="search" type="text" name="query" placeholder="이름을 입력하세요..." required>
                         <button type="submit" class="styled-button">🔎 검색</button>
                     </form>
@@ -108,23 +108,23 @@
             </tr>
             </tbody>
         </table>
-            <form action="/sidemenu/employee/page" method="get">
+            <form action="/employee/page" method="get">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <li class="page-item" th:classappend="${pageInfo.currentPage == 0} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{/sidemenu/employee(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}">Previous</a>
+                               th:href="@{/employee(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}">Previous</a>
                         </li>
                         <li class="page-item"
                             th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
                             th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
                             <a class="page-link"
-                               th:href="@{/sidemenu/employee(page=${pageNum}, size=${pageInfo.pageSize})}"
+                               th:href="@{/employee(page=${pageNum}, size=${pageInfo.pageSize})}"
                                th:text="${pageNum + 1}"></a>
                         </li>
                         <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{/sidemenu/employee(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}">Next</a>
+                               th:href="@{/employee(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}">Next</a>
                         </li>
                     </ul>
                 </nav>

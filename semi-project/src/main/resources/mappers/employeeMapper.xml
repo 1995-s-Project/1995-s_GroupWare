@@ -99,7 +99,7 @@
     </where>
     </select>
     <!-- 게시판 작성 -->
-    <insert id="boardRegist" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardDTO">
+    <insert id="boardRegist" parameterType="com.ohgiraffers.semiproject.board.model.dto.BoardEmpDTO">
         insert into tbl_board
             (
             board_code,

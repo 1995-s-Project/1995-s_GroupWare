@@ -67,18 +67,18 @@
                         <div class="view-date" th:text="'날짜 '+ ${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></div>
                         <div class="view-count" th:text="'조회수 ' + ${board.viewCnt}"></div>
                         <div class="view-ud">
-                            <div class="view-update">
-                                <a th:href="@{/sidemenu/board/{boardCode}/update(boardCode=${board.boardCode})}">📃 수정</a>
+                            <div class="view-update" th:if="${userRole == 'ADMIN' or ( (job == 'J1' or job == 'J2' or job == 'J3') and userCode == board.empCode)}">
+                                <a th:href="@{/board/{boardCode}/update(boardCode=${board.boardCode})}">📃 수정</a>
                             </div>
-                            <div class="view-delete">
-                                <a id="delete" th:href="@{/sidemenu/board/{boardCode}/delete(boardCode=${board.boardCode})}">🗑 삭제</a>
+
+                            <div class="view-delete" th:if="${userRole == 'ADMIN' or ( (job == 'J1' or job == 'J2' or job == 'J3') and userCode == board.empCode)}">
+                                <a id="delete" th:href="@{/board/{boardCode}/delete(boardCode=${board.boardCode})}">🗑 삭제</a>
                             </div>
-                        </div>
                     </div>
                 </div>
                 <div class="view-content" th:text="${board.boardContents}">내용</div>
                 <div align="center" class="view-footer">
-                    <a class="view-page" th:href="@{/sidemenu/board}">목록</a>
+                    <a class="view-page" th:href="@{/board}">목록</a>
                 </div>
             </div>
         </div>

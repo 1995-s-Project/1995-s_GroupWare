@@ -60,11 +60,12 @@
     <div id="change-screen-content">
         <div class="board">
             <div class="title-search">
-                <div style="text-align: right;">
-                    <button class="styled-button" onclick="location.href='/sidemenu/board/regist'">📝 글쓰기</button>
+                <div>
+                    <button class="styled-button" th:if="${userRole == 'ADMIN' or job == 'J1' or job == 'J2' or job == 'J3'}"
+                            onclick="location.href='/board/regist'">📝 글쓰기</button>
                 </div>
                 <div>
-                    <form action="/sidemenu/board/search" method="get">
+                    <form th:action="@{/board/search}" method="get">
                         <input class="search" type="text" name="query" placeholder="제목을 입력해주세요..." required>
                         <button type="submit" class="styled-button">🔎 검색</button>
                     </form>
@@ -82,13 +83,14 @@
                 </thead>
                 <tbody>
                 <!-- 검색결과 X -->
-                <tr th:if="${boardSearch.isEmpty}">
+                <tr th:if="${boardSearch.isEmpty()}">
                     <td colspan="5" style="text-align: center;">검색 결과가 없습니다</td>
                 </tr>
-                <tr th:each="board, stat : ${boardSearch}" th:if="${!boardSearch.isEmpty}">
-                    <td class="code-style" th:text="${boardSearch.size() - stat.index}"></td>
+                <tr th:each="board, stat : ${boardSearch}" th:if="${!boardSearch.isEmpty()}">
+                    <!-- 전체 게시글 번호 계산 -->
+                    <td class="code-style" th:text="${stat.index + 1}"></td>
                     <td>
-                        <a class="styled-link" th:href="@{/sidemenu/board/{boardCode}(boardCode=${board.boardCode})}"
+                        <a class="styled-link" th:href="@{/board/{boardCode}(boardCode=${board.boardCode})}"
                            th:text="${board.boardTitle}"></a>
                     </td>
                     <td th:text="${board.employeeDTO.empName}"></td>
@@ -97,30 +99,26 @@
                 </tr>
                 </tbody>
             </table>
-
-            <!-- 페이지 네비게이션 -->
-            <form action="/sidemenu/board/page" method="get">
+            <form action="/board/page" method="get">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <!-- 이전 페이지 링크 -->
                         <li class="page-item" th:classappend="${pageInfo.currentPage == 0} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{/sidemenu/board/search(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize}, query=${query})}">Previous</a>
+                               th:href="@{/board/search(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize}, query=${query})}">Previous</a>
                         </li>
-
                         <!-- 페이지 번호 링크 -->
                         <li class="page-item"
                             th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
                             th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
                             <a class="page-link"
-                               th:href="@{/sidemenu/board/search(page=${pageNum}, size=${pageInfo.pageSize}, query=${query})}"
+                               th:href="@{/board/search(page=${pageNum}, size=${pageInfo.pageSize}, query=${query})}"
                                th:text="${pageNum + 1}"></a>
                         </li>
-
                         <!-- 다음 페이지 링크 -->
                         <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{/sidemenu/board/search(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize}, query=${query})}">Next</a>
+                               th:href="@{/board/search(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize}, query=${query})}">Next</a>
                         </li>
                     </ul>
                 </nav>

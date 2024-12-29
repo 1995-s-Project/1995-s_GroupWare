@@ -216,7 +216,7 @@
         AND comment_emp_code = #{commentEmpCode}
     </delete>
 
-<!-- 마이페이지 - 내 댓글 조회 메소드 -->
+    <!-- 마이페이지 - 내 댓글 조회 메소드 -->
     <select id="getUserComment" resultMap="CommentResultMap">
         SELECT
         C.id,

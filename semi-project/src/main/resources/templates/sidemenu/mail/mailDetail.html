@@ -104,7 +104,7 @@
           <small th:text="'보낸사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + ${mail.senderName}"></small><br><br>
           <small th:text="'받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + ${mail.recipientName}"></small><br><br>
           <small th:text="'날짜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + ${#dates.format(mail.sendDate, 'yyyy-MM-dd')}"></small>
-          <a class="main-page" th:href="@{/sidemenu/mail}">목록</a>
+          <a class="main-page" th:href="@{/mail}">목록</a>
         </div>
         <div class="content-box" th:text="${mail.content}"></div>
         <div id="messageModal" class="modal">
