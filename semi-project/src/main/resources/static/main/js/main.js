@@ -33,6 +33,9 @@ function loadUserInfo() {
             return response.json(); // JSON 형식으로 응답을 파싱
         })
         .then(data => {
+
+            console.log('현재 권한', data.userRole);
+
             // 프로필 사진 URL 처리
             const profilePictureUrl = data.profilePictureUrl || '';
             // 이미지 경로가 /img/profile/로 시작하지 않으면 경로를 붙여줌
@@ -73,6 +76,14 @@ function loadUserInfo() {
             // 직급 코드에 따라 직급명을 설정
             const positionName = positionMap[data.position] || '알 수 없는 직급'; // 기본값 설정
             document.getElementById('unique-user-position').innerText = positionName; // 직급명 설정
+
+            // 사용자 역할에 따라 관리자 메뉴 표시/숨기기
+            const adminMenu = document.querySelector('.admin-menu');
+            if (data.userRole === 'USER') {
+                adminMenu.style.display = 'none'; // USER일 경우 관리자 메뉴 숨기기
+            } else if (data.userRole === 'ADMIN') {
+                adminMenu.style.display = 'block'; // ADMIN일 경우 관리자 메뉴 보이기
+            }
         })
         .catch(error => {
             console.error('Error loading user info:', error);
@@ -140,3 +151,13 @@ document.addEventListener("DOMContentLoaded", function() {
         updateCount(counter, parseInt(counter.innerText), 8000);
     });
 });
+
+
+
+
+
+
+
+
+
+

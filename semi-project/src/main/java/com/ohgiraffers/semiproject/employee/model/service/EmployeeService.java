@@ -83,4 +83,9 @@ public class EmployeeService {
     public List<EmployeeScheduleInfoDTO> getEmployeeList() {
         return  employeeMapper.getEmployeeList();
     }
+
+    // 직원 사번 코드 가져오기
+    public List<EmployeeScheduleInfoDTO> getEmployeeCode() {
+        return  employeeMapper.getEmployeeCode();
+    }
 }

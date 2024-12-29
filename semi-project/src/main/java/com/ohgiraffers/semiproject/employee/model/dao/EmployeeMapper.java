@@ -50,4 +50,6 @@ public interface EmployeeMapper {
     void changeAddress(String newAddress, String empCode);
     // 회원정보수정 - 휴대전화번호 수정
     void changePhone(String newPhone, String empCode);
+    // 직원 사번코드 가져오기
+    List<EmployeeScheduleInfoDTO> getEmployeeCode();
 }

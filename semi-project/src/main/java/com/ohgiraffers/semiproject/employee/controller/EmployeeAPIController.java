@@ -26,4 +26,12 @@ public class EmployeeAPIController {
 
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/api/employeeCode")
+    public ResponseEntity<List<EmployeeScheduleInfoDTO>> getEmployeeCode(){
+
+        List<EmployeeScheduleInfoDTO> list = employeeService.getEmployeeCode();
+
+        return ResponseEntity.ok(list);
+    }
 }
