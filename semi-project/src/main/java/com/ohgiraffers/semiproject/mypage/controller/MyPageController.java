@@ -51,15 +51,17 @@ public class MyPageController {
 
     // 회원정보수정 - 프로필이미지 수정
     @PostMapping("/updateProfileImage")
-    public String updateProfileImage(@RequestParam("fileName") String fileName, RedirectAttributes redirectAttributes){
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> updateProfileImage(@RequestParam("fileName") String fileName){
         UserInfoResponse userInfo = userInfoService.getUserInfo();
         String empCode = userInfo.getCode();
 
-        boolean updateProfile = myPageService.changeProfileImage(fileName, empCode);
+        myPageService.changeProfileImage(fileName, empCode);
 
-        redirectAttributes.addFlashAttribute("alertMessage", updateProfile ? "프로필 사진이 성공적으로 수정되었습니다." : "프로필 사진 수정에 실패했습니다. 다시 시도해주세요.");
+        Map<String, String> response = new HashMap<>();
+        response.put("updateMessage", "수정이 완료되었습니다.");
 
-        return "redirect:/mypage";
+        return ResponseEntity.ok(response);
     }
 
     // 회원정보수정 - 프로필이미지 삭제
@@ -105,26 +107,18 @@ public class MyPageController {
     }
 
     @PostMapping("/setting/password")
-    public String settingPassWord(@RequestParam String newPW, @RequestParam String confirmPW, Model model) {
-        // 새 비밀번호와 확인 비밀번호가 일치하는지 체크
-        if (!newPW.equals(confirmPW)) {
-            model.addAttribute("message", "새 비밀번호가 일치하지 않습니다.");
-
-            return "sidemenu/mypage/settingPass";
-        }
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> settingPassWord(@RequestParam String newPW, @RequestParam String confirmPW, Model model) {
 
         UserInfoResponse userInfo = userInfoService.getUserInfo();
         String code = userInfo.getCode();
         // 새 비밀번호를 변경하는 로직 (예시: 암호화 후 저장)
-        boolean passwordChanged = myPageService.changePassword(newPW,code);
+        myPageService.changePassword(newPW, code);
 
-        if (passwordChanged) {
-            model.addAttribute("message", "비밀번호가 성공적으로 변경되었습니다.");
-        } else {
-            model.addAttribute("message", "비밀번호 변경에 실패했습니다.");
-        }
+        Map<String, String> response = new HashMap<>();
+        response.put("updateMessage", "비밀번호 변경이 성공적으로 완료되었습니다.\n새로운 비밀번호로 다시 로그인 해주세요.");
 
-        return "/home";
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/check-password")
@@ -147,7 +141,7 @@ public class MyPageController {
 
 
     // 마이페이지 - 댓글내역
-    @GetMapping("/my-activity/comments")
+    @GetMapping("/myActivity/comments")
     public String myComments(Model model) {
 
         UserInfoResponse userInfo = userInfoService.getUserInfo();
@@ -159,7 +153,7 @@ public class MyPageController {
         return "sidemenu/mypage/myComments";
     }
 
-    @GetMapping("/my-activity/posts")
+    @GetMapping("/myActivity/posts")
     public String myPosts(Model model) {
         UserInfoResponse userInfo = userInfoService.getUserInfo();
         String code = userInfo.getCode();

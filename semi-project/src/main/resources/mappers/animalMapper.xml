@@ -336,7 +336,7 @@
         from
             tbl_animal
         Where
-            animal_status = '보호중' OR animal_status = '공고중'
+            animal_status = '보호중' OR animal_status = '공고중' OR animal_status = '파양/보호중'
     </select>
 
 </mapper>

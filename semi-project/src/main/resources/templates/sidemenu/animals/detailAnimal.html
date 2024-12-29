@@ -57,85 +57,92 @@
     </div>
 </header>
 <div class="change-screen-animalDetail">
-    <div class="change-screen-animalDetail">
-        <h2>동물 상세 페이지</h2>
-        <img th:src="@{${detail.animalImage != null and detail.animalImage != '' ? '/img/animals/' + detail.animalImage : '/img/animals/defaultAnimal.jpg'}}"
-             alt="Animal Image" width="200px" height="200px"/>
-        <table class="animal-details-table">
-            <thead>
-            <tr>
-                <th>항목</th>
-                <th>상세 내용</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>동물 등록번호</td>
-                <td th:text="${detail.animalCode}"></td>
-            </tr>
-            <tr>
-                <td>분류 & 품종</td>
-                <td>
-                    <span th:text="${detail.typeDTO.typeName}"></span> /
-                    <span th:text="${detail.breedDTO.breedName}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>나이 & 성별</td>
-                <td>
-                    <span th:text="${detail.age}"></span> /
-                    <span th:text="${detail.gender}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>건강검진 & 접종 상태</td>
-                <td>
-                    <ul>
-                        <li th:each="healthCheck : ${health.healthChecks}" th:text="${healthCheck.healthcheckName}"></li>
-                    </ul>
-                    <ul>
-                        <li th:each="inoculation : ${inoculate.inoculations}" th:text="${inoculation.inoculationName}"></li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td>구조장소 & 구조 날짜</td>
-                <td>
-                    <span th:text="${detail.rescueLocation}"></span> /
-                    <span th:text="${#dates.format(detail.rescueDate, 'yyyy-MM-dd')}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>상태</td>
-                <td th:text="${detail.animalStatus}"></td>
-            </tr>
-            <tr>
-                <td>입양자 & 입양자 폰번호</td>
-                <td>
-                    <span th:text="${detail.adoptDTO != null ? detail.adoptDTO.adoptName : ''}"></span> /
-                    <span th:text="${detail.adoptDTO != null ? detail.adoptDTO.adoptPhone : ''}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>입양 시작 & 완료 날짜</td>
-                <td>
-                    <span th:text="${detail.adoptDTO != null && detail.adoptDTO.adoptStartDate != null ? #dates.format(detail.adoptDTO.adoptStartDate, 'yyyy-MM-dd') : ''}"></span> /
-                    <span th:text="${detail.adoptDTO != null && detail.adoptDTO.adoptEndDate != null ? #dates.format(detail.adoptDTO.adoptEndDate, 'yyyy-MM-dd') : ''}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>기타 사항</td>
-                <td th:text="${detail.etc}"></td>
-            </tr>
-            <tr>
-                <td>담당자 & 담당자 폰번호</td>
-                <td>
-                    <span th:text="${detail.empDTO.empName}"></span> /
-                    <span th:text="${detail.empDTO.empPhone}"></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <h2>동물 상세 페이지</h2>
+    <div class="animal-detail-layout">
+        <img class="animal-image" th:src="@{${detail.animalImage != null && detail.animalImage != '' ? '/img/animals/' + detail.animalImage : '/img/animals/defaultAnimal.jpg'}}"
+             alt="Animal Image" />
+        <div class="animal-info">
+            <table class="animal-details-table">
+                <thead>
+                <tr>
+                    <th>항목</th>
+                    <th>상세 내용</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>동물 등록번호</td>
+                    <td th:text="${detail.animalCode}"></td>
+                </tr>
+                <tr>
+                    <td>분류 & 품종</td>
+                    <td>
+                        <span th:text="${detail.typeDTO.typeName}"></span> /
+                        <span th:text="${detail.breedDTO.breedName}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>나이 & 성별</td>
+                    <td>
+                        <span th:text="${detail.age}"></span> /
+                        <span th:text="${detail.gender}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>구조장소 & 구조 날짜</td>
+                    <td>
+                        <span th:text="${detail.rescueLocation}"></span> /
+                        <span th:text="${#dates.format(detail.rescueDate, 'yyyy-MM-dd')}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>상태</td>
+                    <td th:text="${detail.animalStatus}"></td>
+                </tr>
+                <tr>
+                    <td>건강검진 상태</td>
+                    <td>
+                        <ul>
+                            <li th:each="healthCheck : ${health.healthChecks}" th:text="${healthCheck.healthcheckName}"></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>접종 상태</td>
+                    <td>
+                        <ul>
+                            <li th:each="inoculation : ${inoculate.inoculations}" th:text="${inoculation.inoculationName}"></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>입양자 & 입양자 폰번호</td>
+                    <td>
+                        <span th:text="${detail.adoptDTO != null ? detail.adoptDTO.adoptName : ''}"></span> /
+                        <span th:text="${detail.adoptDTO != null ? detail.adoptDTO.adoptPhone : ''}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>입양 시작 & 완료 날짜</td>
+                    <td>
+                        <span th:text="${detail.adoptDTO != null && detail.adoptDTO.adoptStartDate != null ? #dates.format(detail.adoptDTO.adoptStartDate, 'yyyy-MM-dd') : ''}"></span> /
+                        <span th:text="${detail.adoptDTO != null && detail.adoptDTO.adoptEndDate != null ? #dates.format(detail.adoptDTO.adoptEndDate, 'yyyy-MM-dd') : ''}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>기타 사항</td>
+                    <td th:text="${detail.etc}"></td>
+                </tr>
+                <tr>
+                    <td>담당자 & 담당자 폰번호</td>
+                    <td>
+                        <span th:text="${detail.empDTO.empName}"></span> /
+                        <span th:text="${detail.empDTO.empPhone}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>

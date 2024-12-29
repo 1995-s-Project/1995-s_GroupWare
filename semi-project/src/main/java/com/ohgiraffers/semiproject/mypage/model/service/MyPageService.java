@@ -20,15 +20,13 @@ public class MyPageService {
         this.employeeMapper = employeeMapper;
     }
 
-    public boolean changePassword(String newPW, String code) {
+    public void changePassword(String newPW, String code) {
 
         // 새 비밀번호 암호화
         String encryptedPassword = encoder.encode(newPW);
 
         // 사용자의 비밀번호를 암호화된 새 비밀번호로 업데이트
-        int passwordUpdate = employeeMapper.updatePasswordByCode(encryptedPassword, code);
-
-        return passwordUpdate > 0;
+        employeeMapper.updatePasswordByCode(encryptedPassword, code);
     }
 
     public boolean checkCurrentPassword(String enteredPassword, String currentPassword) {
@@ -37,11 +35,9 @@ public class MyPageService {
 
 
     // 회원정보수정 - 프로필이미지 수정
-    public boolean changeProfileImage(String fileName, String empCode) {
+    public void changeProfileImage(String fileName, String empCode) {
 
-        int updateProfile = employeeMapper.changeProfileImage(fileName, empCode);
-
-        return updateProfile > 0;
+        employeeMapper.changeProfileImage(fileName, empCode);
     }
 
     // 회원정보수정 - 프로필이미지 삭제

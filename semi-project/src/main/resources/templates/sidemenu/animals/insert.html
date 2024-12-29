@@ -59,7 +59,7 @@
 <div class="change-screen-animals-insert">
     <div id="change-screen-content">
 
-        <form action="/sidemenu/animals/insert" class="insert-group" method="post">
+        <form action="/animals/insert" class="insert-group" method="post">
             <!-- 프로필 사진 업로드 -->
             <div class="animal-container">
                 <div class="animal-pic" id="animal-pic">
@@ -168,7 +168,7 @@
             let breedData = [];
 
             // 품종 비동기처리
-            fetch("/sidemenu/animals/breed")
+            fetch("/animals/breed")
                 .then(res => res.json())
                 .then(data => {
                     breedData = data; // 비동기로 가져온 데이터를 저장

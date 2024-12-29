@@ -67,7 +67,7 @@
                         기본 설정
                     </div>
                     <ul class="dropdown-menu">
-                        <li><a href="/sidemenu/mypage">회원정보 수정</a></li>
+                        <li><a href="/mypage">회원정보 수정</a></li>
                         <li><a href="/setting/password">비밀번호 변경</a></li>
                     </ul>
                 </div>
@@ -77,8 +77,8 @@
                         내 활동
                     </div>
                     <ul class="dropdown-menu">
-                        <li><a href="/my-activity/comments">댓글 내역</a></li>
-                        <li><a href="/my-activity/posts">게시글 내역</a></li>
+                        <li><a href="/myActivity/comments">댓글 내역</a></li>
+                        <li><a href="/myActivity/posts">게시글 내역</a></li>
                     </ul>
                 </div>
             </nav>
@@ -87,7 +87,7 @@
         <div class="content-container">
             <h3>기본 설정 > 비밀번호 변경</h3>
             <hr class="main-line">
-            <form action="/setting/password" method="post" class="password-change-form">
+            <form id="passForm" action="/setting/password" method="post" class="password-change-form"  onsubmit="updatePassword(event)">
                 <div class="form-group">
                     <label for="current-password">현재 비밀번호</label>
                     <input type="password" id="current-password" name="insertPW" placeholder="현재 비밀번호를 입력하세요" oninput="checkPassword(this.value)">
@@ -121,6 +121,33 @@
 </div>
 
 <script>
+    function updatePassword(event) {
+        event.preventDefault(); // 기본 폼 제출 동작을 막음
+
+        const form = document.getElementById('passForm');
+        const formData = new FormData(form); // FormData는 폼 데이터를 자동으로 포장해줌
+
+        console.log("폼 데이터: ", formData);
+
+        fetch('/setting/password', {
+            method: 'POST',
+            body: formData, // 폼 데이터 전송
+        })
+            .then(response => response.json())  // 서버에서 반환된 JSON 처리
+            .then(data => {
+                console.log("서버 응답: ", data);
+                if (data.updateMessage) {
+                    alert(data.updateMessage); // 서버에서 받은 메시지로 알림 창 표시
+
+                    // 수정이 완료되면 페이지를 리다이렉트
+                    window.location.href = '/home';  // '/mypage'로 리다이렉트 (페이지 주소는 수정 필요)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
     function checkPassword(currentPassword) {
         fetch('/check-password', {
             method: 'POST',
