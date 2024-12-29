@@ -36,7 +36,7 @@ public class BoardService {
     }
 
     @Transactional
-    public void boardRegist(BoardDTO board) {
+    public void boardRegist(BoardEmpDTO board) {
 
         boardMapper.boardRegist(board);
     }
