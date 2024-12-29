@@ -212,7 +212,8 @@
         from
             tbl_cacpayment
         where
-            admin_code = #{code} and progress_code = 'SU1'
+            (admin_code = #{code} and progress_code = 'SU1') or
+            (owner_code = #{code} and progress_code = 'SU2')
     </select>
 
     <select id="getOverTimeList" resultMap="OverTimeResultMap">
@@ -221,7 +222,8 @@
         from
             tbl_overtime
         where
-            admin_code = #{code} and progress_code = 'SU1'
+            (admin_code = #{code} and progress_code = 'SU1') or
+            (owner_code = #{code} and progress_code = 'SU2')
     </select>
 
     <select id="getRetirement" resultMap="RetirementResultMap">
@@ -230,7 +232,8 @@
         from
             tbl_retirement
         where
-            admin_code = #{code} and progress_code = 'SU1'
+            (admin_code = #{code} and progress_code = 'SU1') or
+            (owner_code = #{code} and progress_code = 'SU2')
     </select>
 
     <select id="getAnnualList" resultMap="VacPaymentResultMap">
@@ -239,7 +242,8 @@
         from
             tbl_vacpayment
         where
-        admin_code = #{code} and progress_code = 'SU1' and type = '연차'
+            (admin_code = #{code} and progress_code = 'SU1' and type = '연차') or
+            (owner_code = #{code} and progress_code = 'SU2' and type = '연차')
     </select>
 
     <select id="getVacationList" resultMap="VacPaymentResultMap">
@@ -248,6 +252,7 @@
         from
             tbl_vacpayment
         where
-            admin_code = #{code} and progress_code = 'SU1' and type = '휴가'
+            (admin_code = #{code} and progress_code = 'SU1' and type = '휴가') or
+            (owner_code = #{code} and progress_code = 'SU2' and type = '휴가')
     </select>
 </mapper>

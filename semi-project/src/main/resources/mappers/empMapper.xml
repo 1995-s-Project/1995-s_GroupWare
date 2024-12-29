@@ -273,6 +273,23 @@
             b.dept_name
     </select>
 
+    <select id="getEmployeeCode" resultMap="employeeScheduleListMap">
+        select
+        a.emp_code,
+        a.emp_name,
+        b.dept_name,
+        c.job_name,
+        d.workstart_time,
+        d.workend_time,
+        d.work_type
+        from
+        tbl_emp a
+        join tbl_dept b on (a.dept_code = b.dept_code)
+        join tbl_job c on (a.job_code = c.job_code)
+        left join tbl_work d on (a.emp_code = d.emp_code and d.work_date = CURRENT_DATE)
+    </select>
+
+
 <!-- 마이페이지 - 회원정보 이미지 수정 -->
     <update id="changeProfileImage">
         UPDATE tbl_emp

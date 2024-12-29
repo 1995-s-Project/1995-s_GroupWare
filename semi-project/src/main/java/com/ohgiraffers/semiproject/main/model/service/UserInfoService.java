@@ -1,5 +1,6 @@
 package com.ohgiraffers.semiproject.main.model.service;
 
+import com.ohgiraffers.semiproject.common.UserRole;
 import com.ohgiraffers.semiproject.home.auth.model.dto.AuthDetailes;
 import com.ohgiraffers.semiproject.home.model.dto.LoginUserDTO;
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
@@ -24,8 +25,9 @@ public class UserInfoService {
             String department = loginUserDTO.getDeptCode(); // 부서명 가져오기
             String position = loginUserDTO.getJobCode(); // 직급 가져오기
             String pass = loginUserDTO.getPass(); // 비밀번호 가져오기
+            UserRole authority = loginUserDTO.getAuthority();
 
-            return new UserInfoResponse(code, profilePictureUrl, name, department, position, pass);
+            return new UserInfoResponse(code, profilePictureUrl, name, department, position, pass, authority);
         }
         return null; // 또는 적절한 에러 처리
     }

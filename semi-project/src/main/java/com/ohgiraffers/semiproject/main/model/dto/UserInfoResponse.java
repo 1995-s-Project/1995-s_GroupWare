@@ -1,5 +1,6 @@
 package com.ohgiraffers.semiproject.main.model.dto;
 
+import com.ohgiraffers.semiproject.common.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class UserInfoResponse {
     private String department; // 부서명 추가
     private String position; // 직급 추가
     private String pass; // 사용자 비밀번호
+    private UserRole userRole;
 }
 
