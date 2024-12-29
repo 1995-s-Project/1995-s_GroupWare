@@ -62,7 +62,7 @@
             <div class="animal">
             <!--  검색  -->
             <div class="form-container">
-            <form th:action="@{/sidemenu/animals}" method="get" class="search-form">
+            <form th:action="@{/animals}" method="get" class="search-form">
                 <div class="search">
                     <div class="animal-search-group-inline">
                     <div class="typeCode-group">
@@ -93,7 +93,7 @@
                     <hr>
                     <div class="btn-container">
                         <button class="btn">🔍조회하기</button>
-                        <button class="btn" th:href="@{/sidemenu/animals}">📃목록으로</button>
+                        <button class="btn" th:href="@{/animals}">📃목록으로</button>
                     </div>
                 </div>
             </form>
@@ -106,7 +106,7 @@
                         전체 <span th:text="${totalRecords}"></span> 건
                     </div>
                     <div class="insert">
-                        <a href="/sidemenu/animals/insert">등록</a>
+                        <a href="/animals/insert">등록</a>
                     </div>
                     <div class="delete">
                         <a href="javascript:boardDelete();">삭제</a>
@@ -142,7 +142,7 @@
                             th:each="i : ${#numbers.sequence(1, totalPages)}"
                             th:text="${i}"
                             th:classappend="${currentPage == i ? 'btn-primary' : ''}"
-                            th:onclick="|location.href='/sidemenu/animals?page=' + ${i} + '&limit=8'|">
+                            th:onclick="|location.href='/animals?page=' + ${i} + '&limit=8'|">
                     </button>
                 </div>
             </div>
@@ -235,7 +235,7 @@
         }
     }
 
-    fetch("/sidemenu/animals/breed")
+    fetch("/animals/breed")
         .then(res => res.json())
         .then(data => {
             breedData = data; // 비동기로 가져온 데이터를 저장

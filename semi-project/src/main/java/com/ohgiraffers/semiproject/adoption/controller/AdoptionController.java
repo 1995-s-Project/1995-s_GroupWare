@@ -62,7 +62,7 @@ public class AdoptionController {
 
         adoptionService.updateByCanceled(adoptNo);
 
-        return "redirect:/sidemenu/adoption?tab=canceled";
+        return "redirect:/adoption?tab=canceled";
     }
 
     // 입양진행중 상세페이지
@@ -81,7 +81,7 @@ public class AdoptionController {
 
         adoptionService.updateByCompleted(adoptNo);
 
-        return "redirect:/sidemenu/adoption?tab=completed";
+        return "redirect:/adoption?tab=completed";
     }
 
     // 입양등록 - 동물등록번호 비동기 처리
@@ -120,7 +120,7 @@ public class AdoptionController {
 
         adoptionService.updateByGiveUp(adoptNo);
 
-        return "redirect:/sidemenu/adoption?tab=canceled";
+        return "redirect:/adoption?tab=canceled";
     }
 
 /* comment.--------------------------------- 입양취소 Tab --------------------------------- */

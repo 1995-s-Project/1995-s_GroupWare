@@ -77,8 +77,8 @@
                         내 활동
                     </div>
                     <ul class="dropdown-menu">
-                        <li><a href="/my-activity/comments">댓글 내역</a></li>
-                        <li><a href="/my-activity/posts">게시글 내역</a></li>
+                        <li><a href="/myActivity/comments">댓글 내역</a></li>
+                        <li><a href="/myActivity/posts">게시글 내역</a></li>
                     </ul>
                 </div>
             </nav>
@@ -95,11 +95,10 @@
                         <th>프로필 사진</th>
                         <td class="image">
                             <div class="image-container">
-
-                                <img th:src="${info.profile_image == null || info.profile_image.isEmpty() ? '/img/profile/default.jpg' : (info.profile_image.startsWith('img/profile/') ? '/' + info.profile_image : '/img/profile/' + info.profile_image)}"
-                                     alt="profile Image" id="profile_image"/>
+                                <img th:src="${info.profile_image == null || info.profile_image.isEmpty() ? '/img/default.png' : (info.profile_image.startsWith('/img/profile/') ?
+                                               info.profile_image : '/img/profile/' + info.profile_image)}" alt="profile Image" id="profile_image"/>
                                 <div class="image-info-actions">
-                                    <form action="/updateProfileImage" method="post">
+                                    <form id="profileForm" action="/updateProfileImage" method="post" onsubmit="updateProfileImage(event)">
                                         <div class="image-info-actions">
                                             <p>* 프로필 사진을 등록해주세요.</p>
                                             <p>* 이미지 파일 최대 크기 2MB 미만</p>
@@ -178,6 +177,30 @@
 </div>
 
 <script>
+    function updateProfileImage(event) {
+        event.preventDefault(); // 기본 폼 제출 동작을 막음
+
+        const form = document.getElementById('profileForm');
+        const formData = new FormData(form);
+
+        fetch('/updateProfileImage', {
+            method: 'POST',
+            body: formData, // 폼 데이터 전송
+        })
+            .then(response => response.json())  // 서버에서 반환된 JSON 처리
+            .then(data => {
+                console.log("서버 응답: ", data);
+                if (data.updateMessage) {
+                    alert(data.updateMessage); // 서버에서 받은 메시지로 알림 창 표시
+
+                    // 수정이 완료되면 페이지를 리다이렉트
+                    window.location.href = '/mypage';  // '/mypage'로 리다이렉트 (페이지 주소는 수정 필요)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
     // 전화번호변경
     function openPhoneNumberEdit() {

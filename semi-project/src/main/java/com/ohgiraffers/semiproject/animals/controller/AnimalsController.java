@@ -52,9 +52,6 @@ public class AnimalsController {
         return "sidemenu/animals/animals";
     }
 
-    @GetMapping("sidemenu/animals/animals")
-    public void animalHome(){}
-
     // 구조동물 상세페이지
     @GetMapping("/animals/detailAnimal/{animalCode}")
     public String detailAnimal(@PathVariable String animalCode,Model model){
@@ -72,7 +69,7 @@ public class AnimalsController {
     }
 
     // 동물등록번호 등록 시 자동부여
-    @GetMapping("/sidemenu/animals/insert")
+    @GetMapping("/animals/insert")
     public String addAnimal(Model model){
         String animalCode = animalsService.autoAnimalCode();
 
@@ -84,14 +81,14 @@ public class AnimalsController {
 
         return "sidemenu/animals/insert";
     }
-    @GetMapping(value = "/sidemenu/animals/breed", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/animals/breed", produces = "application/json; charset=UTF-8")
     @ResponseBody
     public List<BreedDTO> findCategoryList(){
         return animalsService.findBreed();
     }
 
     // 구조동물 등록
-    @PostMapping("/sidemenu/animals/insert")
+    @PostMapping("/animals/insert")
     public String newAnimal(@ModelAttribute AnimalDTO animalDTO,
                             @RequestParam List<String> healthChecks, // 수동으로 받기
                             @RequestParam List<String> inoculations){
