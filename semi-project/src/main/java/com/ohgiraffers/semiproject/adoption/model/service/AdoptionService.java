@@ -65,6 +65,9 @@ public class AdoptionService {
     // 취소 상세페이지
     public AdoptionDTO canceledAdopterDetail(String adoptNo){return adoptionMapper.canceledAdopterDetail(adoptNo);}
 
-
-
+/* comment.--------------------------------- 마이페이지 --------------------------------- */
+    // 마이페이지 - 입양 게시글 조회
+    public List<AdoptionDTO> getUserAdoptionPosts(String code) {
+        return adoptionMapper.getUserAdoptionPosts(code);
+    }
 }

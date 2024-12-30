@@ -1,0 +1,285 @@
+.change-screen-calendar {
+    width: 1850px;
+    height: 800px;
+    background-color: #f9f9f9; /* 배경색 수정 */
+    border-radius: 10px;
+    margin-bottom: 3%;
+    display: flex;
+    justify-content: center;
+}
+
+#change-screen-content {
+    display: flex;
+    align-items: stretch; /* 자식 요소들이 같은 높이를 가지도록 설정 */
+    width: 100%;
+}
+
+.navigation {
+    width: 300px;
+    height: 700px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin: 23px 0 15px 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 50px;
+}
+
+h1 {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 10px;
+    font-size: 40px;
+    color: #333;
+    width: 90%;
+    text-align: center;
+    z-index: 100;
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #007bff;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    margin-top: 0; /* 위쪽 여백 없애기 */
+}
+
+/* 기본 스타일 */
+.dropdown {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.dropdown-title {
+    color: #007bff;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    width: 100%;
+}
+
+.dropdown-menu {
+    display: block;
+    position: relative;
+    background-color: transparent;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.dropdown-menu.open {
+    max-height: 300px;
+    opacity: 1;
+}
+
+.dropdown-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.dropdown-menu li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: normal; /* 기본 폰트 굵기 */
+}
+
+.dropdown-menu li a.active {
+    font-weight: bold !important; /* 활성화된 항목의 폰트 굵기 */
+    color: #007bff !important; /* 선택된 항목의 텍스트 색상 */
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu.open li a:hover {
+    background-color: #e0e0e0;
+}
+
+.content-container {
+    display: flex; /* 세로로 배치 */
+    flex-direction: column; /* h3와 캘린더, 투두리스트를 세로로 배치 */
+    width: 1500px;
+    height: 710px; /* 고정된 높이 */
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin: 23px 23px 15px 30px;
+    padding: 20px;
+}
+
+/* h3 텍스트 영역 */
+.header-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+/* 캘린더와 투두리스트를 가로로 배치하는 영역 */
+.calendar-todo-container {
+    display: flex; /* 가로로 배치 */
+    gap: 20px; /* 캘린더와 투두리스트 간격 */
+    width: 100%;
+}
+
+/* 캘린더 영역 */
+.calendar-section {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 10px;
+    height: 635px; /* 원하는 높이 설정 */
+    overflow: hidden; /* 스크롤바 제거 */
+}
+
+#calendar {
+    width: 100%;
+    height: 100%; /* 캘린더가 부모 영역에 맞게 채우도록 설정 */
+    object-fit: contain; /* 컨텐츠가 영역에 맞게 자동으로 축소되도록 설정 */
+}
+
+/* 투두리스트 영역 */
+.todo-section {
+    height: 615px;
+    flex: 1; /* 투두리스트가 적게 차지하도록 설정 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+}
+
+/* To-Do Form */
+#todo-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#todo-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+#add-todo {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#add-todo:hover {
+    background-color: #0056b3;
+}
+
+/* To-Do List 항목 */
+#todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+#todo-list li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#todo-list li:hover {
+    background-color: #e0e0e0;
+}
+
+/* 캘린더 크기 조정 */
+
+
+/* .calendar-bottom 아래의 ul과 li 스타일 */
+.calendar-bottom ul {
+    list-style-type: none;
+    padding: 0;
+    max-height: 230px;
+    overflow-y: auto; /* 리스트가 넘칠 경우 스크롤 가능 */
+}
+
+.calendar-bottom li {
+    display: flex;
+    justify-content: space-between; /* 텍스트와 버튼을 양쪽 끝으로 배치 */
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.calendar-bottom li .todo-text {
+    flex-grow: 1; /* 텍스트가 가능한 공간을 차지하도록 설정 */
+}
+
+.calendar-bottom li button {
+    background-color: #007bff;
+    margin-left: 5px; /* 버튼 사이에 약간의 여백 추가 */
+}
+
+.calendar-bottom li button:hover {
+    background-color: #0056b3;
+}
+
+.calendar-bottom .completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+#todo-list li button {
+    margin-left: 10px; /* 버튼 사이에 여백 추가 */
+}
+
+.todo-label {
+    background-color: #ffcc00;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: -32px;
+    font-size: 12px;
+    position: relative;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+}
