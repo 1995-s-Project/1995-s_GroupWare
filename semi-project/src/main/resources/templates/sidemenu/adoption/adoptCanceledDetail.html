@@ -98,7 +98,9 @@
                 <section class="staff-section">
                     <h2>담당자 정보</h2>
                     <div class="staff-card">
-                        <img th:src="@{${'/img/profile/' + canceledDetail.empDTO.profileImage}}" alt="profile Image" />
+                        <img th:src="${completedDetail.empDTO.profileImage == null || completedDetail.empDTO.profileImage.isEmpty() ?
+                        '/img/default.png' : (completedDetail.empDTO.profileImage.startsWith('/img/profile/') ?
+                        completedDetail.empDTO.profileImage : '/img/profile/' + completedDetail.empDTO.profileImage)}" alt="profile Image"/>
                         <div class="staff-details">
                             <p><strong>담당자 : </strong> <span th:text="${canceledDetail.empDTO.empName}"></span></p>
                             <p><strong>핸드폰번호 : </strong> <span th:text="${canceledDetail.empDTO.empPhone}"></span></p>
