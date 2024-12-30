@@ -104,8 +104,8 @@
                     </div>
                     <hr>
                     <div class="btn-container">
-                        <button class="btn">🔍조회하기</button>
-                        <button class="btn" th:href="@{/animals}">📃목록으로</button>
+                        <button class="btn" onclick="saveSearchConditions()">🔍조회하기</button>
+                        <button class="btn" th:href="@{/animals}" onclick="clearSearchConditions()">📃목록으로</button>
                     </div>
                 </div>
             </form>
@@ -154,7 +154,7 @@
                             th:each="i : ${#numbers.sequence(1, totalPages)}"
                             th:text="${i}"
                             th:classappend="${currentPage == i ? 'btn-primary' : ''}"
-                            th:onclick="|location.href='/animals?page=' + ${i} + '&limit=8'|">
+                            th:onclick="|goToPage(${i})|">
                     </button>
                 </div>
             </div>
@@ -165,6 +165,76 @@
 </body>
 </html>
 <script>
+    window.onload = function() {
+        restoreSearchConditions();
+    };
+
+    function saveSearchConditions() {
+        const typeCode = document.querySelector('select[name="typeCode"]').value;
+        const breedCode = document.querySelector('select[name="breedCode"]').value;
+        const gender = document.querySelector('select[name="gender"]').value;
+        const rescueDate = document.querySelector('input[name="rescueDate"]').value;
+
+        console.log('typeCode:', typeCode);  // 값을 출력
+        console.log('breedCode:', breedCode);  // 값을 출력
+        console.log('gender:', gender);  // 값을 출력
+        console.log('rescueDate:', rescueDate);  // 값을 출력
+
+        // 검색 조건을 localStorage에 저장
+        localStorage.setItem('typeCode', typeCode);
+        localStorage.setItem('breedCode', breedCode);
+        localStorage.setItem('gender', gender);
+        localStorage.setItem('rescueDate', rescueDate);
+    }
+
+    function restoreSearchConditions() {
+        const typeCode = localStorage.getItem('typeCode');
+        const breedCode = localStorage.getItem('breedCode');
+        const gender = localStorage.getItem('gender');
+        const rescueDate = localStorage.getItem('rescueDate');
+
+        // 저장된 값이 없으면 기본값을 설정
+        document.querySelector('select[name="typeCode"]').value = typeCode ? typeCode : '';  // 기본값 빈 값
+        document.querySelector('select[name="breedCode"]').value = breedCode ? breedCode : '';
+        document.querySelector('select[name="gender"]').value = gender ? gender : '';
+        document.querySelector('input[name="rescueDate"]').value = rescueDate ? rescueDate : '';
+    }
+
+    // 페이지 이동
+    function goToPage(pageNumber) {
+        var url = new URL(window.location.href);
+        var params = new URLSearchParams(url.search);
+
+        // localStorage에서 검색 조건을 가져와서 URL 파라미터로 추가
+        params.set('page', pageNumber);
+        params.set('limit', 8);
+        params.set('typeCode', localStorage.getItem('typeCode') || '');  // 기본값 빈 값
+        params.set('breedCode', localStorage.getItem('breedCode') || '');
+        params.set('gender', localStorage.getItem('gender') || '');
+        params.set('rescueDate', localStorage.getItem('rescueDate') || '');
+
+        // URL을 업데이트하고 페이지 이동
+        window.location.href = "/animals?" + params.toString();
+    }
+
+    // 검색 조건 초기화 함수
+    function clearSearchConditions() {
+        // localStorage에서 모든 검색 조건 삭제
+        localStorage.removeItem('typeCode');
+        localStorage.removeItem('breedCode');
+        localStorage.removeItem('gender');
+        localStorage.removeItem('rescueDate');
+
+        // 검색 조건을 빈 값으로 설정
+        document.querySelector('select[name="typeCode"]').value = '';
+        document.querySelector('select[name="breedCode"]').value = '';
+        document.querySelector('select[name="gender"]').value = '';
+        document.querySelector('input[name="rescueDate"]').value = '';
+
+        // 페이지를 기본 URL로 리디렉션
+        window.location.href = "/animals";
+    }
+
     // 체크박스 전체 선택 클릭 이벤트
     function allChecked(target){
         // 전체 체크박스 버튼
