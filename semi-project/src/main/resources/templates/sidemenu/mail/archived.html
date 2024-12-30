@@ -63,31 +63,31 @@
                 <nav>
                     <ul class="ul-change">
                         <li style="font-size: 20px;">
-                            <a th:href="@{/mail}" style="text-decoration: none;">
+                            <a class="styled-link"  th:href="@{/mail}" style="text-decoration: none;">
                                 <b>📥&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지함</b>
                             </a>
                         </li>
                         <br><br><br>
                         <li style="font-size: 20px;">
-                            <a th:href="@{/mail/sent}" style="text-decoration: none;">
+                            <a class="styled-link"  th:href="@{/mail/sent}" style="text-decoration: none;">
                                 <b>📤&nbsp;&nbsp;&nbsp;&nbsp;보낸쪽지함</b>
                             </a>
                         </li>
                         <br><br><br>
                         <li style="font-size: 20px;">
-                            <a th:href="@{/mail/important}" style="text-decoration: none;">
+                            <a class="styled-link"  th:href="@{/mail/important}" style="text-decoration: none;">
                                 <b>⭐&nbsp;&nbsp;&nbsp;&nbsp;중요쪽지함</b>
                             </a>
                         </li>
                         <br><br><br>
                         <li style="font-size: 20px;">
-                            <a th:href="@{/mail/trash}" style="text-decoration: none;">
+                            <a class="styled-link"  th:href="@{/mail/trash}" style="text-decoration: none;">
                                 <b>❌&nbsp;&nbsp;&nbsp;&nbsp;휴지통</b>
                             </a>
                         </li>
                         <br><br><br>
                         <li style="font-size: 20px;">
-                            <a th:href="@{/mail/archived}" style="text-decoration: none;">
+                            <a class="styled-link"  th:href="@{/mail/archived}" style="text-decoration: none;">
                                 <b>📦&nbsp;&nbsp;&nbsp;&nbsp;보관함</b>
                             </a>
                         </li>
@@ -130,7 +130,7 @@
                         <td th:text="${mail.emailCode}"></td>
                         <td th:text="${mail.senderId}"></td>
                         <td>
-                            <a th:href="@{/mail/details/{emailCode}(emailCode=${mail.emailCode})}" th:class="styled-link" th:text="${mail.title}"></a>
+                            <a class="styled-link"  th:href="@{/mail/details/{emailCode}(emailCode=${mail.emailCode})}" th:class="styled-link" th:text="${mail.title}"></a>
                         </td>
                         <td th:text="${#dates.format(mail.sendDate, 'yyyy-MM-dd')}"></td>
                     </tr>
@@ -394,18 +394,49 @@
 
         // 선택된 직원이 없으면 경고 메시지 표시
         if (!recipientIdsField || !recipientIdsField.value || !recipientNameField || !recipientNameField.value) {
-            alert("받는 사람을 선택해 주세요!");
-            return;
+            alert("직원을 선택하셔야 합니다!");  // 메시지 수정
+            return;  // 폼 제출을 방지
         }
 
         // 선택된 직원이 있으면, 추가 작업
         const addressBookModal = document.getElementById('addressBookModal');
         if (addressBookModal) {
-            addressBookModal.style.display = 'none';
+            addressBookModal.style.display = 'none';  // 모달 창 닫기
         }
     }
 
-    // 직원 검색 함수
+    document.getElementById('sendMessageBtn').addEventListener('click', function (e) {
+        const recipientIdsField = document.getElementById('recipient_id');
+        const recipientNameField = document.getElementById('recipient_name');
+        const titleField = document.getElementById('title');
+        const messageField = document.getElementById('message');
+
+        // 직원이 선택되지 않았을 경우
+        if (!recipientIdsField.value || !recipientNameField.value) {
+            alert("직원을 선택하셔야 합니다!");  // 경고 메시지
+            e.preventDefault();  // 폼 제출 방지
+            return;
+        }
+
+        // 제목이 비어 있을 경우
+        if (!titleField.value.trim()) {
+            alert("제목을 입력하세요!");  // 경고 메시지
+            e.preventDefault();  // 폼 제출 방지
+            return;
+        }
+
+        // 내용이 비어 있을 경우
+        if (!messageField.value.trim()) {
+            alert("내용을 입력하세요!");  // 경고 메시지
+            e.preventDefault();  // 폼 제출 방지
+            return;
+        }
+
+        // 모든 필드가 올바르게 채워졌을 경우, 메일을 보냈다는 알림
+        alert("메일을 보냈습니다.");
+    });
+
+
     function filterEmployees() {
         const searchInput = document.getElementById('searchInput2').value.toLowerCase();
         const employeeListItems = document.querySelectorAll('#addressBookContainer2 .employee-list li');

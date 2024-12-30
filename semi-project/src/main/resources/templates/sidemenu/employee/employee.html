@@ -58,78 +58,90 @@
 </header>
 <div class="change-screen-employee">
     <div id="change-screen-content">
-        <div class="employee">
-            <div class="title-search">
-                <div class="container">
-                    <form th:action="@{/employee/search}" method="get" >
-                        <input class="search" type="text" name="query" placeholder="이름을 입력하세요..." required>
-                        <button type="submit" class="styled-button">🔎 검색</button>
-                    </form>
-                </div>
-            </div>
-        <table border="1"  class="post-list">
-            <colgroup>
-                <col style="width: 5%;">
-                <col style="width: 10%;">
-                <col style="width: 15%;">
-                <col style="width: 10%;">
-                <col style="width: 10%;">
-                <col style="width: 5%;">
-                <col style="width: 20%;">
-                <col style="width: 10%;">
-                <col style="width: 10%;">
-            </colgroup>
-            <thead>
-            <tr>
-                <th>사번</th>
-                <th>이름</th>
-                <th>이메일</th>
-                <th>휴대번호</th>
-                <th>입사일</th>
-                <th>성별</th>
-                <th>주소</th>
-                <th>직급</th>
-                <th class="dept">부서</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="emp : ${emp}">
-                <td th:text="${emp.empCode}"></td>
-                <td >
-                    <a th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}" th:text="${emp.empName}" class="styled-link"></a>
-                </td>
-                <td th:text="${emp.empEmail}"></td>
-                <td th:text="${emp.empPhone}"></td>
-                <td th:text="${#dates.format(emp.hireDate, 'yyyy-MM-dd')}"></td>
-                <td th:text="${emp.empGender}"></td>
-                <td th:text="${emp.empAddress}"></td>
-                <td th:text="${emp.jobDTO.jobName}"></td>
-                <td th:text="${emp.deptDTO.deptName}"></td>
-            </tr>
-            </tbody>
-        </table>
-            <form action="/employee/page" method="get">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li class="page-item" th:classappend="${pageInfo.currentPage == 0} ? 'disabled'">
-                            <a class="page-link"
-                               th:href="@{/employee(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}">Previous</a>
-                        </li>
-                        <li class="page-item"
-                            th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
-                            th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
-                            <a class="page-link"
-                               th:href="@{/employee(page=${pageNum}, size=${pageInfo.pageSize})}"
-                               th:text="${pageNum + 1}"></a>
-                        </li>
-                        <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1} ? 'disabled'">
-                            <a class="page-link"
-                               th:href="@{/employee(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </form>
-    </div>
+      <div class="main1">
+          <div class="form1">
+              <ul class="tree">
+                  <li>
+                      <input type="checkbox" id="root" />
+                      <label for="root">🐶PETHARMONY🐶</label>
+                      <ul>
+                          <li><a th:href="@{/employee/management}">💼경영부</a></li>
+                          <li><a th:href="@{/employee/dog}">💼애견담당부</a></li>
+                          <li><a th:href="@{/employee/marketing}">💼마케팅부</a></li>
+                          <li><a th:href="@{/employee/sales}">💼영업부</a></li>
+                          <li><a th:href="@{/employee/logistics}">💼물류부</a></li>
+                          <li><a th:href="@{/employee/customer}">💼고객/CS 업무부</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+          <div class="form2">
+              <div class="employee">
+                  <table border="1"  class="post-list">
+                      <colgroup>
+                          <col style="width: 5%;">
+                          <col style="width: 10%;">
+                          <col style="width: 15%;">
+                          <col style="width: 10%;">
+                          <col style="width: 10%;">
+                          <col style="width: 5%;">
+                          <col style="width: 20%;">
+                          <col style="width: 10%;">
+                          <col style="width: 10%;">
+                      </colgroup>
+                      <thead>
+                      <tr>
+                          <th>사번</th>
+                          <th>이름</th>
+                          <th>이메일</th>
+                          <th>휴대번호</th>
+                          <th>입사일</th>
+                          <th>성별</th>
+                          <th>주소</th>
+                          <th>직급</th>
+                          <th class="dept">부서</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="emp : ${emp}">
+                          <td th:text="${emp.empCode}"></td>
+                          <td >
+                              <a th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}" th:text="${emp.empName}" class="styled-link"></a>
+                          </td>
+                          <td th:text="${emp.empEmail}"></td>
+                          <td th:text="${emp.empPhone}"></td>
+                          <td th:text="${#dates.format(emp.hireDate, 'yyyy-MM-dd')}"></td>
+                          <td th:text="${emp.empGender}"></td>
+                          <td th:text="${emp.empAddress}"></td>
+                          <td th:text="${emp.jobDTO.jobName}"></td>
+                          <td th:text="${emp.deptDTO.deptName}"></td>
+                      </tr>
+                      </tbody>
+                  </table>
+                  <form action="/employee/page" method="get">
+                      <nav aria-label="Page navigation">
+                          <ul class="pagination">
+                              <li class="page-item" th:classappend="${pageInfo.currentPage == 0} ? 'disabled'">
+                                  <a class="page-link"
+                                     th:href="@{/employee(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}">Previous</a>
+                              </li>
+                              <li class="page-item"
+                                  th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
+                                  th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
+                                  <a class="page-link"
+                                     th:href="@{/employee(page=${pageNum}, size=${pageInfo.pageSize})}"
+                                     th:text="${pageNum + 1}"></a>
+                              </li>
+                              <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1} ? 'disabled'">
+                                  <a class="page-link"
+                                     th:href="@{/employee(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}">Next</a>
+                              </li>
+                          </ul>
+                      </nav>
+                  </form>
+              </div>
+          </div>
+      </div>
     </div>
 </div>
 </body>

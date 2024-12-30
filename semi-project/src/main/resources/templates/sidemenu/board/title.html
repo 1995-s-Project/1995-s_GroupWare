@@ -72,7 +72,8 @@
                             </div>
 
                             <div class="view-delete" th:if="${userRole == 'ADMIN' or ( (job == 'J1' or job == 'J2' or job == 'J3'or job == 'J4' or job == 'J5') and userCode == board.empCode)}">
-                                <a id="delete" th:href="@{/board/{boardCode}/delete(boardCode=${board.boardCode})}">🗑 삭제</a>
+                                <a id="delete" th:href="@{/board/{boardCode}/delete(boardCode=${board.boardCode})}"
+                                   onclick="return confirmDelete()">🗑 삭제</a>
                             </div>
                     </div>
                 </div>
@@ -86,4 +87,16 @@
     </div>
 </main>
 </body>
+<script>
+    function confirmDelete() {
+        const result = confirm("정말로 ❌삭제❌하시겠습니까?");
+        if (!result) {
+
+            alert("❌삭제❌가 취소되었습니다.");
+            return false;
+        }
+        alert("❌삭제❌가 완료되었습니다.");
+        return true;
+    }
+</script>
 </html>

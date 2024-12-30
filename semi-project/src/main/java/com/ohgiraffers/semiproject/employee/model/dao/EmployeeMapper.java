@@ -52,5 +52,56 @@ public interface EmployeeMapper {
     void changePhone(String newPhone, String empCode);
     // 직원 사번코드 가져오기
     List<EmployeeScheduleInfoDTO> getEmployeeCode();
+    //  부서별 전체조회(경영부)
+    List<EmployeeDTOJOB> managementDept();
+    //  부서별 전체조회(애견담당부)
+    List<EmployeeDTOJOB> dogDept();
+    //  부서별 전체조회(마케팅부)
+    List<EmployeeDTOJOB> marketingDept();
+    //  부서별 전체조회(영업부)
+    List<EmployeeDTOJOB> salesDept();
+    //  부서별 전체조회(물류부)
+    List<EmployeeDTOJOB> logisticsDept();
+    //  부서별 전체조회(고객업무/cs부)
+    List<EmployeeDTOJOB> customerDept();
 
+    List<EmployeeDTOJOB> getEmployeesPresident(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesVicePresident(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesTeamLeader(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesChief(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesStaff(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesTeamLeaderPet(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesChiefPet(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesStaffPet(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesTeamLeaderMarketing(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesChiefMarketing(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesStaffMarketing(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesTeamLeaderSales(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesChiefSales(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesStaffSales(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesTeamLeaderLogistics(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesChiefLogistics(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesStaffLogistics(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesTeamLeaderCustomer(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesChiefCustomer(@Param("jobCode") String jobCode);
+
+    List<EmployeeDTOJOB> getEmployeesStaffCustomer(@Param("jobCode") String jobCode);
 }
