@@ -85,7 +85,6 @@
                     <h2>동물 정보</h2>
                     <div class="animal-card">
 
-                        <img th:src="${'/img/animals/' + adoptingDetail.animalDTO.animalImage}" alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${adoptingDetail.animalDTO.animalCode})}'|"/>
                         <img th:src="@{${adoptingDetail.animalDTO.animalImage != null and adoptingDetail.animalDTO.animalImage != '' ? '/img/animals/' + adoptingDetail.animalDTO.animalImage : '/img/animals/defaultAnimal.jpg'}}"
                              alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${adoptingDetail.animalDTO.animalCode})}'|"/>
 

@@ -49,6 +49,10 @@ public class AnimalsController {
         model.addAttribute("currentPage", page);
         model.addAttribute("limit", limit);
 
+        model.addAttribute("typeCode", typeCode);
+        model.addAttribute("breedCode", breedCode);
+        model.addAttribute("gender", gender);
+        model.addAttribute("rescueDate", rescueDate);
         return "sidemenu/animals/animals";
     }
 

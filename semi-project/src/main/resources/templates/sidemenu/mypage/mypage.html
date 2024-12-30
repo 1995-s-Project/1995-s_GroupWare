@@ -185,7 +185,7 @@
                     <tr id="phoneEditRow" style="display:none;">
                         <th>새 전화번호</th>
                         <td>
-                            <input type="text" id="newPhoneNumber" name="newPhoneNumber" placeholder="새 전화번호 입력" />
+                            <input type="text" id="newPhoneNumber" name="newPhoneNumber" placeholder="새 전화번호 입력" value="010-" maxlength="13" oninput="formatPhoneNumber(event)" />
                             <button type="submit" onclick="updatePhoneNumber()">변경</button>
                             <button type="button" onclick="cancelEdit()">취소</button>
                         </td>
@@ -278,7 +278,29 @@
             });
     }
 
-    // 전화번호변경
+    // 전화번호 입력 포맷팅 함수
+    function formatPhoneNumber(event) {
+        // 기존 값 가져오기
+        let phoneNumber = event.target.value;
+
+        // 숫자만 남기고 나머지 문자 제거
+        phoneNumber = phoneNumber.replace(/[^0-9]/g, "");
+
+        // '010'을 앞에 추가
+        if (phoneNumber.length <= 3) {
+            phoneNumber = "010-" + phoneNumber;
+        } else if (phoneNumber.length <= 7) {
+            phoneNumber = "010-" + phoneNumber.substring(3, 7);
+        } else if (phoneNumber.length <= 10) {
+            phoneNumber = "010-" + phoneNumber.substring(3, 7) + "-" + phoneNumber.substring(7, 10);
+        } else {
+            phoneNumber = "010-" + phoneNumber.substring(3, 7) + "-" + phoneNumber.substring(7, 13);
+        }
+
+        // 최종적으로 형식 맞게 설정
+        event.target.value = phoneNumber;
+    }
+
     function openPhoneNumberEdit() {
         document.getElementById("phoneEditRow").style.display = "table-row"; // 전화번호 수정 폼 열기
     }
