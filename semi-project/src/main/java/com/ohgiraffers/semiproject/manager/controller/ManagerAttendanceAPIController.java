@@ -43,8 +43,6 @@ public class ManagerAttendanceAPIController {
     @PostMapping("/adminScheduleProcess")
     public String adminScheduleProcess(@ModelAttribute ManagerScheduleDTO parameter) {
 
-        System.out.println("parameter = " + parameter);
-
         // division 필드 값에 따라 다른 메소드 실행
         if ("출근".equals(parameter.getDivision())) {
             // 출근일 때 실행할 메소드

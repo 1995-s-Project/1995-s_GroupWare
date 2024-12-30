@@ -90,11 +90,11 @@
 
       <div class="attendance-request">
         <h2>🗒️근태수정 등록</h2>
-        <form action="/attendance-request" method="post">
+        <form action="/attendance-request" method="post" id="attendance-form">
           <div class="form-row">
             요청일자: <input type="date" id="request-date" name="workDate">
             수정 전 근태시간: <input type="time" id="attendance-time" readonly>
-            수정 후 근태시간 <input type="time" name="modify_time">
+            수정 후 근태시간: <input type="time" name="modify_time">
           </div>
           <div class="radio-group">
             구분
@@ -137,12 +137,13 @@
           </div>
 
           <div class="request-button">
-            <button>등록하기</button>
+            <button type="submit">등록하기</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+<script src="/sidemenu/schedule/js/form-validation.js"></script>
 </body>
 </html>

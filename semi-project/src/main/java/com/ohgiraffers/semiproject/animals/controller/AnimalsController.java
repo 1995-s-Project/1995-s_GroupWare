@@ -109,7 +109,7 @@ public class AnimalsController {
         animalDTO.setInoculations(inoculations.stream()
                 .map(code -> new InoculationDTO(code))
                 .collect(Collectors.toList()));
-        System.out.println("animalDTO = " + animalDTO);
+
         // 동물 등록 처리
         animalsService.newAnimal(animalDTO);
 

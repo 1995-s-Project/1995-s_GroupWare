@@ -65,6 +65,8 @@ public class AdoptionService {
     // 취소 상세페이지
     public AdoptionDTO canceledAdopterDetail(String adoptNo){return adoptionMapper.canceledAdopterDetail(adoptNo);}
 
-
-
+    // 입양완료 데이터 가져오기
+    public List<AdoptionDTO> getAdoptionSuccess() {
+        return adoptionMapper.getAdoptionSuccess();
+    }
 }

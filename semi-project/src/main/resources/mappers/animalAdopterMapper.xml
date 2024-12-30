@@ -184,4 +184,18 @@
         And
         adopt_no = #{adoptNo}
     </select>
+
+    <!-- 입양 완료 데이터 가져오기 -->
+    <select id="getAdoptionSuccess" resultMap="AdopterListResultMap">
+        SELECT
+        *
+        FROM
+        tbl_ani_adopt AD
+        JOIN
+        TBL_ANIMAL A ON AD.animal_code = A.animal_code
+        JOIN
+        TBL_EMP E ON AD.EMP_CODE = E.EMP_CODE
+        WHERE
+        adopt_status = '입양완료'
+    </select>
 </mapper>

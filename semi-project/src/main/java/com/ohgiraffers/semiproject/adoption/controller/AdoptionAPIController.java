@@ -26,4 +26,12 @@ public class AdoptionAPIController {
 
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/api/adoption-success")
+    public ResponseEntity<List<AdoptionDTO>> getAdoptionSuccess(){
+
+        List<AdoptionDTO> list = adoptionService.getAdoptionSuccess();
+
+        return ResponseEntity.ok(list);
+    }
 }

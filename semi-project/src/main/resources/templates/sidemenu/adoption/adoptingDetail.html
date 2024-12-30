@@ -84,7 +84,7 @@
                 <section class="animal-section">
                     <h2>동물 정보</h2>
                     <div class="animal-card">
-                        <img th:src="@{${'/img/animals/' + adoptingDetail.animalDTO.animalImage}}" alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${adoptingDetail.animalDTO.animalCode})}'|"/>
+                        <img th:src="${'/img/animals/' + adoptingDetail.animalDTO.animalImage}" alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${adoptingDetail.animalDTO.animalCode})}'|"/>
                         <div class="animal-details">
                             <p><strong>동물등록번호 : </strong> <span th:text="${adoptingDetail.animalDTO.animalCode}"></span></p>
                             <p><strong>구조 된 날짜 : </strong> <span th:text="${#dates.format(adoptingDetail.animalDTO.rescueDate, 'yyyy-MM-dd')}"></span></p>

@@ -38,6 +38,6 @@ public interface AdoptionMapper {
     // 취소 상세페이지
     AdoptionDTO canceledAdopterDetail(String adoptNo);
 
-
-
+    // 입양완료 데이터 가져오기
+    List<AdoptionDTO> getAdoptionSuccess();
 }
