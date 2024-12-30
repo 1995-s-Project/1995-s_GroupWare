@@ -14,13 +14,68 @@ body, table {
     box-sizing: border-box;
 }
 
-/* Basic styling */
-body {
-    font-family: Arial, sans-serif;
+.form1 {
+    border: white;
+    width: 280px;
+    height: 700px;
+    border-radius: 12px;
+    font-weight: bold;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+.form2 {
+    border: white;
+    width: 1400px;
+    margin-left: 70px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.main1 {
+    display: flex;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+/*-------------------------------------------------- 트리 구조 -------------------------------------------------------*/
+
+.tree {
+    color: #393939;
+}
+
+.tree, .tree ul {
+    list-style: none;
+    padding-left: 17px;
+}
+
+.tree *:before {
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+}
+
+.tree label {
+    cursor: pointer;
+}
+
+.tree a {
+    text-decoration: none;
+    color: #393939;
+}
+
+.tree input[type="checkbox"] {
+    display: none;
+}
+
+.tree input[type="checkbox"]:checked ~ ul {
+    display: none;
+}
+
+/*-------------------------------------------------- 트리 구조 -------------------------------------------------------*/
+
+/*-------------------------------------------------- 직원 카드 -------------------------------------------------------*/
 .employee {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
     background-color: #ffffff; /* 흰색 배경 */
@@ -62,9 +117,9 @@ body {
     list-style: none; /* 점 제거 */
     padding: 0;
     position: absolute;
-    left: 25px;
-    right: 25px;
-    bottom: 10px;
+    left: 363px;
+    right: 0px;
+    bottom: 60px;
 }
 
 .page-item {
@@ -144,3 +199,4 @@ body {
 .styled-link:hover {
     color: black; /* 호버 시 색상 변화 */
 }
+

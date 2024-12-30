@@ -121,3 +121,8 @@ textarea {
 select {
     background: #fbfbfb;
 }
+
+.Author {
+    font-weight: bold;
+    margin-left: 25px;
+}

@@ -70,19 +70,29 @@
       <h3>내용</h3>
       <div class="title-context">
         <textarea class="title-con" name="boardContents" placeholder="내용을 수정해주세요..." th:text="${board.boardContents}"></textarea>
-        <input type="submit" value="수정완료">
       </div>
+      <input type="submit" value="수정완료">
     </div>
   </div>
 </form>
 <script>
   document.getElementById("boardUpdateForm").addEventListener("submit", function(event) {
-    // 사용자에게 확인을 요청
-    var confirmUpdate = confirm("정말 수정하시겠습니까?");
 
-    // 사용자가 '확인'을 누른 경우에만 폼을 제출
-    if (!confirmUpdate) {
-      event.preventDefault();  // 폼 제출 방지
+    var title = document.querySelector("textarea[name='boardTitle']").value.trim();
+    var content = document.querySelector("textarea[name='boardContents']").value.trim();
+
+    if (title === "" || content === "") {
+      alert("제목과 내용은 반드시 입력해야 합니다.");
+      event.preventDefault();
+    } else {
+
+      var confirmUpdate = confirm("정말 🔧수정🔧하시겠습니까?");
+      if (!confirmUpdate) {
+        event.preventDefault();
+      } else {
+
+        alert("🔧수정🔧이 완료되었습니다.");
+      }
     }
   });
 </script>

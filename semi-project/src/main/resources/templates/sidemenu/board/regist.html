@@ -67,8 +67,10 @@
         </div>
       </div>
       <div class="title-context">
-        <label>작성자 :</label>
-        <span th:text="${name}"></span>
+        <div class="Author">
+          <label>작성자 :</label>
+          <span th:text="${name}"></span>
+        </div>
         <h3>내용</h3>
         <textarea class="title-con" name="boardContents" placeholder="내용을 입력해주세요..."></textarea>
         <input type="submit" value="등록">
