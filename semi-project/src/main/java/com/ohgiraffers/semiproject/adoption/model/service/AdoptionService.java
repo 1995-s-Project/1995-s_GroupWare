@@ -12,24 +12,41 @@ public class AdoptionService {
 
     private final AdoptionMapper adoptionMapper;
 
-    public AdoptionService(AdoptionMapper adoptionMapper){
+    public AdoptionService(AdoptionMapper adoptionMapper) {
         this.adoptionMapper = adoptionMapper;
     }
 
-/* comment. --------------------------------- 입양진행중 Tab --------------------------------- */
+    /* comment. --------------------------------- 입양진행중 Tab --------------------------------- */
     // 진행중 조회
-    public List<AdoptionDTO> adoptingList() {return adoptionMapper.adoptingList();}
+    public List<AdoptionDTO> adoptingList() {
+        return adoptionMapper.adoptingList();
+    }
+
     // 완료 조회
-    public List<AdoptionDTO> adoptCompletedList() {return  adoptionMapper.adoptCompletedList();}
+    public List<AdoptionDTO> adoptCompletedList() {
+        return adoptionMapper.adoptCompletedList();
+    }
+
     // 취소 조회
-    public List<AdoptionDTO> adoptCanceledList() {return adoptionMapper.adoptCanceledList();}
+    public List<AdoptionDTO> adoptCanceledList() {
+        return adoptionMapper.adoptCanceledList();
+    }
+
     // 진행중 탭에서 입양취소로 상태 업데이트
-    public void updateByCanceled(String adoptNo) {adoptionMapper.updateByCanceled(adoptNo);}
+    public void updateByCanceled(String adoptNo) {
+        adoptionMapper.updateByCanceled(adoptNo);
+    }
+
     // 진행중 상세페이지
-    public AdoptionDTO adoptingDetail(String adoptNo) {return adoptionMapper.adoptingDetail(adoptNo);}
+    public AdoptionDTO adoptingDetail(String adoptNo) {
+        return adoptionMapper.adoptingDetail(adoptNo);
+    }
+
     @Transactional
     // 진행중 상세페이지에서 입양완료로 상태 업데이트
-    public void updateByCompleted(String adoptNo) {adoptionMapper.updateByCompleted(adoptNo);}
+    public void updateByCompleted(String adoptNo) {
+        adoptionMapper.updateByCompleted(adoptNo);
+    }
 
     // 입양자번호 등록 시 자동부여
     public String addAdoptNo() {
@@ -49,31 +66,41 @@ public class AdoptionService {
             return "AD001";  // 첫 번째 입양 번호
         }
     }
+
     // 입양자 등록
     public void insertAdoption(AdoptionDTO adoptionDTO) {
         adoptionMapper.insertAdoption(adoptionDTO);
     }
 
-/* comment.--------------------------------- 입양완료 Tab --------------------------------- */
+    /* comment.--------------------------------- 입양완료 Tab --------------------------------- */
     // 완료 상세페이지
-    public AdoptionDTO completedAdopterDetail(String adoptNo) {return adoptionMapper.completedAdopterDetail(adoptNo);}
+    public AdoptionDTO completedAdopterDetail(String adoptNo) {
+        return adoptionMapper.completedAdopterDetail(adoptNo);
+    }
 
     @Transactional
     // 입양완료 상세페이지에서 파양으로 상태 업데이트
-    public void updateByGiveUp(String adoptNo) {adoptionMapper.updateByGiveUp(adoptNo);}
-/* comment.--------------------------------- 입양취소 Tab --------------------------------- */
-    // 취소 상세페이지
-    public AdoptionDTO canceledAdopterDetail(String adoptNo){return adoptionMapper.canceledAdopterDetail(adoptNo);}
+    public void updateByGiveUp(String adoptNo) {
+        adoptionMapper.updateByGiveUp(adoptNo);
+    }
 
+    /* comment.--------------------------------- 입양취소 Tab --------------------------------- */
+    // 취소 상세페이지
+    public AdoptionDTO canceledAdopterDetail(String adoptNo) {
+        return adoptionMapper.canceledAdopterDetail(adoptNo);
+    }
 
     // 입양완료 데이터 가져오기
     public List<AdoptionDTO> getAdoptionSuccess() {
         return adoptionMapper.getAdoptionSuccess();
+    }
 
-/* comment.--------------------------------- 마이페이지 --------------------------------- */
+    /* comment.--------------------------------- 마이페이지 --------------------------------- */
     // 마이페이지 - 입양 게시글 조회
+
     public List<AdoptionDTO> getUserAdoptionPosts(String code) {
         return adoptionMapper.getUserAdoptionPosts(code);
-
     }
+
 }
+
