@@ -15,7 +15,7 @@ function fetchAndDisplayData() {
             let html = '<ul class="slide-list">';
             if (Array.isArray(data)) {
                 data.forEach(function(item) {
-                    html += '<li style="display: none;"><a href="/sidemenu/board/' + item.boardCode + '">' + item.boardTitle + '</a></li>';
+                    html += '<li style="display: none;"><a href="/board/' + item.boardCode + '">' + item.boardTitle + '</a></li>';
                 });
             } else {
                 console.error('데이터 형식이 올바르지 않습니다:', data);
