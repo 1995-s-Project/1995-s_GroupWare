@@ -91,7 +91,8 @@ public class AnimalsController {
     @PostMapping("/animals/insert")
     public String newAnimal(@ModelAttribute AnimalDTO animalDTO,
                             @RequestParam List<String> healthChecks, // 수동으로 받기
-                            @RequestParam List<String> inoculations){
+                            @RequestParam List<String> inoculations,
+                            RedirectAttributes redirectAttributes){
 
 
         // 사용자 정보 가져오기
@@ -112,6 +113,8 @@ public class AnimalsController {
         System.out.println("animalDTO = " + animalDTO);
         // 동물 등록 처리
         animalsService.newAnimal(animalDTO);
+
+        redirectAttributes.addFlashAttribute("message", "구조 동물 등록이 완료되었습니다.");
 
         return "redirect:/animals";
     }

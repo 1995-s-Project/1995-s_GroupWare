@@ -7,6 +7,17 @@
     <script src="/main/js/main.js"></script> <!-- 메인 자바스크립트 연결 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_arrow_down" />
     <link rel="stylesheet" href="/sidemenu/mypage/css/mypage-style.css">
+
+    <script>
+        // 페이지 로드 시 메시지 확인
+        // 메시지가 있으면 알림창 표시
+        window.onload = function () {
+            const message = document.getElementById('message');
+            if (message) {
+                alert(message.textContent.trim()); // 메시지를 알림창으로 표시
+            }
+        };
+    </script>
 </head>
 <body>
 <header>
@@ -81,6 +92,15 @@
                         <li><a href="/myActivity/posts">게시글 내역</a></li>
                     </ul>
                 </div>
+
+                <div class="dropdown">
+                    <div class="dropdown-title" onclick="toggleDropdown(this)">
+                        캘린더
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="/calender">To-Do-List</a></li>
+                    </ul>
+                </div>
             </nav>
         </div>
 
@@ -94,22 +114,25 @@
                     <tr>
                         <th>프로필 사진</th>
                         <td class="image">
+                            <div th:if="${message}" id="message" th:text="${message}" style="display: none;"></div>
                             <div class="image-container">
+
                                 <img th:src="${info.profile_image == null || info.profile_image.isEmpty() ? '/img/default.png' : (info.profile_image.startsWith('/img/profile/') ?
                                                info.profile_image : '/img/profile/' + info.profile_image)}" alt="profile Image" id="profile_image"/>
+
                                 <div class="image-info-actions">
                                     <form id="profileForm" action="/updateProfileImage" method="post" onsubmit="updateProfileImage(event)">
                                         <div class="image-info-actions">
                                             <p>* 프로필 사진을 등록해주세요.</p>
                                             <p>* 이미지 파일 최대 크기 2MB 미만</p>
 
-                                            <input class="file-input" type="file" id="fileInput" name="profile_image" accept="image/*" onchange="updateFileName(event)">
+                                            <input class="file-input" type="file" id="fileInput" name="profile_image" accept="image/*" onchange="updateFileName(event); previewImage(event)" >
                                             <input class="file-input" type="hidden" id="fileName" name="fileName" />
                                         </div>
 
                                         <div class="image-actions">
                                             <input type="submit" class="btn btn-register" value="수정">
-                                            <a href="/deleteProfileImage" class="btn btn-cancel">삭제</a>
+                                            <a href="javascript:void(0);" class="btn btn-cancel" onclick="cancelImageChange()">취소</a>
                                         </div>
 
                                     </form>
@@ -139,7 +162,17 @@
                         <th>주소</th>
                         <td>
                             <span id="empAddress" th:text="${info.empAddress}"></span>
-                            <a href="#" class="btn btn-change" onclick="openAddressSearch()">주소변경</a>
+                            <a href="#" class="btn btn-change" onclick="openAddressSearch()">주소찾기</a>
+                        </td>
+                    </tr>
+
+                    <!-- 주소를 찾기 전까지는 상세주소 입력란을 숨김 -->
+                    <tr id="addressEditRow" style="display:none;">
+                        <th>상세주소</th>
+                        <td>
+                            <!-- 상세주소 입력란 -->
+                            <input type="text" id="detailAddress" placeholder="상세 주소를 입력하세요" />
+                            <button type="button" onclick="submitAddress()">변경</button>
                         </td>
                     </tr>
                     <tr>
@@ -177,8 +210,51 @@
 </div>
 
 <script>
+    // 원래 이미지 URL 저장
+    const originalImageSrc = document.getElementById('profile_image').src;
+
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const imagePreview = document.getElementById('profile_image');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // 선택한 이미지 파일을 미리보기로 표시
+                imagePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);  // 파일을 Data URL로 변환
+        }
+    }
+
+    // 파일 이름을 hidden 필드에 설정하는 함수
+    function updateFileName(event) {
+        const fileInput = event.target;  // file input 요소
+        const fileName = fileInput.files[0] ? fileInput.files[0].name : '';  // 선택된 파일 이름
+        document.getElementById('fileName').value = fileName;  // hidden 필드에 파일 이름 설정
+    }
+
+    // 취소 버튼 클릭 시 이미지 복원
+    function cancelImageChange() {
+        const imagePreview = document.getElementById('profile_image');
+        // 원래 이미지로 복원
+        imagePreview.src = originalImageSrc;
+
+        // 파일 선택 필드 초기화
+        document.getElementById('fileInput').value = ''; // 파일 입력 초기화 (파일 선택 취소)
+    }
+
+    // 폼 제출 시 서버로 파일 전송하는 함수
     function updateProfileImage(event) {
         event.preventDefault(); // 기본 폼 제출 동작을 막음
+
+        const fileInput = document.getElementById('fileInput');
+
+        // 파일이 선택되지 않았을 경우
+        if (!fileInput.files || fileInput.files.length === 0) {
+            alert('파일을 선택하지 않으셨습니다.');
+            return; // 파일을 선택하지 않으면 함수 종료
+        }
 
         const form = document.getElementById('profileForm');
         const formData = new FormData(form);
@@ -243,26 +319,50 @@
             });
     }
 
+    // 페이지 로드 시, 상세주소 입력란을 숨겨두기
+    window.onload = function() {
+        document.getElementById("detailAddressSection").style.display = "none";  // 주소찾기 전에는 숨겨둠
+    }
+
     // 주소 검색 창 열기
     function openAddressSearch() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 선택된 주소 결과 처리
+                // 도로명 주소 또는 지번 주소 선택
                 const roadAddress = data.roadAddress; // 도로명 주소
                 const jibunAddress = data.jibunAddress; // 지번 주소
 
-                // 화면에 표시 (도로명 주소 우선)
+                // 선택된 주소 처리
                 const selectedAddress = roadAddress || jibunAddress || "주소 정보 없음";
                 document.getElementById("empAddress").innerText = selectedAddress;
+                document.getElementById("empAddress").setAttribute("data-address", selectedAddress);
 
-                // 주소를 서버로 전송
-                updateAddress(selectedAddress);
+                // 상세주소 입력란 보이기
+                document.getElementById("addressEditRow").style.display = "table-row";
             }
         }).open();
     }
 
-    // 서버로 주소 전송
-    async function updateAddress(newAddress) {
+    // 상세주소 취소
+    function cancelAddress() {
+        // 상세주소 입력란 숨기기
+        document.getElementById("addressEditRow").style.display = "none";
+        // 상세주소 입력값 초기화
+        document.getElementById("detailAddress").value = "";
+    }
+
+    // 서버로 주소 전송 후 리다이렉트
+    async function submitAddress() {
+        const roadAddress = document.getElementById("empAddress").getAttribute("data-address"); // 도로명 주소
+        const detailAddress = document.getElementById("detailAddress").value.trim(); // 상세 주소
+
+        if (!roadAddress || !detailAddress) {
+            alert("상세주소를 입력해주세요.");
+            return; // 주소가 불완전하면 서버로 전송하지 않음
+        }
+
+        const fullAddress = roadAddress + " " + detailAddress; // 도로명 주소 + 상세 주소 결합
+
         try {
             const response = await fetch("/updateAddress", {
                 method: "POST",
@@ -270,26 +370,19 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    empAddress: newAddress
+                    empAddress: fullAddress
                 }),
             });
 
             if (response.ok) {
-                alert("주소가 성공적으로 업데이트되었습니다.");
+                alert("주소가 성공적으로 변경되었습니다.");
+                window.location.href = '/mypage'; // 성공적으로 처리 후 리다이렉트
             } else {
-                alert("주소 업데이트 실패. 다시 시도해주세요.");
+                alert("주소 변경에 실패하였습니다. 다시 시도해주세요.");
             }
         } catch (error) {
             console.error("주소 업데이트 중 오류:", error);
         }
-    }
-
-
-    // 파일이름 보내기
-    function updateFileName(event) {
-        const fileInput = event.target;  // file input 요소
-        const fileName = fileInput.files[0] ? fileInput.files[0].name : '';  // 선택된 파일 이름
-        document.getElementById('fileName').value = fileName;  // hidden 필드에 파일 이름 설정
     }
 
     // 드롭다운 메뉴를 열고 닫는 함수

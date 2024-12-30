@@ -38,6 +38,7 @@ public interface AdoptionMapper {
     // 취소 상세페이지
     AdoptionDTO canceledAdopterDetail(String adoptNo);
 
-
-
+/* comment.------------------------ 마이페이지 ------------------------ */
+    // 마이페이지 - 입양 게시글 조회
+    List<AdoptionDTO> getUserAdoptionPosts(String code);
 }

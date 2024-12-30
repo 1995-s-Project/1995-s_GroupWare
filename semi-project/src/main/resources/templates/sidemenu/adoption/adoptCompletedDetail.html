@@ -74,8 +74,8 @@
                     <p><strong>성별 : </strong> <span th:text="${completedDetail.adoptGender}"></span></p>
                     <p><strong>핸드폰 번호 : </strong> <span th:text="${completedDetail.adoptPhone}"></span></p>
                     <p><strong>이메일 : </strong> <span th:text="${completedDetail.adoptPhone}"></span></p>
-                    <p><strong>입양시작날짜 : </strong> <span th:text="${completedDetail.adoptStartDate}"></span></p>
-                    <p><strong>입양완료날짜 : </strong> <span th:text="${completedDetail.adoptEndDate}"></span></p>
+                    <p><strong>입양시작날짜 : </strong> <span th:text="${#dates.format(completedDetail.adoptStartDate, 'yyyy-MM-dd')}"></span></p>
+                    <p><strong>입양완료날짜 : </strong> <span th:text="${#dates.format(completedDetail.adoptEndDate, 'yyyy-MM-dd')}"></span></p>
                 </div>
             </section>
 
@@ -84,7 +84,8 @@
                 <section class="animal-section">
                     <h2>동물 정보</h2>
                     <div class="animal-card">
-                        <img th:src="@{${'/img/animals/' + completedDetail.animalDTO.animalImage}}" alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${completedDetail.animalDTO.animalCode})}'|"/>
+                        <img th:src="@{${completedDetail.animalDTO.animalImage != null and completedDetail.animalDTO.animalImage != '' ? '/img/animals/' + completedDetail.animalDTO.animalImage : '/img/animals/defaultAnimal.jpg'}}"
+                             alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${completedDetail.animalDTO.animalCode})}'|"/>
                         <div class="animal-details">
 
                             <p><strong>동물등록번호 : </strong> <span th:text="${completedDetail.animalDTO.animalCode}"></span></p>
@@ -100,9 +101,9 @@
                 <section class="staff-section">
                     <h2>담당자 정보</h2>
                     <div class="staff-card">
-                        <img th:src="${canceledDetail.empDTO.profileImage == null || canceledDetail.empDTO.profileImage.isEmpty() ?
-                        '/img/default.png' : (canceledDetail.empDTO.profileImage.startsWith('/img/profile/') ?
-                        canceledDetail.empDTO.profileImage : '/img/profile/' + canceledDetail.empDTO.profileImage)}" alt="profile Image"/>
+                        <img th:src="${completedDetail.empDTO.profileImage == null || completedDetail.empDTO.profileImage.isEmpty() ?
+                        '/img/default.png' : (completedDetail.empDTO.profileImage.startsWith('/img/profile/') ?
+                        completedDetail.empDTO.profileImage : '/img/profile/' + completedDetail.empDTO.profileImage)}" alt="profile Image"/>
                         <div class="staff-details">
                             <p><strong>담당자 : </strong> <span th:text="${completedDetail.empDTO.empName}"></span></p>
                             <p><strong>핸드폰번호 : </strong> <span th:text="${completedDetail.empDTO.empPhone}"></span></p>

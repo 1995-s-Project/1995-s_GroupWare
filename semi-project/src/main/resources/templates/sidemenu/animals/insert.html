@@ -7,6 +7,7 @@
     <script src="/main/js/main.js"></script> <!-- 메인 자바스크립트 연결 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_arrow_down" />
     <link rel="stylesheet" href="/sidemenu/animals/css/animals-insert-style.css">
+
 </head>
 <body>
 <header>
@@ -104,7 +105,7 @@
 
             <div class="animal-group">
                 <label>건강검진 :</label>
-                <select name="healthChecks" multiple>
+                <select name="healthChecks" multiple required>
                     <option value="H1">사상충</option>
                     <option value="H2">X-파보 검사</option>
                     <option value="H3">코로나</option>
@@ -115,7 +116,7 @@
 
             <div class="animal-group">
                 <label>접종 :</label>
-                <select name="inoculations" multiple>
+                <select name="inoculations" multiple required>
                     <option value="INOC1">CVRP</option>
                     <option value="INOC2">백혈병</option>
                     <option value="INOC3">전염성 복막염</option>
@@ -148,6 +149,11 @@
             <button type="submit">동물등록하기</button>
         </form>
         <script>
+
+        </script>
+
+        <script>
+
             // 프로필 미리보기
             function previewImage(event) {
                 const file = event.target.files[0];

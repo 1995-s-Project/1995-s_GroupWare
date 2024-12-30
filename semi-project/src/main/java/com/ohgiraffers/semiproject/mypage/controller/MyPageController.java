@@ -1,5 +1,7 @@
 package com.ohgiraffers.semiproject.mypage.controller;
 
+import com.ohgiraffers.semiproject.adoption.model.dto.AdoptionDTO;
+import com.ohgiraffers.semiproject.adoption.model.service.AdoptionService;
 import com.ohgiraffers.semiproject.animals.model.dto.AnimalDTO;
 import com.ohgiraffers.semiproject.animals.model.service.AnimalsService;
 import com.ohgiraffers.semiproject.employee.model.dto.CommentDTO;
@@ -9,6 +11,8 @@ import com.ohgiraffers.semiproject.employee.model.service.EmployeeService;
 import com.ohgiraffers.semiproject.main.model.dto.UserInfoResponse;
 import com.ohgiraffers.semiproject.main.model.service.UserInfoService;
 import com.ohgiraffers.semiproject.mypage.model.service.MyPageService;
+import com.ohgiraffers.semiproject.todo.model.dto.ToDoDTO;
+import com.ohgiraffers.semiproject.todo.model.service.TodoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +32,16 @@ public class MyPageController {
     private final MyPageService myPageService;
     private final EmployeeService employeeService;
     private final AnimalsService animalsService;
+    private final AdoptionService adoptionService;
+    private final TodoService todoService;
 
-    public MyPageController(UserInfoService userInfoService, MyPageService myPageService, EmployeeService employeeService, AnimalsService animalsService){
+    public MyPageController(UserInfoService userInfoService, MyPageService myPageService, EmployeeService employeeService, AnimalsService animalsService, AdoptionService adoptionService, TodoService todoService){
         this.userInfoService = userInfoService;
         this.myPageService = myPageService;
         this.employeeService = employeeService;
         this.animalsService = animalsService;
+        this.adoptionService = adoptionService;
+        this.todoService = todoService;
     }
 
     // 마이페이지 페이지로 이동 및 회원정보 수정
@@ -66,14 +74,14 @@ public class MyPageController {
 
     // 회원정보수정 - 프로필이미지 삭제
     @GetMapping("deleteProfileImage")
-    public String deleteProfileImage(RedirectAttributes redirectAttributes){
+    @ResponseBody
+    public ResponseEntity<String> deleteProfileImage(){
         UserInfoResponse userInfo = userInfoService.getUserInfo();
         String empCode = userInfo.getCode();
 
-        boolean deleteProfile = myPageService.deleteProfileImage(empCode);
-        redirectAttributes.addFlashAttribute("deleteProfile", deleteProfile);
+        myPageService.deleteProfileImage(empCode);
 
-        return "redirect:/mypage";
+        return ResponseEntity.ok("삭제 성공");
     }
 
     // 회원정보수정 - 주소 수정
@@ -157,9 +165,37 @@ public class MyPageController {
     public String myPosts(Model model) {
         UserInfoResponse userInfo = userInfoService.getUserInfo();
         String code = userInfo.getCode();
-        List<AnimalDTO> posts = animalsService.getUserPosts(code);
+        List<AnimalDTO> AnimalPosts = animalsService.getUserPosts(code);
+        model.addAttribute("AnimalPosts", AnimalPosts);
 
-        model.addAttribute("posts", posts);
+        List<AdoptionDTO> AdoptionPosts = adoptionService.getUserAdoptionPosts(code);
+        model.addAttribute("AdoptionPosts", AdoptionPosts);
         return "sidemenu/mypage/myPosts";
+    }
+
+    @GetMapping("/calender")
+    public String calender() {
+        return "sidemenu/mypage/calender";
+    }
+
+    @PostMapping("/calender/insertTodo")
+    public String calenderInsertTodo(@ModelAttribute ToDoDTO toDoDTO) {
+        UserInfoResponse info = userInfoService.getUserInfo();
+        String code = info.getCode();
+
+        ToDoDTO insertTodo = new ToDoDTO();
+
+        // 사용자 코드 설정
+        insertTodo.setEmpCode(code);
+
+        // 글 쓴 날짜
+        insertTodo.setWriteDate(toDoDTO.getWriteDate()); // 날짜 설정
+
+        // 할 일 내용 설정
+        insertTodo.setToDoContents(toDoDTO.getToDoContents());
+
+        todoService.insertTodo(insertTodo);
+
+        return "sidemenu/mypage/calender";
     }
 }
