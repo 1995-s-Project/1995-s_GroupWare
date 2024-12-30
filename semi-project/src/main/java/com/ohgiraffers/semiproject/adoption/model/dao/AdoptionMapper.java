@@ -40,4 +40,8 @@ public interface AdoptionMapper {
 
     // 입양완료 데이터 가져오기
     List<AdoptionDTO> getAdoptionSuccess();
+
+/* comment.------------------------ 마이페이지 ------------------------ */
+    // 마이페이지 - 입양 게시글 조회
+    List<AdoptionDTO> getUserAdoptionPosts(String code);
 }

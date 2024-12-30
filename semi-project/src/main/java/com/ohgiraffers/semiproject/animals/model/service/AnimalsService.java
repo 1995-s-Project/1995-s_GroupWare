@@ -113,7 +113,7 @@ public class AnimalsService {
     }
 
 // -----------------------------------------마이페이지(게시글내역)-----------------------------------------
-    // 마이페이지 - 내 댓글 조회 메소드
+    // 마이페이지 - 동물 게시글 조회
     public List<AnimalDTO> getUserPosts(String code) {
         return animalsMapper.getUserPosts(code);
     }

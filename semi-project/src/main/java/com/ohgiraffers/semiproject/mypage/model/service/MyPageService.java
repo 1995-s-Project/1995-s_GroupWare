@@ -41,10 +41,8 @@ public class MyPageService {
     }
 
     // 회원정보수정 - 프로필이미지 삭제
-    public boolean deleteProfileImage(String empCode) {
-        int deleteProfile = employeeMapper.deleteProfileImage(empCode);
-
-        return deleteProfile > 0;
+    public void deleteProfileImage(String empCode) {
+        employeeMapper.deleteProfileImage(empCode);
     }
 
     // 회원정보수정 - 주소 수정
