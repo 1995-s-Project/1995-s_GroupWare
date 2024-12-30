@@ -128,7 +128,7 @@
                 <div class="card-container">
                     <div class="card" th:each="allList : ${list}">
                         <div class="card-image">
-                            <img th:src="@{${allList.animalImage != null and allList.animalImage != '' ? '/img/animals/' + allList.animalImage : '/img/animals/defaultAnimal.jpg'}}"
+                            <img th:src="${allList.animalImage != null and allList.animalImage != '' ? '/img/animals/' + allList.animalImage : '/img/animals/defaultAnimal.jpg'}"
                                  alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${allList.animalCode})}'|"/>
                         </div>
                         <div class="card-status"

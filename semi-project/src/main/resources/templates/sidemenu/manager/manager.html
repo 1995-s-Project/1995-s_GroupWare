@@ -260,10 +260,6 @@
             const breedLabels = Object.keys(breedCountsMap); // 품종 이름 배열
             const breedCounts = Object.values(breedCountsMap); // 품종 수 배열
 
-            // 중간 결과 확인
-            console.log('품종 이름:', breedLabels);
-            console.log('품종 수:', breedCounts);
-
             // 품종 수 차트 생성
             const ctx2 = document.querySelector('#myChart2'); // 두 번째 차트의 ctx
             new Chart(ctx2, {

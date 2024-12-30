@@ -113,7 +113,7 @@
                     <div class="adapt-container1">
                         <div class="adapt-sub-box">
                             <img src="/img/adapt_icon/1.png">
-                            <h1 class="counter1">452</h1>
+                            <h1 class="counter1">0</h1>
                             <p>누적 입양수</p>
                         </div>
                     </div>
@@ -121,12 +121,12 @@
                     <div class="adapt-container2">
                         <div class="adapt-sub-box">
                             <img src="/img/adapt_icon/3.png">
-                            <h1 class="counter2">52</h1>
+                            <h1 class="counter2">0</h1>
                             <p>현재 입양 신청자</p>
                         </div>
                         <div class="adapt-sub-box">
                             <img src="/img/adapt_icon/2.png">
-                            <h1 class="counter2">52</h1>
+                            <h1 class="counter3">0</h1>
                             <p>보호중인 유기동물</p>
                         </div>
                     </div>
@@ -142,52 +142,90 @@
                     <script>
                         const ctx = document.querySelector('#myChart');
 
-                        // 차트 생성 및 설정
-                        new Chart(ctx, {
-                            type: 'pie',  // 차트 유형
-                            data: {
-                                labels: ['말티즈', '믹스견', '골든리트리버', '시츄', '치와와', '믹스묘', '러시안블루', '아비시니안', '코리안숏헤어'],
-                                datasets: [
-                                    {
-                                        label: '품종수',
-                                        data: [10, 19, 13, 15, 12, 13, 9, 5, 8],
-                                        backgroundColor: [ // 각 데이터 항목에 대한 색상 배열
-                                            'rgba(255, 99, 132, 0.6)', // 말티즈
-                                            'rgba(54, 162, 235, 0.6)', // 믹스견
-                                            'rgba(255, 206, 86, 0.6)', // 골든리트리버
-                                            'rgba(75, 192, 192, 0.6)', // 시츄 (청록색)
-                                            'rgba(75, 255, 75, 0.6)',  // 치와와 (초록색)
-                                            'rgba(255, 159, 64, 0.6)', // 믹스묘
-                                            'rgba(153, 102, 255, 0.6)', // 러시안블루
-                                            'rgba(54, 162, 235, 0.6)', // 아비시니안
-                                            'rgba(255, 206, 86, 0.6)'  // 코리안숏헤어
-                                        ],
-                                        borderWidth: 1,
+                        // API 호출하여 품종 데이터 가져오기
+                        fetch('/api/breed-counts')
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(breedData => {
+                                // 품종 수 데이터 처리
+                                const breedCountsMap = breedData.reduce((acc, breed) => {
+                                    const breedName = breed.breedDTO.breedName;
+
+                                    // 품종 이름이 이미 존재하면 수를 더하고, 존재하지 않으면 새로 추가
+                                    if (acc[breedName]) {
+                                        acc[breedName] += 1; // 품종이 발견될 때마다 1씩 증가
+                                    } else {
+                                        acc[breedName] = 1; // 새로운 품종 발견 시 1로 초기화
                                     }
-                                ]
-                            },
-                            options: {
-                                responsive: true, // 반응형 설정
-                                plugins: {
-                                    legend: {
-                                        display: true, // 범례 표시
-                                        position: 'top', // 범례 위치
+
+                                    return acc;
+                                }, {});
+
+                                // 중간 결과 확인
+                                console.log('품종 카운트 맵:', breedCountsMap);
+
+                                // 객체를 배열로 변환
+                                const breedLabels = Object.keys(breedCountsMap); // 품종 이름 배열
+                                const breedCounts = Object.values(breedCountsMap); // 품종 수 배열
+
+                                // 차트 생성 및 설정
+                                new Chart(ctx, {
+                                    type: 'pie',  // 차트 유형
+                                    data: {
+                                        labels: breedLabels,
+                                        datasets: [
+                                            {
+                                                label: '품종 수',
+                                                data: breedCounts,
+                                                backgroundColor: generateColors(breedLabels.length), // 각 데이터 항목에 대한 색상 배열
+                                                borderWidth: 1,
+                                            }
+                                        ]
                                     },
-                                    tooltip: {
-                                        callbacks: {
-                                            label: function(tooltipItem) {
-                                                return tooltipItem.label + ': ' + tooltipItem.raw; // 툴팁에 레이블과 값 표시
+                                    options: {
+                                        responsive: true, // 반응형 설정
+                                        plugins: {
+                                            legend: {
+                                                display: true, // 범례 표시
+                                                position: 'top', // 범례 위치
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(tooltipItem) {
+                                                        return tooltipItem.label + ': ' + tooltipItem.raw; // 툴팁에 레이블과 값 표시
+                                                    }
+                                                }
                                             }
                                         }
                                     }
-                                }
+                                });
+                            })
+                            .catch(error => {
+                                console.error('There was a problem with the fetch operation:', error);
+                            });
+
+                        // 색상 생성 함수
+                        function generateColors(numColors) {
+                            const colors = new Set(); // 중복을 방지하기 위해 Set 사용
+
+                            while (colors.size < numColors) {
+                                // 랜덤 색상 생성
+                                const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.6)`;
+                                colors.add(randomColor); // Set에 추가 (중복 시 무시됨)
                             }
-                        });
+
+                            return Array.from(colors); // Set을 배열로 변환하여 반환
+                        }
                     </script>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<script src="/main/js/count.js"></script>
 </body>
 </html>

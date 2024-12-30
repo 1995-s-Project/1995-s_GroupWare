@@ -314,8 +314,6 @@ public class ApprovalController {
     @PostMapping("/deleteCacProcess")
     public String deleteCacProcess(@RequestParam("documentNo") int no){
 
-        System.out.println("no = " + no);
-
         approvalService.deleteCacProcess(no);
 
         return "sidemenu/approval/approval";
@@ -323,8 +321,6 @@ public class ApprovalController {
 
     @PostMapping("/deleteOverTimeProcess")
     public String deleteOverTimeProcess(@RequestParam("documentNo") int no){
-
-        System.out.println("no = " + no);
 
         approvalService.deleteOverTimeProcess(no);
 
@@ -334,8 +330,6 @@ public class ApprovalController {
     @PostMapping("/deleteRetirementProcess")
     public String deleteRetirementProcess(@RequestParam("documentNo") int no){
 
-        System.out.println("no = " + no);
-
         approvalService.deleteRetirementProcess(no);
 
         return "sidemenu/approval/approval";
@@ -343,8 +337,6 @@ public class ApprovalController {
 
     @PostMapping("/deleteVacationProcess")
     public String deleteVacationProcess(@RequestParam("documentNo") int no){
-
-        System.out.println("no = " + no);
 
         approvalService.deleteVacationProcess(no);
 

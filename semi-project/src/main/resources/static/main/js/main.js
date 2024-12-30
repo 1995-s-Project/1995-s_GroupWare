@@ -127,7 +127,8 @@ document.addEventListener("DOMContentLoaded", function() {
     loadUserInfo();
 
     const counter1 = document.querySelector('.counter1');
-    const counter2 = document.querySelectorAll('.counter2');
+    const counter2 = document.querySelector('.counter2');
+    const counter3 = document.querySelector('.counter3');
 
     const updateCount = (counter, target, speed) => {
         let count = 0; // 현재 숫자
@@ -143,14 +144,44 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 100); // 100ms마다 업데이트
     };
 
-    // 카운터1: 빠르게 증가
-    updateCount(counter1, 452, 4000);
+    // 누적 입양수 가져오기
+    fetch('/api/adoption-success')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(adoptionData => {
+            console.log('누적 입양자수', adoptionData.length);
 
-    // 카운터2: 느리게 증가
-    counter2.forEach(counter => {
-        updateCount(counter, parseInt(counter.innerText), 8000);
-    });
+            // 현재 입양 신청자 수 가져오기
+            return fetch('/api/adoption-status');
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(statusData => {
+            console.log('입양자 신청자 수', statusData.length);
+
+            const animalsInCare = statusData.animalsInCare || 0; // 보호중인 유기동물
+
+            // 카운터 업데이트
+            updateCount(counter1, adoptionData.length, 4000);
+            updateCount(counter2, statusData.length, 8000); // 현재 입양 신청자 카운터 업데이트
+            updateCount(counter3, animalsInCare, 8000); // 보호중인 유기동물 카운터 업데이트
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
 });
+
+
+
+
 
 
 
