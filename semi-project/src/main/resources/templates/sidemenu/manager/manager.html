@@ -169,15 +169,21 @@
             const adoptionCounts = {};
             const adoptionDates = [];
 
-            // 데이터 가공
             data.forEach(adoption => {
-                const date = adoption.adoptStartDate;
-                const formattedDate = date.split('-').slice(1).join('-'); // "MM-DD" 형식으로 변환
+                const date = new Date(adoption.adoptStartDate); // ISO 형식의 날짜를 Date 객체로 변환
+                const formattedDate = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; // "MM-DD" 형식으로 변환
                 if (!adoptionCounts[formattedDate]) {
                     adoptionCounts[formattedDate] = 0;
                     adoptionDates.push(formattedDate); // 날짜를 배열에 추가
                 }
                 adoptionCounts[formattedDate] += 1; // 해당 날짜의 입양 수 증가
+            });
+
+            // 날짜를 정렬
+            adoptionDates.sort((a, b) => {
+                const [monthA, dayA] = a.split('-').map(Number);
+                const [monthB, dayB] = b.split('-').map(Number);
+                return monthA === monthB ? dayA - dayB : monthA - monthB; // 월과 일 기준으로 정렬
             });
 
             // 차트 데이터 준비
