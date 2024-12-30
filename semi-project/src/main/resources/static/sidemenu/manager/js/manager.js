@@ -81,7 +81,7 @@ function displayBoardData(data) {
         // 클릭 이벤트 추가
         li.addEventListener('click', () => {
             // 해당 게시판 코드로 상세 페이지로 이동
-            window.location.href = `/sidemenu/board/${item.boardCode}`; // item.boardCode는 게시판의 고유 코드
+            window.location.href = `/board/${item.boardCode}`; // item.boardCode는 게시판의 고유 코드
         });
 
         boardContent.appendChild(li);
@@ -317,9 +317,6 @@ document.addEventListener('DOMContentLoaded', function() {
         listItem.appendChild(deleteButton); // 삭제 버튼
         todoList.appendChild(listItem);
     }
-
-    // 페이지 로드 시 To-Do 리스트 가져오기
-    fetchTodoList(); // 페이지 로드 시 To-Do 리스트 가져오기
 });
 
 

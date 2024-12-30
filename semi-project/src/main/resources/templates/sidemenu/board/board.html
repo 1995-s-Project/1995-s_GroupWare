@@ -61,10 +61,10 @@
         <div id="change-screen-content">
             <div class="board">
                 <div class="title-search">
-                    <div>
-                        <button class="styled-button" th:if="${userRole == 'ADMIN' or job == 'J1' or job == 'J2' or job == 'J3'}"
-                                onclick="location.href='/board/regist'">📝 글쓰기</button>
+                    <div class="admin-menu">
+                        <button class="styled-button" id="write-button" onclick="location.href='/board/regist'">📝 글쓰기</button>
                     </div>
+
                     <div class="container">
                         <form th:action="@{/board/search}" method="get">
                             <input class="search" type="text" name="query" placeholder="검색어 입력" required>
@@ -120,6 +120,7 @@
             </nav>
         </form>
     </div>
+<script src="/sidemenu/board/js/board.js"></script>
 </body>
 </html>
 
