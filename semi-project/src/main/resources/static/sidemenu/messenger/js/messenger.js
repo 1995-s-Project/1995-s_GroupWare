@@ -254,8 +254,8 @@ function loadInitialMessages(currentUser) {
             return response.json();
         })
         .then(messages => {
-                handleIncomingMessage(messages); // 수신된 메시지 처리
-            })
+            handleIncomingMessage(messages); // 수신된 메시지 처리
+        })
         .catch(error => {
             console.error('Error fetching initial messages:', error);
             alert('초기 메시지를 가져오는 데 실패했습니다.');
@@ -304,15 +304,14 @@ function filterUsers() {
 }
 
 // 사용자 선택 시 처리 여기 수정좀 더해야됨
-function selectUser(empCode) {
+function selectUser(user) {
     console.log('Before selecting user, currentUser:', currentUser); // currentUser 값 확인
-    selectedUser = empCode; // 선택된 사용자의 사원 코드 저장
-    document.getElementById('chatWith').innerText = '채팅 상대: ' + empCode; // UI 업데이트
+    selectedUser = user.empCode; // 선택된 사용자의 사원 코드 저장
+    document.getElementById('chatWith').innerText =  user.deptDTO.deptName + " " + user.empName + " " + user.jobDTO.jobName  ; // UI 업데이트
     console.log('Selected user:', selectedUser); // selectedUser 값 확인
     console.log('After selecting user, currentUser:', currentUser); // currentUser가 변하지 않았는지 확인
     loadChatHistory(); // 채팅 기록 로드
 }
-
 // 메시지 전송 함수
 function sendMessage() {
     var messageInput = document.getElementById('messageInput');
@@ -391,7 +390,6 @@ function checkEnter(event) {
         sendMessage();
     }
 }
-
 
 
 // 메시지 표시
