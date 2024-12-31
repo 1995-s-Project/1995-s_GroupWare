@@ -14,6 +14,9 @@ public interface ChatMapper {
 
     void save(ChatDTO chat, String senderCode);
 
+    // 안 읽은 메세지 가져오기
+    List<ChatDTO> getUnreadMessages(Long userId);
 
-//    List<Chat> findByChatList(@Param("sender") String sender, @Param("receiver") String receiver);
+    // 읽은 표시 업데이트
+    boolean markMessagesAsRead(Long userId, String currentCode);
 }

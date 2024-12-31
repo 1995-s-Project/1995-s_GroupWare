@@ -71,5 +71,20 @@
         ORDER BY a.created_date ASC
     </select>
 
+    <select id="getUnreadMessages" resultMap="chatResultMap">
+        SELECT
+        *
+        FROM
+        tbl_chat
+        WHERE recipient_code = #{userId} AND is_read = false
+    </select>
 
+    <update id="markMessagesAsRead">
+        update
+            tbl_chat
+        set
+            is_read = true
+        where
+            sender_code = #{userId} AND recipient_code = #{currentCode} AND is_read = false
+    </update>
 </mapper>

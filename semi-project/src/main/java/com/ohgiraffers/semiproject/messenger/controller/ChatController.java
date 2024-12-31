@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Timestamp;
@@ -30,6 +31,36 @@ public class ChatController {
         this.userInfoService = userInfoService;
         this.service = service;
     }
+
+    @GetMapping("/{userId}/unread")
+    public ResponseEntity<List<ChatDTO>> getUnreadMessages(@PathVariable Long userId) {
+
+        List<ChatDTO> unreadList = service.getUnreadMessages(userId);
+
+        return ResponseEntity.ok(unreadList);
+    }
+
+    @PostMapping("/{senderCode}/markAsRead")
+    public ResponseEntity<Void> markMessagesAsRead(@PathVariable Long senderCode) {
+
+        UserInfoResponse info = userInfoService.getUserInfo();
+
+        System.out.println("senderCode = " + senderCode);
+
+        String currentCode = info.getCode();
+
+        // 서비스 호출하여 메시지를 읽음 처리
+        boolean isUpdated = service.markMessagesAsRead(senderCode, currentCode);
+
+        if (isUpdated) {
+            // 성공적으로 업데이트된 경우 204 No Content 응답 반환
+            return ResponseEntity.noContent().build();
+        } else {
+            // 업데이트 실패 시 404 Not Found 응답 반환
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/user/info")
     public UserInfoResponse getUserInfo() {
         UserInfoResponse userInfo = userInfoService.getUserInfo();  // 로그인한 사용자의 정보 가져오기
@@ -67,4 +98,6 @@ public class ChatController {
 
         return chat; // 메시지 브로커를 통해 전송
     }
+
+
 }
