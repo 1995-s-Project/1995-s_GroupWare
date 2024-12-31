@@ -139,7 +139,7 @@ function displayUsers(users) {
             unreadBadge.style.backgroundColor = 'red';
             unreadBadge.style.borderRadius = '50%';
             unreadBadge.style.padding = '5px';
-            unreadBadge.style.marginRight = '170px'; // 오른쪽 여백 추가
+            unreadBadge.style.marginRight = '185px'; // 오른쪽 여백 추가
             unreadBadge.style.display = 'inline-block';
             unreadBadge.style.width = '20px';
             unreadBadge.style.height = '20px';
@@ -162,7 +162,7 @@ function displayUsers(users) {
         // 클릭 이벤트 추가
         li.onclick = function() {
             console.log('Selected user:', user.empCode);
-            selectUser(user.empCode);
+            selectUser(user);
             console.log('읽지 않은 메시지 보낸 사번 코드:', user.empCode); // 추가된 로그
             markMessagesAsRead(user.empCode); // 메시지를 읽음 처리하는 함수 호출
             unreadMessagesCount[user.empCode] = 0; // 읽지 않은 메시지 수 초기화
@@ -307,11 +307,12 @@ function filterUsers() {
 function selectUser(user) {
     console.log('Before selecting user, currentUser:', currentUser); // currentUser 값 확인
     selectedUser = user.empCode; // 선택된 사용자의 사원 코드 저장
-    document.getElementById('chatWith').innerText =  user.deptDTO.deptName + " " + user.empName + " " + user.jobDTO.jobName  ; // UI 업데이트
+    document.getElementById('chatWith').innerText = user.deptDTO.deptName + " " + user.empName + " " + user.jobDTO.jobName  // UI 업데이트
     console.log('Selected user:', selectedUser); // selectedUser 값 확인
     console.log('After selecting user, currentUser:', currentUser); // currentUser가 변하지 않았는지 확인
     loadChatHistory(); // 채팅 기록 로드
 }
+
 // 메시지 전송 함수
 function sendMessage() {
     var messageInput = document.getElementById('messageInput');
@@ -390,6 +391,7 @@ function checkEnter(event) {
         sendMessage();
     }
 }
+
 
 
 // 메시지 표시

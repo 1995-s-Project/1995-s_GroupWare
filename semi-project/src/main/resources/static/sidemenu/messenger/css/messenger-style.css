@@ -271,11 +271,12 @@ select:focus, input[type="text"]:focus {
     width: 20px; /* 동그라미의 너비 */
     height: 20px; /* 동그라미의 높이 */
     border-radius: 50%; /* 동그라미 모양 */
-    background-color: red; /* 배경색 빨간색 */
+    background-color: #e63616; /* 배경색 빨간색 */
     color: white; /* 글자색 흰색 */
+    font-weight: bold;
     text-align: center; /* 텍스트 중앙 정렬 */
     line-height: 20px; /* 텍스트 수직 중앙 정렬 */
-    font-size: 12px; /* 글자 크기 */
+    font-size: 15px; /* 글자 크기 */
     position: relative; /* 위치 설정 */
     margin-left: 5px; /* 사용자 정보와의 간격 */
 }
