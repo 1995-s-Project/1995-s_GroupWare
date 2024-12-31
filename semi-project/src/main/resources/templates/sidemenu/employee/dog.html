@@ -65,68 +65,160 @@
                         <input type="checkbox" id="root" />
                         <label for="root">🐶PETHARMONY🐶</label>
                         <ul>
-                            <li><a th:href="@{/employee/management}">💼경영부</a></li>
-                            <li><a th:href="@{/employee/dog}">💼애견담당부</a></li>
-                            <li><a th:href="@{/employee/marketing}">💼마케팅부</a></li>
-                            <li><a th:href="@{/employee/sales}">💼영업부</a></li>
-                            <li><a th:href="@{/employee/logistics}">💼물류부</a></li>
-                            <li><a th:href="@{/employee/customer}">💼고객/CS 업무부</a></li>
+                            <!-- 경영부 -->
+                            <li>
+                                <input type="checkbox" id="management" class="department-checkbox" />
+                                <label for="management" onclick="toggleEmpList('management')">💼경영부</label>
+                                <ul class="emp-name" id="management-emp-list" th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B1'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+
+                            <!-- 애견담당부 -->
+                            <li>
+                                <input type="checkbox" id="dog" class="department-checkbox" />
+                                <label for="dog" onclick="toggleEmpList('dog')">💼애견담당부</label>
+                                <ul class="emp-name" id="dog-emp-list" th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B2'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+
+                            <!-- 마케팅부 -->
+                            <li>
+                                <input type="checkbox" id="marketing" class="department-checkbox" />
+                                <label for="marketing" onclick="toggleEmpList('marketing')">💼마케팅부</label>
+                                <ul class="emp-name" id="marketing-emp-list" th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B3'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+
+                            <!-- 영업부 -->
+                            <li>
+                                <input type="checkbox" id="sales" class="department-checkbox" />
+                                <label for="sales" onclick="toggleEmpList('sales')">💼영업부</label>
+                                <ul class="emp-name" id="sales-emp-list" th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B4'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+
+                            <!-- 물류부 -->
+                            <li>
+                                <input type="checkbox" id="logistics" class="department-checkbox" />
+                                <label for="logistics" onclick="toggleEmpList('logistics')">💼물류부</label>
+                                <ul class="emp-name" id="logistics-emp-list" th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B5'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+
+                            <!-- 고객/CS 업무부 -->
+                            <li>
+                                <input type="checkbox" id="customer" class="department-checkbox" />
+                                <label for="customer" onclick="toggleEmpList('customer')">💼고객/CS 업무부</label>
+                                <ul class="emp-name" id="customer-emp-list" th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B6'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="form2">
                 <h4>PETHARMONY (애견담당부)</h4>
-                <div class="org-chart" id="orgChart">
-                    <!-- 팀장 (레벨 1) -->
-                    <div class="level team-leader" id="teamLeader">
-                        <div class="employee-card" th:each="emp : ${teamLeader}">
-                            <div class="image-section">
-                                <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}" alt="profile Image" />
-                            </div>
-                            <div class="info-section">
-                                <div class="label">
-                                    <h3 class="department" th:text="${emp.deptDTO.deptName}"></h3>
-                                </div>
-                                <div class="label1">
-                                    <p class="name" th:text="${emp.empName}"></p>
-                                    <small th:text="${emp.jobDTO.jobName}"></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 주임 (레벨 2) -->
-                    <div class="level chief" id="chiefs">
-                        <div class="employee-card" th:each="emp : ${chief}">
-                            <div class="image-section">
-                                <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}" alt="profile Image" />
-                            </div>
-                            <div class="info-section">
-                                <div class="label">
-                                    <h3 class="department" th:text="${emp.deptDTO.deptName}"></h3>
-                                </div>
-                                <div class="label1">
-                                    <p class="name" th:text="${emp.empName}"></p>
-                                    <small th:text="${emp.jobDTO.jobName}"></small>
+                <div class="container">
+                    <div class="org-chart">
+                        <!-- 부장 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${dog}" th:if="${emp.jobDTO.jobName == '부장'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- 사원 (레벨 3) -->
-                    <div class="level staff-level" id="staff">
-                        <div class="employee-card" th:each="emp : ${staff}">
-                            <div class="image-section">
-                                <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}" alt="profile Image" />
-                            </div>
-                            <div class="info-section">
-                                <div class="label">
-                                    <h3 class="department" th:text="${emp.deptDTO.deptName}"></h3>
+                        <!-- 과장 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${dog}" th:if="${emp.jobDTO.jobName == '과장'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="label1">
-                                    <p class="name" th:text="${emp.empName}"></p>
-                                    <small th:text="${emp.jobDTO.jobName}"></small>
+                            </div>
+                        </div>
+                        <!-- 팀장 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${dog}" th:if="${emp.jobDTO.jobName == '팀장'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 대리 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${dog}" th:if="${emp.jobDTO.jobName == '대리'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 주임 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${dog}" th:if="${emp.jobDTO.jobName == '주임'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 사원 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${dog}" th:if="${emp.jobDTO.jobName == '사원'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -138,6 +230,51 @@
 </div>
 </body>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 모든 부서의 체크박스를 선택합니다.
+        const departmentCheckboxes = document.querySelectorAll('.department-checkbox');
+
+        departmentCheckboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                // 해당 부서의 직원 목록을 가져옵니다.
+                const empListId = checkbox.id + '-emp-list';
+                const empList = document.getElementById(empListId);
+
+                // 체크된 경우 목록을 표시하고, 체크 해제된 경우 숨깁니다.
+                if (checkbox.checked) {
+                    empList.style.display = 'block';
+                } else {
+                    empList.style.display = 'none';
+                }
+            });
+        });
+
+        // 부서별 직원 목록 초기화 (처음에는 모든 직원 목록을 숨김)
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = false;  // 모든 체크박스를 해제 상태로 만듬
+        });
+
+        // 연결선 그리기 함수 호출
+        drawConnectionLines();
+    });
+
+    // 부서 클릭 시 직원 목록을 토글하는 함수
+    function toggleEmpList(department) {
+        const empList = document.getElementById(department + '-emp-list');
+        if (empList.style.display === 'none' || empList.style.display === '') {
+            empList.style.display = 'block'; // 직원 목록 표시
+        } else {
+            empList.style.display = 'none'; // 직원 목록 숨김
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // 연결선 그리기 함수 호출
+        drawConnectionLines();
+    });
+
+    // 연결선 그리기
     function drawConnectionLines() {
         const levels = document.querySelectorAll('.level');
         for (let i = 0; i < levels.length - 1; i++) {
@@ -165,8 +302,5 @@
             });
         }
     }
-
-    // 연결선 그리기
-    drawConnectionLines();
 </script>
 </html>

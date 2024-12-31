@@ -107,4 +107,6 @@ public interface EmployeeMapper {
 
     // 경영부 직원정보 가져오기
     List<EmployeeDTOJOB> getManagementEmployees();
+
+    List<EmployeeDTOJOB> empAllList();
 }

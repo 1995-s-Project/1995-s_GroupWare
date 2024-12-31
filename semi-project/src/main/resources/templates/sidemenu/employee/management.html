@@ -66,12 +66,54 @@
                         <input type="checkbox" id="root" />
                         <label for="root">🐶PETHARMONY🐶</label>
                         <ul>
-                            <li class="menu-bar"><a th:href="@{/employee/management}">💼경영부</a></li>
-                            <li class="menu-bar"><a th:href="@{/employee/dog}">💼애견담당부</a></li>
-                            <li class="menu-bar"><a th:href="@{/employee/marketing}">💼마케팅부</a></li>
-                            <li class="menu-bar"><a th:href="@{/employee/sales}">💼영업부</a></li>
-                            <li class="menu-bar"><a th:href="@{/employee/logistics}">💼물류부</a></li>
-                            <li class="menu-bar"><a th:href="@{/employee/customer}">💼고객/CS 업무부</a></li>
+                            <!-- 경영부 -->
+                            <li>
+                                <input type="checkbox" id="management" />
+                                <label for="management" th:href="@{/employee/management}">💼경영부</label>
+                                <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B1'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+                            <!-- 애견담당부 -->
+                            <li>
+                                <input type="checkbox" id="dog" />
+                                <label for="dog" th:href="@{/employee/dog}">💼애견담당부</label>
+                                <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B2'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+                            <!-- 마케팅부 -->
+                            <li>
+                                <input type="checkbox" id="marketing" />
+                                <label for="marketing" th:href="@{/employee/marketing}">💼마케팅부</label>
+                                <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B3'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+                            <!-- 영업부 -->
+                            <li>
+                                <input type="checkbox" id="sales" />
+                                <label for="sales" th:href="@{/employee/sales}">💼영업부</label>
+                                <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B4'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+                            <!-- 물류부 -->
+                            <li>
+                                <input type="checkbox" id="logistics" />
+                                <label for="logistics" th:href="@{/employee/logistics}">💼물류부</label>
+                                <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B5'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
+                            <!-- 고객/CS 업무부 -->
+                            <li>
+                                <input type="checkbox" id="customer" />
+                                <label for="customer" th:href="@{/employee/customer}">💼고객/CS 업무부</label>
+                                <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B6'}">
+                                    <li th:text="${emplist.empName}"></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -223,4 +265,21 @@
     </div>
 </div>
 </body>
+<script>
+    document.querySelectorAll('.menu-bar input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            const subMenu = e.target.nextElementSibling;
+            if (subMenu && subMenu.classList.contains('sub-menu')) {
+                subMenu.style.display = e.target.checked ? 'block' : 'none';
+            }
+        });
+    });
+
+    window.onload = function() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = false;  // 모든 체크박스를 해제 상태로 만듬
+        });
+    };
+</script>
 </html>

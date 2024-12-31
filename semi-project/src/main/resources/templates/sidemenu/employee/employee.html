@@ -145,4 +145,21 @@
     </div>
 </div>
 </body>
+<script>
+    document.querySelectorAll('.menu-bar input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            const subMenu = e.target.nextElementSibling;
+            if (subMenu && subMenu.classList.contains('sub-menu')) {
+                subMenu.style.display = e.target.checked ? 'block' : 'none';
+            }
+        });
+    });
+
+    window.onload = function() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = false;  // 모든 체크박스를 해제 상태로 만듬
+        });
+    };
+</script>
 </html>

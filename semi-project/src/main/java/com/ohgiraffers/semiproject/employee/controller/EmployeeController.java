@@ -56,9 +56,11 @@ public class EmployeeController {
 
         List<EmployeeDTOJOB> management = employeeService.managementDept();
         List<EmployeeDTOJOB> managementList = employeeService.getManagementEmployees();
+        List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("management", management);
         model.addAttribute("managementList", managementList);
+        model.addAttribute("emp", emp);
 
         return "sidemenu/employee/management";
     }
@@ -68,16 +70,10 @@ public class EmployeeController {
     public String dogDept(Model model) {
 
         List<EmployeeDTOJOB> dog = employeeService.dogDept();
-        List<EmployeeDTOJOB> teamLeader = employeeService.getEmployeesTeamLeaderPet("j5");
-        List<EmployeeDTOJOB> chief = employeeService.getEmployeesChiefPet("j7");
-        List<EmployeeDTOJOB> staff = employeeService.getEmployeesStaffPet("j8");
+        List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("dog", dog);
-        model.addAttribute("teamLeader", teamLeader);
-        model.addAttribute("chief", chief);
-        model.addAttribute("staff", staff);
-
-
+        model.addAttribute("emp", emp);
 
         return "sidemenu/employee/dog";
     }
@@ -87,14 +83,8 @@ public class EmployeeController {
     public String marketingDept(Model model) {
 
         List<EmployeeDTOJOB> marketing = employeeService.marketingDept();
-        List<EmployeeDTOJOB> teamLeader = employeeService.getEmployeesTeamLeaderMarketing("j5");
-        List<EmployeeDTOJOB> chief = employeeService.getEmployeesChiefMarketing("j7");
-        List<EmployeeDTOJOB> staff = employeeService.getEmployeesStaffMarketing("j8");
 
         model.addAttribute("marketing", marketing);
-        model.addAttribute("teamLeader", teamLeader);
-        model.addAttribute("chief", chief);
-        model.addAttribute("staff", staff);
 
         return "sidemenu/employee/marketing";
     }
@@ -104,14 +94,8 @@ public class EmployeeController {
     public String salesDept(Model model) {
 
         List<EmployeeDTOJOB> sales = employeeService.salesDept();
-        List<EmployeeDTOJOB> teamLeader = employeeService.getEmployeesTeamLeaderSales("j5");
-        List<EmployeeDTOJOB> chief = employeeService.getEmployeesChiefSales("j7");
-        List<EmployeeDTOJOB> staff = employeeService.getEmployeesStaffSales("j8");
 
         model.addAttribute("sales", sales);
-        model.addAttribute("teamLeader", teamLeader);
-        model.addAttribute("chief", chief);
-        model.addAttribute("staff", staff);
 
         return "sidemenu/employee/sales";
     }
@@ -121,14 +105,8 @@ public class EmployeeController {
     public String logisticsDept(Model model) {
 
         List<EmployeeDTOJOB> logistics = employeeService.logisticsDept();
-        List<EmployeeDTOJOB> teamLeader = employeeService.getEmployeesTeamLeaderLogistics("j5");
-        List<EmployeeDTOJOB> chief = employeeService.getEmployeesChiefLogistics("j7");
-        List<EmployeeDTOJOB> staff = employeeService.getEmployeesStaffLogistics("j8");
 
         model.addAttribute("logistics", logistics);
-        model.addAttribute("teamLeader", teamLeader);
-        model.addAttribute("chief", chief);
-        model.addAttribute("staff", staff);
 
         return "sidemenu/employee/logistics";
     }
@@ -138,14 +116,8 @@ public class EmployeeController {
     public String customerDept(Model model) {
 
         List<EmployeeDTOJOB> customer = employeeService.customerDept();
-        List<EmployeeDTOJOB> teamLeader = employeeService.getEmployeesTeamLeaderCustomer("j5");
-        List<EmployeeDTOJOB> chief = employeeService.getEmployeesChiefCustomer("j7");
-        List<EmployeeDTOJOB> staff = employeeService.getEmployeesStaffCustomer("j8");
 
         model.addAttribute("customer", customer);
-        model.addAttribute("teamLeader", teamLeader);
-        model.addAttribute("chief", chief);
-        model.addAttribute("staff", staff);
 
         return "sidemenu/employee/customer";
     }
