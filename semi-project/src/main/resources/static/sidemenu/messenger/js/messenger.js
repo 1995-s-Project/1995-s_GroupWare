@@ -433,7 +433,3 @@ function displayMessage(chat) {
     chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 
-
-
-
-
