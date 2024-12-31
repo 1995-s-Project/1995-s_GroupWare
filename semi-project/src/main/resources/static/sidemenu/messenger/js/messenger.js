@@ -112,7 +112,7 @@ function displayUsers(users) {
         // 클릭 이벤트 추가
         li.onclick = function() {
             console.log('Selected user:', user.empCode); // 선택된 사원 코드 출력
-            selectUser(user.empCode); // 사원 코드로 사용자 선택
+            selectUser(user); // 사원 코드로 사용자 선택
         };
 
         // 리스트 항목에 이미지, 사용자 정보 및 상태 표시 추가
@@ -140,15 +140,14 @@ function filterUsers() {
 }
 
 // 사용자 선택 시 처리 여기 수정좀 더해야됨
-function selectUser(empCode) {
+function selectUser(user) {
     console.log('Before selecting user, currentUser:', currentUser); // currentUser 값 확인
-    selectedUser = empCode; // 선택된 사용자의 사원 코드 저장
-    document.getElementById('chatWith').innerText = '채팅 상대: ' + empCode; // UI 업데이트
+    selectedUser = user.empCode; // 선택된 사용자의 사원 코드 저장
+    document.getElementById('chatWith').innerText =  user.deptDTO.deptName + " " + user.empName + " " + user.jobDTO.jobName  ; // UI 업데이트
     console.log('Selected user:', selectedUser); // selectedUser 값 확인
     console.log('After selecting user, currentUser:', currentUser); // currentUser가 변하지 않았는지 확인
     loadChatHistory(); // 채팅 기록 로드
 }
-
 // 메시지 전송 함수
 function sendMessage() {
     var messageInput = document.getElementById('messageInput');
