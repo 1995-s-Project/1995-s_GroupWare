@@ -104,4 +104,7 @@ public interface EmployeeMapper {
     List<EmployeeDTOJOB> getEmployeesChiefCustomer(@Param("jobCode") String jobCode);
 
     List<EmployeeDTOJOB> getEmployeesStaffCustomer(@Param("jobCode") String jobCode);
+
+    // 경영부 직원정보 가져오기
+    List<EmployeeDTOJOB> getManagementEmployees();
 }

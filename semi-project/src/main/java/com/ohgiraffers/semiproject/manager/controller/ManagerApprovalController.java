@@ -85,7 +85,7 @@ public class ManagerApprovalController {
         String code = userInfo.getCode();
 
         vacPaymentDTO.setEmpCode(code);
-        vacPaymentDTO.setOwnerCode("025"); // 대표 사번
+        vacPaymentDTO.setOwnerCode("051"); // 대표 사번
         vacPaymentDTO.setProgressCode("SU1");
 
         approvalService.insertVacForm(vacPaymentDTO);
@@ -101,7 +101,7 @@ public class ManagerApprovalController {
         String code = userInfo.getCode();
 
         cacPaymentDTO.setEmpCode(code);
-        cacPaymentDTO.setOwnerCode("025"); // 대표 사번
+        cacPaymentDTO.setOwnerCode("051"); // 대표 사번
         cacPaymentDTO.setProgressCode("SU1");
 
         approvalService.insertCacForm(cacPaymentDTO);
@@ -116,7 +116,7 @@ public class ManagerApprovalController {
         String code = userInfo.getCode();
 
         overTimeDTO.setEmpCode(code);
-        overTimeDTO.setOwnerCode("025"); // 대표 사번
+        overTimeDTO.setOwnerCode("051"); // 대표 사번
         overTimeDTO.setProgressCode("SU1");
 
         // String을 LocalTime으로 변환
@@ -139,7 +139,7 @@ public class ManagerApprovalController {
         String code = userInfo.getCode();
 
         retirementDTO.setEmpCode(code);
-        retirementDTO.setOwnerCode("025"); // 대표 사번
+        retirementDTO.setOwnerCode("051"); // 대표 사번
         retirementDTO.setProgressCode("SU1");
 
         approvalService.insertRetireMentForm(retirementDTO);

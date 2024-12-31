@@ -706,4 +706,19 @@
         WHERE
         b.job_code = #{jobCode} and c.dept_name= '고객CS업무부'
     </select>
+
+    <select id="getManagementEmployees" resultMap="empResult">
+        SELECT
+        a.job_name,
+        b.*,
+        c.dept_name
+        FROM
+        tbl_job a
+        JOIN
+        tbl_emp b on(a.job_code = b.job_code)
+        JOIN
+        tbl_dept c on(b.dept_code = c.dept_code)
+        WHERE
+        c.dept_name= '경영부'
+    </select>
 </mapper>
