@@ -223,4 +223,8 @@ public class EmployeeService {
     public List<EmployeeDTOJOB> getManagementEmployees() {
         return employeeMapper.getManagementEmployees();
     }
+
+    public List<EmployeeDTOJOB> empAllList() {
+        return employeeMapper.empAllList();
+    }
 }

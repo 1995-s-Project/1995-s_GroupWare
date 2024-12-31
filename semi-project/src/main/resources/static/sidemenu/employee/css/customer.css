@@ -1,12 +1,10 @@
-.change-screen-empmanagement{
+.change-screen-customer {
     width: 1850px;
     height: 800px;
     background-color: white;
     border-radius: 10px;
     margin-bottom: 3%;
     color: black;
-    position: relative;
-    overflow: auto;
 }
 
 body, table {
@@ -23,7 +21,6 @@ body, table {
     font-weight: bold;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     margin-left: 14px;
-    overflow-y: auto;
 }
 
 .container {
@@ -126,9 +123,11 @@ label {
 .org-chart {
     display: flex;
     flex-direction: column;
-    align-items: center; /* 중앙 정렬 */
+    align-items: center;
     position: relative;
     width: 100%;
+    gap: 100px;
+    margin-top: 150px;
 }
 
 .level {
@@ -224,22 +223,11 @@ h4 {
 .level:last-child {
     display: flex;
     flex-wrap: wrap;
-    row-gap: 30px;
+    row-gap: 35px;
     width: 95%;
-    margin-left: 70px;
+    margin-left: 1040px;
 }
 
 .menu-bar{
     margin-bottom: 10px;
-}
-
-/* 기본적으로 직원 목록 숨김 */
-.emp-name {
-    display: none;
-    margin: -10px;
-}
-
-/* 체크박스가 체크되었을 때 직원 목록 표시 */
-input[type="checkbox"]:checked ~ .emp-name {
-    display: block;
 }

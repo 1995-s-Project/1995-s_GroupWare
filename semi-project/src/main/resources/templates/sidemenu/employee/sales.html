@@ -2,9 +2,227 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>직원정보</title>
+    <link rel="stylesheet" href="/main/css/main-style.css"> <!-- 메인 스타일 연결 -->
+    <script src="/main/js/main.js"></script> <!-- 메인 자바스크립트 연결 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_arrow_down" />
+    <link rel="stylesheet" href="/sidemenu/employee/css/sales.css">
+    <script src="/sidemenu/employee/js/empManagement.js"></script>
 </head>
 <body>
-
+<header>
+    <div class="side-menu-bar">
+        <ul>
+            <li>
+                <a href="/main">
+                    <img src="/img/icon/logo.png" alt="PetHarmony Logo" style="width: 120px; height: auto; padding-top: 10px; padding-left: 40px;">
+                </a>
+            </li>
+            <li><a href="http://localhost:9595/schedule">근태관리</a></li>
+            <li><a href="http://localhost:9595/messenger">메신저(채팅)</a></li>
+            <li><a href="http://localhost:9595/mail">쪽지</a></li> <!-- 이메일을 쪽지로 변경 -->
+            <li><a href="http://localhost:9595/adoption">입양관리</a></li>
+            <li><a href="http://localhost:9595/animals">구조동물</a></li> <!-- 서브메뉴를 상위 메뉴로 이동 -->
+            <li><a href="http://localhost:9595/stock">재고관리</a></li>
+            <li><a href="http://localhost:9595/board">전사게시판</a></li>
+            <li><a href="http://localhost:9595/mypage">마이페이지</a></li>
+            <li><a href="http://localhost:9595/employee">직원정보</a></li>
+            <li><a href="http://localhost:9595/approval">결재요청</a></li>
+            <li class="admin-menu">
+                <div class="admin-menu-wrapper">
+                    <a href="http://localhost:9595/manager">관리자전용
+                        <span class="material-symbols-outlined">keyboard_arrow_down</span>
+                    </a>
+                </div>
+                <ul class="sub-menu">
+                    <li><a href="http://localhost:9595/manager">관리자페이지</a></li>
+                    <li><a href="http://localhost:9595/employeeRegister">사원등록</a></li>
+                    <li><a href="http://localhost:9595/employeeManagement">직원관리</a></li>
+                    <li><a href="http://localhost:9595/approvalBox">결재함</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="current-user">
+            <img id="unique-user-profile-picture" src="" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%;">
+            <div id="unique-user-info">
+                <div id="unique-user-department" class="user-info-box"></div>
+                <div class="name-position">
+                    <div id="unique-user-name-display" class="user-info-box"></div>
+                    <div id="unique-user-position" class="user-info-box"></div>
+                </div>
+            </div>
+            <form id="logout-form-unique" action="/logout" method="post" onsubmit="return confirmLogoutUnique();">
+                <button id="logout-button-unique" class="logout-button-unique" type="button" onclick="confirmLogoutUnique()">로그아웃</button> <!-- 로그아웃 버튼 -->
+            </form>
+        </div>
+    </div>
+</header>
+<div class="change-screen-sales">
+    <div id="change-screen-content">
+        <div class="main1">
+            <div class="form1">
+                <ul class="tree">
+                    <li>
+                        <input type="checkbox" id="root" />
+                        <label for="root">🐶PETHARMONY🐶</label>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="management" />
+                                <label for="management" class="menu-bar">💼경영부</label>
+                                <a th:href="@{/employee/management}" class="menu-link"></a>
+                                <ul class="emp-name" th:each="emp : ${managementList}" th:if="${emp.deptDTO.deptCode == 'B1'}">
+                                    <li th:text="${emp.empName}"></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="management1" />
+                                <label for="management" class="menu-bar">💼애견담당부</label>
+                                <a th:href="@{/employee/dog}" class="menu-link"></a>
+                                <ul class="emp-name" th:each="emp : ${managementList}" th:if="${emp.deptDTO.deptCode == 'B2'}">
+                                    <li th:text="${emp.empName}"></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="management2" />
+                                <label for="management" class="menu-bar">💼마케팅부</label>
+                                <a th:href="@{/employee/marketing}" class="menu-link"></a>
+                                <ul class="emp-name" th:each="emp : ${managementList}" th:if="${emp.deptDTO.deptCode == 'B3'}">
+                                    <li th:text="${emp.empName}"></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="management3" />
+                                <label for="management" class="menu-bar">💼영업부</label>
+                                <a th:href="@{/employee/sales}" class="menu-link"></a>
+                                <ul class="emp-name" th:each="emp : ${managementList}" th:if="${emp.deptDTO.deptCode == 'B4'}">
+                                    <li th:text="${emp.empName}"></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="management4" />
+                                <label for="management" class="menu-bar">💼물류부</label>
+                                <a th:href="@{/employee/logistics}" class="menu-link"></a>
+                                <ul class="emp-name" th:each="emp : ${managementList}" th:if="${emp.deptDTO.deptCode == 'B5'}">
+                                    <li th:text="${emp.empName}"></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="management5" />
+                                <label for="management" class="menu-bar">💼고객/CS 업무부</label>
+                                <a th:href="@{/employee/customer}" class="menu-link"></a>
+                                <ul class="emp-name" th:each="emp : ${managementList}" th:if="${emp.deptDTO.deptCode == 'B6'}">
+                                    <li th:text="${emp.empName}"></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="form2">
+                <h4>PETHARMONY (영업부)</h4>
+                <div class="container">
+                    <div class="org-chart">
+                        <!-- 부장 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${sales}" th:if="${emp.jobDTO.jobName == '부장'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 과장 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${sales}" th:if="${emp.jobDTO.jobName == '과장'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 팀장 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${sales}" th:if="${emp.jobDTO.jobName == '팀장'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 대리 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${sales}" th:if="${emp.jobDTO.jobName == '대리'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 주임 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${sales}" th:if="${emp.jobDTO.jobName == '주임'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 사원 -->
+                        <div class="level">
+                            <div class="employee-card" th:each="emp : ${sales}" th:if="${emp.jobDTO.jobName == '사원'}">
+                                <div class="image-section">
+                                    <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
+                                         alt="profile Image" />
+                                    <div class="info-section">
+                                        <div class="name">
+                                            <p class="department" th:text="${emp.deptDTO.deptName}"></p>
+                                            <p th:text="${emp.empName}"></p>
+                                            <small th:text="${emp.jobDTO.jobName}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
