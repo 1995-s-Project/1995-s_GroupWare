@@ -45,8 +45,6 @@ public class ChatController {
 
         UserInfoResponse info = userInfoService.getUserInfo();
 
-        System.out.println("senderCode = " + senderCode);
-
         String currentCode = info.getCode();
 
         // 서비스 호출하여 메시지를 읽음 처리
