@@ -22,5 +22,7 @@ public class ChatDTO {
 
     private Timestamp timestamp;
 
+    private boolean isRead;
+
     private EmployeeJoinListDTO employeeJoinListDTO;
 }
