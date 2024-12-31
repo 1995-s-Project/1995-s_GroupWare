@@ -55,19 +55,10 @@ public class EmployeeController {
     public String managementDept(Model model) {
 
         List<EmployeeDTOJOB> management = employeeService.managementDept();
-        List<EmployeeDTOJOB> president = employeeService.getEmployeesPresident("j1");
-        List<EmployeeDTOJOB> vicePresident = employeeService.getEmployeesVicePresident("j2");
-        List<EmployeeDTOJOB> teamLeader = employeeService.getEmployeesTeamLeader("j5");
-        List<EmployeeDTOJOB> chief = employeeService.getEmployeesChief("j7");
-        List<EmployeeDTOJOB> staff = employeeService.getEmployeesStaff("j8");
+        List<EmployeeDTOJOB> managementList = employeeService.getManagementEmployees();
 
         model.addAttribute("management", management);
-        model.addAttribute("president", president);
-        model.addAttribute("vicePresident", vicePresident);
-        model.addAttribute("teamLeader", teamLeader);
-        model.addAttribute("chief", chief);
-        model.addAttribute("staff", staff);
-
+        model.addAttribute("managementList", managementList);
 
         return "sidemenu/employee/management";
     }

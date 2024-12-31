@@ -6,6 +6,7 @@
     margin-bottom: 3%;
     color: black;
     position: relative;
+    overflow: auto;
 }
 
 body, table {
@@ -21,14 +22,23 @@ body, table {
     border-radius: 12px;
     font-weight: bold;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-left: 14px;
+}
+
+.container {
+    display: flex;
+    width: 1400px;
+    flex-wrap: wrap; /* 요소가 넘칠 경우 다음 줄로 내려가도록 설정 */
 }
 
 .form2 {
     border: white;
     width: 1400px;
-    margin-left: 70px;
+    max-height: 700px;
+    margin-left: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .main1 {
@@ -47,7 +57,7 @@ body, table {
 
 .tree, .tree ul {
     list-style: none;
-    padding-left: 17px;
+    padding: 16px;
 }
 
 .tree *:before {
@@ -117,6 +127,7 @@ label {
     flex-direction: column;
     align-items: center; /* 중앙 정렬 */
     position: relative;
+    overflow: auto;
 }
 
 .level {
@@ -147,35 +158,80 @@ label {
     margin: 0 20px; /* 카드 간 간격 */
 }
 
-.level .employee-card:after {
-    content: "";
-    position: absolute;
-    top: -42px;
-    left: 50%;
-    width: 2px;
-    height: 42px;
-    background-color: #000;
-    transform: translateX(-50%);
+.level {
+    display: flex; /* 카드들을 가로로 나열 */
+    justify-content: space-between; /* 카드 간의 좌우 간격을 동일하게 */
+    margin-bottom: 10px; /* 카드 간의 아래 간격 */
 }
+
+.employee-card {
+    display: flex; /* 가로로 배치 */
+    align-items: center; /* 수직 중앙 정렬 */
+    margin: 20px 0; /* 위아래 간격을 20px로 설정 */
+    padding: 10px; /* 카드 내부 여백 추가 */
+    border: 1px solid transparent; /* 카드가 없을 때도 공간을 차지하도록 투명한 테두리 추가 */
+    width: 222px;;
+    height: 20px;
+}
+
+.image-section {
+    margin-right: 10px; /* 이미지와 텍스트 간의 간격 */
+}
+
+.image-section img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    position: relative;
+    top: -7px;
+    left: -80px;
+}
+
+.info-section {
+    display: flex;
+    flex-direction: column; /* 세로로 정렬 */
+}
+
 
 .level .employee-card:first-child:after {
     content: none; /* 첫 번째 카드 위쪽 줄 제거 */
 }
 
 h4 {
-    margin-left: 45px;
+    padding: 10px;
+    margin: 0 auto;
 }
 
 .name {
+    display: flex;
     font-size: 16px; /* 기본 글씨 크기 */
     color: #333; /* 기본 글씨 색상 */
     margin: 0; /* 위아래 간격 제거 */
-    display: inline-flex; /* 이름과 직책을 한 줄로 표시 */
     align-items: baseline; /* 텍스트의 수직 정렬 */
+    position: relative;
+    top: -65px;
+    right: -30px;
 }
 
 .name small {
     font-size: 12px; /* 직책의 글씨 크기 */
     color: #666; /* 직책의 글씨 색상 */
     margin-left: 5px; /* 이름과 직책 간 간격 */
+}
+
+.department{
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 15px;
+}
+
+.level:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 30px;
+    width: 95%;
+}
+
+.menu-bar{
+    margin-bottom: 10px;
 }

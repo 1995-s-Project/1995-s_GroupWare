@@ -218,4 +218,9 @@ public class EmployeeService {
 
         return employeeMapper.getEmployeesStaffCustomer(jobCode);
     }
+
+    // 경영부 직원정보 가져오기
+    public List<EmployeeDTOJOB> getManagementEmployees() {
+        return employeeMapper.getManagementEmployees();
+    }
 }
