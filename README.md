@@ -7,7 +7,7 @@
 2. [팀원 소개](#팀원-소개)
 3. [개발환경](#개발환경)
 4. [프로젝트 기능 소개](#프로젝트-기능-소개)
-5. [ERD 설계](#erd-설계) 
+5. [ERD 및 피그마 설계](#erd-및-피그마-설계계) 
 
 ## 🔥프로젝트 소개
 개요
@@ -202,7 +202,7 @@
 <br>
 
 ### 관리자페이지
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/a7cb200e-8ee9-4a44-8a66-ea90ffd8987f"> <br>
 관리자페이지
 - 오늘의 할 일을 통해 본인 사번 앞으로 결재 기안이 올라온 건에 대해서 한 번에 확인할 수 있습니다.
 - 오늘의 근태 현황은 현재 날짜 기준으로 전 직원의 출 퇴근 기록을 확인할 수 있습니다.
@@ -211,7 +211,7 @@
 
 <br>
 
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/76f1d30d-6aef-4c75-be67-45c0594fcb98"> <br>
 사원등록
 - 관리자는 신입사원을 등록할 수 있습니다.
 - 프로필 이미지를 등록하면 현재 DB에 없는 사번으로 자동 부여가 됩니다.
@@ -219,27 +219,29 @@
 
 <br>
 
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/0697e41d-faed-427a-b025-34ec369cb4f3"> <br>
 직원관리(근태수정 요청관리)
 - 근태수정 건에 대해서 확인 후 승인 및 반려를 할 수 있습니다
 
 <br>
 
-<img src=""> <br>
+<img src="(https://github.com/user-attachments/assets/0e65b5d6-c899-43b9-b98d-5b371e36beb6"> <br>
 직원관리(연차 & 휴가 관리)
 - 근태율에 따라 연차 및 휴가를 부여할 수 있습니다.
 - 혹여나 잘못 부여했다면 차감도 가능하도록 하였습니다
 
 <br>
 
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/35b1708f-7ef2-45f9-8a9d-0cead6bb2196" width="500"> <img src="https://github.com/user-attachments/assets/7ae420c1-59a2-4d72-b03d-64d6e699f56f" width="500">
+<br>
 결재함
 - 관리자 사번으로 넘어온 결재 건들을 한 번에 확인할 수 있습니다.
 - 관리자가 먼저 승인해야만 대표가 승인 및 반려 처리할 수 있습니다.
 - 관리자가 반려를 했다면 대표는 굳이 확인을 하지 않아도 되므로 관리자 측에서 바로 최종 반려처리가 됩니다.
 
-## ✏️ERD 설계
-- 변경 되거나 추가된 엔터티가 있으므로 추 후 수정예정
+## ✏️ERD 및 피그마 설계
+- [피그마 링크](https://www.figma.com/design/sq0XE3RSMjfI374AXYnDf9/%EC%84%B8%EB%AF%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?t=IjbHGfA8eKdH9vHA-0)
+- ERD 변경 되거나 추가된 엔터티가 있으므로 추 후 수정예정
 <img src="https://github.com/user-attachments/assets/23554ab8-107c-4aec-9200-1ef412ed20fd">
 
 
