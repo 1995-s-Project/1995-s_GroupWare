@@ -45,36 +45,37 @@
         <th>기능개발</th>
     </tr>
     <tr>
-        <td>김경훈</td>
+        <td><span style="white-space: nowrap;">김경훈</span></td>
         <td><img src="https://github.com/user-attachments/assets/dcd31cb3-f7cd-4aa0-bef2-9111a28701d3" alt="경훈님" width="100" /></td>
         <td>PM</td>
         <td>메신저(채팅), PPT</td>
     </tr>
     <tr>
-        <td>정근희</td>
+        <td><span style="white-space: nowrap;">정근희</span></td>
         <td><img src="https://github.com/user-attachments/assets/f63fb788-dbc7-485c-a643-0971e19dd89e" alt="근희님" width="100" /></td>
         <td>형상관리자</td>
-        <td>로그인, 사번 찾기, 비밀번호 찾기, 메인화면, 근태관리, 관리자전용용, 결재</td>
+        <td>로그인, 사번 찾기, 비밀번호 찾기, 메인화면, 근태관리, 관리자전용, 결재</td>
     </tr>
     <tr>
-        <td>김관훈</td>
+        <td><span style="white-space: nowrap;">김관훈</span></td>
         <td><img src="https://github.com/user-attachments/assets/a09c05f1-51fa-467a-bc56-b826e6307f2d" alt="관훈님" width="100" /></td>
         <td>DBA</td>
         <td>쪽지, 전사게시판, 직원정보</td>
     </tr>
     <tr>
-        <td>정은미</td>
+        <td><span style="white-space: nowrap;">정은미</span></td>
         <td><img src="https://github.com/user-attachments/assets/e4536a2d-c9dc-427d-b027-fbab32c02947" alt="은미님" width="100" /></td>
         <td>DBA</td>
         <td>입양, 구조동물, 재고관리, 마이페이지(재민님과 협업)</td>
     </tr>
     <tr>
-        <td>박재민</td>
+        <td><span style="white-space: nowrap;">박재민</span></td>
         <td><img src="https://github.com/user-attachments/assets/51b820d3-bb25-4e51-961c-2ce056e9a8c6" alt="재민님" width="100" height="100" /></td>
         <td>DBA</td>
         <td>마이페이지(은미님과 협업)</td>
     </tr>
 </table>
+
 
 
 
