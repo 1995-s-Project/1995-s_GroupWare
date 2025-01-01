@@ -35,7 +35,8 @@ public class EmployeeController {
 
         int offset = page * size;
 
-        List<EmployeeDTOJOB> emp = employeeService.empAll(offset, size);
+        List<EmployeeDTOJOB> employee = employeeService.empAll(offset, size);
+        List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         long totalProducts = employeeService.getTotalProducts();
 
@@ -44,6 +45,8 @@ public class EmployeeController {
         PageDTO pageInfo = new PageDTO(page, size, totalPages);
 
         model.addAttribute("pageInfo", pageInfo);
+
+        model.addAttribute("employee", employee);
 
         model.addAttribute("emp", emp);
 
@@ -83,8 +86,10 @@ public class EmployeeController {
     public String marketingDept(Model model) {
 
         List<EmployeeDTOJOB> marketing = employeeService.marketingDept();
+        List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("marketing", marketing);
+        model.addAttribute("emp", emp);
 
         return "sidemenu/employee/marketing";
     }
@@ -94,8 +99,10 @@ public class EmployeeController {
     public String salesDept(Model model) {
 
         List<EmployeeDTOJOB> sales = employeeService.salesDept();
+        List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("sales", sales);
+        model.addAttribute("emp", emp);
 
         return "sidemenu/employee/sales";
     }
@@ -105,8 +112,10 @@ public class EmployeeController {
     public String logisticsDept(Model model) {
 
         List<EmployeeDTOJOB> logistics = employeeService.logisticsDept();
+        List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("logistics", logistics);
+        model.addAttribute("emp", emp);
 
         return "sidemenu/employee/logistics";
     }
@@ -116,8 +125,10 @@ public class EmployeeController {
     public String customerDept(Model model) {
 
         List<EmployeeDTOJOB> customer = employeeService.customerDept();
+        List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("customer", customer);
+        model.addAttribute("emp", emp);
 
         return "sidemenu/employee/customer";
     }
@@ -151,9 +162,10 @@ public class EmployeeController {
     // 상세페이지에서 댓글쓰기
     @PostMapping("/comments/add")
     public String addComment(@RequestParam String empCode, @RequestParam String text) {
+        
         UserInfoResponse userInfo = userInfoService.getUserInfo();
 
-        String code = userInfo.getCode();
+        String name = userInfo.getName();
 
         CommentDTO commentDTO = new CommentDTO();
 
@@ -161,7 +173,7 @@ public class EmployeeController {
 
         commentDTO.setText(text);
 
-        commentDTO.setCommentEmpCode(code);
+        commentDTO.setCommentEmpCode(name);
 
         LocalDateTime createdDate = LocalDateTime.now();
 
