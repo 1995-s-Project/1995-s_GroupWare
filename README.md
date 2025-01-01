@@ -9,6 +9,8 @@
 4. [프로젝트 기능 소개](#프로젝트-기능-소개)
 5. [ERD 및 피그마 설계](#erd-및-피그마-설계계) 
 
+<br>
+
 ## 🔥프로젝트 소개
 개요
 - PetHarmony 프로젝트는 구조 동물 보호소를 위한 그룹웨어입니다.
@@ -34,44 +36,50 @@
 | 프로젝트 기획 및 프로토타입 제작, DB설계 | 2024년 11월 18일 ~ 2024년 12월 06일 |
 | Front-End 및 Back-End 기능 개발 | 2024년 12월 07일 ~ 2024년 12월 30일 |
 
+<br>
 
 ## 😊팀원 소개
 
 <table>
     <tr>
-        <th>김경훈</th>
-        <th>정근희</th>
-        <th>김관훈</th>
-        <th>정은미</th>
-        <th>박재민</th>
+        <th>이름</th>
+        <th>이미지</th>
+        <th>역할</th>
+        <th>기능개발</th>
     </tr>
     <tr>
+        <td><span style="white-space: nowrap;">김경훈</span></td>
         <td><img src="https://github.com/user-attachments/assets/dcd31cb3-f7cd-4aa0-bef2-9111a28701d3" alt="경훈님" width="100" /></td>
-        <td><img src="https://github.com/user-attachments/assets/f63fb788-dbc7-485c-a643-0971e19dd89e" alt="근희님" width="100" /></td>
-        <td><img src="https://github.com/user-attachments/assets/a09c05f1-51fa-467a-bc56-b826e6307f2d" alt="관훈님" width="100" /></td>
-        <td><img src="https://github.com/user-attachments/assets/e4536a2d-c9dc-427d-b027-fbab32c02947" alt="은미님" width="100" /></td>
-        <td><img src="https://github.com/user-attachments/assets/51b820d3-bb25-4e51-961c-2ce056e9a8c6" alt="재민님" width="100" /></td>
-    </tr>
-    <tr>
         <td>PM</td>
-        <td>형상관리자</td>
-        <td>DBA</td>
-        <td>DBA</td>
-        <td>DBA</td>
+        <td>메신저(채팅), PPT</td>
     </tr>
     <tr>
-        <td>메신저(채팅), PPT</td>
+        <td><span style="white-space: nowrap;">정근희</span></td>
+        <td><img src="https://github.com/user-attachments/assets/f63fb788-dbc7-485c-a643-0971e19dd89e" alt="근희님" width="100" /></td>
+        <td>형상관리자</td>
         <td>로그인, 사번 찾기, 비밀번호 찾기, 메인화면, 근태관리, 관리자전용, 결재</td>
+    </tr>
+    <tr>
+        <td><span style="white-space: nowrap;">김관훈</span></td>
+        <td><img src="https://github.com/user-attachments/assets/a09c05f1-51fa-467a-bc56-b826e6307f2d" alt="관훈님" width="100" /></td>
+        <td>DBA</td>
         <td>쪽지, 전사게시판, 직원정보</td>
+    </tr>
+    <tr>
+        <td><span style="white-space: nowrap;">정은미</span></td>
+        <td><img src="https://github.com/user-attachments/assets/e4536a2d-c9dc-427d-b027-fbab32c02947" alt="은미님" width="100" /></td>
+        <td>DBA</td>
         <td>입양, 구조동물, 재고관리, 마이페이지(재민님과 협업)</td>
+    </tr>
+    <tr>
+        <td><span style="white-space: nowrap;">박재민</span></td>
+        <td><img src="https://github.com/user-attachments/assets/51b820d3-bb25-4e51-961c-2ce056e9a8c6" alt="재민님" width="100" height="100" /></td>
+        <td>DBA</td>
         <td>마이페이지(은미님과 협업)</td>
     </tr>
 </table>
 
-
-
-
-
+<br>
 
 ## 🛠️개발환경
 | 🖥️Front-End                                   |
@@ -89,7 +97,7 @@
 |---------------------------------------------|
 | MySQL, MyBatis       |
 
-
+<br>
 
 ## 📌프로젝트 기능 소개
 ### 홈
@@ -273,6 +281,8 @@
 - 관리자 사번으로 넘어온 결재 건들을 한 번에 확인할 수 있습니다.
 - 관리자가 먼저 승인해야만 대표가 승인 및 반려 처리할 수 있습니다.
 - 관리자가 반려를 했다면 대표는 굳이 확인을 하지 않아도 되므로 관리자 측에서 바로 최종 반려처리가 됩니다.
+
+<br>
 
 ## ✏️ERD 및 피그마 설계
 - [피그마 링크](https://www.figma.com/design/sq0XE3RSMjfI374AXYnDf9/%EC%84%B8%EB%AF%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?t=IjbHGfA8eKdH9vHA-0)
