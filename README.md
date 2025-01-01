@@ -37,13 +37,13 @@
 
 ## 😊팀원 소개
 
-| 이름       | 이미지          | 역할               | 기능개발               |
-|------------|-----------------|--------------------|--------------------|
-| 김경훈     | <img src="https://github.com/user-attachments/assets/dcd31cb3-f7cd-4aa0-bef2-9111a28701d3" alt="경훈님" width="100" /> | 프로젝트 매니저    | 메신저(채팅), PPT  |
-| 정근희     | <img src="https://github.com/user-attachments/assets/f63fb788-dbc7-485c-a643-0971e19dd89e" alt="근희님" width="100" /> | 형상관리자             | 로그인, 사원번호 찾기, 비밀번호 찾기, 메인화면, 근태관리, 관리자페이지, 결재  |
-| 김관훈     | <img src="https://github.com/user-attachments/assets/a09c05f1-51fa-467a-bc56-b826e6307f2d" alt="관훈님" width="100" /> | DBA           | 쪽지, 전사게시판, 직원정보 |
-| 정은미     | <img src="https://github.com/user-attachments/assets/e4536a2d-c9dc-427d-b027-fbab32c02947" alt="은미님" width="100" /> | DBA          | 입양, 구조동물, 재고관리, 마이페이지(재민님과 협업)          | 
-| 박재민     | <img src="https://github.com/user-attachments/assets/51b820d3-bb25-4e51-961c-2ce056e9a8c6" alt="재민님" width="100" height="100" /> | DBA          | 마이페이지(은미님과 협업)          |
+| 이름          | 이미지          | 역할               | 기능개발               |
+|---------------|-----------------|--------------------|--------------------|
+| 김경훈        | <img src="https://github.com/user-attachments/assets/dcd31cb3-f7cd-4aa0-bef2-9111a28701d3" alt="경훈님" width="100" /> | 프로젝트 매니저    | 메신저(채팅), PPT  |
+| 정근희        | <img src="https://github.com/user-attachments/assets/f63fb788-dbc7-485c-a643-0971e19dd89e" alt="근희님" width="100" /> | 형상관리자             | 로그인, 사원번호 찾기, 비밀번호 찾기, 메인화면, 근태관리, 관리자페이지, 결재  |
+| 김관훈        | <img src="https://github.com/user-attachments/assets/a09c05f1-51fa-467a-bc56-b826e6307f2d" alt="관훈님" width="100" /> | DBA           | 쪽지, 전사게시판, 직원정보 |
+| 정은미        | <img src="https://github.com/user-attachments/assets/e4536a2d-c9dc-427d-b027-fbab32c02947" alt="은미님" width="100" /> | DBA          | 입양, 구조동물, 재고관리, 마이페이지(재민님과 협업)          | 
+| 박재민        | <img src="https://github.com/user-attachments/assets/51b820d3-bb25-4e51-961c-2ce056e9a8c6" alt="재민님" width="100" height="100" /> | DBA          | 마이페이지(은미님과 협업)          |
 
 
 
@@ -170,7 +170,9 @@
 <br>
 
 ### 마이페이지
-<img src="https://github.com/user-attachments/assets/58ca7950-1b40-447c-8753-df79ef7867f7" width="500"> <img src="https://github.com/user-attachments/assets/d74f5f95-ac96-4252-9874-133a56877be2" width="500"> 
+<img src="https://github.com/user-attachments/assets/58ca7950-1b40-447c-8753-df79ef7867f7">
+<br>
+<img src="https://github.com/user-attachments/assets/d74f5f95-ac96-4252-9874-133a56877be2"> 
 <br>
 마이페이지
 - 로그인한 정보를 확인할 수 있습니다.
@@ -190,7 +192,9 @@
 <br>
 
 ### 결재요청
-<img src="https://github.com/user-attachments/assets/e9d9b4db-2f64-47c1-a035-a91d9d558ddd" width="500"> <img src="https://github.com/user-attachments/assets/7c554f84-8259-4d30-b564-64b571b48d84" width="500">
+<img src="https://github.com/user-attachments/assets/e9d9b4db-2f64-47c1-a035-a91d9d558ddd">
+<br>
+<img src="https://github.com/user-attachments/assets/7c554f84-8259-4d30-b564-64b571b48d84">
 <br>
 결재요청
 - 연차 휴가, 경조사, 연장, 퇴직원 기안을 작성할 수 있습니다.
@@ -225,15 +229,18 @@
 
 <br>
 
-<img src="(https://github.com/user-attachments/assets/0e65b5d6-c899-43b9-b98d-5b371e36beb6"> <br>
+<img src="https://github.com/user-attachments/assets/0e65b5d6-c899-43b9-b98d-5b371e36beb6"> <br>
 직원관리(연차 & 휴가 관리)
 - 근태율에 따라 연차 및 휴가를 부여할 수 있습니다.
 - 혹여나 잘못 부여했다면 차감도 가능하도록 하였습니다
 
 <br>
 
-<img src="https://github.com/user-attachments/assets/35b1708f-7ef2-45f9-8a9d-0cead6bb2196" width="500"> <img src="https://github.com/user-attachments/assets/7ae420c1-59a2-4d72-b03d-64d6e699f56f" width="500">
+<img src="https://github.com/user-attachments/assets/35b1708f-7ef2-45f9-8a9d-0cead6bb2196">
 <br>
+<img src="https://github.com/user-attachments/assets/7ae420c1-59a2-4d72-b03d-64d6e699f56f">
+<br>
+
 결재함
 - 관리자 사번으로 넘어온 결재 건들을 한 번에 확인할 수 있습니다.
 - 관리자가 먼저 승인해야만 대표가 승인 및 반려 처리할 수 있습니다.
