@@ -1,2 +1,4 @@
 <h1>🐶PetHarmony🐶</h1>
-<p>소개글 주저리주저리...</p>
+![801shots_so](https://github.com/user-attachments/assets/9dcd0624-7cb6-41ec-9482-5f674115be7c)
+
+
