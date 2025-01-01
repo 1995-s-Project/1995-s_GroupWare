@@ -127,7 +127,7 @@
 <br>
 
 ### 쪽지
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/898d12d2-2d37-4e84-9535-1513fdcc4913"> <br>
 쪽지
 - 사내 직원에게 쪽지를 전송할 수 있습니다.
 - 개인 및 단체로 전송이 가능하도록 하였으며 각각의 쪽지함마다 보관 또는 삭제할 수 있습니다.
@@ -135,7 +135,7 @@
 <br>
 
 ### 입양관리
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/71936b23-34f6-4ede-a8c0-d0e2c13609ca"> <br>
 입양관리
 - 보호소에서 관리중인 유기동물 데이터 기반으로 입양 절차에 대해 관리할 수 있도록 하였습니다.
 - 구조동물 탭에서 등록 되있는 데이터로 입양 등록을 할 수 있습니다.
@@ -145,7 +145,7 @@
 <br>
 
 ### 구조동물
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/7feeb064-96e1-4b68-a385-314679beea2b"> <br>
 구조동물
 - 구조된 유기동물들을 등록할 수 있습니다.
 - 등록된 동물들은 입양관리 탭과 데이터가 공유 됩니다.
@@ -154,7 +154,7 @@
 <br>
 
 ### 재고관리
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/6d8f087c-c7a5-45d9-8d22-0b10a4318761"> <br>
 재고관리
 - 사내에 재고 현황을 확인하면서 재고수량을 업데이트 할 수 있습니다.
 - 재고가 부족한 품목은 구매를 선택할 시 해당 제품을 판매하는 외부 사이트로 이동할 수 있도록 하였습니다.
@@ -162,7 +162,7 @@
 <br>
 
 ### 전사게시판
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/321f6fbb-2cfb-44b4-a44b-cbcf49773e47"> <br>
 전사게시판
 - 관리자 권한만 게시글을 작성할 수 있습니다.
 - 게시글은 본인이 작성한 글에 대해서만 수정 및 삭제할 수 있습니다.
@@ -170,27 +170,29 @@
 <br>
 
 ### 마이페이지
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/58ca7950-1b40-447c-8753-df79ef7867f7" width="500"> <img src="https://github.com/user-attachments/assets/d74f5f95-ac96-4252-9874-133a56877be2" width="500"> 
+<br>
 마이페이지
 - 로그인한 정보를 확인할 수 있습니다.
 - 프로필 사진, 주소, 핸드폰 번호, 비밀번호를 변경할 수 있습니다.
   - 주소 변경은 좀 더 정확하게 하기 위해 다음 주소 API를 연결하였습니다.
-- 본인이 작성한 댓글 및 게시글 내역을 확인할 수 있습니다.
+- 본인이 작성한 댓글 및 입양, 구조동물 게시글 내역을 확인할 수 있습니다.
 - 원하는 날짜에 To-Do List를 작성할 수 있으며 작성하면 라벨로 확인할 수 있습니다.
 
 <br>
 
 ### 직원정보
-<img src=""> <br>
+<img src="https://github.com/user-attachments/assets/c8a08018-962f-4788-9945-4772694e149f"> <br>
 직원정보
 - 사내 직원정보 및 조직도를 확인 할 수 있습니다.
 - 직원정보를 선택하여 댓글도 작성할 수 있도록 하였습니다.
 
 <br>
 
-### 결재
-<img src=""> <br>
-결재
+### 결재요청
+<img src="https://github.com/user-attachments/assets/e9d9b4db-2f64-47c1-a035-a91d9d558ddd" width="500"> <img src="https://github.com/user-attachments/assets/7c554f84-8259-4d30-b564-64b571b48d84" width="500">
+<br>
+결재요청
 - 연차 휴가, 경조사, 연장, 퇴직원 기안을 작성할 수 있습니다.
 - 연차 휴가는 본인이 갖고 있는 갯수 만큼만 기안을 올릴 수 있도록 하였습니다.
 - 기안서 모두 현재 날짜보다 전 날짜로는 기안을 올릴 수 없도록 하였습니다.
