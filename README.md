@@ -1,4 +1,3 @@
 <h1>🐶PetHarmony🐶</h1>
-![801shots_so](https://github.com/user-attachments/assets/9dcd0624-7cb6-41ec-9482-5f674115be7c)
-
+<img src="https://github.com/user-attachments/assets/fcd3dcec-cf8f-449b-afa5-ff8bb94f6364">
 
