@@ -60,17 +60,101 @@
     <div id="change-screen-content">
       <div class="main1">
           <div class="form1">
-              <ul class="tree">
+              <ul class="dropdown-menu">
+                  <!-- PETHARMONY -->
                   <li>
-                      <input type="checkbox" id="root" />
-                      <label for="root">🐶PETHARMONY🐶</label>
-                      <ul>
-                          <li class="menu-bar"><a th:href="@{/employee/management}">💼경영부</a></li>
-                          <li class="menu-bar"><a th:href="@{/employee/dog}">💼애견담당부</a></li>
-                          <li class="menu-bar"><a th:href="@{/employee/marketing}">💼마케팅부</a></li>
-                          <li class="menu-bar"><a th:href="@{/employee/sales}">💼영업부</a></li>
-                          <li class="menu-bar"><a th:href="@{/employee/logistics}">💼물류부</a></li>
-                          <li class="menu-bar"><a th:href="@{/employee/customer}">💼고객/CS 업무부</a></li>
+                      <button class="dropdown-toggle">🐶PETHARMONY🐶</button>
+                      <ul class="dropdown-content">
+                          <!-- 경영부 -->
+                          <li>
+                              <button class="dropdown-toggle">💼경영부</button>
+                              <div class="dropdown-content">
+                                  <a class="org-a" th:href="@{/employee/management}">조직도</a>
+                                  <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B1'}">
+                                      <li>
+                                          <a class="dropdown-name" th:href="@{/employee/details/{empCode}(empCode=${emplist.empCode})}">
+                                              <span style="color: blue;" th:text="${emplist.jobDTO.jobName}"></span>
+                                              <span th:text="' ' + ${emplist.empName}"></span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </li>
+                          <!-- 애견담당부 -->
+                          <li>
+                              <button class="dropdown-toggle">💼애견담당부</button>
+                              <div class="dropdown-content">
+                                  <a class="org-a" th:href="@{/employee/dog}">조직도</a>
+                                  <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B2'}">
+                                      <li>
+                                          <a class="dropdown-name" th:href="@{/employee/details/{empCode}(empCode=${emplist.empCode})}">
+                                              <span style="color: blue;" th:text="${emplist.jobDTO.jobName}"></span>
+                                              <span th:text="' ' + ${emplist.empName}"></span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </li>
+                          <!-- 마케팅부 -->
+                          <li>
+                              <button class="dropdown-toggle">💼마케팅부</button>
+                              <div class="dropdown-content">
+                                  <a class="org-a" th:href="@{/employee/marketing}">조직도</a>
+                                  <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B3'}">
+                                      <li>
+                                          <a class="dropdown-name" th:href="@{/employee/details/{empCode}(empCode=${emplist.empCode})}">
+                                              <span style="color: blue;" th:text="${emplist.jobDTO.jobName}"></span>
+                                              <span th:text="' ' + ${emplist.empName}"></span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </li>
+                          <!-- 영업부 -->
+                          <li>
+                              <button class="dropdown-toggle">💼영업부</button>
+                              <div class="dropdown-content">
+                                  <a class="org-a" th:href="@{/employee/sales}">조직도</a>
+                                  <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B4'}">
+                                      <li>
+                                          <a class="dropdown-name" th:href="@{/employee/details/{empCode}(empCode=${emplist.empCode})}">
+                                              <span style="color: blue;" th:text="${emplist.jobDTO.jobName}"></span>
+                                              <span th:text="' ' + ${emplist.empName}"></span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </li>
+                          <!-- 물류부 -->
+                          <li>
+                              <button class="dropdown-toggle">💼물류부</button>
+                              <div class="dropdown-content">
+                                  <a class="org-a" th:href="@{/employee/logistics}">조직도</a>
+                                  <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B5'}">
+                                      <li>
+                                          <a class="dropdown-name" th:href="@{/employee/details/{empCode}(empCode=${emplist.empCode})}">
+                                              <span style="color: blue;" th:text="${emplist.jobDTO.jobName}"></span>
+                                              <span th:text="' ' + ${emplist.empName}"></span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </li>
+                          <!-- 고객/CS 업무부 -->
+                          <li>
+                              <button class="dropdown-toggle">💼고객/CS 업무부</button>
+                              <div class="dropdown-content">
+                                  <a class="org-a" th:href="@{/employee/customer}">조직도</a>
+                                  <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B6'}">
+                                      <li>
+                                          <a class="dropdown-name" th:href="@{/employee/details/{empCode}(empCode=${emplist.empCode})}">
+                                              <span style="color: blue;" th:text="${emplist.jobDTO.jobName}"></span>
+                                              <span th:text="' ' + ${emplist.empName}"></span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </li>
                       </ul>
                   </li>
               </ul>
@@ -103,18 +187,18 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr th:each="emp : ${emp}">
-                          <td th:text="${emp.empCode}"></td>
+                      <tr th:each="employee : ${employee}">
+                          <td th:text="${employee.empCode}"></td>
                           <td >
-                              <a th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}" th:text="${emp.empName}" class="styled-link"></a>
+                              <a th:href="@{/employee/details/{empCode}(empCode=${employee.empCode})}" th:text="${employee.empName}" class="styled-link"></a>
                           </td>
-                          <td th:text="${emp.empEmail}"></td>
-                          <td th:text="${emp.empPhone}"></td>
-                          <td th:text="${#dates.format(emp.hireDate, 'yyyy-MM-dd')}"></td>
-                          <td th:text="${emp.empGender}"></td>
-                          <td th:text="${emp.empAddress}"></td>
-                          <td th:text="${emp.jobDTO.jobName}"></td>
-                          <td th:text="${emp.deptDTO.deptName}"></td>
+                          <td th:text="${employee.empEmail}"></td>
+                          <td th:text="${employee.empPhone}"></td>
+                          <td th:text="${#dates.format(employee.hireDate, 'yyyy-MM-dd')}"></td>
+                          <td th:text="${employee.empGender}"></td>
+                          <td th:text="${employee.empAddress}"></td>
+                          <td th:text="${employee.jobDTO.jobName}"></td>
+                          <td th:text="${employee.deptDTO.deptName}"></td>
                       </tr>
                       </tbody>
                   </table>
@@ -146,20 +230,25 @@
 </div>
 </body>
 <script>
-    document.querySelectorAll('.menu-bar input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', (e) => {
-            const subMenu = e.target.nextElementSibling;
-            if (subMenu && subMenu.classList.contains('sub-menu')) {
-                subMenu.style.display = e.target.checked ? 'block' : 'none';
-            }
+    document.addEventListener("DOMContentLoaded", () => {
+        const toggles = document.querySelectorAll(".dropdown-toggle");
+        toggles.forEach(toggle => {
+            toggle.addEventListener("click", () => {
+                const content = toggle.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
         });
     });
 
-    window.onload = function() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = false;  // 모든 체크박스를 해제 상태로 만듬
+    document.addEventListener("DOMContentLoaded", () => {
+        const dropdownContents = document.querySelectorAll(".dropdown-content");
+        dropdownContents.forEach(content => {
+            content.style.display = "none"; // 항상 닫힌 상태로 초기화
         });
-    };
+    });
 </script>
 </html>

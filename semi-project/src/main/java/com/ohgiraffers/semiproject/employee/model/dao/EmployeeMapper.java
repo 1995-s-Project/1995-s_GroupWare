@@ -65,46 +65,6 @@ public interface EmployeeMapper {
     //  부서별 전체조회(고객업무/cs부)
     List<EmployeeDTOJOB> customerDept();
 
-    List<EmployeeDTOJOB> getEmployeesPresident(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesVicePresident(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesTeamLeader(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesChief(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesStaff(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesTeamLeaderPet(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesChiefPet(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesStaffPet(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesTeamLeaderMarketing(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesChiefMarketing(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesStaffMarketing(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesTeamLeaderSales(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesChiefSales(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesStaffSales(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesTeamLeaderLogistics(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesChiefLogistics(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesStaffLogistics(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesTeamLeaderCustomer(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesChiefCustomer(@Param("jobCode") String jobCode);
-
-    List<EmployeeDTOJOB> getEmployeesStaffCustomer(@Param("jobCode") String jobCode);
-
     // 경영부 직원정보 가져오기
     List<EmployeeDTOJOB> getManagementEmployees();
 

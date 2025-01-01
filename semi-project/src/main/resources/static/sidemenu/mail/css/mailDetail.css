@@ -399,12 +399,11 @@ textarea {
 
 .content-box {
     border: 1px solid #ccc;
-    width: 1430px;
+    width: 1428px;
     font-size: 15px;
-    font-family: "HY견명조", "굴림", "Arial", sans-serif;
     height: 442px;
     border-radius: 10px;
-    padding: 35px
+    padding: 36px;
 }
 
 .main-page{
