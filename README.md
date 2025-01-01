@@ -45,7 +45,7 @@
 | 이름     | 이미지                                                                 | 역할     | 기능개발                                                        |
 |----------|-----------------------------------------------------------------------|----------|-----------------------------------------------------------------|
 | 김경훈   | <img src="https://github.com/user-attachments/assets/dcd31cb3-f7cd-4aa0-bef2-9111a28701d3" width="130"> | PM       | 메신저(채팅), PPT                                              |
-| 정근희   | <img src="https://github.com/user-attachments/assets/f63fb788-dbc7-485c-a643-0971e19dd89e" width="130"> | 형상관리자 | 로그인, 사번&비밀번호 찾기, 메인화면, 결재, 관리자 |
+| 정근희   | <img src="https://github.com/user-attachments/assets/f63fb788-dbc7-485c-a643-0971e19dd89e" width="130"> | 형상관리자 | 로그인, 사번&비밀번호 찾기, 메인화면, 결재, 관리자페이지 |
 | 김관훈   | <img src="https://github.com/user-attachments/assets/a09c05f1-51fa-467a-bc56-b826e6307f2d" width="130"> | DBA      | 쪽지, 전사게시판, 직원정보                                     |
 | 정은미   | <img src="https://github.com/user-attachments/assets/e4536a2d-c9dc-427d-b027-fbab32c02947" width="130"> | DBA      | 입양, 구조동물, 재고관리, 마이페이지(재민님과 협업)           |
 | 박재민   | <img src="https://github.com/user-attachments/assets/51b820d3-bb25-4e51-961c-2ce056e9a8c6" width="130" height="130"> | DBA      | 마이페이지(은미님과 협업)                                     |
