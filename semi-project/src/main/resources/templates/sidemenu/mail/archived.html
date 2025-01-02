@@ -111,7 +111,7 @@
                     <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAll(this)">
+                            <input type="checkbox" id="selectAll" class="checkbox1" onclick="toggleSelectAllMail(this)">
                         </th>
                         <th>메일번호</th>
                         <th>보낸사람</th>
@@ -179,6 +179,7 @@
                             <button type="submit" id="sendMessageBtn" class="submit">보내기</button>
                             <input type="hidden" id="recipient_id" name="recipientId">
                             <input type="hidden" id="recipient_name" name="recipientName">
+                            <input  type="hidden" id="senderId" name="senderId" value="${userInfo.code}">
                         </form>
                     </div>
                 </div>
@@ -259,8 +260,8 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-            emailCode: selectedMailIds.join(","),
-            recipientFolder: targetFolder
+                emailCode: selectedMailIds.join(","),
+                recipientFolder: targetFolder
             })
         })
             .then(response => {
@@ -270,8 +271,20 @@
                 return response.text();
             })
             .then(data => {
-                alert(data);
-                location.reload();
+                alert(data);  // 이동 성공 메시지
+
+                // 현재 URL에서 page와 size를 가져옵니다.
+                const urlParams = new URLSearchParams(window.location.search);
+                let page = parseInt(urlParams.get('page') || 0); // 현재 페이지 (기본값은 0)
+                const size = parseInt(urlParams.get('size') || 15); // 페이지 크기 (기본값은 15)
+
+                // 페이지가 0보다 크면 1 페이지를 뒤로 이동
+                if (page > 0) {
+                    page--;
+                }
+
+                // 메일 목록이 비었을 경우 자동으로 이전 페이지로 이동
+                window.location.href = `/mail/archived?page=${page}&size=${size}`;
             })
             .catch(error => {
                 console.error("메일 이동 중 오류 발생:", error);
@@ -308,13 +321,12 @@
         updateRecipientField();
     }
 
-    // 선택된 직원들을 갱신
+    // 선택된 직원들 갱신
     function updateRecipientField() {
         const recipientField = document.getElementById('recipient');
         const recipientIdField = document.getElementById('recipient_id');
         const recipientNameField = document.getElementById('recipient_name');
 
-        // 선택된 직원들이 있을 때만 처리
         if (selectedRecipients.length > 0) {
             recipientField.value = selectedRecipients.map(emp => emp.empName).join(', ');
             recipientIdField.value = selectedRecipients.map(emp => emp.empCode).join(',');
@@ -326,6 +338,11 @@
         }
     }
 
+    // 페이지 로딩 시 직원 데이터 가져오기
+    window.onload = function() {
+        fetchEmployees();
+    };
+
     function fetchEmployees() {
         const departments = {
             '경영부': document.getElementById('managementDept'),
@@ -336,7 +353,7 @@
             '고객CS업무부': document.getElementById('customerDept')
         };
 
-        fetch('/api/employees')
+        fetch('/mail/employees')
             .then(response => response.json())
             .then(data => {
                 data.forEach(employee => {
@@ -346,22 +363,22 @@
 
                     if (departments[deptName]) {
                         const li = document.createElement('li');
-                        // 체크박스를 동적으로 생성하여 li에 추가
                         const checkbox = document.createElement('input');
                         checkbox.type = "checkbox";
                         checkbox.classList.add("select-item");
                         checkbox.value = employee.empCode;
-                        checkbox.setAttribute('data-name', empName);
-                        checkbox.onclick = () => selectEmployee(employee, checkbox); // 클릭시 직원 선택 처리
+                        checkbox.setAttribute('data-name', empName);  // 여기서 name을 data-name에 설정
 
                         // 직원 이름과 직급을 li에 추가
                         const nameText = document.createTextNode(`${empName} (${jobName})`);
 
-                        // 체크박스를 먼저 추가하고, 그 다음 텍스트를 추가합니다.
-                        li.appendChild(checkbox);  // 체크박스를 먼저 추가
-                        li.appendChild(nameText);  // 그 후 텍스트 추가
+                        // 체크박스를 먼저 추가하고, 그 후 텍스트를 추가합니다.
+                        li.appendChild(checkbox);
+                        li.appendChild(nameText);
+                        li.onclick = () => selectEmployee(employee, checkbox);
 
-                        li.onclick = () => selectEmployee(employee, checkbox);  // 클릭시 직원 선택 처리
+                        // 각 li에 data-name 속성을 설정해줍니다.
+                        li.setAttribute('data-name', empName.toLowerCase()); // 검색을 위해 data-name에 empName을 소문자로 설정
 
                         departments[deptName].appendChild(li);
                     }
@@ -436,28 +453,94 @@
         alert("메일을 보냈습니다.");
     });
 
-
+    // 검색 필터링 함수
     function filterEmployees() {
         const searchInput = document.getElementById('searchInput2').value.toLowerCase();
         const employeeListItems = document.querySelectorAll('#addressBookContainer2 .employee-list li');
 
+        filteredItems = []; // 검색된 항목 초기화
+
         employeeListItems.forEach(item => {
             const name = item.getAttribute('data-name').toLowerCase();
             if (name.includes(searchInput)) {
-                item.style.display = '';
+                item.style.display = ''; // 검색된 항목 보이기
+                filteredItems.push(item); // 검색된 항목 추가
             } else {
-                item.style.display = 'none';
+                item.style.display = 'none'; // 검색되지 않은 항목 숨기기
             }
         });
     }
 
+    // "전체 선택" 체크박스 이벤트
+    const selectAllCheckbox = document.getElementById('selectAllManagementDept');
+    selectAllCheckbox.addEventListener('change', function () {
+        const isChecked = selectAllCheckbox.checked;
+
+        // 검색된 항목들만 선택하도록 filteredItems를 대상으로 처리
+        filteredItems.forEach(item => {
+            const checkbox = item.querySelector('.select-item');
+            checkbox.checked = isChecked; // 체크박스 상태 변경
+
+            const empCode = checkbox.value;
+            const empName = checkbox.getAttribute('data-name');
+
+            const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === empCode);
+
+            if (isChecked && recipientIndex === -1) {
+                selectedRecipients.push({ empCode, empName }); // 선택된 직원 추가
+            } else if (!isChecked && recipientIndex !== -1) {
+                selectedRecipients.splice(recipientIndex, 1); // 선택 해제된 직원 제거
+            }
+        });
+
+        updateRecipientField(); // 선택된 직원들 갱신
+    });
+
+    // 전체 선택/해제 처리 함수 (필터링된 항목만 포함)
     function toggleSelectAll(source, isAddressBook = false) {
         const checkboxes = isAddressBook
             ? document.querySelectorAll('.employee-list .select-item') // 주소록에서의 선택
             : document.querySelectorAll('.post-list .select-item');  // 메일 목록에서의 선택
 
+        // 검색된 항목만 필터링 (display: none이 아닌 항목들)
+        const visibleCheckboxes = Array.from(checkboxes).filter(checkbox => {
+            const row = checkbox.closest('li');
+            return row && window.getComputedStyle(row).display !== 'none'; // display: none이 아닌 항목만 필터링
+        });
+
+        // 전체 선택/해제
+        visibleCheckboxes.forEach(function(checkbox) {
+            checkbox.checked = source.checked; // 전체 선택/해제
+
+            const empCode = checkbox.value;
+            const empName = checkbox.getAttribute('data-name');
+
+            const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === empCode);
+
+            if (checkbox.checked) {
+                // 체크박스가 선택되면 수신자 리스트에 추가
+                if (recipientIndex === -1) {
+                    selectedRecipients.push({ empCode, empName });
+                }
+            } else {
+                // 체크박스가 해제되면 수신자 리스트에서 제거
+                if (recipientIndex !== -1) {
+                    selectedRecipients.splice(recipientIndex, 1);
+                }
+            }
+        });
+
+        // 선택된 직원들 갱신
+        updateRecipientField();
+    }
+
+    // 메일 목록 전체 선택/해제 함수
+    function toggleSelectAllMail(source) {
+        const checkboxes = document.querySelectorAll('.post-list .select-item'); // 메일 목록에서의 체크박스들
+
         checkboxes.forEach(function(checkbox) {
-            checkbox.checked = source.checked;
+            checkbox.checked = source.checked; // 전체 선택/해제
+
             const empCode = checkbox.value;
             const empName = checkbox.getAttribute('data-name');
 
@@ -484,9 +567,12 @@
     }
 
     window.onload = function() {
+        // 서버에서 가져온 사용자 이름을 senderName 필드에 설정
+        const senderId = '현재 로그인한 사 용자 코드'; // 실제로 서버에서 받아온 값을 사용
+        document.getElementById('senderId').value = senderId;
+
         fetchEmployees();
     };
-
 
     function getSelectedMailIds() {
         const selected = [];
@@ -496,5 +582,27 @@
         return selected;
     }
 
+    document.getElementById("messageForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // 기본 제출 동작 방지
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData,
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "/mail/sent";
+                } else {
+                    alert("서버와의 통신 중 문제가 발생했습니다.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("네트워크 에러가 발생했습니다.");
+            });
+    });
 </script>
 </html>

@@ -142,24 +142,26 @@ public class MailService {
 
     public long inboxTotalProducts(String code) {
 
-        long result = mailMapper.inboxTotalProducts(code);
-
-        return result;
+        return mailMapper.inboxTotalProducts(code);
     }
 
     public long sentTotalProducts(String code) {
+
         return mailMapper.sentTotalProducts(code);
     }
 
     public long trashTotalProducts(String code) {
+
         return mailMapper.trashTotalProducts(code);
     }
 
     public long importantTotalProducts(String code) {
+
         return mailMapper.importantTotalProducts(code);
     }
 
     public long archivedTotalProducts(String code) {
+
         return mailMapper.archivedTotalProducts(code);
     }
 

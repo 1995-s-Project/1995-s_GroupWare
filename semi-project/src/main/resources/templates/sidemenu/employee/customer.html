@@ -166,7 +166,10 @@
                     <div class="org-chart">
                         <!-- 팀장 -->
                         <div class="level">
-                            <div class="employee-card" th:each="emp : ${customer}" th:if="${emp.jobDTO.jobName == '팀장'}">
+                            <a class="employee-card"
+                               th:each="emp : ${customer}"
+                               th:if="${emp.jobDTO.jobName == '팀장'}"
+                               th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                 <div class="image-section">
                                     <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                          alt="profile Image" />
@@ -178,11 +181,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <!-- 사원 -->
                         <div class="level">
-                            <div class="employee-card" th:each="emp : ${customer}" th:if="${emp.jobDTO.jobName == '사원'}">
+                            <a class="employee-card"
+                               th:each="emp : ${customer}"
+                               th:if="${emp.jobDTO.jobName == '사원'}"
+                               th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                 <div class="image-section">
                                     <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                          alt="profile Image" />
@@ -194,7 +200,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

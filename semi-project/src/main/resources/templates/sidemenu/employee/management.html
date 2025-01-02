@@ -70,15 +70,15 @@
                             <li>
                                 <button class="dropdown-toggle">💼경영부</button>
                                 <div class="dropdown-content">
-                                    <a class="org-a " th:href="@{/employee/management}">조직도</a>
-                                        <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B1'}">
-                                            <li>
-                                                <a class="dropdown-name" th:href="@{/employee/details/{empCode}(empCode=${emplist.empCode})}">
-                                                    <span style="color: blue;" th:text="${emplist.jobDTO.jobName}"></span>
-                                                    <span th:text="' ' + ${emplist.empName}"></span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                    <a class="org-a" th:href="@{/employee/management}">조직도</a>
+                                    <ul th:each="emplist : ${emp}" th:if="${emplist.deptDTO.deptCode == 'B1'}">
+                                        <li>
+                                            <a class="dropdown-name" th:href="@{/employee/details/{empCode}(empCode=${emplist.empCode})}">
+                                                <span style="color: blue;" th:text="${emplist.jobDTO.jobName}"></span>
+                                                <span th:text="' ' + ${emplist.empName}"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </li>
                             <!-- 애견담당부 -->
@@ -166,7 +166,10 @@
                         <div class="org-chart">
                             <!-- 대표 -->
                             <div class="level">
-                                <div class="employee-card" th:each="emp : ${managementList}" th:if="${emp.jobDTO.jobName == '대표'}">
+                                <a class="employee-card"
+                                   th:each="emp : ${management}"
+                                   th:if="${emp.jobDTO.jobName == '대표'}"
+                                   th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                     <div class="image-section">
                                         <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                              alt="profile Image" />
@@ -178,13 +181,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
-
                             <!-- 부사장 -->
                             <div class="level">
-                                <div class="employee-card" th:each="emp : ${managementList}" th:if="${emp.jobDTO.jobName == '부사장'}">
+                                <a class="employee-card"
+                                   th:each="emp : ${management}"
+                                   th:if="${emp.jobDTO.jobName == '부사장'}"
+                                   th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                     <div class="image-section">
                                         <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                              alt="profile Image" />
@@ -196,12 +200,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
                             <!-- 부장 -->
                             <div class="level">
-                                <div class="employee-card" th:each="emp : ${managementList}" th:if="${emp.jobDTO.jobName == '부장'}">
+                                <a class="employee-card"
+                                   th:each="emp : ${management}"
+                                   th:if="${emp.jobDTO.jobName == '부장'}"
+                                   th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                     <div class="image-section">
                                         <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                              alt="profile Image" />
@@ -213,12 +219,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
-                            <!-- 과장 -->
                             <div class="level">
-                                <div class="employee-card" th:each="emp : ${managementList}" th:if="${emp.jobDTO.jobName == '과장'}">
+                                <a class="employee-card"
+                                   th:each="emp : ${management}"
+                                   th:if="${emp.jobDTO.jobName == '과장'}"
+                                   th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                     <div class="image-section">
                                         <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                              alt="profile Image" />
@@ -230,12 +237,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
-                            <!-- 팀장 -->
                             <div class="level">
-                                <div class="employee-card" th:each="emp : ${managementList}" th:if="${emp.jobDTO.jobName == '팀장'}">
+                                <a class="employee-card"
+                                   th:each="emp : ${management}"
+                                   th:if="${emp.jobDTO.jobName == '팀장'}"
+                                   th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                     <div class="image-section">
                                         <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                              alt="profile Image" />
@@ -247,12 +255,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
-                            <!-- 대리 -->
                             <div class="level">
-                                <div class="employee-card" th:each="emp : ${managementList}" th:if="${emp.jobDTO.jobName == '대리'}">
+                                <a class="employee-card"
+                                   th:each="emp : ${management}"
+                                   th:if="${emp.jobDTO.jobName == '대리'}"
+                                   th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                     <div class="image-section">
                                         <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                              alt="profile Image" />
@@ -264,12 +273,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
-                            <!-- 주임 -->
                             <div class="level">
-                                <div class="employee-card" th:each="emp : ${managementList}" th:if="${emp.jobDTO.jobName == '주임'}">
+                                <a class="employee-card"
+                                   th:each="emp : ${management}"
+                                   th:if="${emp.jobDTO.jobName == '주임'}"
+                                   th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                     <div class="image-section">
                                         <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                              alt="profile Image" />
@@ -281,12 +291,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
-                            <!-- 사원 -->
                             <div class="level">
-                                <div class="employee-card" th:each="emp : ${managementList}" th:if="${emp.jobDTO.jobName == '사원'}">
+                                <a class="employee-card"
+                                   th:each="emp : ${management}"
+                                   th:if="${emp.jobDTO.jobName == '사원'}"
+                                   th:href="@{/employee/details/{empCode}(empCode=${emp.empCode})}">
                                     <div class="image-section">
                                         <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
                                              alt="profile Image" />
@@ -298,7 +309,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                 </div>

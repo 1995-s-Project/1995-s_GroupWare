@@ -58,11 +58,9 @@ public class EmployeeController {
     public String managementDept(Model model) {
 
         List<EmployeeDTOJOB> management = employeeService.managementDept();
-        List<EmployeeDTOJOB> managementList = employeeService.getManagementEmployees();
         List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("management", management);
-        model.addAttribute("managementList", managementList);
         model.addAttribute("emp", emp);
 
         return "sidemenu/employee/management";
@@ -165,7 +163,7 @@ public class EmployeeController {
         
         UserInfoResponse userInfo = userInfoService.getUserInfo();
 
-        String name = userInfo.getName();
+        String code = userInfo.getCode();
 
         CommentDTO commentDTO = new CommentDTO();
 
@@ -173,7 +171,7 @@ public class EmployeeController {
 
         commentDTO.setText(text);
 
-        commentDTO.setCommentEmpCode(name);
+        commentDTO.setCommentEmpCode(code);
 
         LocalDateTime createdDate = LocalDateTime.now();
 
@@ -185,8 +183,9 @@ public class EmployeeController {
     }
 
     // 댓글삭제
-    @GetMapping("/employee/{empCode}/comment/{id}/delete")
-    public String commentDelete(@PathVariable String empCode, @PathVariable Integer id) {
+    @GetMapping("/employee/{empCode}/comment/{id}/{commentEmpCode}/delete")
+    public String commentDelete(@PathVariable String empCode, @PathVariable Integer id,
+                                @PathVariable String commentEmpCode) {
 
         UserInfoResponse userInfo = userInfoService.getUserInfo();
 
@@ -198,9 +197,9 @@ public class EmployeeController {
 
         commentDTO.setId(id);
 
-        commentDTO.setCommentEmpCode(code);
-
-        employeeService.commentDelete(commentDTO);
+        if (commentEmpCode.equals(code)) {
+            employeeService.commentDelete(commentDTO);
+        }
 
         return "redirect:/employee/details/" + empCode;
     }

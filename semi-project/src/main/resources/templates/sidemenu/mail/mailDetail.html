@@ -127,39 +127,47 @@
               <button type="submit" id="sendMessageBtn" class="submit">보내기</button>
               <input type="hidden" id="recipient_id" name="recipientId">
               <input type="hidden" id="recipient_name" name="recipientName">
+              <input  type="hidden" id="senderId" name="senderId" value="${userInfo.code}">
             </form>
           </div>
         </div>
         <div id="addressBookModal" class="modal2">
           <div class="modal-content2">
-            <span class="close-btn" id="closeModalBtn2">&times;</span>
+            <span class="close-btn2" id="closeModalBtn2">&times;</span>
             <h2>주소록</h2>
             <div class="search-bar">
               <input class="textbox2" type="text" id="searchInput2" placeholder="직원 검색..." oninput="filterEmployees()">
             </div>
             <div id="addressBookContainer2">
+              <input type="checkbox" id="selectAllManagementDept" onclick="toggleSelectAll(this, 'managementDept')"> 전체 선택
               <div class="department-group">
-                <h3>📂 경영부</h3>
+                <h3>📂 경영부
+                </h3>
                 <ul class="employee-list" id="managementDept"></ul>
               </div>
               <div class="department-group">
-                <h3>📂 애견담당부</h3>
+                <h3>📂 애견담당부
+                </h3>
                 <ul class="employee-list" id="dogDept"></ul>
               </div>
               <div class="department-group">
-                <h3>📂 마케팅부</h3>
+                <h3>📂 마케팅부
+                </h3>
                 <ul class="employee-list" id="marketingDept"></ul>
               </div>
               <div class="department-group">
-                <h3>📂 영업부</h3>
+                <h3>📂 영업부
+                </h3>
                 <ul class="employee-list" id="salesDept"></ul>
               </div>
               <div class="department-group">
-                <h3>📂 물류부</h3>
+                <h3>📂 물류부
+                </h3>
                 <ul class="employee-list" id="logisticsDept"></ul>
               </div>
               <div class="department-group">
-                <h3>📂 고객업무부</h3>
+                <h3>📂 고객업무부
+                </h3>
                 <ul class="employee-list" id="customerDept"></ul>
               </div>
             </div>
@@ -187,37 +195,6 @@
   document.getElementById('closeModalBtn2').addEventListener('click', function() {
     document.getElementById('addressBookModal').style.display = 'none';
   });
-
-  function moveMails(targetFolder) {
-    const selectedMailIds = getSelectedMailIds();
-
-    if (selectedMailIds.length === 0) {
-      alert("이동할 메일을 선택하세요.");
-      return;
-    }
-
-    fetch('/mail/move', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        emailCode: selectedMailIds.join(","),
-        recipientFolder: targetFolder
-      })
-    })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error("메일 이동 실패");
-              }
-              return response.text();
-            })
-            .then(data => {
-              alert(data);
-              location.reload();
-            })
-            .catch(error => {
-              console.error("메일 이동 중 오류 발생:", error);
-            });
-  }
 
   let selectedRecipients = [];
 
@@ -381,9 +358,6 @@
     alert("메일을 보냈습니다.");
   });
 
-  // 검색된 직원 항목 저장
-  let filteredItems = [];
-
   // 검색 필터링 함수
   function filterEmployees() {
     const searchInput = document.getElementById('searchInput2').value.toLowerCase();
@@ -407,9 +381,7 @@
   selectAllCheckbox.addEventListener('change', function () {
     const isChecked = selectAllCheckbox.checked;
 
-    // 검색된 항목들만 선택하도록 필터링된 항목을 대상으로 처리
-    const filteredItems = document.querySelectorAll('#addressBookContainer2 .employee-list li');
-
+    // 검색된 항목들만 선택하도록 filteredItems를 대상으로 처리
     filteredItems.forEach(item => {
       const checkbox = item.querySelector('.select-item');
       checkbox.checked = isChecked; // 체크박스 상태 변경
@@ -429,13 +401,51 @@
     updateRecipientField(); // 선택된 직원들 갱신
   });
 
+  // 전체 선택/해제 처리 함수 (필터링된 항목만 포함)
   function toggleSelectAll(source, isAddressBook = false) {
     const checkboxes = isAddressBook
             ? document.querySelectorAll('.employee-list .select-item') // 주소록에서의 선택
             : document.querySelectorAll('.post-list .select-item');  // 메일 목록에서의 선택
 
+    // 검색된 항목만 필터링 (display: none이 아닌 항목들)
+    const visibleCheckboxes = Array.from(checkboxes).filter(checkbox => {
+      const row = checkbox.closest('li');
+      return row && window.getComputedStyle(row).display !== 'none'; // display: none이 아닌 항목만 필터링
+    });
+
+    // 전체 선택/해제
+    visibleCheckboxes.forEach(function(checkbox) {
+      checkbox.checked = source.checked; // 전체 선택/해제
+
+      const empCode = checkbox.value;
+      const empName = checkbox.getAttribute('data-name');
+
+      const recipientIndex = selectedRecipients.findIndex(emp => emp.empCode === empCode);
+
+      if (checkbox.checked) {
+        // 체크박스가 선택되면 수신자 리스트에 추가
+        if (recipientIndex === -1) {
+          selectedRecipients.push({ empCode, empName });
+        }
+      } else {
+        // 체크박스가 해제되면 수신자 리스트에서 제거
+        if (recipientIndex !== -1) {
+          selectedRecipients.splice(recipientIndex, 1);
+        }
+      }
+    });
+
+    // 선택된 직원들 갱신
+    updateRecipientField();
+  }
+
+  // 메일 목록 전체 선택/해제 함수
+  function toggleSelectAllMail(source) {
+    const checkboxes = document.querySelectorAll('.post-list .select-item'); // 메일 목록에서의 체크박스들
+
     checkboxes.forEach(function(checkbox) {
-      checkbox.checked = source.checked;
+      checkbox.checked = source.checked; // 전체 선택/해제
+
       const empCode = checkbox.value;
       const empName = checkbox.getAttribute('data-name');
 
@@ -476,5 +486,28 @@
     });
     return selected;
   }
+
+  document.getElementById("messageForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // 기본 제출 동작 방지
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: form.method,
+      body: formData,
+    })
+            .then(response => {
+              if (response.ok) {
+                window.location.href = "/mail/sent";
+              } else {
+                alert("서버와의 통신 중 문제가 발생했습니다.");
+              }
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              alert("네트워크 에러가 발생했습니다.");
+            });
+  });
 </script>
 </html>

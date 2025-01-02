@@ -138,15 +138,17 @@
 
     <select id="comment" resultMap="CommentResultMap">
         SELECT
-            id,
-            emp_code,
-            comment_contents,
-            created_date,
-            comment_emp_code
+            a.id,
+            a.emp_code,
+            a.comment_contents,
+            a.created_date,
+            a.comment_emp_code,
+            b.emp_name
         FROM
-            tbl_comment
+            tbl_comment a
+        join tbl_emp b on (a.comment_emp_code = b.emp_code)
         WHERE
-            emp_code = #{empCode}
+            a.emp_code = #{empCode}
         ORDER BY
             created_date DESC
     </select>
@@ -210,10 +212,10 @@
     </select>
 
     <delete id="commentDelete" parameterType="com.ohgiraffers.semiproject.employee.model.dto.CommentDTO">
-        DELETE FROM tbl_comment
-        WHERE id = #{id}
-        AND emp_code = #{empCode}
-        AND comment_emp_code = #{commentEmpCode}
+        DELETE FROM
+            tbl_comment
+        WHERE
+            id = #{id}
     </delete>
 
     <!-- 마이페이지 - 내 댓글 조회 메소드 -->

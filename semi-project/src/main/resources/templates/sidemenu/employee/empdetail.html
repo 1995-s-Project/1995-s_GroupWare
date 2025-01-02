@@ -108,11 +108,11 @@
                 <div th:unless="${#lists.isEmpty(comment)}" th:each="comment : ${comment}">
                     <div class="comment-item">
                         <p th:text="${comment.text}"></p>
-                        <small th:text="'작성자 : ' + ${name}"></small>
+                        <small th:text="'작성자 : ' + ${comment.employeeDTO.empName}"></small>
                         <br>
                         <small th:text="'날짜 : ' + ${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></small>
                         <small style="margin-left: auto">
-                            <a th:href="@{/employee/{empCode}/comment/{id}/delete(empCode=${emp.empCode}, id=${comment.id})}" class="delete">📃 삭제</a>
+                            <a th:href="@{/employee/{empCode}/comment/{id}/{commentEmpCode}/delete(empCode=${emp.empCode}, id=${comment.id}, commentEmpCode=${comment.commentEmpCode})}" class="delete">📃 삭제</a>
                         </small>
                     </div>
                 </div>
