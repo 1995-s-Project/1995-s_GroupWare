@@ -131,7 +131,6 @@ public class AnimalsController {
         for(int i=0; i<boardIds.size(); i++){
             String id = boardIds.get(i);
             animalsService.deleteBoard(id);
-            System.out.println("id = " + id);
         }
 
         return "redirect:/animals";
