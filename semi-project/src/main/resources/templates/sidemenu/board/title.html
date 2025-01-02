@@ -67,11 +67,11 @@
                         <div class="view-date" th:text="'날짜 '+ ${#dates.format(board.boardDate, 'yyyy-MM-dd')}"></div>
                         <div class="view-count" th:text="'조회수 ' + ${board.viewCnt}"></div>
                         <div class="view-ud">
-                            <div class="view-update" th:if="${userRole == 'ADMIN' or ( (job == 'J1' or job == 'J2' or job == 'J3' or job == 'J4' or job == 'J5') and userCode == board.empCode)}">
+                            <div class="view-update" th:if="${userCode == board.empCode}">
                                 <a th:href="@{/board/{boardCode}/update(boardCode=${board.boardCode})}">📃 수정</a>
                             </div>
 
-                            <div class="view-delete" th:if="${userRole == 'ADMIN' or ( (job == 'J1' or job == 'J2' or job == 'J3'or job == 'J4' or job == 'J5') and userCode == board.empCode)}">
+                            <div class="view-delete" th:if="${userCode == board.empCode}">
                                 <a id="delete" th:href="@{/board/{boardCode}/delete(boardCode=${board.boardCode})}"
                                    onclick="return confirmDelete()">🗑 삭제</a>
                             </div>

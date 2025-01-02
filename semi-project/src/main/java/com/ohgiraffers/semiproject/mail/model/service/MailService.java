@@ -70,6 +70,7 @@ public class MailService {
     public void inboxRegistMail(MailDTO mailDTO, List<String> recipientId, List<String> recipientName) {
 
         for (int i = 0; i < recipientId.size(); i++) {
+
             mailDTO.setRecipientId(recipientId.get(i));
 
             mailDTO.setRecipientName(recipientName.get(i));
@@ -95,10 +96,12 @@ public class MailService {
     public void inboxDeleteMails(List<Integer> mailIds, String userCode) {
 
         if (mailIds == null || mailIds.isEmpty()) {
+
             throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
         }
 
         if (userCode == null || userCode.isEmpty()) {
+
             throw new IllegalArgumentException("사용자 코드가 유효하지 않습니다.");
         }
 
@@ -110,10 +113,12 @@ public class MailService {
     public void sentDeleteMails(List<Integer> mailIds, String userCode) {
 
         if (mailIds == null || mailIds.isEmpty()) {
+
             throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
         }
 
         if (userCode == null || userCode.isEmpty()) {
+
             throw new IllegalArgumentException("사용자 코드가 유효하지 않습니다.");
         }
 
@@ -124,6 +129,7 @@ public class MailService {
     public void importantMails(List<Integer> mail, String recipientFolder, String code) {
 
         if (mail == null || mail.isEmpty()) {
+
             throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
         }
 
@@ -134,6 +140,7 @@ public class MailService {
     public void archivedMails(List<Integer> mail, String recipientFolder, String code) {
 
         if (mail == null || mail.isEmpty()) {
+
             throw new IllegalArgumentException("메일 ID 목록이 비어 있습니다.");
         }
 
