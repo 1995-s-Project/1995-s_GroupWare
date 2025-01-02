@@ -16,13 +16,13 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("home/no-search")
+    @GetMapping("/home/no-search")
     public String noSearch(){
-        return "/home/no-search";
+        return "home/no-search";
     }
 
-    @GetMapping("home/pass-search")
+    @GetMapping("/home/pass-search")
     public String passSearch(){
-        return "/home/pass-search";
+        return "home/pass-search";
     }
 }
