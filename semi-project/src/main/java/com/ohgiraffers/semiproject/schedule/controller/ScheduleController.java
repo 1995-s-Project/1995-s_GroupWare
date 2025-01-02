@@ -36,7 +36,7 @@ public class ScheduleController {
     // 근태 수정 페이지 이동
     @GetMapping("/attendance-request")
     public String attendance(){
-        return "/sidemenu/schedule/attendance-request";
+        return "sidemenu/schedule/attendance-request";
     }
 
     @PostMapping("/attendance-request")
@@ -63,7 +63,7 @@ public class ScheduleController {
 
         scheduleService.modifyAttendanceRequest(attendanceModifyInfo);
 
-        return "/sidemenu/schedule/attendance-request";
+        return "sidemenu/schedule/attendance-request";
     }
 
 }
