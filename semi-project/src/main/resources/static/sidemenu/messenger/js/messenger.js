@@ -359,17 +359,31 @@ function sendMessage() {
 // 채팅 히스토리 로드
 function loadChatHistory() {
     var chatHistory = document.getElementById('chatHistory');
-    chatHistory.innerHTML = '';
     if (selectedUser) {
         fetch('/chat/history/' + currentUser + '/' + selectedUser)
             .then(response => response.json())
             .then(data => {
+                chatHistory.innerHTML = ''; // 이전 메시지 지우기
                 data.forEach(function(chat) {
                     displayMessage(chat);
                 });
+            })
+            .catch(error => {
+                console.error('Error loading chat history:', error);
+            })
+            .finally(() => {
+                // 1초 후에 다시 호출
+                setTimeout(loadChatHistory, 1000);
             });
+    } else {
+        // 선택된 사용자가 없을 경우 1초 후에 다시 호출
+        setTimeout(loadChatHistory, 1000);
     }
 }
+
+// 처음 호출
+loadChatHistory();
+
 
 
 // 페이지 로드 시 실행되는 기존 코드에 추가
@@ -385,6 +399,7 @@ window.onload = function () {
         }
     });
 };
+
 //엔터키
 function checkEnter(event) {
     if (event.key === 'Enter') {
