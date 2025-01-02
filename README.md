@@ -3,11 +3,12 @@
 
 ## 🗒️목차
 
-1. [프로젝트 소개](#프로젝트-소개)
-2. [팀원 소개](#팀원-소개)
-3. [개발환경](#개발환경)
-4. [프로젝트 기능 소개](#프로젝트-기능-소개)
-5. [ERD 및 피그마 설계](#erd-및-피그마-설계계) 
+1. [프로젝트 소개](##프로젝트-소개)
+2. [팀원 소개](##팀원-소개)
+3. [개발환경](##개발환경)
+4. [프로젝트 기능 소개](##프로젝트-기능-소개)
+5. [ERD 논리 데이터 모델링](##erd-논리-데이터-모델링)
+6. [Wiki 모음 링크](##wiki-모음-링크)
 
 <br>
 
@@ -257,9 +258,19 @@
 
 <br>
 
-## ✏️ERD 및 피그마 설계
-- [피그마 링크](https://www.figma.com/design/sq0XE3RSMjfI374AXYnDf9/%EC%84%B8%EB%AF%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?t=IjbHGfA8eKdH9vHA-0)
+## ✏️ERD 논리 데이터 모델링
 - ERD 변경 되거나 추가된 엔터티가 있으므로 추 후 수정예정
+- 물리 데이터 모델링은 아래 Wiki에서 확인 가능
 <img src="https://github.com/user-attachments/assets/23554ab8-107c-4aec-9200-1ef412ed20fd">
 
+<br>
 
+## 🌏Wiki 링크 모음
+- [시장조사](https://github.com/1995-s-Project/1995-s_GroupWare/wiki/%EC%8B%9C%EC%9E%A5-%EC%A1%B0%EC%82%AC)
+- [유사 프로그램 분석](https://github.com/1995-s-Project/1995-s_GroupWare/wiki/%EC%9C%A0%EC%82%AC%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EB%B6%84%EC%84%9D)
+- [프로젝트 관련 법률 정리](https://github.com/1995-s-Project/1995-s_GroupWare/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B4%80%EB%A0%A8-%EB%B2%95%EB%A5%A0-%EC%A0%95%EB%A6%AC)
+- [요구사항 명세](https://github.com/1995-s-Project/1995-s_GroupWare/wiki/%EC%9A%94%EA%B5%AC-%EC%82%AC%ED%95%AD-%EB%AA%85%EC%84%B8)
+- [피그마](https://www.figma.com/design/sq0XE3RSMjfI374AXYnDf9/%EC%84%B8%EB%AF%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?t=IjbHGfA8eKdH9vHA-0)
+- [단위 업무 정의](https://github.com/1995-s-Project/1995-s_GroupWare/wiki/%EB%8B%A8%EC%9C%84-%EC%97%85%EB%AC%B4-%EC%A0%95%EC%9D%98%EC%84%9C)
+- [단위 업무 흐름도](https://github.com/1995-s-Project/1995-s_GroupWare/wiki/%EB%8B%A8%EC%9C%84-%EC%97%85%EB%AC%B4-%ED%9D%90%EB%A6%84%EB%8F%84)
+- [ERD 설계(논리, 물리)](https://github.com/1995-s-Project/1995-s_GroupWare/wiki/ERD-%EC%84%A4%EA%B3%84(%EB%85%BC%EB%A6%AC,-%EB%AC%BC%EB%A6%AC))
