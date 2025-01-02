@@ -60,7 +60,7 @@
         FROM
             tbl_email
         WHERE
-            recipient_id = 023
+            recipient_id = #{code}
         AND
             recipient_folder = '받은쪽지함'
         </select>

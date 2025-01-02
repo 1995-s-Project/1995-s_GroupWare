@@ -48,18 +48,6 @@ public class EmployeeService {
         return employeeMapper.countAll();
     }
 
-    public List<EmployeeDTOJOB> empSearch(String query, int offset, int size) {
-
-        List<EmployeeDTOJOB> result = employeeMapper.empSearch(query, offset, size);
-
-        return result;
-    }
-
-    public long getTotalProducts1(String query) {
-
-        return employeeMapper.countAll1(query);
-    }
-
     public List<EmployeeJoinListDTO> empAllSelect() {
         return employeeMapper.empAllSelect();
     }
@@ -117,11 +105,6 @@ public class EmployeeService {
     public List<EmployeeDTOJOB> customerDept() {
 
         return employeeMapper.customerDept();
-    }
-
-    // 경영부 직원정보 가져오기
-    public List<EmployeeDTOJOB> getManagementEmployees() {
-        return employeeMapper.getManagementEmployees();
     }
 
     public List<EmployeeDTOJOB> empAllList() {

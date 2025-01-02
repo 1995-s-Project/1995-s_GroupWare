@@ -16,10 +16,6 @@ public interface EmployeeMapper {
 
     long countAll();
 
-    List<EmployeeDTOJOB> empSearch(String query, @Param("offset") int offset,
-                                                 @Param("size") int size);
-
-    long countAll1(String query);
 
     EmployeeDTOJOB empSelect(String empCode);
 
@@ -64,9 +60,6 @@ public interface EmployeeMapper {
     List<EmployeeDTOJOB> logisticsDept();
     //  부서별 전체조회(고객업무/cs부)
     List<EmployeeDTOJOB> customerDept();
-
-    // 경영부 직원정보 가져오기
-    List<EmployeeDTOJOB> getManagementEmployees();
 
     List<EmployeeDTOJOB> empAllList();
 }

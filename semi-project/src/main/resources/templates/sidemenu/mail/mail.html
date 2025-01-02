@@ -137,26 +137,23 @@
                     </tr>
                     </tbody>
                 </table>
-                <form action="/sidemenu/mail" method="get">
+                <form action="/mail" method="get">
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
-                            <!-- Previous Page Button -->
                             <li class="page-item" th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">
                                 <a class="page-link"
-                                   th:href="@{/sidemenu/mail(page=${pageInfo.currentPage - 1 >= 0 ? pageInfo.currentPage - 1 : 0}, size=${pageInfo.pageSize})}"
+                                   th:href="@{/mail(page=${pageInfo.currentPage - 1}, size=${pageInfo.pageSize})}"
                                    th:classappend="${pageInfo.currentPage == 0 or pageInfo.totalPages == 1} ? 'disabled'">Previous</a>
                             </li>
-                            <!-- Page Number Buttons -->
                             <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, pageInfo.totalPages - 1)}"
                                 th:classappend="${pageInfo.currentPage == pageNum} ? 'active'">
                                 <a class="page-link"
-                                   th:href="@{/sidemenu/mail(page=${pageNum}, size=${pageInfo.pageSize})}"
+                                   th:href="@{/mail(page=${pageNum}, size=${pageInfo.pageSize})}"
                                    th:text="${pageNum + 1}"></a>
                             </li>
-                            <!-- Next Page Button -->
                             <li class="page-item" th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">
                                 <a class="page-link"
-                                   th:href="@{/sidemenu/mail(page=${pageInfo.currentPage + 1 < pageInfo.totalPages ? pageInfo.currentPage + 1 : pageInfo.totalPages - 1}, size=${pageInfo.pageSize})}"
+                                   th:href="@{/mail(page=${pageInfo.currentPage + 1}, size=${pageInfo.pageSize})}"
                                    th:classappend="${pageInfo.currentPage == pageInfo.totalPages - 1 or pageInfo.totalPages == 1} ? 'disabled'">Next</a>
                             </li>
                         </ul>
@@ -276,7 +273,19 @@
             })
             .then(data => {
                 alert(data);  // 이동 성공 메시지
-                window.location.href = "/mail/sent?page=0&size=15";  // 첫 페이지로 리디렉션
+
+                // 현재 URL에서 page와 size를 가져옵니다.
+                const urlParams = new URLSearchParams(window.location.search);
+                let page = parseInt(urlParams.get('page') || 0); // 현재 페이지 (기본값은 0)
+                const size = parseInt(urlParams.get('size') || 15); // 페이지 크기 (기본값은 15)
+
+                // 페이지가 0보다 크면 1 페이지를 뒤로 이동
+                if (page > 0) {
+                    page--;
+                }
+
+                // 메일 목록이 비었을 경우 자동으로 이전 페이지로 이동
+                window.location.href = `/mail?page=${page}&size=${size}`;
             })
             .catch(error => {
                 console.error("메일 이동 중 오류 발생:", error);
@@ -573,5 +582,28 @@
         });
         return selected;
     }
+
+    document.getElementById("messageForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // 기본 제출 동작 방지
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData,
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "/mail/sent";
+                } else {
+                    alert("서버와의 통신 중 문제가 발생했습니다.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("네트워크 에러가 발생했습니다.");
+            });
+    });
 </script>
 </html>
