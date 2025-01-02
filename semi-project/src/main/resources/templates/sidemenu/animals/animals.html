@@ -128,8 +128,6 @@
                 <div class="card-container">
                     <div class="card" th:each="allList : ${list}">
                         <div class="card-image">
-                            <img th:src="${emp.profileImage == null || emp.profileImage.isEmpty() ? '/img/default.png' : (emp.profileImage.startsWith('/img/profile/') ? emp.profileImage : '/img/profile/' + emp.profileImage)}"
-                                 alt="profile Image" />
                             <img th:src="${allList.animalImage == null || allList.animalImage.isEmpty() ? '/img/animals/defaultAnimal.jpg' : (allList.animalImage.startsWith('/img/animals/') ? allList.animalImage : '/img/animals/' + allList.animalImage)}"
                                  alt="Animal Image" th:attr="onclick=|location.href='@{/animals/detailAnimal/{animalCode}(animalCode=${allList.animalCode})}'|"/>
 <!--                            <img th:src="${allList.animalImage != null and allList.animalImage != '' ? '/img/animals/' + allList.animalImage : '/img/animals/defaultAnimal.jpg'}"-->

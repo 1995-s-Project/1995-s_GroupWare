@@ -20,7 +20,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat") // 웹소켓 엔드포인트
-                .setAllowedOrigins("http://125.129.201.45:9595") // 정확한 Origin 설정
+                .setAllowedOrigins("http://localhost:9595") // 정확한 Origin 설정
                 .withSockJS(); // SockJS 사용
     }
 }
