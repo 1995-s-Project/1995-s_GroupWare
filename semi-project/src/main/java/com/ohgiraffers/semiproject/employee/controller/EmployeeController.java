@@ -36,6 +36,7 @@ public class EmployeeController {
         int offset = page * size;
 
         List<EmployeeDTOJOB> employee = employeeService.empAll(offset, size);
+
         List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         long totalProducts = employeeService.getTotalProducts();
@@ -58,9 +59,11 @@ public class EmployeeController {
     public String managementDept(Model model) {
 
         List<EmployeeDTOJOB> management = employeeService.managementDept();
+
         List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("management", management);
+
         model.addAttribute("emp", emp);
 
         return "sidemenu/employee/management";
@@ -71,9 +74,11 @@ public class EmployeeController {
     public String dogDept(Model model) {
 
         List<EmployeeDTOJOB> dog = employeeService.dogDept();
+
         List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("dog", dog);
+
         model.addAttribute("emp", emp);
 
         return "sidemenu/employee/dog";
@@ -84,9 +89,11 @@ public class EmployeeController {
     public String marketingDept(Model model) {
 
         List<EmployeeDTOJOB> marketing = employeeService.marketingDept();
+
         List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("marketing", marketing);
+
         model.addAttribute("emp", emp);
 
         return "sidemenu/employee/marketing";
@@ -97,9 +104,11 @@ public class EmployeeController {
     public String salesDept(Model model) {
 
         List<EmployeeDTOJOB> sales = employeeService.salesDept();
+
         List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("sales", sales);
+
         model.addAttribute("emp", emp);
 
         return "sidemenu/employee/sales";
@@ -110,9 +119,11 @@ public class EmployeeController {
     public String logisticsDept(Model model) {
 
         List<EmployeeDTOJOB> logistics = employeeService.logisticsDept();
+
         List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("logistics", logistics);
+
         model.addAttribute("emp", emp);
 
         return "sidemenu/employee/logistics";
@@ -123,9 +134,11 @@ public class EmployeeController {
     public String customerDept(Model model) {
 
         List<EmployeeDTOJOB> customer = employeeService.customerDept();
+
         List<EmployeeDTOJOB> emp = employeeService.empAllList();
 
         model.addAttribute("customer", customer);
+
         model.addAttribute("emp", emp);
 
         return "sidemenu/employee/customer";

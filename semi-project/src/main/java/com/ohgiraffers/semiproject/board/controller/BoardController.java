@@ -156,12 +156,6 @@ public class BoardController {
 
         model.addAttribute("userCode", userCode);
 
-        System.out.println("userRole: " + userRole);
-        System.out.println("job: " + job);
-        System.out.println("userCode: " + userCode);
-        System.out.println("board.empCode: " + board.getEmpCode());
-
-
         return "sidemenu/board/title";
     }
 

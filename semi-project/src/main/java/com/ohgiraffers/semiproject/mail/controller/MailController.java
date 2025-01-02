@@ -53,7 +53,9 @@ public class MailController {
         List<MailDTO> mail = mailService.mailAllSelect(code, offset, size);
 
         model.addAttribute("mail", mail);
+
         model.addAttribute("isEmpty", mail.isEmpty());
+
         model.addAttribute("pageInfo", pageInfo);
 
         return "sidemenu/mail/mail";
@@ -82,7 +84,9 @@ public class MailController {
         List<MailDTO> mail = mailService.mailSentSelect(code, offset, size);
 
         model.addAttribute("mail", mail);
+
         model.addAttribute("isEmpty", mail.isEmpty());
+
         model.addAttribute("pageInfo", pageInfo);
 
         return "sidemenu/mail/mailSent";
@@ -165,6 +169,7 @@ public class MailController {
         List<MailDTO> important = mailService.mailFolderImportant(code, offset, size);
 
         model.addAttribute("important", important);
+
         model.addAttribute("pageInfo", pageInfo);
 
         return "sidemenu/mail/important";
@@ -194,7 +199,9 @@ public class MailController {
         List<MailDTO> trash = mailService.mailFolderTrash(code, offset, size);
 
         model.addAttribute("trash", trash);
+
         model.addAttribute("isEmpty", trash.isEmpty());
+
         model.addAttribute("pageInfo", pageInfo);
 
         return "sidemenu/mail/trash";
@@ -224,6 +231,7 @@ public class MailController {
         List<MailDTO> archived = mailService.mailFolderArchived(code, offset, size);
 
         model.addAttribute("archived", archived);
+
         model.addAttribute("pageInfo", pageInfo);
 
         return "sidemenu/mail/archived";
